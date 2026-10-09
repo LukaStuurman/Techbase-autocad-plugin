@@ -1,5 +1,5 @@
 _NETLOAD
-"C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.2.1/Techbase.Blocks.bundle/Contents/R25-1.2.1/Techbase.Blocks.dll"
+"C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.2.2/Techbase.Blocks.bundle/Contents/R25-1.2.2/Techbase.Blocks.dll"
 TBKABELVALIDATE
 (setvar "INSUNITS" 4)
 (entmake (list (cons 0 "LAYER") (cons 100 "AcDbSymbolTableRecord") (cons 100 "AcDbLayerTableRecord") (cons 2 "Aansluiting LS K03 150Al") (cons 70 0) (cons 62 3)))

@@ -43,7 +43,7 @@ public sealed class Plugin : IExtensionApplication
         catch (System.Exception ex) { AcApp.DocumentManager.MdiActiveDocument?.Editor.WriteMessage("\nInstelling kon niet worden opgeslagen: " + ex.Message); }
         panel?.RefreshSettings();
     }
-    [CommandMethod("TBLOCKS", CommandFlags.Modal)]
+    [CommandMethod("TECHBASE", CommandFlags.Modal)]
     public void Show()
     {
         try
@@ -51,7 +51,7 @@ public sealed class Plugin : IExtensionApplication
             if (Blocks == null) Reload();
             if (palette == null)
             {
-                palette = new PaletteSet("Techbase Blocks", new Guid("F0674EA1-D625-43F5-A0BA-016A165B0D66"))
+                palette = new PaletteSet("Techbase", new Guid("F0674EA1-D625-43F5-A0BA-016A165B0D66"))
                 {
                     Style = PaletteSetStyles.ShowAutoHideButton | PaletteSetStyles.ShowCloseButton | PaletteSetStyles.ShowPropertiesMenu,
                     MinimumSize = new Size(330, 560), Size = new Size(380, 650),
@@ -128,7 +128,7 @@ public sealed class Plugin : IExtensionApplication
             var code = doc.Editor.GetString("\nTool-ID: ");
             if (code.Status != Autodesk.AutoCAD.EditorInput.PromptStatus.OK) return;
             var tool = Blocks!.Tools.FirstOrDefault(t => t.Id.Equals(code.StringResult, StringComparison.OrdinalIgnoreCase));
-            if (tool == null) { doc.Editor.WriteMessage("\nOnbekende tool-ID. Gebruik TBLOCKS."); return; }
+            if (tool == null) { doc.Editor.WriteMessage("\nOnbekende tool-ID. Gebruik TECHBASE."); return; }
             do { if (!BlockInserter.Place(doc, Blocks, tool, Preferences)) break; } while (Preferences.Repeat);
         }
         catch (System.Exception ex) { Error(ex); }

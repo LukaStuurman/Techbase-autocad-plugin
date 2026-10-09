@@ -73,9 +73,9 @@ internal static class BlockInserter
         {
             if (tx.GetObject(id, OpenMode.ForRead) is not AttributeDefinition definition || definition.Constant) continue;
             using var attribute = new AttributeReference();
-            attribute.SetAttributeFromBlock(definition, block.BlockTransform);
-            attribute.TextString = values != null && values.TryGetValue(definition.Tag, out var value) ? value : definition.TextString;
-            if (definition.Layer == "0") attribute.LayerId = block.LayerId;
+            attribute.SetDatabaseDefaults(db);
+            UpdateAttribute(db, block, attribute, definition,
+                values != null && values.TryGetValue(definition.Tag, out var value) ? value : definition.TextString);
             block.AttributeCollection.AppendAttribute(attribute);
             tx.AddNewlyCreatedDBObject(attribute, true);
             attribute.AdjustAlignment(db);
@@ -100,6 +100,16 @@ internal static class BlockInserter
         return inserted;
     }
 
+    internal static void UpdateAttribute(Database db, BlockReference block, AttributeReference attribute,
+        AttributeDefinition definition, string value)
+    {
+        attribute.SetAttributeFromBlock(definition, block.BlockTransform);
+        attribute.TextString = value;
+        if (definition.Layer == "0") attribute.LayerId = block.LayerId;
+        attribute.AdjustAlignment(db);
+        if (attribute.IsMTextAttribute) attribute.UpdateMTextAttribute();
+    }
+
     internal static bool Place(Document doc, Catalog catalog, BlockTool tool, Settings settings)
     {
         var db = doc.Database;
@@ -112,7 +122,7 @@ internal static class BlockInserter
         var definition = Import(db, catalog, tool);
         var defaultLayer = DefaultLayer(db, tx, tool.Layer);
         using var block = CreateReference(db, tx, definition, tool, Point3d.Origin, defaultLayer, ed.CurrentUserCoordinateSystem);
-        using var jig = new PlacementJig(block);
+        using var jig = new PlacementJig(db, tx, block, tool.Rotation);
         var picked = Array.Empty<ObjectId>();
         Point3d? pickedPoint = null;
         void Monitor(object sender, PointMonitorEventArgs args)
@@ -120,16 +130,24 @@ internal static class BlockInserter
             pickedPoint = args.Context.ComputedPoint;
             picked = args.Context.GetPickedEntities().Select(p => p.GetObjectIds()).Where(ids => ids.Length > 0).Select(ids => ids[0]).Distinct().ToArray();
         }
-        PromptResult result;
-        if (inheritLayer)
+        PromptResult DragPoint()
         {
-            ed.TurnForcedPickOn();
-            ed.PointMonitor += Monitor;
+            picked = Array.Empty<ObjectId>(); pickedPoint = null;
+            if (inheritLayer) { ed.TurnForcedPickOn(); ed.PointMonitor += Monitor; }
+            try { return ed.Drag(jig); }
+            finally
+            {
+                if (inheritLayer) { ed.PointMonitor -= Monitor; ed.TurnForcedPickOff(); }
+            }
         }
-        try { result = ed.Drag(jig); }
-        finally
+        PromptResult result;
+        var rotationChosen = false;
+        while (true)
         {
-            if (inheritLayer) { ed.PointMonitor -= Monitor; ed.TurnForcedPickOff(); }
+            result = DragPoint();
+            if (result.Status != PromptStatus.Keyword || result.StringResult != "Draaien") break;
+            if (!jig.Rotate(ed)) return false;
+            rotationChosen = true;
         }
         ObjectId explicitLayer = ObjectId.Null;
         if (result.Status == PromptStatus.Keyword && result.StringResult == "Object")
@@ -138,8 +156,7 @@ internal static class BlockInserter
             if (selection.Status != PromptStatus.OK) return false;
             var target = (Entity)tx.GetObject(selection.ObjectId, OpenMode.ForRead);
             explicitLayer = LayerResolver.CheckLayer(tx, target.LayerId).LayerId;
-            block.Position = selection.PickedPoint;
-            if (target is Curve curve) block.Position = curve.GetClosestPointTo(selection.PickedPoint, false);
+            jig.MoveTo(target is Curve curve ? curve.GetClosestPointTo(selection.PickedPoint, false) : selection.PickedPoint);
         }
         else if (result.Status != PromptStatus.OK) return false;
         if (inheritLayer || !explicitLayer.IsNull)
@@ -159,13 +176,8 @@ internal static class BlockInserter
             ed.WriteMessage("\n" + match.Message);
         }
         LayerResolver.CheckLayer(tx, block.LayerId);
-        if (tool.PromptRotation)
-        {
-            var angle = ed.GetAngle(new PromptAngleOptions("\nDraaihoek <0>: ")
-            { BasePoint = block.Position, UseBasePoint = true, AllowNone = true, DefaultValue = tool.Rotation });
-            if (angle.Status == PromptStatus.Cancel) return false;
-            if (angle.Status == PromptStatus.OK) block.Rotation += angle.Value - tool.Rotation;
-        }
+        jig.RefreshAttributes();
+        if (tool.PromptRotation && !rotationChosen && !jig.Rotate(ed)) return false;
         var attributes = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         var record = (BlockTableRecord)tx.GetObject(definition, OpenMode.ForRead);
         if (Convert.ToInt16(AcApp.GetSystemVariable("ATTREQ")) != 0)
@@ -185,23 +197,91 @@ internal static class BlockInserter
     }
 }
 
-internal sealed class PlacementJig : EntityJig, IDisposable
+// A transient block has no AttributeCollection to draw. Draw its attribute
+// references explicitly, without adding a temporary insert to the drawing.
+internal sealed class PlacementJig : DrawJig, IDisposable
 {
+    private readonly Database db;
     private readonly BlockReference block;
-    private Point3d point;
-    internal PlacementJig(BlockReference block) : base(block) { this.block = block; point = block.Position; }
+    private readonly List<(AttributeDefinition Definition, AttributeReference Reference)> attributes = new();
+    private readonly double ucsRotation;
+    private double angle;
+    private double defaultAngle;
+    private bool rotating;
+    internal IReadOnlyList<AttributeReference> Attributes => attributes.Select(a => a.Reference).ToArray();
+
+    internal PlacementJig(Database db, Transaction tx, BlockReference block, double initialAngle)
+    {
+        this.db = db; this.block = block;
+        angle = initialAngle; ucsRotation = block.Rotation - initialAngle;
+        try
+        {
+            var record = (BlockTableRecord)tx.GetObject(block.BlockTableRecord, OpenMode.ForRead);
+            foreach (ObjectId id in record)
+            {
+                if (tx.GetObject(id, OpenMode.ForRead) is not AttributeDefinition definition || definition.Constant) continue;
+                var attribute = new AttributeReference();
+                attributes.Add((definition, attribute));
+                attribute.SetDatabaseDefaults(db);
+            }
+            RefreshAttributes();
+        }
+        catch { Dispose(); throw; }
+    }
+    internal void MoveTo(Point3d point) { block.Position = point; RefreshAttributes(); }
+    internal void SetAngle(double value) { angle = value; block.Rotation = ucsRotation + value; RefreshAttributes(); }
+    internal void RefreshAttributes()
+    {
+        foreach (var (definition, attribute) in attributes)
+            BlockInserter.UpdateAttribute(db, block, attribute, definition, definition.TextString);
+    }
+    internal bool Rotate(Editor ed)
+    {
+        defaultAngle = angle; rotating = true;
+        try
+        {
+            var result = ed.Drag(this);
+            if (result.Status == PromptStatus.None) SetAngle(defaultAngle);
+            return result.Status == PromptStatus.OK || result.Status == PromptStatus.None;
+        }
+        finally { rotating = false; }
+    }
     protected override SamplerStatus Sampler(JigPrompts prompts)
     {
-        var options = new JigPromptPointOptions("\nInvoegpunt: ")
+        if (rotating)
+        {
+            var options = new JigPromptAngleOptions("\nDraaihoek: ")
+            {
+                BasePoint = block.Position, UseBasePoint = true,
+                DefaultValue = defaultAngle,
+                Cursor = CursorType.RubberBand,
+                UserInputControls = UserInputControls.Accept3dCoordinates | UserInputControls.NullResponseAccepted | UserInputControls.GovernedByOrthoMode
+            };
+            var result = prompts.AcquireAngle(options);
+            if (result.Status == PromptStatus.Cancel) return SamplerStatus.Cancel;
+            var value = result.Status == PromptStatus.None ? defaultAngle : result.Value;
+            if (Math.Abs(value - angle) < 1e-10) return SamplerStatus.NoChange;
+            SetAngle(value);
+            return SamplerStatus.OK;
+        }
+        var optionsPoint = new JigPromptPointOptions("\nInvoegpunt: ")
         { UserInputControls = UserInputControls.Accept3dCoordinates | UserInputControls.NullResponseAccepted };
-        options.Keywords.Add("Object");
-        var result = prompts.AcquirePoint(options);
-        if (result.Status == PromptStatus.Keyword) return SamplerStatus.OK;
-        if (result.Status == PromptStatus.Cancel || result.Status == PromptStatus.None) return SamplerStatus.Cancel;
-        if (result.Value.IsEqualTo(point)) return SamplerStatus.NoChange;
-        point = result.Value;
+        optionsPoint.Keywords.Add("Object"); optionsPoint.Keywords.Add("Draaien");
+        var pointResult = prompts.AcquirePoint(optionsPoint);
+        if (pointResult.Status == PromptStatus.Keyword) return SamplerStatus.OK;
+        if (pointResult.Status != PromptStatus.OK) return SamplerStatus.Cancel;
+        if (pointResult.Value.IsEqualTo(block.Position)) return SamplerStatus.NoChange;
+        MoveTo(pointResult.Value);
         return SamplerStatus.OK;
     }
-    protected override bool Update() { block.Position = point; return true; }
-    public void Dispose() { }
+    protected override bool WorldDraw(WorldDraw draw)
+    {
+        draw.Geometry.Draw(block);
+        var mode = Convert.ToInt16(AcApp.GetSystemVariable("ATTMODE"));
+        if (mode != 0)
+            foreach (var (_, attribute) in attributes)
+                if (!attribute.Invisible || mode == 2) draw.Geometry.Draw(attribute);
+        return true;
+    }
+    public void Dispose() { foreach (var (_, attribute) in attributes) attribute.Dispose(); attributes.Clear(); }
 }

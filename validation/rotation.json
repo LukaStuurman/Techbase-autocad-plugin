@@ -1,0 +1,15 @@
+{
+  "Status": "PASS",
+  "Checks": 13,
+  "Host": "AutoCAD 2026 Core Console",
+  "Cases": [
+    "prompt rotation",
+    "Enter default",
+    "Draaien option",
+    "one chosen angle",
+    "rotated UCS",
+    "cancel after point",
+    "cancel before point",
+    "saved attribute geometry"
+  ]
+}

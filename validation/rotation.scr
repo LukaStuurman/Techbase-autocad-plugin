@@ -1,0 +1,56 @@
+_NETLOAD
+"C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.2.2/Techbase.Blocks.bundle/Contents/R25-1.2.2/Techbase.Blocks.dll"
+(setvar "ATTREQ" 0)
+(setvar "INSUNITS" 0)
+(setvar "OSMODE" 0)
+_TBPLAATS
+9dbea1c0c575423e80d3feede50deff1
+0,0,0
+0
+(princ (strcat "\nROTATION_BASE=" (rtos (cdr (assoc 50 (entget (entlast)))) 2 8)))
+_TBPLAATS
+9dbea1c0c575423e80d3feede50deff1
+20,0,0
+90
+(princ (strcat "\nROTATION_PROMPT=" (rtos (cdr (assoc 50 (entget (entlast)))) 2 8)))
+_TBPLAATS
+9dbea1c0c575423e80d3feede50deff1
+40,0,0
+
+(princ (strcat "\nROTATION_DEFAULT=" (rtos (cdr (assoc 50 (entget (entlast)))) 2 8)))
+_TBPLAATS
+547536b5125144edbc8868691121d217
+_Draaien
+-90
+60,0,0
+(princ (strcat "\nROTATION_OPTION=" (rtos (cdr (assoc 50 (entget (entlast)))) 2 8)))
+_TBPLAATS
+9dbea1c0c575423e80d3feede50deff1
+_Draaien
+45
+80,0,0
+(princ (strcat "\nROTATION_CHOSEN=" (rtos (cdr (assoc 50 (entget (entlast)))) 2 8)))
+_UCS
+_Z
+90
+_TBPLAATS
+9dbea1c0c575423e80d3feede50deff1
+0,-100,0
+30
+(princ (strcat "\nROTATION_UCS=" (rtos (cdr (assoc 50 (entget (entlast)))) 2 8)))
+_UCS
+_W
+_TBPLAATS
+9dbea1c0c575423e80d3feede50deff1
+120,0,0
+(princ)
+_TBPLAATS
+547536b5125144edbc8868691121d217
+_Draaien
+(princ)
+(princ (strcat "\nINSERT_COUNT=" (itoa (sslength (ssget "_X" (list (cons 0 "INSERT")))))))
+_DXFOUT
+"C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/validation/Draaien - commando.dxf"
+16
+_QUIT
+_Y

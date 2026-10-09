@@ -1,4 +1,4 @@
-Redirect stdout (file: C:\Users\LUKAST~1\AppData\Local\Temp\accc66242).
+Redirect stdout (file: C:\Users\LUKAST~1\AppData\Local\Temp\accc164562).
 AcCoreConsole: StdOutConsoleMode: processed-output: disabled,auto
 AutoCAD Core Engine Console - Copyright 2025 Autodesk, Inc.  All rights reserved. (W.122.0.0)
 
@@ -22,7 +22,7 @@ Command:
 
 Command:
 Command: _NETLOAD
-Assembly file name: "C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.2.1/Techbase.Blocks.bundle/Contents/R25-1.2.1/Techbase.Blocks.dll"
+Assembly file name: "C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.2.2/Techbase.Blocks.bundle/Contents/R25-1.2.2/Techbase.Blocks.dll"
 
 Command: (setvar "ATTREQ" 0)
 0
@@ -222,7 +222,7 @@ Loading AECC Hydrology...
 Loading AECC Bridge...
 Loading AECC Rail...
 
-Invoegpunt [Object]: 5,0,0
+Invoegpunt [Object/Draaien]: 5,0,0
 
 Laag overgenomen: TEST_MAIN
 Geplaatst: BESTAANDE MOF op laag TEST_MAIN.
@@ -237,7 +237,7 @@ Command: _TBPLAATS
 
 Tool-ID: 547536b5125144edbc8868691121d217
 
-Invoegpunt [Object]: 10,0,0
+Invoegpunt [Object/Draaien]: 10,0,0
 
 Geplaatst: BESTAANDE MOF op laag 0.
 Command: (princ (strcat "\nCHECK_OFF=" (cdr (assoc 8 (entget (entlast))))))
@@ -259,7 +259,7 @@ Command: _TBPLAATS
 
 Tool-ID: 547536b5125144edbc8868691121d217
 
-Invoegpunt [Object]: _Object
+Invoegpunt [Object/Draaien]: _Object
 
 Selecteer het object op de gewenste plaats: 15,0,0
 
@@ -287,7 +287,7 @@ Command: _TBPLAATS
 
 Tool-ID: 547536b5125144edbc8868691121d217
 
-Invoegpunt [Object]: 5,-100,0
+Invoegpunt [Object/Draaien]: 5,-100,0
 
 Laag overgenomen: TEST_MAIN
 Geplaatst: BESTAANDE MOF op laag TEST_MAIN.

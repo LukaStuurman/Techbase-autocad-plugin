@@ -1,6 +1,18 @@
-# Controle versie 1.2.1 — 9 oktober 2026
+# Controle versie 1.2.2 — 9 oktober 2026
 
 De plugin is gebouwd en lokaal geïnstalleerd. De automatische controles draaien in de echte AutoCAD 2026 Core Console (ACADVER 25.1), zonder de bron-DWG of gebruikersinstellingen te wijzigen.
+
+## Plaatsen en hoofdcommando 1.2.2
+
+Het hoofdcommando is nu **TECHBASE**. Manifest, installer en gebruikershandleiding zijn aangepast. De installer vervangt de oude TBLOCKS-startregistratie alleen binnen de gecontroleerde registratie van deze plugin; oude waarden worden eerst opgeslagen.
+
+Het cursorvoorbeeld bevat het block en de zichtbare attribuutteksten, inclusief meerdere regels. De teksten worden met het block verplaatst en gedraaid vóór er een invoegobject aan de tekening wordt toegevoegd. De draaivraag gebruikt nu hetzelfde voorbeeld. De extra optie **Draaien** bij het invoegpunt werkt ook voor blocks zonder draaivraag uit de XTP.
+
+- **1549 geslaagde geometriecontroles** voor alle **33 paletteknoppen met niet-constante attributen**. De bewegende tekst is vergeleken met onafhankelijk verplaatste/gedraaide attributen van een echt ingevoegd block, op vijf hoeken en afwisselend in wereld- en gedraaid UCS. Ook meerregelige tekst, laagovererving, het ontbreken van tijdelijke inserts en de definitieve tekstgeometrie zijn gecontroleerd.
+- **13 geslaagde controles** via de echte plaats-/draaiprompts: klikpunt en numerieke hoek, Enter voor de standaardhoek, vooraf Draaien bij beide soorten blocks, geen tweede draaivraag na een gekozen hoek, gedraaid UCS, annuleren vóór/na het invoegpunt en onafhankelijk teruglezen van de opgeslagen attribuutgeometrie uit DXF.
+- De bestaande 410 block-/CAD-controles en 7 controles op laagovername en Undo slagen opnieuw. Het pakket bevat het TECHBASE-commando voor beide CAD-generaties.
+
+Bewijs: `validation/plaatsvoorbeeld.json`, `Plaatsvoorbeeld - controle.dwg`/`.dxf`, `rotation.json`, `rotation.log` en `Draaien - commando.dxf`. De Core Console test de geometrie en prompts; de live cursorweergave in de desktop-GUI moet nog praktisch worden bekeken.
 
 ## Derde tab Enexis kabelchecker
 

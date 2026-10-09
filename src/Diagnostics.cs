@@ -15,6 +15,7 @@ internal static class Diagnostics
     {
         var output = Environment.GetEnvironmentVariable("TECHBASE_TEST_OUTPUT") ?? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Techbase", "Blocks", "Validation");
         Directory.CreateDirectory(output);
+        PlacementDiagnostics.Run(catalog, output);
         var checks = new List<string>();
         var results = new List<object>();
         void Check(bool condition, string name) { if (!condition) throw new InvalidOperationException("Test mislukt: " + name); checks.Add(name); }

@@ -1,4 +1,4 @@
-Redirect stdout (file: C:\Users\LUKAST~1\AppData\Local\Temp\accc171882).
+Redirect stdout (file: C:\Users\LUKAST~1\AppData\Local\Temp\accc279082).
 AcCoreConsole: StdOutConsoleMode: processed-output: disabled,auto
 AutoCAD Core Engine Console - Copyright 2025 Autodesk, Inc.  All rights reserved. (W.122.0.0)
 
@@ -10,6 +10,7 @@ Version Number: W.122.0.0 (UNICODE)
 LogFilePath has been set to the working folder.
 CoreHeartBeat
 Regenerating model.
+CoreHeartBeat
 Drawing created using acadiso.dwt from AutoCAD profile: <<Unnamed Profile>>
 **** System Variable Changed ****
 2 of the monitored system variables have changed from the preferred value. Use SYSVARMONITOR command to view changes.
@@ -20,9 +21,6 @@ Command:
 Command:
 
 Command:
-Command: _NETLOAD
-Assembly file name: "C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.2.1/Techbase.Blocks.bundle/Contents/R25-1.2.1/Techbase.Blocks.dll"
-
 Command: TBVALIDATE
 Loading AEC Base...
 Loading AEC Base Extended...
@@ -205,13 +203,22 @@ Loading AECC ETransmit...
 
 ************************MessageBox****************************
 Exception in c:\program files\autodesk\civil 3d 2026 object enabler\aecccorebase.crx ARX Command
-Unhandled Exception c0000027 (c0000027h) at address c18b506dh
+Unhandled Exception c0000027 (c0000027h) at address fdc4506dh
 >>>Responding: OK.
 **************************************************************
 Loading AECC Plan Production...
 Loading AECC Hydrology...
 Loading AECC Bridge...
 Loading AECC Rail...
+CoreHeartBeat
+Unable to find the rules file: C:\C3DPipeRules.xml
+Unable to find the rules file: C:\C3DPipeRules.xml
+Unable to find the rules file: C:\C3DPipeRules.xml
+Unable to find the rules file: C:\C3DPipeRules.xml
+Unable to find the rules file: C:\C3DPipeRules.xml
+Unable to find the rules file: C:\C3DPipeRules.xml
+Unable to find the rules file: C:\C3DPipeRules.xml
+Unable to find the rules file: C:\C3DPipeRules.xml
 Unable to find the rules file: C:\C3DPipeRules.xml
 Unable to find the rules file: C:\C3DPipeRules.xml
 Unable to find the rules file: C:\C3DPipeRules.xml

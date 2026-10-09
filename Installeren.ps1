@@ -46,6 +46,13 @@ if (Test-Path -LiteralPath $registryRoot) {
                 foreach ($command in $entry.Commands.Command) {
                     New-ItemProperty -LiteralPath $commandKey -Name ([string]$command.Global) -Value ([string]$command.Local) -PropertyType String -Force | Out-Null
                 }
+                # The old name belonged to this verified plugin registration.
+                if (@($entry.Commands.Command.Global) -contains 'TECHBASE' -and $previousCommands.ContainsKey('TBLOCKS')) {
+                    $commandRegistry = Get-Item -LiteralPath $commandKey
+                    $writableCommands = $commandRegistry.OpenSubKey('', $true)
+                    try { $writableCommands.DeleteValue('TBLOCKS', $false) }
+                    finally { $writableCommands.Dispose(); $commandRegistry.Dispose() }
+                }
             }
         }
     }
@@ -54,4 +61,4 @@ if ($registrations.Count -gt 0) {
     $registrations | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $target ('registratie-backup-' + (Get-Date -Format 'yyyyMMdd-HHmmss') + '.json')) -Encoding UTF8
 }
 Write-Host "Geïnstalleerd in: $target"
-Write-Host 'Start AutoCAD of Civil 3D opnieuw en voer TBLOCKS uit.'
+Write-Host 'Start AutoCAD of Civil 3D opnieuw en voer TECHBASE uit.'

@@ -1,4 +1,4 @@
-# Techbase Blocks 1.2.1
+# Techbase Blocks 1.2.2
 
 Gebruik drie tabs in AutoCAD en Civil 3D voor Windows: Blocks, Lichtmasten en Enexis kabelchecker.
 
@@ -6,14 +6,16 @@ Gebruik drie tabs in AutoCAD en Civil 3D voor Windows: Blocks, Lichtmasten en En
 
 1. Pak de zip uit. Laat de map `Techbase.Blocks.bundle` naast `Installeren.cmd` staan.
 2. Sluit AutoCAD en Civil 3D. Dubbelklik op `Installeren.cmd`. Beheerdersrechten zijn niet nodig.
-3. Start AutoCAD of Civil 3D en voer **TBLOCKS** uit.
+3. Start AutoCAD of Civil 3D en voer **TECHBASE** uit.
 
 De plugin staat daarna onder `%APPDATA%\Autodesk\ApplicationPlugins`. Bestaande bestanden van deze plugin worden bij opnieuw installeren eerst gekopieerd naar een backup. De installatie wijzigt de oorspronkelijke toolpalette, DWG en Lisp niet.
 
 ## Blocks plaatsen
 
 - Zoek of kies een groep. Dubbelklik op een block of klik **Plaatsen**.
-- Er verschijnt een voorbeeld aan de cursor. Klik op het invoegpunt. Object snaps blijven beschikbaar.
+- Aan de cursor zie je het block inclusief de zichtbare attribuutteksten. Klik op het invoegpunt. Object snaps blijven beschikbaar.
+- Blocks met een draaivraag blijven na het invoegpunt zichtbaar terwijl je de hoek kiest; de tekst draait mee. Je kunt klikken, een hoek invoeren of Enter gebruiken voor de standaardhoek.
+- Typ bij het invoegpunt **Draaien** om ook andere blocks vooraf te oriënteren. Daarna kies je het invoegpunt met het gedraaide cursorvoorbeeld. Esc annuleert de volledige plaatsing.
 - Met **Laag van object overnemen** aan krijgt de nieuwe blockreferentie de laag van een lijn, polyline, boog, cirkel, spline, ellips of 3D-curve nabij het invoegpunt. Zoekafstand standaard: **0,05 tekeneenheden** (5 cm in een meter-tekening).
 - Voor tekst, arceringen, blocks en Civil-objecten gebruikt de plugin de werkelijke objectselectie onder de cursor. Voor een expliciete keuze typ je tijdens plaatsen **Object** en klik je het bedoelde object. Bij een curve wordt het invoegpunt op de curve gezet. Deze expliciete optie werkt ook als de automatische schakelaar uit staat.
 - Bij een kruising van verschillende lagen vraagt de plugin welk object bedoeld wordt; Enter gebruikt de palettelaag. Zonder object gebruikt de plugin de vaste laag uit de palette, of de huidige laag als de palette geen laag voorschrijft.
@@ -28,7 +30,7 @@ De schakelaar regelt plaatsingen vanuit deze plugin. De oorspronkelijke palette 
 
 De installatie bevat een kopie van de XTP, bijbehorende afbeeldingen en de benodigde bron-DWG. Hierdoor werkt de meegeleverde palette zonder de gedeelde Techbase-map. De kopie is een momentopname; bronhashes staan in `Contents/Assets/bronversies.json`. **Vernieuwen** leest de huidige geselecteerde XTP opnieuw. Kies **Bron...** om een andere XTP te gebruiken; daarbij worden de eigen DWG-paden uit die XTP gebruikt, met ondersteuning voor `%UserProfileFolder%` en relatieve paden.
 
-Een blockdefinitie die al in de tekening bestaat wordt hergebruikt. Bestaande blocks worden niet opnieuw gedefinieerd of gewijzigd. Nieuwe blockdefinities worden afzonderlijk uit de bron-DWG geïmporteerd, inclusief dynamische eigenschappen en afhankelijkheden. Annuleren laat geen ingevoegd block achter. Invoegeenheden worden tussen block en tekening omgerekend als beide een eenheid hebben; de paletfactor (bijvoorbeeld Flatkast 0,5) wordt daarop toegepast.
+Een blockdefinitie die al in de tekening bestaat wordt hergebruikt. Bestaande blocks worden niet opnieuw gedefinieerd of gewijzigd. Nieuwe blockdefinities worden afzonderlijk uit de bron-DWG geÃ¯mporteerd, inclusief dynamische eigenschappen en afhankelijkheden. Annuleren laat geen ingevoegd block achter. Invoegeenheden worden tussen block en tekening omgerekend als beide een eenheid hebben; de paletfactor (bijvoorbeeld Flatkast 0,5) wordt daarop toegepast.
 
 Instellingen staan in `%APPDATA%\Techbase\Blocks\settings.json` en blijven bewaard na herstart.
 
@@ -36,7 +38,7 @@ Instellingen staan in `%APPDATA%\Techbase\Blocks\settings.json` en blijven bewaa
 
 De functionaliteit uit `LICHTMAST.LSP` is rechtstreeks in de plugin opgenomen. Je hoeft de Lisp niet te laden.
 
-1. Open **TBLOCKS** en kies de tab **Lichtmasten**, of voer **TBLICHTMAST** uit.
+1. Open **TECHBASE** en kies de tab **Lichtmasten**, of voer **TBLICHTMAST** uit.
 2. Kies de geladen xref. Als dezelfde xref meerdere keren is ingevoegd, staan de invoegingen apart in de lijst met hun handle en locatie. De lijst gebruikt de huidige model-/papieromgeving.
 3. Vink de **lichtmastlagen** aan. De lijst bevat lagen waarop blockinvoegingen voorkomen, met aantallen. Onder **Blockfilter** kun je optioneel de gewenste blocktypen aanvinken, zoals de oude Lisp deed. Geen vinkjes bij blocktypen betekent alle typen op de aangevinkte lagen. Bij groepsblocks op dezelfde laag kun je het filter gebruiken om alleen de echte masttypen te kiezen.
 4. Kies het gebied en klik **Lichtmasten plaatsen**:
@@ -57,9 +59,9 @@ Een opnieuw uitgevoerde selectie slaat al door deze plugin geplaatste masten op 
 
 ## Tab Enexis kabelchecker
 
-Deze tab bevat de bestaande richtingbouwer uit [jouw GitHub-repo](https://github.com/LukaStuurman/AutoCAD-Enexis-kabels-checker), vastgezet op [commit 4009601](https://github.com/LukaStuurman/AutoCAD-Enexis-kabels-checker/commit/4009601e15fa4b1b6926380395132b0c1630ce21). De rekenengine, kadercatalogi, richting-/stationsmodellen, Excel-worker en vier officiële kaderbestanden zijn uit die bron overgenomen. Alleen de vensterkoppeling is aangepast voor de tab.
+Deze tab bevat de bestaande richtingbouwer uit [jouw GitHub-repo](https://github.com/LukaStuurman/AutoCAD-Enexis-kabels-checker), vastgezet op [commit 4009601](https://github.com/LukaStuurman/AutoCAD-Enexis-kabels-checker/commit/4009601e15fa4b1b6926380395132b0c1630ce21). De rekenengine, kadercatalogi, richting-/stationsmodellen, Excel-worker en vier officiÃ«le kaderbestanden zijn uit die bron overgenomen. Alleen de vensterkoppeling is aangepast voor de tab.
 
-Open **TBLOCKS → Enexis kabelchecker**, of gebruik **TBKABELCHECK** om de tab direct groter en zwevend te openen. In een smalle palette blijven alle onderdelen via schuifbalken bereikbaar. **Groter openen** biedt de volledige werkruimte.
+Open **TECHBASE â†’ Enexis kabelchecker**, of gebruik **TBKABELCHECK** om de tab direct groter en zwevend te openen. In een smalle palette blijven alle onderdelen via schuifbalken bereikbaar. **Groter openen** biedt de volledige werkruimte.
 
 - Bouw richtingen op met kabeltype en een hele polyline, of een deel tot een virtueel knippunt. De bestaande eenhedenomrekening en herkenning van richtingnummers worden gebruikt.
 - Kies kader **1.0, 2.0, 3.0 of 3.2** en stroombasis **Automatisch, Verbruik of Opwek**.
@@ -72,15 +74,15 @@ Onderin de tab staat **Richting-info plaatsen**. Kies een opgeslagen richting bi
 
 Er worden twee gecentreerde Arial-teksten geplaatst: de berekende totale kabelstroom als `...Amp.` en de rekenlengte als `...Met.`. Ze volgen de actieve stroombasis en gebruiken de bestaande laag `Aansluiting LS Kxx`, kleur ByLayer en teksthoogte 1 tekeneenheid. Opwek en verbruik worden eerst apart opgeteld, inclusief de kader-fasefactor. De teksten volgen het huidige UCS. Een ontbrekende of vergrendelde richtingslaag wordt gemeld. Esc annuleert de plaatsing; Undo neemt beide teksten samen terug.
 
-Opgeslagen stations blijven in de bestaande map `%APPDATA%\EnexisKabelChecker\stations.json`. Daardoor kun je de bestaande stations van de losse kabelchecker laden. De huidige richtingenset is, net als in de repo, één sessie; wisselen van tekening maakt geen nieuw station aan. De oorspronkelijke losse plugin en haar ENEXISKABELCHECK-commando worden niet verwijderd of vervangen. In deze plugin gebruik je TBKABELCHECK.
+Opgeslagen stations blijven in de bestaande map `%APPDATA%\EnexisKabelChecker\stations.json`. Daardoor kun je de bestaande stations van de losse kabelchecker laden. De huidige richtingenset is, net als in de repo, Ã©Ã©n sessie; wisselen van tekening maakt geen nieuw station aan. De oorspronkelijke losse plugin en haar ENEXISKABELCHECK-commando worden niet verwijderd of vervangen. In deze plugin gebruik je TBKABELCHECK.
 
-De Excel-dependencies staan per CAD-generatie in een aparte map `excel` en worden via de bestaande geïsoleerde laadcontext gebruikt. De volledige installatiemap is nodig voor export. Bronversie en bestandschecksums staan in `Contents/Assets/enexis-source.json`; een volgende wijziging in GitHub wordt pas na een nieuwe gecontroleerde build opgenomen.
+De Excel-dependencies staan per CAD-generatie in een aparte map `excel` en worden via de bestaande geÃ¯soleerde laadcontext gebruikt. De volledige installatiemap is nodig voor export. Bronversie en bestandschecksums staan in `Contents/Assets/enexis-source.json`; een volgende wijziging in GitHub wordt pas na een nieuwe gecontroleerde build opgenomen.
 
 ## Commando's
 
 | Commando | Functie |
 | --- | --- |
-| TBLOCKS | Open het blockpaneel |
+| TECHBASE | Open het blockpaneel |
 | TBLAAG | Wissel automatische laagovername aan/uit |
 | TBHERLAAD | Lees de geselecteerde XTP opnieuw |
 | TBLICHTMAST | Open de tab Lichtmasten; het paneel start ook dit uitvoercommando |
@@ -88,7 +90,7 @@ De Excel-dependencies staan per CAD-generatie in een aparte map `excel` en worde
 | TBVALIDATE | Test in een aparte database; schrijft test-DWG, DXF en JSON onder `%LOCALAPPDATA%\Techbase\Blocks\Validation` |
 | TBMASTVALIDATE | Controleer lichtmastselectie, xref-transformaties en symbolen in aparte testtekeningen |
 | TBKABELCHECK | Open de derde tab, Enexis kabelchecker, groter en zwevend |
-| TBKABELVALIDATE | Controleer de geïntegreerde rekenengine, bediening en vier echte Excel-exports |
+| TBKABELVALIDATE | Controleer de geÃ¯ntegreerde rekenengine, bediening en vier echte Excel-exports |
 | TBRICHTINGINFO | Plaatscommando achter de knop Richting-info plaatsen |
 
 ## Versies en controle
@@ -101,4 +103,4 @@ De concrete testresultaten en resterende praktijktests staan in `VALIDATIE.md` b
 
 ## Opnieuw bouwen
 
-Gebruik een .NET 10 SDK en voer `Build.ps1 -Dotnet <pad-naar-dotnet.exe>` uit. De build haalt Autodesk AutoCAD.NET API 25.0.1 en 26.0.0 via NuGet op en bouwt de Excel-worker voor beide runtimes. De Autodesk API-DLL's worden niet meegeleverd: die levert de hostapplicatie. De uitvoer staat in `dist/1.2.1` en in `Techbase Blocks 1.2.1.zip`. Versiegebonden DLL-mappen maken een update mogelijk zonder een reeds geladen oude DLL te overschrijven; herstart de CAD-toepassing om de nieuwe versie te laden.
+Gebruik een .NET 10 SDK en voer `Build.ps1 -Dotnet <pad-naar-dotnet.exe>` uit. De build haalt Autodesk AutoCAD.NET API 25.0.1 en 26.0.0 via NuGet op en bouwt de Excel-worker voor beide runtimes. De Autodesk API-DLL's worden niet meegeleverd: die levert de hostapplicatie. De uitvoer staat in `dist/1.2.2` en in `Techbase Blocks 1.2.2.zip`. Versiegebonden DLL-mappen maken een update mogelijk zonder een reeds geladen oude DLL te overschrijven; herstart de CAD-toepassing om de nieuwe versie te laden.
