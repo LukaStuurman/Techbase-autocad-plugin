@@ -53,7 +53,7 @@ internal static class DirectionText
         if (ordered.Count == 0 || ordered.Distinct().Count() != ordered.Count) throw new InvalidOperationException("Selecteer teksten eenmaal in de gewenste volgorde.");
         using var tx = db.TransactionManager.StartTransaction();
         var originals = ordered.Select(id => Read(db, tx, id)).ToArray();
-        var heights = originals.Select(t => t.ActualHeight).ToArray();
+        var style = Typography.Style(db, tx);
         var targets = new List<MText>();
         var space = (BlockTableRecord)tx.GetObject(db.CurrentSpaceId, OpenMode.ForWrite);
         foreach (var original in originals)
@@ -64,6 +64,8 @@ internal static class DirectionText
             }
             else { original.UpgradeOpen(); targets.Add(original); }
         }
+        foreach (var text in targets) Typography.Apply(text, style);
+        var heights = targets.Select(t => t.ActualHeight).ToArray();
         Layout(targets, heights, start, end, ucs);
         var ids = targets.Select(t => t.ObjectId).ToArray(); tx.Commit(); return ids;
     }
@@ -148,8 +150,11 @@ internal sealed class DirectionTextJig : DrawJig, IDisposable
         try
         {
             using var tx = db.TransactionManager.StartTransaction();
+            var style = Typography.Style(db, tx);
             foreach (var id in ids) texts.Add((MText)tx.GetObject(id, OpenMode.ForRead).Clone());
+            foreach (var text in texts) Typography.Apply(text, style);
             heights = texts.Select(t => t.ActualHeight).ToArray();
+            tx.Commit();
         }
         catch { Dispose(); throw; }
     }

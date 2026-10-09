@@ -1,3 +1,12 @@
+## Arial Nova Light - versie 1.4.0
+
+- Beide builds voor AutoCAD/Civil 3D 2025-2026 (R25) en 2027 (R26) samengesteld. De daadwerkelijke CAD-controle is uitgevoerd met de AutoCAD 2026 Core Console; geen afzonderlijke interactieve 2025/2027- of Civil 3D-test.
+- 749 lettertypecontroles: Windows herkent Arial Nova Light; alle geimporteerde tekst-/attribuutdefinities, geneste en dynamische blocks gebruiken de echte Light-variant. Alle controls in de vier tabs en tabelkoppen gecontroleerd, inclusief later toegevoegde controls. Bestaande gelijknamige gebruikersstijl beschermd.
+- Richtingstekst kopieren beschermt het origineel; kopie en verplaatste tekst krijgen Light. Inline font/gewicht verwijderd met behoud van tekst, kleur, hoogte en alineas. De opgeslagen DWG/DXF is teruggelezen en onafhankelijk gecontroleerd.
+- Lettertype-installer getest onder Windows PowerShell 5.1: ontbrekend font activeert het officiele Microsoft Store-installatiepad; bestaande installatie wordt hergebruikt; ontbrekende App Installer geeft een duidelijke melding. Store-download in de ontbrekend-fonttest gesimuleerd; registratie-/activatiepad met het echte font uitgevoerd. Op deze computer was het officiele Store-pakket al aanwezig; de installer heeft de Light-variant voor de gebruiker geregistreerd.
+- Regressies: 410 blockcontroles, 20 bronversiecontroles, 1549 plaatsvoorbeeldcontroles, 11 draai-instellingcontroles; 7 plaats-/Undo-controles; 13 draai-/UCS-/Esc-controles; 49 kabelcheckercontroles; 79 richtingservice- en 9 commandocontroles; 36 tekstservice- en 8 commandocontroles; 28 lichtmast- en 4 gebiedscontroles geslaagd.
+- UI-afbeeldingen van Richtingen en Kabelchecker met Arial Nova Light bekeken. De bronbestanden zijn niet aangepast.
+
 # Controle versie 1.3.1 — 9 oktober 2026
 
 De plugin is gebouwd en lokaal geïnstalleerd. De automatische controles draaien in de echte AutoCAD 2026 Core Console (ACADVER 25.1), zonder de bron-DWG of gebruikersinstellingen te wijzigen.

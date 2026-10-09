@@ -68,7 +68,7 @@ internal sealed class BlocksPanel : UserControl
         };
         place.Click += (_, _) => InsertSelected(); list.DoubleClick += (_, _) => InsertSelected();
         list.KeyDown += (_, e) => { if (e.KeyCode == Keys.Enter) { InsertSelected(); e.Handled = true; } };
-        RefreshSettings(); RefreshTools();
+        RefreshSettings(); RefreshTools(); UiTypography.Apply(this);
     }
     internal void RefreshSettings()
     {

@@ -58,9 +58,11 @@ assert all(r.get(8) == 'TEST_INSERT' for r in insertions)
 archive = root / f'Techbase Blocks {VERSION}.zip'
 with zipfile.ZipFile(archive) as zip_file:
     assert zip_file.testzip() is None
-    for name in ['Installeren.cmd', 'Installeren.ps1', 'LEESMIJ.md', 'VALIDATIE.md']:
+    for name in ['Installeren.cmd', 'Installeren.ps1', 'Lettertype.ps1', 'LEESMIJ.md', 'VALIDATIE.md']:
         assert name in zip_file.namelist()
         assert zip_file.read(name) == (bundle.parent / name).read_bytes()
+    assert zip_file.read('Techbase.Blocks.bundle/Contents/Lettertype.ps1') == (root / 'Lettertype.ps1').read_bytes()
+    assert not any(name.lower().endswith(('.ttf', '.otf')) for name in zip_file.namelist()), 'Microsoft fonts must be installed from their official distribution.'
     for series in ['R25.0', 'R26.0']:
         path = plugin_dll(series)
         name = 'Techbase.Blocks.bundle/' + path.relative_to(bundle).as_posix()

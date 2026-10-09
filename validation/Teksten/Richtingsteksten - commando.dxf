@@ -33,9 +33,9 @@ $INSBASE
   9
 $EXTMIN
  10
--10.10231923601637
+-10.11869031377899
  20
--6.97505461167475
+-6.976182259594679
  30
 -0.0000000116415251
   9
@@ -43,7 +43,7 @@ $EXTMAX
  10
 103.5729877216917
  20
-63.57298772169167
+63.43451568894952
  30
 0.0
   9
@@ -493,19 +493,19 @@ $SKPOLY
   9
 $TDCREATE
  40
-2461323.538321759
+2461323.557013889
   9
 $TDUCREATE
  40
-2461323.454988426
+2461323.473680555
   9
 $TDUPDATE
  40
-2461323.538321759
+2461323.557013889
   9
 $TDUUPDATE
  40
-2461323.454988426
+2461323.473680555
   9
 $TDINDWG
  40
@@ -553,7 +553,7 @@ $SPLINESEGS
   9
 $HANDSEED
   5
-3AB
+3AA
   9
 $SURFTAB1
  70
@@ -933,7 +933,7 @@ $PSTYLEMODE
   9
 $FINGERPRINTGUID
   2
-{DACDA8ED-63A8-7F43-AA61-B61B23A17495}
+{9AC1DD9C-9CAA-854E-B649-62DA41BF3E2F}
   9
 $VERSIONGUID
   2
@@ -1901,9 +1901,9 @@ AcDbViewportTableRecord
  21
 1.0
  12
-50.77484849273242
+50.77313209315072
  22
-8.644805415538026
+8.644241591578065
  13
 0.0
  23
@@ -1929,7 +1929,7 @@ AcDbViewportTableRecord
  37
 0.0
  40
-60.19236006474356
+60.19431684106323
  41
 1.765478424015009
  42
@@ -2201,7 +2201,7 @@ EE
   0
 LAYER
   5
-34B
+34C
 330
 2
 100
@@ -2229,7 +2229,7 @@ EE
   0
 LAYER
   5
-351
+352
 330
 2
 100
@@ -2735,7 +2735,7 @@ Arial
   0
 STYLE
   5
-354
+34B
 330
 3
 100
@@ -2743,11 +2743,11 @@ AcDbSymbolTableRecord
 100
 AcDbTextStyleTableRecord
   2
-TM-0.5
+TECHBASE_ARIAL_NOVA_LIGHT
  70
      0
  40
-0.5
+0.0
  41
 1.0
  50
@@ -2755,9 +2755,9 @@ TM-0.5
  71
      0
  42
-0.5
+2.5
   3
-
+ArialNova-Light.ttf
   4
 
 1001
@@ -2923,7 +2923,7 @@ ACAD_NAV_VCDISPLAY
   0
 APPID
   5
-352
+353
 330
 9
 100
@@ -2937,7 +2937,7 @@ AcAecLayerStandard
   0
 APPID
   5
-353
+354
 330
 9
 100
@@ -3221,11 +3221,11 @@ D7
   0
 BLOCK_RECORD
   5
-34C
+34D
 102
 {ACAD_XDICTIONARY
 360
-34D
+34E
 102
 }
 330
@@ -3235,7 +3235,7 @@ AcDbSymbolTableRecord
 100
 AcDbBlockTableRecord
   2
-TB_RICHTINGEN TEKST__72CE810BC840_93BBF5A7
+TB_RICHTINGEN TEKST__72CE810BC840_93BBF5A7_ANL1
 340
 0
 310
@@ -3317,11 +3317,11 @@ AcDbDynamicBlockGUID
   0
 BLOCK_RECORD
   5
-380
+37F
 102
 {ACAD_XDICTIONARY
 360
-381
+380
 102
 }
 330
@@ -3331,7 +3331,7 @@ AcDbSymbolTableRecord
 100
 AcDbBlockTableRecord
   2
-TB_RICHTINGEN TEKST OV__72CE810BC840_AEB5EF70
+TB_RICHTINGEN TEKST OV__72CE810BC840_AEB5EF70_ANL1
 340
 0
  70
@@ -3477,9 +3477,9 @@ AcDbBlockEnd
   0
 BLOCK
   5
-34F
+350
 330
-34C
+34D
 100
 AcDbEntity
   8
@@ -3487,7 +3487,7 @@ AcDbEntity
 100
 AcDbBlockBegin
   2
-TB_RICHTINGEN TEKST__72CE810BC840_93BBF5A7
+TB_RICHTINGEN TEKST__72CE810BC840_93BBF5A7_ANL1
  70
      0
  10
@@ -3497,15 +3497,15 @@ TB_RICHTINGEN TEKST__72CE810BC840_93BBF5A7
  30
 0.0
   3
-TB_RICHTINGEN TEKST__72CE810BC840_93BBF5A7
+TB_RICHTINGEN TEKST__72CE810BC840_93BBF5A7_ANL1
   1
 
   0
 MTEXT
   5
-350
+351
 330
-34C
+34D
 100
 AcDbEntity
   8
@@ -3529,9 +3529,9 @@ AcDbMText
  72
      5
   1
-{\fArial Nova Light|b1|i0|c0|p34;95Al / ????-??}
+{95Al / ????-??}
   7
-TM-0.5
+TECHBASE_ARIAL_NOVA_LIGHT
  73
      1
  44
@@ -3587,7 +3587,7 @@ MTEXT
   5
 355
 330
-34C
+34D
 100
 AcDbEntity
   8
@@ -3611,9 +3611,9 @@ AcDbMText
  72
      5
   1
-{\fArial Nova Light|b1|i0|c0|p34;150AL / ????-??}
+{150AL / ????-??}
   7
-TM-0.5
+TECHBASE_ARIAL_NOVA_LIGHT
  73
      1
  44
@@ -3669,7 +3669,7 @@ MTEXT
   5
 358
 330
-34C
+34D
 100
 AcDbEntity
   8
@@ -3693,9 +3693,9 @@ AcDbMText
  72
      5
   1
-{\fArial Nova Light|b1|i0|c0|p34;150AL / ????-??}
+{150AL / ????-??}
   7
-TM-0.5
+TECHBASE_ARIAL_NOVA_LIGHT
  73
      1
  44
@@ -3751,7 +3751,7 @@ MTEXT
   5
 35A
 330
-34C
+34D
 100
 AcDbEntity
   8
@@ -3775,9 +3775,9 @@ AcDbMText
  72
      5
   1
-{\fArial Nova Light|b1|i0|c0|p34;150AL / ????-??}
+{150AL / ????-??}
   7
-TM-0.5
+TECHBASE_ARIAL_NOVA_LIGHT
  73
      1
  44
@@ -3833,7 +3833,7 @@ MTEXT
   5
 35C
 330
-34C
+34D
 100
 AcDbEntity
   8
@@ -3857,9 +3857,9 @@ AcDbMText
  72
      5
   1
-{\fArial Nova Light|b1|i0|c0|p34;150AL / ????-??}
+{150AL / ????-??}
   7
-TM-0.5
+TECHBASE_ARIAL_NOVA_LIGHT
  73
      1
  44
@@ -3915,7 +3915,7 @@ MTEXT
   5
 35E
 330
-34C
+34D
 100
 AcDbEntity
   8
@@ -3939,9 +3939,9 @@ AcDbMText
  72
      5
   1
-{\fArial Nova Light|b1|i0|c0|p34;150AL / ????-??}
+{150AL / ????-??}
   7
-TM-0.5
+TECHBASE_ARIAL_NOVA_LIGHT
  73
      1
  44
@@ -3997,7 +3997,7 @@ MTEXT
   5
 360
 330
-34C
+34D
 100
 AcDbEntity
   8
@@ -4021,9 +4021,9 @@ AcDbMText
  72
      5
   1
-{\fArial Nova Light|b1|i0|c0|p34;150AL / ????-??}
+{150AL / ????-??}
   7
-TM-0.5
+TECHBASE_ARIAL_NOVA_LIGHT
  73
      1
  44
@@ -4079,7 +4079,7 @@ MTEXT
   5
 362
 330
-34C
+34D
 100
 AcDbEntity
   8
@@ -4103,9 +4103,9 @@ AcDbMText
  72
      5
   1
-{\fArial Nova Light|b1|i0|c0|p34;150AL / ????-??}
+{150AL / ????-??}
   7
-TM-0.5
+TECHBASE_ARIAL_NOVA_LIGHT
  73
      1
  44
@@ -4161,7 +4161,7 @@ MTEXT
   5
 364
 330
-34C
+34D
 100
 AcDbEntity
   8
@@ -4185,9 +4185,9 @@ AcDbMText
  72
      5
   1
-{\fArial Nova Light|b1|i0|c0|p34;150AL / ????-??}
+{150AL / ????-??}
   7
-TM-0.5
+TECHBASE_ARIAL_NOVA_LIGHT
  73
      1
  44
@@ -4243,7 +4243,7 @@ MTEXT
   5
 366
 330
-34C
+34D
 100
 AcDbEntity
   8
@@ -4267,9 +4267,9 @@ AcDbMText
  72
      5
   1
-{\fArial Nova Light|b1|i0|c0|p34;150AL / ????-??}
+{150AL / ????-??}
   7
-TM-0.5
+TECHBASE_ARIAL_NOVA_LIGHT
  73
      1
  44
@@ -4325,7 +4325,7 @@ MTEXT
   5
 368
 330
-34C
+34D
 100
 AcDbEntity
   8
@@ -4349,9 +4349,9 @@ AcDbMText
  72
      5
   1
-{\fArial Nova Light|b1|i0|c0|p34;150AL / ????-??}
+{150AL / ????-??}
   7
-TM-0.5
+TECHBASE_ARIAL_NOVA_LIGHT
  73
      1
  44
@@ -4407,7 +4407,7 @@ MTEXT
   5
 36A
 330
-34C
+34D
 100
 AcDbEntity
   8
@@ -4431,9 +4431,9 @@ AcDbMText
  72
      5
   1
-{\fArial Nova Light|b1|i0|c0|p34;150AL / ????-??}
+{150AL / ????-??}
   7
-TM-0.5
+TECHBASE_ARIAL_NOVA_LIGHT
  73
      1
  44
@@ -4489,7 +4489,7 @@ MTEXT
   5
 36C
 330
-34C
+34D
 100
 AcDbEntity
   8
@@ -4513,9 +4513,9 @@ AcDbMText
  72
      5
   1
-{\fArial Nova Light|b1|i0|c0|p34;150AL / ????-??}
+{150AL / ????-??}
   7
-TM-0.5
+TECHBASE_ARIAL_NOVA_LIGHT
  73
      1
  44
@@ -4571,7 +4571,7 @@ ENDBLK
   5
 36E
 330
-34C
+34D
 100
 AcDbEntity
   8
@@ -4581,9 +4581,9 @@ AcDbBlockEnd
   0
 BLOCK
   5
-383
+382
 330
-380
+37F
 100
 AcDbEntity
   8
@@ -4591,7 +4591,7 @@ AcDbEntity
 100
 AcDbBlockBegin
   2
-TB_RICHTINGEN TEKST OV__72CE810BC840_AEB5EF70
+TB_RICHTINGEN TEKST OV__72CE810BC840_AEB5EF70_ANL1
  70
      0
  10
@@ -4601,15 +4601,15 @@ TB_RICHTINGEN TEKST OV__72CE810BC840_AEB5EF70
  30
 0.0
   3
-TB_RICHTINGEN TEKST OV__72CE810BC840_AEB5EF70
+TB_RICHTINGEN TEKST OV__72CE810BC840_AEB5EF70_ANL1
   1
 
   0
 MTEXT
   5
-384
+383
 330
-380
+37F
 100
 AcDbEntity
   8
@@ -4633,9 +4633,9 @@ AcDbMText
  72
      5
   1
-{\fArial Nova Light|b1|i0|c0|p34;6CU / ????-??}
+{6CU / ????-??}
   7
-TM-0.5
+TECHBASE_ARIAL_NOVA_LIGHT
  73
      1
  44
@@ -4689,9 +4689,9 @@ Embedded Object
   0
 MTEXT
   5
-385
+384
 330
-380
+37F
 100
 AcDbEntity
   8
@@ -4715,9 +4715,9 @@ AcDbMText
  72
      5
   1
-{\fArial Nova Light|b1|i0|c0|p34;6CU / ????-??}
+{6CU / ????-??}
   7
-TM-0.5
+TECHBASE_ARIAL_NOVA_LIGHT
  73
      1
  44
@@ -4744,6 +4744,88 @@ Embedded Object
 -1.906492416745407
  21
 4.034018520640035
+ 31
+0.0
+ 40
+7.085641470089901
+ 41
+0.0
+ 42
+6.266079891672307
+ 43
+0.7809749492213945
+ 71
+     2
+ 72
+     1
+ 44
+7.085641470089901
+ 45
+2.499999999999999
+ 73
+     0
+ 74
+     0
+ 46
+0.0
+  0
+MTEXT
+  5
+385
+330
+37F
+100
+AcDbEntity
+  8
+Aansluiting LS K02
+100
+AcDbMText
+ 10
+-1.906492416745407
+ 20
+3.053043571418641
+ 30
+0.0
+ 40
+0.75
+ 41
+7.085641470089901
+ 46
+0.0
+ 71
+     7
+ 72
+     5
+  1
+{6CU / ????-??}
+  7
+TECHBASE_ARIAL_NOVA_LIGHT
+ 73
+     1
+ 44
+1.0
+ 90
+        3
+ 63
+   256
+ 45
+1.1
+441
+        0
+101
+Embedded Object
+ 70
+     7
+ 10
+1.0
+ 20
+0.0
+ 30
+0.0
+ 11
+-1.906492416745407
+ 21
+3.053043571418641
  31
 0.0
  40
@@ -4773,17 +4855,17 @@ MTEXT
   5
 386
 330
-380
+37F
 100
 AcDbEntity
   8
-Aansluiting LS K02
+Aansluiting LS K03
 100
 AcDbMText
  10
 -1.906492416745407
  20
-3.053043571418641
+2.072068622197246
  30
 0.0
  40
@@ -4797,9 +4879,9 @@ AcDbMText
  72
      5
   1
-{\fArial Nova Light|b1|i0|c0|p34;6CU / ????-??}
+{6CU / ????-??}
   7
-TM-0.5
+TECHBASE_ARIAL_NOVA_LIGHT
  73
      1
  44
@@ -4825,7 +4907,7 @@ Embedded Object
  11
 -1.906492416745407
  21
-3.053043571418641
+2.072068622197246
  31
 0.0
  40
@@ -4855,17 +4937,17 @@ MTEXT
   5
 387
 330
-380
+37F
 100
 AcDbEntity
   8
-Aansluiting LS K03
+Aansluiting LS K04
 100
 AcDbMText
  10
 -1.906492416745407
  20
-2.072068622197246
+1.091093672975851
  30
 0.0
  40
@@ -4879,9 +4961,9 @@ AcDbMText
  72
      5
   1
-{\fArial Nova Light|b1|i0|c0|p34;6CU / ????-??}
+{6CU / ????-??}
   7
-TM-0.5
+TECHBASE_ARIAL_NOVA_LIGHT
  73
      1
  44
@@ -4907,7 +4989,7 @@ Embedded Object
  11
 -1.906492416745407
  21
-2.072068622197246
+1.091093672975851
  31
 0.0
  40
@@ -4937,17 +5019,17 @@ MTEXT
   5
 388
 330
-380
+37F
 100
 AcDbEntity
   8
-Aansluiting LS K04
+Aansluiting LS K05
 100
 AcDbMText
  10
 -1.906492416745407
  20
-1.091093672975851
+0.1101187237544581
  30
 0.0
  40
@@ -4961,9 +5043,9 @@ AcDbMText
  72
      5
   1
-{\fArial Nova Light|b1|i0|c0|p34;6CU / ????-??}
+{6CU / ????-??}
   7
-TM-0.5
+TECHBASE_ARIAL_NOVA_LIGHT
  73
      1
  44
@@ -4989,7 +5071,7 @@ Embedded Object
  11
 -1.906492416745407
  21
-1.091093672975851
+0.1101187237544581
  31
 0.0
  40
@@ -5019,17 +5101,17 @@ MTEXT
   5
 389
 330
-380
+37F
 100
 AcDbEntity
   8
-Aansluiting LS K05
+Aansluiting LS K06
 100
 AcDbMText
  10
 -1.906492416745407
  20
-0.1101187237544581
+-0.8708562254669365
  30
 0.0
  40
@@ -5043,9 +5125,9 @@ AcDbMText
  72
      5
   1
-{\fArial Nova Light|b1|i0|c0|p34;6CU / ????-??}
+{6CU / ????-??}
   7
-TM-0.5
+TECHBASE_ARIAL_NOVA_LIGHT
  73
      1
  44
@@ -5071,7 +5153,7 @@ Embedded Object
  11
 -1.906492416745407
  21
-0.1101187237544581
+-0.8708562254669365
  31
 0.0
  40
@@ -5101,17 +5183,17 @@ MTEXT
   5
 38A
 330
-380
+37F
 100
 AcDbEntity
   8
-Aansluiting LS K06
+Aansluiting LS K07
 100
 AcDbMText
  10
 -1.906492416745407
  20
--0.8708562254669365
+-1.851831174688331
  30
 0.0
  40
@@ -5125,9 +5207,9 @@ AcDbMText
  72
      5
   1
-{\fArial Nova Light|b1|i0|c0|p34;6CU / ????-??}
+{6CU / ????-??}
   7
-TM-0.5
+TECHBASE_ARIAL_NOVA_LIGHT
  73
      1
  44
@@ -5153,7 +5235,7 @@ Embedded Object
  11
 -1.906492416745407
  21
--0.8708562254669365
+-1.851831174688331
  31
 0.0
  40
@@ -5183,17 +5265,17 @@ MTEXT
   5
 38B
 330
-380
+37F
 100
 AcDbEntity
   8
-Aansluiting LS K07
+Aansluiting LS K08
 100
 AcDbMText
  10
 -1.906492416745407
  20
--1.851831174688331
+-2.832806123909725
  30
 0.0
  40
@@ -5207,9 +5289,9 @@ AcDbMText
  72
      5
   1
-{\fArial Nova Light|b1|i0|c0|p34;6CU / ????-??}
+{6CU / ????-??}
   7
-TM-0.5
+TECHBASE_ARIAL_NOVA_LIGHT
  73
      1
  44
@@ -5235,7 +5317,7 @@ Embedded Object
  11
 -1.906492416745407
  21
--1.851831174688331
+-2.832806123909725
  31
 0.0
  40
@@ -5265,17 +5347,17 @@ MTEXT
   5
 38C
 330
-380
+37F
 100
 AcDbEntity
   8
-Aansluiting LS K08
+Aansluiting LS K09
 100
 AcDbMText
  10
 -1.906492416745407
  20
--2.832806123909725
+-3.81378107313112
  30
 0.0
  40
@@ -5289,9 +5371,9 @@ AcDbMText
  72
      5
   1
-{\fArial Nova Light|b1|i0|c0|p34;6CU / ????-??}
+{6CU / ????-??}
   7
-TM-0.5
+TECHBASE_ARIAL_NOVA_LIGHT
  73
      1
  44
@@ -5317,7 +5399,7 @@ Embedded Object
  11
 -1.906492416745407
  21
--2.832806123909725
+-3.81378107313112
  31
 0.0
  40
@@ -5347,17 +5429,17 @@ MTEXT
   5
 38D
 330
-380
+37F
 100
 AcDbEntity
   8
-Aansluiting LS K09
+Aansluiting LS K10
 100
 AcDbMText
  10
 -1.906492416745407
  20
--3.81378107313112
+-4.794756022352514
  30
 0.0
  40
@@ -5371,9 +5453,9 @@ AcDbMText
  72
      5
   1
-{\fArial Nova Light|b1|i0|c0|p34;6CU / ????-??}
+{6CU / ????-??}
   7
-TM-0.5
+TECHBASE_ARIAL_NOVA_LIGHT
  73
      1
  44
@@ -5399,7 +5481,7 @@ Embedded Object
  11
 -1.906492416745407
  21
--3.81378107313112
+-4.794756022352514
  31
 0.0
  40
@@ -5429,17 +5511,17 @@ MTEXT
   5
 38E
 330
-380
+37F
 100
 AcDbEntity
   8
-Aansluiting LS K10
+Aansluiting LS K11
 100
 AcDbMText
  10
--1.906492416745407
+-1.906492416745408
  20
--4.794756022352514
+-5.775730971573908
  30
 0.0
  40
@@ -5453,9 +5535,9 @@ AcDbMText
  72
      5
   1
-{\fArial Nova Light|b1|i0|c0|p34;6CU / ????-??}
+{6CU / ????-??}
   7
-TM-0.5
+TECHBASE_ARIAL_NOVA_LIGHT
  73
      1
  44
@@ -5479,9 +5561,9 @@ Embedded Object
  30
 0.0
  11
--1.906492416745407
+-1.906492416745408
  21
--4.794756022352514
+-5.775730971573908
  31
 0.0
  40
@@ -5511,89 +5593,7 @@ MTEXT
   5
 38F
 330
-380
-100
-AcDbEntity
-  8
-Aansluiting LS K11
-100
-AcDbMText
- 10
--1.906492416745408
- 20
--5.775730971573908
- 30
-0.0
- 40
-0.75
- 41
-7.085641470089901
- 46
-0.0
- 71
-     7
- 72
-     5
-  1
-{\fArial Nova Light|b1|i0|c0|p34;6CU / ????-??}
-  7
-TM-0.5
- 73
-     1
- 44
-1.0
- 90
-        3
- 63
-   256
- 45
-1.1
-441
-        0
-101
-Embedded Object
- 70
-     7
- 10
-1.0
- 20
-0.0
- 30
-0.0
- 11
--1.906492416745408
- 21
--5.775730971573908
- 31
-0.0
- 40
-7.085641470089901
- 41
-0.0
- 42
-6.266079891672307
- 43
-0.7809749492213945
- 71
-     2
- 72
-     1
- 44
-7.085641470089901
- 45
-2.499999999999999
- 73
-     0
- 74
-     0
- 46
-0.0
-  0
-MTEXT
-  5
-390
-330
-380
+37F
 100
 AcDbEntity
   8
@@ -5617,9 +5617,9 @@ AcDbMText
  72
      5
   1
-{\fArial Nova Light|b1|i0|c0|p34;6CU / ????-??}
+{6CU / ????-??}
   7
-TM-0.5
+TECHBASE_ARIAL_NOVA_LIGHT
  73
      1
  44
@@ -5673,9 +5673,9 @@ Embedded Object
   0
 ENDBLK
   5
-391
+390
 330
-380
+37F
 100
 AcDbEntity
   8
@@ -5717,9 +5717,9 @@ AcDbMText
  72
      5
   1
-{\fArial Nova Light|b1|i0|c0|p34;95Al / ????-??}
+{95Al / ????-??}
   7
-TM-0.5
+TECHBASE_ARIAL_NOVA_LIGHT
  73
      1
  44
@@ -5753,9 +5753,9 @@ Embedded Object
  41
 0.0
  42
-6.25795531482735
+6.285470668485674
  43
-0.7809749492213945
+0.781718963165075
  71
      2
  72
@@ -5799,9 +5799,9 @@ AcDbMText
  72
      5
   1
-{\fArial Nova Light|b1|i0|c0|p34;150AL / ????-??}
+{150AL / ????-??}
   7
-TM-0.5
+TECHBASE_ARIAL_NOVA_LIGHT
  73
      1
  44
@@ -5835,9 +5835,9 @@ Embedded Object
  41
 0.0
  42
-7.115098171970207
+7.146998635743519
  43
-0.7809749492213945
+0.781718963165075
  71
      2
  72
@@ -5881,9 +5881,9 @@ AcDbMText
  72
      5
   1
-{\fArial Nova Light|b1|i0|c0|p34;150AL / ????-??}
+{150AL / ????-??}
   7
-TM-0.5
+TECHBASE_ARIAL_NOVA_LIGHT
  73
      1
  44
@@ -5917,9 +5917,9 @@ Embedded Object
  41
 0.0
  42
-7.115098171970207
+7.146998635743519
  43
-0.7809749492213945
+0.781718963165075
  71
      2
  72
@@ -5963,9 +5963,9 @@ AcDbMText
  72
      5
   1
-{\fArial Nova Light|b1|i0|c0|p34;150AL / ????-??}
+{150AL / ????-??}
   7
-TM-0.5
+TECHBASE_ARIAL_NOVA_LIGHT
  73
      1
  44
@@ -5999,9 +5999,9 @@ Embedded Object
  41
 0.0
  42
-7.115098171970207
+7.146998635743519
  43
-0.7809749492213945
+0.781718963165075
  71
      2
  72
@@ -6045,9 +6045,9 @@ AcDbMText
  72
      5
   1
-{\fArial Nova Light|b1|i0|c0|p34;150AL / ????-??}
+{150AL / ????-??}
   7
-TM-0.5
+TECHBASE_ARIAL_NOVA_LIGHT
  73
      1
  44
@@ -6081,9 +6081,9 @@ Embedded Object
  41
 0.0
  42
-7.115098171970207
+7.146998635743519
  43
-0.7809749492213945
+0.781718963165075
  71
      2
  72
@@ -6127,9 +6127,9 @@ AcDbMText
  72
      5
   1
-{\fArial Nova Light|b1|i0|c0|p34;150AL / ????-??}
+{150AL / ????-??}
   7
-TM-0.5
+TECHBASE_ARIAL_NOVA_LIGHT
  73
      1
  44
@@ -6163,9 +6163,9 @@ Embedded Object
  41
 0.0
  42
-7.115098171970207
+7.146998635743519
  43
-0.7809749492213945
+0.781718963165075
  71
      2
  72
@@ -6209,9 +6209,9 @@ AcDbMText
  72
      5
   1
-{\fArial Nova Light|b1|i0|c0|p34;150AL / ????-??}
+{150AL / ????-??}
   7
-TM-0.5
+TECHBASE_ARIAL_NOVA_LIGHT
  73
      1
  44
@@ -6245,9 +6245,9 @@ Embedded Object
  41
 0.0
  42
-7.115098171970207
+7.146998635743519
  43
-0.7809749492213945
+0.781718963165075
  71
      2
  72
@@ -6291,9 +6291,9 @@ AcDbMText
  72
      5
   1
-{\fArial Nova Light|b1|i0|c0|p34;150AL / ????-??}
+{150AL / ????-??}
   7
-TM-0.5
+TECHBASE_ARIAL_NOVA_LIGHT
  73
      1
  44
@@ -6327,9 +6327,9 @@ Embedded Object
  41
 0.0
  42
-7.115098171970207
+7.146998635743519
  43
-0.7809749492213945
+0.781718963165075
  71
      2
  72
@@ -6373,9 +6373,9 @@ AcDbMText
  72
      5
   1
-{\fArial Nova Light|b1|i0|c0|p34;150AL / ????-??}
+{150AL / ????-??}
   7
-TM-0.5
+TECHBASE_ARIAL_NOVA_LIGHT
  73
      1
  44
@@ -6409,9 +6409,9 @@ Embedded Object
  41
 0.0
  42
-7.115098171970207
+7.146998635743519
  43
-0.7809749492213945
+0.781718963165075
  71
      2
  72
@@ -6455,9 +6455,9 @@ AcDbMText
  72
      5
   1
-{\fArial Nova Light|b1|i0|c0|p34;150AL / ????-??}
+{150AL / ????-??}
   7
-TM-0.5
+TECHBASE_ARIAL_NOVA_LIGHT
  73
      1
  44
@@ -6491,9 +6491,9 @@ Embedded Object
  41
 0.0
  42
-7.115098171970207
+7.146998635743519
  43
-0.7809749492213945
+0.781718963165075
  71
      2
  72
@@ -6537,9 +6537,9 @@ AcDbMText
  72
      5
   1
-{\fArial Nova Light|b1|i0|c0|p34;150AL / ????-??}
+{150AL / ????-??}
   7
-TM-0.5
+TECHBASE_ARIAL_NOVA_LIGHT
  73
      1
  44
@@ -6573,9 +6573,9 @@ Embedded Object
  41
 0.0
  42
-7.115098171970207
+7.146998635743519
  43
-0.7809749492213945
+0.781718963165075
  71
      2
  72
@@ -6619,9 +6619,9 @@ AcDbMText
  72
      5
   1
-{\fArial Nova Light|b1|i0|c0|p34;150AL / ????-??}
+{150AL / ????-??}
   7
-TM-0.5
+TECHBASE_ARIAL_NOVA_LIGHT
  73
      1
  44
@@ -6655,9 +6655,9 @@ Embedded Object
  41
 0.0
  42
-7.115098171970207
+7.146998635743519
  43
-0.7809749492213945
+0.781718963165075
  71
      2
  72
@@ -6701,9 +6701,9 @@ AcDbMText
  72
      5
   1
-{\fArial Nova Light|b1|i0|c0|p34;150AL / ????-??}
+{150AL / ????-??}
   7
-TM-0.5
+TECHBASE_ARIAL_NOVA_LIGHT
  73
      1
  44
@@ -6737,9 +6737,9 @@ Embedded Object
  41
 0.0
  42
-7.115098171970207
+7.146998635743519
  43
-0.7809749492213945
+0.781718963165075
  71
      2
  72
@@ -6757,7 +6757,7 @@ Embedded Object
   0
 MTEXT
   5
-393
+392
 330
 1F
 100
@@ -6783,9 +6783,9 @@ AcDbMText
  72
      5
   1
-{\fArial Nova Light|b1|i0|c0|p34;6CU / ????-??}
+{6CU / ????-??}
   7
-TM-0.5
+TECHBASE_ARIAL_NOVA_LIGHT
  73
      1
  44
@@ -6819,9 +6819,9 @@ Embedded Object
  41
 0.0
  42
-6.266079891672307
+6.294167803547066
  43
-0.7809749492213945
+0.781718963165075
  71
      2
  72
@@ -6839,7 +6839,7 @@ Embedded Object
   0
 MTEXT
   5
-394
+393
 330
 1F
 100
@@ -6865,9 +6865,9 @@ AcDbMText
  72
      5
   1
-{\fArial Nova Light|b1|i0|c0|p34;6CU / ????-??}
+{6CU / ????-??}
   7
-TM-0.5
+TECHBASE_ARIAL_NOVA_LIGHT
  73
      1
  44
@@ -6901,9 +6901,9 @@ Embedded Object
  41
 0.0
  42
-6.266079891672307
+6.294167803547066
  43
-0.7809749492213945
+0.781718963165075
  71
      2
  72
@@ -6921,7 +6921,7 @@ Embedded Object
   0
 MTEXT
   5
-395
+394
 330
 1F
 100
@@ -6947,9 +6947,9 @@ AcDbMText
  72
      5
   1
-{\fArial Nova Light|b1|i0|c0|p34;6CU / ????-??}
+{6CU / ????-??}
   7
-TM-0.5
+TECHBASE_ARIAL_NOVA_LIGHT
  73
      1
  44
@@ -6983,9 +6983,9 @@ Embedded Object
  41
 0.0
  42
-6.266079891672307
+6.294167803547066
  43
-0.7809749492213945
+0.781718963165075
  71
      2
  72
@@ -7003,7 +7003,7 @@ Embedded Object
   0
 MTEXT
   5
-396
+395
 330
 1F
 100
@@ -7029,9 +7029,9 @@ AcDbMText
  72
      5
   1
-{\fArial Nova Light|b1|i0|c0|p34;6CU / ????-??}
+{6CU / ????-??}
   7
-TM-0.5
+TECHBASE_ARIAL_NOVA_LIGHT
  73
      1
  44
@@ -7065,9 +7065,9 @@ Embedded Object
  41
 0.0
  42
-6.266079891672307
+6.294167803547066
  43
-0.7809749492213945
+0.781718963165075
  71
      2
  72
@@ -7085,7 +7085,7 @@ Embedded Object
   0
 MTEXT
   5
-397
+396
 330
 1F
 100
@@ -7111,9 +7111,9 @@ AcDbMText
  72
      5
   1
-{\fArial Nova Light|b1|i0|c0|p34;6CU / ????-??}
+{6CU / ????-??}
   7
-TM-0.5
+TECHBASE_ARIAL_NOVA_LIGHT
  73
      1
  44
@@ -7147,9 +7147,9 @@ Embedded Object
  41
 0.0
  42
-6.266079891672307
+6.294167803547066
  43
-0.7809749492213945
+0.781718963165075
  71
      2
  72
@@ -7167,7 +7167,7 @@ Embedded Object
   0
 MTEXT
   5
-398
+397
 330
 1F
 100
@@ -7193,9 +7193,9 @@ AcDbMText
  72
      5
   1
-{\fArial Nova Light|b1|i0|c0|p34;6CU / ????-??}
+{6CU / ????-??}
   7
-TM-0.5
+TECHBASE_ARIAL_NOVA_LIGHT
  73
      1
  44
@@ -7229,9 +7229,9 @@ Embedded Object
  41
 0.0
  42
-6.266079891672307
+6.294167803547066
  43
-0.7809749492213945
+0.781718963165075
  71
      2
  72
@@ -7249,7 +7249,7 @@ Embedded Object
   0
 MTEXT
   5
-399
+398
 330
 1F
 100
@@ -7275,9 +7275,9 @@ AcDbMText
  72
      5
   1
-{\fArial Nova Light|b1|i0|c0|p34;6CU / ????-??}
+{6CU / ????-??}
   7
-TM-0.5
+TECHBASE_ARIAL_NOVA_LIGHT
  73
      1
  44
@@ -7311,9 +7311,9 @@ Embedded Object
  41
 0.0
  42
-6.266079891672307
+6.294167803547066
  43
-0.7809749492213945
+0.781718963165075
  71
      2
  72
@@ -7331,7 +7331,7 @@ Embedded Object
   0
 MTEXT
   5
-39A
+399
 330
 1F
 100
@@ -7357,9 +7357,9 @@ AcDbMText
  72
      5
   1
-{\fArial Nova Light|b1|i0|c0|p34;6CU / ????-??}
+{6CU / ????-??}
   7
-TM-0.5
+TECHBASE_ARIAL_NOVA_LIGHT
  73
      1
  44
@@ -7393,9 +7393,9 @@ Embedded Object
  41
 0.0
  42
-6.266079891672307
+6.294167803547066
  43
-0.7809749492213945
+0.781718963165075
  71
      2
  72
@@ -7413,7 +7413,7 @@ Embedded Object
   0
 MTEXT
   5
-39B
+39A
 330
 1F
 100
@@ -7439,9 +7439,9 @@ AcDbMText
  72
      5
   1
-{\fArial Nova Light|b1|i0|c0|p34;6CU / ????-??}
+{6CU / ????-??}
   7
-TM-0.5
+TECHBASE_ARIAL_NOVA_LIGHT
  73
      1
  44
@@ -7475,9 +7475,9 @@ Embedded Object
  41
 0.0
  42
-6.266079891672307
+6.294167803547066
  43
-0.7809749492213945
+0.781718963165075
  71
      2
  72
@@ -7495,7 +7495,7 @@ Embedded Object
   0
 MTEXT
   5
-39C
+39B
 330
 1F
 100
@@ -7521,9 +7521,9 @@ AcDbMText
  72
      5
   1
-{\fArial Nova Light|b1|i0|c0|p34;6CU / ????-??}
+{6CU / ????-??}
   7
-TM-0.5
+TECHBASE_ARIAL_NOVA_LIGHT
  73
      1
  44
@@ -7557,9 +7557,9 @@ Embedded Object
  41
 0.0
  42
-6.266079891672307
+6.294167803547066
  43
-0.7809749492213945
+0.781718963165075
  71
      2
  72
@@ -7577,7 +7577,7 @@ Embedded Object
   0
 MTEXT
   5
-39D
+39C
 330
 1F
 100
@@ -7603,9 +7603,9 @@ AcDbMText
  72
      5
   1
-{\fArial Nova Light|b1|i0|c0|p34;6CU / ????-??}
+{6CU / ????-??}
   7
-TM-0.5
+TECHBASE_ARIAL_NOVA_LIGHT
  73
      1
  44
@@ -7639,9 +7639,9 @@ Embedded Object
  41
 0.0
  42
-6.266079891672307
+6.294167803547066
  43
-0.7809749492213945
+0.781718963165075
  71
      2
  72
@@ -7659,7 +7659,7 @@ Embedded Object
   0
 MTEXT
   5
-39E
+39D
 330
 1F
 100
@@ -7685,9 +7685,9 @@ AcDbMText
  72
      5
   1
-{\fArial Nova Light|b1|i0|c0|p34;6CU / ????-??}
+{6CU / ????-??}
   7
-TM-0.5
+TECHBASE_ARIAL_NOVA_LIGHT
  73
      1
  44
@@ -7721,9 +7721,9 @@ Embedded Object
  41
 0.0
  42
-6.266079891672307
+6.294167803547066
  43
-0.7809749492213945
+0.781718963165075
  71
      2
  72
@@ -7741,7 +7741,7 @@ Embedded Object
   0
 MTEXT
   5
-39F
+39E
 330
 1F
 100
@@ -7767,9 +7767,9 @@ AcDbMText
  72
      5
   1
-{\fArial Nova Light|b1|i0|c0|p34;6CU / ????-??}
+{6CU / ????-??}
   7
-TM-0.5
+TECHBASE_ARIAL_NOVA_LIGHT
  73
      1
  44
@@ -7803,9 +7803,9 @@ Embedded Object
  41
 0.0
  42
-6.266079891672307
+6.294167803547066
  43
-0.7809749492213945
+0.781718963165075
  71
      2
  72
@@ -7823,7 +7823,7 @@ Embedded Object
   0
 MTEXT
   5
-3A0
+39F
 330
 1F
 100
@@ -7857,7 +7857,7 @@ Alpha
   0
 MTEXT
   5
-3A2
+3A1
 330
 1F
 100
@@ -7891,7 +7891,7 @@ Beta
   0
 MTEXT
   5
-3A3
+3A2
 330
 1F
 100
@@ -7918,6 +7918,8 @@ AcDbMText
      5
   1
 Beta
+  7
+TECHBASE_ARIAL_NOVA_LIGHT
  73
      1
  44
@@ -7925,7 +7927,7 @@ Beta
   0
 MTEXT
   5
-3A4
+3A3
 330
 1F
 100
@@ -7937,7 +7939,7 @@ AcDbMText
  10
 0.0
  20
-41.61637107776262
+41.61705320600272
  30
 0.0
  40
@@ -7952,6 +7954,8 @@ AcDbMText
      5
   1
 Alpha
+  7
+TECHBASE_ARIAL_NOVA_LIGHT
  73
      1
  44
@@ -7959,7 +7963,7 @@ Alpha
   0
 MTEXT
   5
-3A7
+3A6
 330
 1F
 100
@@ -7986,6 +7990,8 @@ AcDbMText
      5
   1
 Beta
+  7
+TECHBASE_ARIAL_NOVA_LIGHT
  11
 0.0000000000000001
  21
@@ -7999,7 +8005,7 @@ Beta
   0
 MTEXT
   5
-3A8
+3A7
 330
 1F
 100
@@ -8009,7 +8015,7 @@ AcDbEntity
 100
 AcDbMText
  10
--1.616371077762619
+-1.617053206002728
  20
 60.0
  30
@@ -8026,6 +8032,8 @@ AcDbMText
      5
   1
 Alpha
+  7
+TECHBASE_ARIAL_NOVA_LIGHT
  11
 0.0000000000000001
  21
@@ -8111,7 +8119,7 @@ EF
   3
 ACDB_RECOMPOSE_DATA
 350
-3AA
+3A9
   3
 AcDbVariableDictionary
 350
@@ -8167,9 +8175,9 @@ AcDbDictionary
   0
 DICTIONARY
   5
-34D
+34E
 330
-34C
+34D
 100
 AcDbDictionary
 280
@@ -8179,13 +8187,13 @@ AcDbDictionary
   3
 TECHBASE_BLOCK_SOURCE
 360
-34E
+34F
   0
 DICTIONARY
   5
-381
-330
 380
+330
+37F
 100
 AcDbDictionary
 280
@@ -8195,7 +8203,7 @@ AcDbDictionary
   3
 TECHBASE_BLOCK_SOURCE
 360
-382
+381
   0
 XRECORD
   5
@@ -8649,7 +8657,7 @@ X-Ray
   0
 XRECORD
   5
-3AA
+3A9
 102
 {ACAD_REACTORS
 330
@@ -8765,21 +8773,21 @@ AcDbDictionary
   0
 XRECORD
   5
-34E
+34F
 102
 {ACAD_REACTORS
 330
-34D
+34E
 102
 }
 330
-34D
+34E
 100
 AcDbXrecord
 280
      1
   1
-1
+2
   1
 RICHTINGEN TEKST
   1
@@ -8787,21 +8795,21 @@ RICHTINGEN TEKST
   0
 XRECORD
   5
-382
+381
 102
 {ACAD_REACTORS
 330
-381
+380
 102
 }
 330
-381
+380
 100
 AcDbXrecord
 280
      1
   1
-1
+2
   1
 RICHTINGEN TEKST OV
   1
@@ -17095,7 +17103,7 @@ AcDbDictionary
   3
 ACAD_ROUNDTRIP_2008_TABLESTYLE_CELLSTYLEMAP
 360
-3A9
+3A8
   0
 XRECORD
   5
@@ -17515,7 +17523,7 @@ AcDbXrecord
   0
 CELLSTYLEMAP
   5
-3A9
+3A8
 102
 {ACAD_REACTORS
 330

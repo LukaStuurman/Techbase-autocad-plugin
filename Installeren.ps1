@@ -2,6 +2,7 @@ param([string]$Destination = (Join-Path $env:APPDATA 'Autodesk\ApplicationPlugin
 $ErrorActionPreference = 'Stop'
 $bundle = Join-Path $PSScriptRoot 'Techbase.Blocks.bundle'
 if (!(Test-Path -LiteralPath (Join-Path $bundle 'PackageContents.xml'))) { throw 'Techbase.Blocks.bundle ontbreekt naast dit installatiebestand.' }
+& (Join-Path $PSScriptRoot 'Lettertype.ps1')
 $target = [IO.Path]::GetFullPath($Destination)
 if (Test-Path -LiteralPath $target) {
     $manifest = Join-Path $target 'PackageContents.xml'
@@ -60,5 +61,5 @@ if (Test-Path -LiteralPath $registryRoot) {
 if ($registrations.Count -gt 0) {
     $registrations | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $target ('registratie-backup-' + (Get-Date -Format 'yyyyMMdd-HHmmss') + '.json')) -Encoding UTF8
 }
-Write-Host "Geïnstalleerd in: $target"
+Write-Host "Geinstalleerd in: $target"
 Write-Host 'Start AutoCAD of Civil 3D opnieuw en voer TECHBASE uit.'

@@ -67,7 +67,9 @@ internal static class DirectionTextDiagnostics
         using (var tx = db.TransactionManager.StartTransaction())
         {
             var texts = new[] { b, a }.Select(id => (MText)tx.GetObject(id, OpenMode.ForRead)).ToArray();
-            heights = texts.Select(t => t.ActualHeight).ToArray(); contents = texts.Select(t => t.Contents).ToArray();
+            var style = Typography.Style(db, tx);
+            heights = texts.Select(t => { using var clone = (MText)t.Clone(); Typography.Apply(clone, style); return clone.ActualHeight; }).ToArray();
+            contents = texts.Select(t => t.Contents).ToArray(); tx.Commit();
         }
         var stackIds = new List<ObjectId>();
         foreach (var degrees in new[] { 0, 45, 90, 135, 180, 225, 270, 315 })

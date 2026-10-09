@@ -8,3 +8,4 @@
 *.dwl
 *.dwl2
 # Sources, Assets, dist, finished ZIPs and validation artifacts are intentionally tracked.
+validation/font-installer-*/

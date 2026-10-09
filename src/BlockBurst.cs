@@ -18,6 +18,7 @@ internal static class BlockBurst
                 entity.Color = block.Color.ColorMethod == Autodesk.AutoCAD.Colors.ColorMethod.ByLayer
                     ? ((LayerTableRecord)tx.GetObject(block.LayerId, OpenMode.ForRead)).Color : block.Color;
             result.Add(space.AppendEntity(entity)); tx.AddNewlyCreatedDBObject(entity, true);
+            Typography.Apply(entity, Typography.Style(db, tx));
             if (entity is DBText text) text.AdjustAlignment(db);
         }
         foreach (ObjectId id in block.AttributeCollection)

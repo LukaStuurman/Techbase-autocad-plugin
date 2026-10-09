@@ -49,6 +49,7 @@ internal sealed class LightmastPanel : UserControl
         AcApp.DocumentManager.DocumentActivated += Activated;
         AcApp.DocumentManager.DocumentToBeDestroyed += Closing;
         RefreshDrawing();
+        UiTypography.Apply(this);
     }
     private void Activated(object sender, DocumentCollectionEventArgs args) => RefreshDrawing();
     private void Closing(object sender, DocumentCollectionEventArgs args)

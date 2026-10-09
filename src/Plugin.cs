@@ -27,7 +27,7 @@ public sealed class Plugin : IExtensionApplication
     internal static string DefaultPalette => Path.Combine(ContentsRoot, "Assets", "Techbase toolpallete.xtp");
     public void Initialize()
     {
-        try { Reload(); }
+        try { Typography.EnsureInstalled(); Reload(); }
         catch (System.Exception ex) { AcApp.DocumentManager.MdiActiveDocument?.Editor.WriteMessage("\nTechbase Blocks: " + ex.Message); }
     }
     public void Terminate() { directionPanel?.Dispose(); kabelCheckerPanel?.Dispose(); lightmastPanel?.Dispose(); panel?.Dispose(); palette?.Dispose(); }

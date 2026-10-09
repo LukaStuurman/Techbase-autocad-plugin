@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ApplicationPackage SchemaVersion="1.0" AutodeskProduct="AutoCAD" Name="Techbase Blocks" Description="Techbase blocks, lichtmasten, Enexis kabelchecker en richtingen" AppVersion="1.4.0" ProductCode="{00F3D68E-BF18-489F-88F4-153DA04AED1E}" UpgradeCode="{38F92DB5-FD94-41EB-B73E-31DAC1BD784A}">
+  <CompanyDetails Name="Techbase" />
+  <Components Description="AutoCAD en Civil 3D 2025-2026">
+    <RuntimeRequirements OS="Win64" Platform="AutoCAD*" SeriesMin="R25.0" SeriesMax="R25.1" />
+    <ComponentEntry AppName="Techbase.Blocks.R25" ModuleName="./Contents/R25-1.4.0/Techbase.Blocks.dll" AppType=".Net" LoadOnAutoCADStartup="False" LoadOnCommandInvocation="True">
+      <Commands GroupName="TECHBASE_BLOCKS"><Command Global="TECHBASE" Local="TECHBASE" /><Command Global="TBLAAG" Local="TBLAAG" /><Command Global="TBPLAATS" Local="TBPLAATS" /><Command Global="TBHERLAAD" Local="TBHERLAAD" /><Command Global="TBVALIDATE" Local="TBVALIDATE" /><Command Global="TBLICHTMAST" Local="TBLICHTMAST" /><Command Global="TBMASTVALIDATE" Local="TBMASTVALIDATE" /><Command Global="TBKABELCHECK" Local="TBKABELCHECK" /><Command Global="TBKABELVALIDATE" Local="TBKABELVALIDATE" /><Command Global="TBRICHTINGINFO" Local="TBRICHTINGINFO" /><Command Global="TBRICHTINGEN" Local="TBRICHTINGEN" /><Command Global="TBTEKENRICHTING" Local="TBTEKENRICHTING" /><Command Global="TBMAAKRICHTING" Local="TBMAAKRICHTING" /><Command Global="TBRICHTINGVALIDATE" Local="TBRICHTINGVALIDATE" /><Command Global="TBTEKSTLS" Local="TBTEKSTLS" /><Command Global="TBTEKSTOV" Local="TBTEKSTOV" /><Command Global="TBTEKSTKOPIE" Local="TBTEKSTKOPIE" /><Command Global="TBTEKSTVERPLAATS" Local="TBTEKSTVERPLAATS" /><Command Global="TBTEKSTVALIDATE" Local="TBTEKSTVALIDATE" /></Commands>
+    </ComponentEntry>
+  </Components>
+  <Components Description="AutoCAD en Civil 3D 2027">
+    <RuntimeRequirements OS="Win64" Platform="AutoCAD*" SeriesMin="R26.0" SeriesMax="R26.0" />
+    <ComponentEntry AppName="Techbase.Blocks.R26" ModuleName="./Contents/R26-1.4.0/Techbase.Blocks.dll" AppType=".Net" LoadOnAutoCADStartup="False" LoadOnCommandInvocation="True">
+      <Commands GroupName="TECHBASE_BLOCKS"><Command Global="TECHBASE" Local="TECHBASE" /><Command Global="TBLAAG" Local="TBLAAG" /><Command Global="TBPLAATS" Local="TBPLAATS" /><Command Global="TBHERLAAD" Local="TBHERLAAD" /><Command Global="TBVALIDATE" Local="TBVALIDATE" /><Command Global="TBLICHTMAST" Local="TBLICHTMAST" /><Command Global="TBMASTVALIDATE" Local="TBMASTVALIDATE" /><Command Global="TBKABELCHECK" Local="TBKABELCHECK" /><Command Global="TBKABELVALIDATE" Local="TBKABELVALIDATE" /><Command Global="TBRICHTINGINFO" Local="TBRICHTINGINFO" /><Command Global="TBRICHTINGEN" Local="TBRICHTINGEN" /><Command Global="TBTEKENRICHTING" Local="TBTEKENRICHTING" /><Command Global="TBMAAKRICHTING" Local="TBMAAKRICHTING" /><Command Global="TBRICHTINGVALIDATE" Local="TBRICHTINGVALIDATE" /><Command Global="TBTEKSTLS" Local="TBTEKSTLS" /><Command Global="TBTEKSTOV" Local="TBTEKSTOV" /><Command Global="TBTEKSTKOPIE" Local="TBTEKSTKOPIE" /><Command Global="TBTEKSTVERPLAATS" Local="TBTEKSTVERPLAATS" /><Command Global="TBTEKSTVALIDATE" Local="TBTEKSTVALIDATE" /></Commands>
+    </ComponentEntry>
+  </Components>
+</ApplicationPackage>

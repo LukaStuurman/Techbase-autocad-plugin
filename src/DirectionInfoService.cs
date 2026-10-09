@@ -51,15 +51,7 @@ internal static class DirectionInfoService
         using var working = new WorkingDatabaseScope(db);
         var layer = ValidateLayer(db, number);
         using var tx = db.TransactionManager.StartTransaction();
-        var styles = (TextStyleTable)tx.GetObject(db.TextStyleTableId, OpenMode.ForRead);
-        ObjectId style;
-        if (styles.Has("ARIAL")) style = styles["ARIAL"];
-        else
-        {
-            styles.UpgradeOpen();
-            using var record = new TextStyleTableRecord { Name = "ARIAL", FileName = "arial.ttf" };
-            style = styles.Add(record); tx.AddNewlyCreatedDBObject(record, true);
-        }
+        var style = Typography.Style(db, tx);
         var space = (BlockTableRecord)tx.GetObject(db.CurrentSpaceId, OpenMode.ForWrite);
         var ids = new List<ObjectId>();
         var texts = new[] { labels.Current, labels.Length };

@@ -53,6 +53,7 @@ $hashes += [pscustomobject]@{ File = 'Techbase toolpallete.xtp'; SHA256 = (Get-F
 $hashes | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $assets 'bronversies.json') -Encoding UTF8
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'enexis-source.json') -Destination $assets -Force
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'PackageContents.xml') -Destination $bundle -Force
-foreach ($file in @('Installeren.ps1','Installeren.cmd','LEESMIJ.md','VALIDATIE.md')) { Copy-Item -LiteralPath (Join-Path $PSScriptRoot $file) -Destination $dist -Force }
-Compress-Archive -LiteralPath $bundle,(Join-Path $dist 'Installeren.ps1'),(Join-Path $dist 'Installeren.cmd'),(Join-Path $dist 'LEESMIJ.md'),(Join-Path $dist 'VALIDATIE.md') -DestinationPath (Join-Path $PSScriptRoot "Techbase Blocks $version.zip") -Force
+Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'Lettertype.ps1') -Destination $contents -Force
+foreach ($file in @('Installeren.ps1','Installeren.cmd','Lettertype.ps1','LEESMIJ.md','VALIDATIE.md')) { Copy-Item -LiteralPath (Join-Path $PSScriptRoot $file) -Destination $dist -Force }
+Compress-Archive -LiteralPath $bundle,(Join-Path $dist 'Installeren.ps1'),(Join-Path $dist 'Installeren.cmd'),(Join-Path $dist 'Lettertype.ps1'),(Join-Path $dist 'LEESMIJ.md'),(Join-Path $dist 'VALIDATIE.md') -DestinationPath (Join-Path $PSScriptRoot "Techbase Blocks $version.zip") -Force
 Write-Host "Pakket: $dist"

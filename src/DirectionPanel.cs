@@ -48,7 +48,7 @@ internal sealed class DirectionPanel : UserControl
         layout.Controls.Add(textButtons);
         layout.Controls.Add(new Label { Text = "LS/OV plaatst de losse richtingsteksten.\nKies daarna MTexten in klikvolgorde en twee punten langs de kabel. Kopiëren: herhalen; Terug wist de laatste kopie.", AutoSize = true,
             MaximumSize = new Size(340, 0), Padding = new Padding(0, 6, 0, 0) });
-        layout.Controls.Add(status); Controls.Add(layout); RefreshLayer();
+        layout.Controls.Add(status); Controls.Add(layout); RefreshLayer(); UiTypography.Apply(this);
     }
     private void RefreshLayer() => layer.Text = "Laag: " + DirectionLines.LayerName(selected);
     private void Queue(string command, bool withDirection = true)

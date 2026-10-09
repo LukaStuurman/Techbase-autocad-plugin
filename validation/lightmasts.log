@@ -1,116 +1,231 @@
-Redirect stdout (file: C:\Users\LUKAST~1\AppData\Local\Temp\accc512802).
-AcCoreConsole: StdOutConsoleMode: processed-output: disabled,auto
-AutoCAD Core Engine Console - Copyright 2025 Autodesk, Inc.  All rights reserved. (W.122.0.0)
-
-Execution Path:
-C:\Program Files\Autodesk\AutoCAD 2026\accoreconsole.exe
-Current Directory: C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\validation
-
-Version Number: W.122.0.0 (UNICODE)
-LogFilePath has been set to the working folder.
-CoreHeartBeat
-Regenerating model.
-Drawing created using acadiso.dwt from AutoCAD profile: <<Unnamed Profile>>
-**** System Variable Changed ****
-2 of the monitored system variables have changed from the preferred value. Use SYSVARMONITOR command to view changes.
-
-
-AutoCAD menu utilities loaded.
-Command:
-Command:
-
-Command:
-Command: _NETLOAD
-Assembly file name: "C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.2.2/Techbase.Blocks.bundle/Contents/R25-1.2.2/Techbase.Blocks.dll"
-
-Command: TBMASTVALIDATE
-
-Attach Xref "MAST_XREF": C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\validation\Lichtmasten\test-xref.dwg
-"MAST_XREF" loaded.
-CoreHeartBeat
-
-LIGHTMAST VALIDATION PASS: 28 checks.
-Command: TBMASTAREATEST
-
-Gebiedstest [Tekenen/Polyline]: _Tekenen
-
-Eerste hoekpunt van het gebied: 0,0,0
-
-Volgend hoekpunt (Enter = sluiten) [Terug]: 10,0,0
-
-Volgend hoekpunt (Enter = sluiten) [Terug]: 10,10,0
-
-Volgend hoekpunt (Enter = sluiten) [Terug/Sluiten]: 0,10,0
-
-Volgend hoekpunt (Enter = sluiten) [Terug/Sluiten]:
-
-AREA_INPUT_PASS
-Command: TBMASTAREATEST
-
-Gebiedstest [Tekenen/Polyline]: _Tekenen
-
-Eerste hoekpunt van het gebied: 0,0,0
-
-Volgend hoekpunt (Enter = sluiten) [Terug]: 12,0,0
-
-Volgend hoekpunt (Enter = sluiten) [Terug]: _Terug
-
-Volgend hoekpunt (Enter = sluiten) [Terug]: 10,0,0
-
-Volgend hoekpunt (Enter = sluiten) [Terug]: 10,10,0
-
-Volgend hoekpunt (Enter = sluiten) [Terug/Sluiten]: 0,10,0
-
-Volgend hoekpunt (Enter = sluiten) [Terug/Sluiten]: _Sluiten
-
-AREA_INPUT_PASS
-Command: (entmake (list (cons 0 "LWPOLYLINE") (cons 100 "AcDbEntity") (cons 100 "AcDbPolyline") (cons 90 4) (cons 70 1) (cons 10 (list 0.0 0.0)) (cons 10 (list 10.0 0.0)) (cons 10 (list 10.0 10.0)) (cons 10 (list 0.0 10.0))))
-((0 . "LWPOLYLINE") (100 . "AcDbEntity") (100 . "AcDbPolyline") (90 . 4) (70 . 1) (10 0.0 0.0) (10 10.0 0.0) (10 10.0 10.0) (10 0.0 10.0))
-
-Command: _ZOOM
-
-Specify corner of window, enter a scale factor (nX or nXP), or
-[All/Center/Dynamic/Extents/Previous/Scale/Window/Object] <real time>: _E
-
-Command: _REGEN
-Regenerating model.
-
-Command: TBMASTAREATEST
-
-Gebiedstest [Tekenen/Polyline]: _Polyline
-
-Selecteer de gesloten polyline van het gebied: 5,0,0
-
-AREA_INPUT_PASS
-Command: _UCS
-
-Current ucs name:  *WORLD*
-Specify origin of UCS or [Face/NAmed/OBject/Previous/View/World/X/Y/Z/ZAxis] <World>: _Z
-
-Specify rotation angle about Z axis <90>: 90
-
-Command: TBMASTAREATEST
-
-Gebiedstest [Tekenen/Polyline]: _Tekenen
-
-Eerste hoekpunt van het gebied: 0,0,0
-
-Volgend hoekpunt (Enter = sluiten) [Terug]: 0,-10,0
-
-Volgend hoekpunt (Enter = sluiten) [Terug]: 10,-10,0
-
-Volgend hoekpunt (Enter = sluiten) [Terug/Sluiten]: 10,0,0
-
-Volgend hoekpunt (Enter = sluiten) [Terug/Sluiten]:
-
-AREA_INPUT_PASS
-Command: _UCS
-
-Current ucs name:  *NO NAME*
-Specify origin of UCS or [Face/NAmed/OBject/Previous/View/World/X/Y/Z/ZAxis] <World>: _W
-
-Command: _QUIT
-_Y
-Really want to discard all changes to drawing? <N> _Y
-
-LogFilePath has been restored to ''.
+Redirect stdout (file: C:\Users\LUKAST~1\AppData\Local\Temp\accc106522).
+
+AcCoreConsole: StdOutConsoleMode: processed-output: disabled,auto
+
+AutoCAD Core Engine Console - Copyright 2025 Autodesk, Inc.  All rights reserved. (W.122.0.0)
+
+
+
+Execution Path:
+
+C:\Program Files\Autodesk\AutoCAD 2026\accoreconsole.exe
+
+Current Directory: C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\validation
+
+
+
+Version Number: W.122.0.0 (UNICODE)
+
+LogFilePath has been set to the working folder.
+
+CoreHeartBeat
+
+Regenerating model.
+
+Drawing created using acadiso.dwt from AutoCAD profile: <<Unnamed Profile>>
+
+**** System Variable Changed ****
+
+2 of the monitored system variables have changed from the preferred value. Use SYSVARMONITOR command to view changes.
+
+
+
+
+
+AutoCAD menu utilities loaded.
+
+Command:
+
+Command:
+
+
+
+Command:
+
+Command: _NETLOAD
+
+Assembly file name: "C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.4.0/Techbase.Blocks.bundle/Contents/R25-1.4.0/Techbase.Blocks.dll"
+
+
+
+Command: TBMASTVALIDATE
+
+
+
+Attach Xref "MAST_XREF": C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\validation\Lichtmasten\test-xref.dwg
+
+"MAST_XREF" loaded.
+
+CoreHeartBeat
+
+
+
+LIGHTMAST VALIDATION PASS: 28 checks.
+
+Command: TBMASTAREATEST
+
+
+
+Gebiedstest [Tekenen/Polyline]: _Tekenen
+
+
+
+Eerste hoekpunt van het gebied: 0,0,0
+
+
+
+Volgend hoekpunt (Enter = sluiten) [Terug]: 10,0,0
+
+
+
+Volgend hoekpunt (Enter = sluiten) [Terug]: 10,10,0
+
+
+
+Volgend hoekpunt (Enter = sluiten) [Terug/Sluiten]: 0,10,0
+
+
+
+Volgend hoekpunt (Enter = sluiten) [Terug/Sluiten]:
+
+
+
+AREA_INPUT_PASS
+
+Command: TBMASTAREATEST
+
+
+
+Gebiedstest [Tekenen/Polyline]: _Tekenen
+
+
+
+Eerste hoekpunt van het gebied: 0,0,0
+
+
+
+Volgend hoekpunt (Enter = sluiten) [Terug]: 12,0,0
+
+
+
+Volgend hoekpunt (Enter = sluiten) [Terug]: _Terug
+
+
+
+Volgend hoekpunt (Enter = sluiten) [Terug]: 10,0,0
+
+
+
+Volgend hoekpunt (Enter = sluiten) [Terug]: 10,10,0
+
+
+
+Volgend hoekpunt (Enter = sluiten) [Terug/Sluiten]: 0,10,0
+
+
+
+Volgend hoekpunt (Enter = sluiten) [Terug/Sluiten]: _Sluiten
+
+
+
+AREA_INPUT_PASS
+
+Command: (entmake (list (cons 0 "LWPOLYLINE") (cons 100 "AcDbEntity") (cons 100 "AcDbPolyline") (cons 90 4) (cons 70 1) (cons 10 (list 0.0 0.0)) (cons 10 (list 10.0 0.0)) (cons 10 (list 10.0 10.0)) (cons 10 (list 0.0 10.0))))
+
+((0 . "LWPOLYLINE") (100 . "AcDbEntity") (100 . "AcDbPolyline") (90 . 4) (70 . 1) (10 0.0 0.0) (10 10.0 0.0) (10 10.0 10.0) (10 0.0 10.0))
+
+
+
+Command: _ZOOM
+
+
+
+Specify corner of window, enter a scale factor (nX or nXP), or
+
+[All/Center/Dynamic/Extents/Previous/Scale/Window/Object] <real time>: _E
+
+
+
+Command: _REGEN
+
+Regenerating model.
+
+
+
+Command: TBMASTAREATEST
+
+
+
+Gebiedstest [Tekenen/Polyline]: _Polyline
+
+
+
+Selecteer de gesloten polyline van het gebied: 5,0,0
+
+
+
+AREA_INPUT_PASS
+
+Command: _UCS
+
+
+
+Current ucs name:  *WORLD*
+
+Specify origin of UCS or [Face/NAmed/OBject/Previous/View/World/X/Y/Z/ZAxis] <World>: _Z
+
+
+
+Specify rotation angle about Z axis <90>: 90
+
+
+
+Command: TBMASTAREATEST
+
+
+
+Gebiedstest [Tekenen/Polyline]: _Tekenen
+
+
+
+Eerste hoekpunt van het gebied: 0,0,0
+
+
+
+Volgend hoekpunt (Enter = sluiten) [Terug]: 0,-10,0
+
+
+
+Volgend hoekpunt (Enter = sluiten) [Terug]: 10,-10,0
+
+
+
+Volgend hoekpunt (Enter = sluiten) [Terug/Sluiten]: 10,0,0
+
+
+
+Volgend hoekpunt (Enter = sluiten) [Terug/Sluiten]:
+
+
+
+AREA_INPUT_PASS
+
+Command: _UCS
+
+
+
+Current ucs name:  *NO NAME*
+
+Specify origin of UCS or [Face/NAmed/OBject/Previous/View/World/X/Y/Z/ZAxis] <World>: _W
+
+
+
+Command: _QUIT
+
+_Y
+
+Really want to discard all changes to drawing? <N> _Y
+
+
+
+LogFilePath has been restored to ''.

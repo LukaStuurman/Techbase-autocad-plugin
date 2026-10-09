@@ -92,6 +92,7 @@ internal static class BlockInserter
         if (definition.Layer == "0") attribute.LayerId = block.LayerId;
         attribute.AdjustAlignment(db);
         if (attribute.IsMTextAttribute) attribute.UpdateMTextAttribute();
+        Typography.Apply(attribute, definition.TextStyleId);
     }
 
     internal static bool Place(Document doc, Catalog catalog, BlockTool tool, Settings settings, bool burst = false)

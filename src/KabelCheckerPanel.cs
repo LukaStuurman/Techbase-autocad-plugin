@@ -48,6 +48,7 @@ internal sealed class KabelCheckerPanel : UserControl
         viewport.Resize += (_, _) => FitBuilder();
         Builder.Show();
         FitBuilder();
+        UiTypography.Apply(this);
     }
     private void QueueDirectionInfo()
     {

@@ -9,7 +9,7 @@ Plugin voor AutoCAD en Civil 3D op Windows met vier tabs:
 
 ## Installeren
 
-Download **Techbase Blocks 1.3.1.zip** uit de [release v1.3.1](https://github.com/LukaStuurman/Techbase-autocad-plugin/releases/tag/v1.3.1), pak hem uit en dubbelklik **Installeren.cmd**. Start AutoCAD of Civil 3D opnieuw en voer **TECHBASE** uit.
+Download **Techbase Blocks 1.4.0.zip** uit de [release v1.4.0](https://github.com/LukaStuurman/Techbase-autocad-plugin/releases/tag/v1.4.0), pak hem uit en dubbelklik **Installeren.cmd**. De installer controleert en installeert ook **Arial Nova Light** via het officiele Microsoft Store-pakket als het lettertype ontbreekt. Geen aparte fontinstallatie nodig. Start AutoCAD of Civil 3D opnieuw en voer **TECHBASE** uit.
 
 Nieuwe plaatsingen gebruiken eigen bronblocks, ook als de tekening al een oudere blockdefinitie met dezelfde naam bevat. Bestaande plaatsingen blijven intact.
 
@@ -33,6 +33,6 @@ Gebruik Windows en een .NET 10 SDK:
 
 De benodigde XTP, afbeeldingen en bron-DWG staan in `Assets/Palette`. De kader-Excels en Enexis-bronnen staan onder `vendor/AutoCAD-Enexis-kabels-checker`. De clone heeft daardoor geen lokale Techbase-map of submodule nodig. NuGet haalt de Autodesk API-referenties en Excel-dependencies op. AutoCAD zelf blijft nodig voor de CAD-engine-tests.
 
-De build maakt `dist/1.3.1/Techbase.Blocks.bundle` en `Techbase Blocks 1.3.1.zip`. Een andere bronpalette kan met `-PaletteRoot <map>` worden opgegeven.
+De build maakt `dist/1.4.0/Techbase.Blocks.bundle` en `Techbase Blocks 1.4.0.zip`. Een andere bronpalette kan met `-PaletteRoot <map>` worden opgegeven.
 
 De bronrepo bevat ook de afgeronde oudere installatiepakketten. Compiler-caches, tijdelijke bestanden en interne Git-metadata van de meegeleverde Enexis-bron worden niet opgenomen.

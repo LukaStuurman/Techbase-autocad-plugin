@@ -1,4 +1,4 @@
-# Techbase Blocks 1.3.1
+# Techbase Blocks 1.4.0
 
 Gebruik vier tabs in AutoCAD en Civil 3D voor Windows: Blocks, Lichtmasten, Enexis kabelchecker en Richtingen.
 
@@ -9,6 +9,14 @@ Gebruik vier tabs in AutoCAD en Civil 3D voor Windows: Blocks, Lichtmasten, Enex
 3. Start AutoCAD of Civil 3D en voer **TECHBASE** uit.
 
 De plugin staat daarna onder `%APPDATA%\Autodesk\ApplicationPlugins`. Bestaande bestanden van deze plugin worden bij opnieuw installeren eerst gekopieerd naar een backup. De installatie wijzigt de oorspronkelijke toolpalette, DWG en Lisp niet.
+
+## Lettertype
+
+Alle teksten in de vier plugintabs en alle blockteksten, attributen, losse richtingsteksten en richting-info die de plugin plaatst gebruiken **Arial Nova Light**. Bij kopieren of verplaatsen van richtingsteksten krijgt het resultaat ook dit lettertype. Hoogtes, kleuren en overige tekstopmaak blijven behouden; expliciete fontoverrides in MText worden verwijderd.
+
+**Installeren.cmd regelt het lettertype automatisch.** De installer gebruikt een bestaande Windows-installatie of het officiele Arial Nova-pakket uit de Microsoft Store. Ontbreekt het pakket, dan downloadt en installeert Windows het via App Installer (winget). Daarvoor zijn internet en toegestane Store-toegang nodig. De Light-variant wordt voor de huidige gebruiker geregistreerd, zonder beheerdersrechten. Een ontbrekende of geblokkeerde Store-installatie wordt gemeld voordat de plugin wordt vervangen. Het lettertype hoeft dus niet apart te worden geinstalleerd.
+
+Bestaande tekststijlen, oude blockdefinities en bron-DWG's blijven intact. Nieuwe blocks krijgen een eigen fontversie en eigen tekststijl. De officiele Microsoft-fontbestanden worden op de computer geinstalleerd en niet in deze openbare release verspreid.
 
 ## Blocks plaatsen
 
@@ -94,7 +102,7 @@ Open **TECHBASE → Enexis kabelchecker**, of gebruik **TBKABELCHECK** om de tab
 
 Onderin de tab staat **Richting-info plaatsen**. Kies een opgeslagen richting bij **Opgeslagen** (of sla de huidige richting eerst op), klik op de knop en klik daarna in de tekening op het middelpunt van de bovenste tekst. De knop verwerkt actuele wijzigingen in de richting via de bestaande validatie en slaat die in de sessie op; de stations-JSON wordt daarmee niet automatisch overschreven.
 
-Er worden twee gecentreerde Arial-teksten geplaatst: de berekende totale kabelstroom als `...Amp.` en de rekenlengte als `...Met.`. Ze volgen de actieve stroombasis en gebruiken de bestaande laag `Aansluiting LS Kxx`, kleur ByLayer en teksthoogte 1 tekeneenheid. Opwek en verbruik worden eerst apart opgeteld, inclusief de kader-fasefactor. De teksten volgen het huidige UCS. Een ontbrekende of vergrendelde richtingslaag wordt gemeld. Esc annuleert de plaatsing; Undo neemt beide teksten samen terug.
+Er worden twee gecentreerde Arial Nova Light-teksten geplaatst: de berekende totale kabelstroom als `...Amp.` en de rekenlengte als `...Met.`. Ze volgen de actieve stroombasis en gebruiken de bestaande laag `Aansluiting LS Kxx`, kleur ByLayer en teksthoogte 1 tekeneenheid. Opwek en verbruik worden eerst apart opgeteld, inclusief de kader-fasefactor. De teksten volgen het huidige UCS. Een ontbrekende of vergrendelde richtingslaag wordt gemeld. Esc annuleert de plaatsing; Undo neemt beide teksten samen terug.
 
 Opgeslagen stations blijven in de bestaande map `%APPDATA%\EnexisKabelChecker\stations.json`. Daardoor kun je de bestaande stations van de losse kabelchecker laden. De huidige richtingenset is, net als in de repo, één sessie; wisselen van tekening maakt geen nieuw station aan. De oorspronkelijke losse plugin en haar ENEXISKABELCHECK-commando worden niet verwijderd of vervangen. In deze plugin gebruik je TBKABELCHECK.
 
@@ -131,4 +139,4 @@ De concrete testresultaten en resterende praktijktests staan in `VALIDATIE.md` b
 
 ## Opnieuw bouwen
 
-Gebruik een .NET 10 SDK en voer `Build.ps1 -Dotnet <pad-naar-dotnet.exe>` uit. De build haalt Autodesk AutoCAD.NET API 25.0.1 en 26.0.0 via NuGet op en bouwt de Excel-worker voor beide runtimes. De Autodesk API-DLL's worden niet meegeleverd: die levert de hostapplicatie. De uitvoer staat in `dist/1.3.1` en in `Techbase Blocks 1.3.1.zip`. Versiegebonden DLL-mappen maken een update mogelijk zonder een reeds geladen oude DLL te overschrijven; herstart de CAD-toepassing om de nieuwe versie te laden.
+Gebruik een .NET 10 SDK en voer `Build.ps1 -Dotnet <pad-naar-dotnet.exe>` uit. De build haalt Autodesk AutoCAD.NET API 25.0.1 en 26.0.0 via NuGet op en bouwt de Excel-worker voor beide runtimes. De Autodesk API-DLL's worden niet meegeleverd: die levert de hostapplicatie. De uitvoer staat in `dist/1.4.0` en in `Techbase Blocks 1.4.0.zip`. Versiegebonden DLL-mappen maken een update mogelijk zonder een reeds geladen oude DLL te overschrijven; herstart de CAD-toepassing om de nieuwe versie te laden.
