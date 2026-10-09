@@ -1,3 +1,9 @@
+## BESTAANDE MOF zwart en Continuous - versie 1.5.2
+
+- Alleen de omtrek en teksten/attribuutdefinities van BESTAANDE MOF krijgen vaste AutoCAD-kleur 7 (zwart/wit). De omtrek krijgt expliciet Continuous en schaal 1. Richtingslaagkleuren en DASHED hebben hierop geen invloed; de arcering behoudt de bronopmaak.
+- Eigen uitvoeringsversie voor dit block voorkomt hergebruik van een eerdere plugindefinitie. Bron-DWG en reeds geplaatste oude blocks worden niet gewijzigd.
+- Plaatsing, Object, Undo, Escape en UCS op richting 1, 10, 12 en Bestaande kabel getest. Opgeslagen cirkel/attributen gecontroleerd op vaste kleur en Continuous. Beide API-builds gemaakt; CAD-tests in AutoCAD 2026 Core Console.
+
 ## Bijgewerkte BESTAANDE MOF - versie 1.5.1
 
 - Actuele gebruikersbron `Techbase template LS en OV.dwg` overgenomen in de pluginbibliotheek. SHA-256: `40955691265e0ef638434c265b549f7cae047b8a4c372e9c4a17dd78d54b7c4c` (1.114.306 bytes). De oorspronkelijke gebruikersbron is niet gewijzigd.

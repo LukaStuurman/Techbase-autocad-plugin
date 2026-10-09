@@ -1,0 +1,33 @@
+{
+  "Status": "PASS",
+  "Cases": [
+    {
+      "LayerChoice": 1,
+      "OutlineColor": 7,
+      "OutlineLinetype": "Continuous",
+      "BlackAttributes": 3,
+      "HatchLayer": "01 - Bestaande kabel"
+    },
+    {
+      "LayerChoice": 10,
+      "OutlineColor": 7,
+      "OutlineLinetype": "Continuous",
+      "BlackAttributes": 3,
+      "HatchLayer": "01 - Bestaande kabel"
+    },
+    {
+      "LayerChoice": 12,
+      "OutlineColor": 7,
+      "OutlineLinetype": "Continuous",
+      "BlackAttributes": 3,
+      "HatchLayer": "01 - Bestaande kabel"
+    },
+    {
+      "LayerChoice": 0,
+      "OutlineColor": 7,
+      "OutlineLinetype": "Continuous",
+      "BlackAttributes": 3,
+      "HatchLayer": "01 - Bestaande kabel"
+    }
+  ]
+}

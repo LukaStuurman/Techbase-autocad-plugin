@@ -29,6 +29,7 @@ internal static class SourceBlockImporter
         using var sourceTx = source.TransactionManager.StartTransaction();
         var targetStyle = (TextStyleTableRecord)targetTx.GetObject(Typography.Style(target, targetTx), OpenMode.ForRead);
         Typography.NormalizeSource(source, sourceTx, targetStyle.Name);
+        ExistingMofAppearance.Apply(source, sourceTx);
         var sourceTable = (BlockTable)sourceTx.GetObject(source.BlockTableId, OpenMode.ForRead);
         if (!sourceTable.Has(blockName)) throw new InvalidOperationException("Block '" + blockName + "' ontbreekt in " + path);
         var sourceId = sourceTable[blockName];
@@ -68,7 +69,7 @@ internal static class SourceBlockImporter
     private static (string Name, ObjectId Existing) FindName(BlockTable table, Transaction tx, string original, string fingerprint)
     {
         var nameHash = Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(original.ToUpperInvariant())))[..8];
-        var stem = "TB_" + original[..Math.Min(original.Length, 200)] + "__" + fingerprint[..12] + "_" + nameHash + "_" + Typography.Revision;
+        var stem = "TB_" + original[..Math.Min(original.Length, 190)] + "__" + fingerprint[..12] + "_" + nameHash + "_" + Typography.Revision + ExistingMofAppearance.Revision(original);
         for (var index = 0; ; index++)
         {
             var name = stem + (index == 0 ? "" : "_" + index);

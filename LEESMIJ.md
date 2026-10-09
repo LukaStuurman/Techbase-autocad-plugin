@@ -1,4 +1,4 @@
-# Techbase Blocks 1.5.1
+# Techbase Blocks 1.5.2
 
 Gebruik vier tabs in AutoCAD en Civil 3D voor Windows: Blocks, Lichtmasten, Enexis kabelchecker en Richtingen.
 
@@ -19,6 +19,8 @@ Alle teksten in de vier plugintabs en alle blockteksten, attributen, losse richt
 Bestaande tekststijlen, oude blockdefinities en bron-DWG's blijven intact. Nieuwe blocks krijgen een eigen fontversie en eigen tekststijl. De officiele Microsoft-fontbestanden worden op de computer geinstalleerd en niet in deze openbare release verspreid.
 
 ## Blocks plaatsen
+
+**BESTAANDE MOF** heeft een vaste zwarte omtrek (Continuous) en zwarte tekst, onafhankelijk van de gekozen richtingslaag. Hiervoor wordt vaste AutoCAD-kleur 7 gebruikt: zwart op een witte achtergrond, wit op een donkere achtergrond. De arcering behoudt de bronopmaak. Nieuwe plaatsingen krijgen deze uitvoering; oude geplaatste blocks blijven intact.
 
 - **Gekozen laag gebruiken**: kies **Richting 1 t/m 12** of **Bestaande kabel**. De schakelaar zet deze laagkeuze aan of uit; keuze en schakelaar blijven na herstart bewaard. De echte laagnamen zijn `Aansluiting LS K01` t/m `Aansluiting LS K12` en `01 - Bestaande kabel`.
 - Als de gekozen laag aanstaat, heeft die voorrang. **Laag van object overnemen** is dan tijdelijk grijs; uitzetten herstelt de eerdere instelling. **Object** blijft bruikbaar om een plaats op een kabel aan te wijzen, terwijl de gekozen laag behouden blijft. Het voorbeeld, het geplaatste block en de attributen die op laag 0 staan volgen deze laag.
@@ -143,4 +145,4 @@ De concrete testresultaten en resterende praktijktests staan in `VALIDATIE.md` b
 
 ## Opnieuw bouwen
 
-Gebruik een .NET 10 SDK en voer `Build.ps1 -Dotnet <pad-naar-dotnet.exe>` uit. De build haalt Autodesk AutoCAD.NET API 25.0.1 en 26.0.0 via NuGet op en bouwt de Excel-worker voor beide runtimes. De Autodesk API-DLL's worden niet meegeleverd: die levert de hostapplicatie. De uitvoer staat in `dist/1.5.1` en in `Techbase Blocks 1.5.1.zip`. Versiegebonden DLL-mappen maken een update mogelijk zonder een reeds geladen oude DLL te overschrijven; herstart de CAD-toepassing om de nieuwe versie te laden.
+Gebruik een .NET 10 SDK en voer `Build.ps1 -Dotnet <pad-naar-dotnet.exe>` uit. De build haalt Autodesk AutoCAD.NET API 25.0.1 en 26.0.0 via NuGet op en bouwt de Excel-worker voor beide runtimes. De Autodesk API-DLL's worden niet meegeleverd: die levert de hostapplicatie. De uitvoer staat in `dist/1.5.2` en in `Techbase Blocks 1.5.2.zip`. Versiegebonden DLL-mappen maken een update mogelijk zonder een reeds geladen oude DLL te overschrijven; herstart de CAD-toepassing om de nieuwe versie te laden.

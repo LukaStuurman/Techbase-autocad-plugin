@@ -1,4 +1,4 @@
-Redirect stdout (file: C:\Users\LUKAST~1\AppData\Local\Temp\accc346562).
+Redirect stdout (file: C:\Users\LUKAST~1\AppData\Local\Temp\accc204842).
 AcCoreConsole: StdOutConsoleMode: processed-output: disabled,auto
 AutoCAD Core Engine Console - Copyright 2025 Autodesk, Inc.  All rights reserved. (W.122.0.0)
 
@@ -10,7 +10,6 @@ Version Number: W.122.0.0 (UNICODE)
 LogFilePath has been set to the working folder.
 CoreHeartBeat
 Regenerating model.
-CoreHeartBeat
 Drawing created using acadiso.dwt from AutoCAD profile: <<Unnamed Profile>>
 **** System Variable Changed ****
 2 of the monitored system variables have changed from the preferred value. Use SYSVARMONITOR command to view changes.
@@ -21,6 +20,9 @@ Command:
 Command:
 
 Command:
+Command: _NETLOAD
+Assembly file name: "C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.5.2/Techbase.Blocks.bundle/Contents/R25-1.5.2/Techbase.Blocks.dll"
+
 Command: (setvar "ATTREQ" 0)
 0
 

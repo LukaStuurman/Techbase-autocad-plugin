@@ -31,5 +31,5 @@
     "INSERTS=2",
     "0: saved DXF has three inserts on the chosen layer with correct UCS position"
   ],
-  "Autoload": true
+  "Autoload": false
 }
