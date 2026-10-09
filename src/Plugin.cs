@@ -135,6 +135,30 @@ public sealed class Plugin : IExtensionApplication
             if (folder != null) { Directory.CreateDirectory(folder); File.WriteAllText(Path.Combine(folder, "richting-failure.log"), ex.ToString()); }
         }
     }
+    [CommandMethod("TBTEKSTLS", CommandFlags.Modal)]
+    public void PlaceLSText() => ExecuteDirectionText(false, null);
+    [CommandMethod("TBTEKSTOV", CommandFlags.Modal)]
+    public void PlaceOVText() => ExecuteDirectionText(true, null);
+    [CommandMethod("TBTEKSTKOPIE", CommandFlags.Modal)]
+    public void CopyDirectionText() => ExecuteDirectionText(false, true);
+    [CommandMethod("TBTEKSTVERPLAATS", CommandFlags.Modal)]
+    public void MoveDirectionText() => ExecuteDirectionText(false, false);
+    private static void ExecuteDirectionText(bool ov, bool? copy)
+    {
+        var doc = AcApp.DocumentManager.MdiActiveDocument; if (doc == null) return;
+        try { ReportDirection(copy.HasValue ? DirectionText.Run(doc, copy.Value) : DirectionText.PlaceTemplate(doc, ov)); }
+        catch (System.Exception ex) { ReportDirection(ex.Message); }
+    }
+    [CommandMethod("TBTEKSTVALIDATE", CommandFlags.Modal)]
+    public void ValidateDirectionText()
+    {
+        try { DirectionTextDiagnostics.Run(); }
+        catch (System.Exception ex)
+        {
+            Error(ex); var folder = Environment.GetEnvironmentVariable("TECHBASE_TEST_OUTPUT");
+            if (folder != null) { Directory.CreateDirectory(folder); File.WriteAllText(Path.Combine(folder, "tekst-failure.log"), ex.ToString()); }
+        }
+    }
     [CommandMethod("TBKABELCHECK", CommandFlags.Modal)]
     public void KabelChecker()
     {

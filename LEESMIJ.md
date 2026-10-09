@@ -1,4 +1,4 @@
-# Techbase Blocks 1.3.0
+# Techbase Blocks 1.3.1
 
 Gebruik vier tabs in AutoCAD en Civil 3D voor Windows: Blocks, Lichtmasten, Enexis kabelchecker en Richtingen.
 
@@ -46,6 +46,15 @@ Instellingen staan in `%APPDATA%\Techbase\Blocks\settings.json` en blijven bewaa
 Beide acties geven de objecten **global width 0,1**, **DASHED**, **entity linetype scale 0,0035**, kleur ByLayer en lijndikte ByLayer. Breedte is in tekeneenheden. Ontbrekende richtingslagen en DASHED worden uit de meegeleverde Techbase-bron gehaald; bestaande laagkleuren blijven behouden. Je huidige tekenlaag en gewone tekeninstellingen blijven gelijk.
 
 Een vergrendelde, externe, uitgeschakelde of bevroren doellaag moet je eerst zelf bruikbaar maken. Vergrendelde bronobjecten, blockinhoud, xrefs, 3D-polylines en andere objecttypen worden overgeslagen. Een 3D-polyline heeft geen globale 2D-breedte; de plugin vlakt de geometrie daarvan niet af. Undo neemt tekenen of omzetten terug.
+
+### Richtingsteksten boven kabels
+
+- **LS-tekst plaatsen (burst)** en **OV-tekst plaatsen (burst)** plaatsen de meegeleverde `RICHTINGEN TEKST LS` / `RICHTINGEN TEKST OV` als losse, bewerkbare MTexten. Per template zijn dat 13 teksten met de originele inhoud, kleuren en lagen. De LS-paletteknop gebruikt in de bron-DWG de blocknaam `RICHTINGEN TEKST`. Eventuele attribuutwaarden worden bij burst als tekst bewaard.
+- **Tekst kopiëren** en **Tekst verplaatsen** gebruiken het gedrag van `RICHTINGEN` uit het Techbase Lisp-pakket. Klik MTexten in de gewenste volgorde. Nogmaals dezelfde tekst aanklikken verwijdert haar uit de selectie. Enter sluit de selectie.
+- Kies twee punten langs de kabel. Het cursorvoorbeeld toont de gestapelde tekst. Tekst draait leesbaar mee, met dezelfde ankering als de Lisp. De eerste tekst staat 0,4 tekeneenheden van de gekozen lijn; de volgende staan op werkelijke teksthoogte plus 0,2 afstand. Om de andere kant van de kabel te kiezen, kies je de twee punten in omgekeerde volgorde.
+- **Kopiëren** herhaalt de plaatsing tot Enter of Esc bij het startpunt. **Terug** verwijdert de laatste kopiestapel. Al geplaatste kopiestapels blijven staan bij stoppen. **Verplaatsen** bewerkt de oorspronkelijke teksten eenmaal; hun handles, inhoud, opmaak en lagen blijven behouden. Esc bij het eindpunt wijzigt niets voor die stap. Undo kan het hele commando terugnemen.
+
+Deze knoppen werken met losse MText in de huidige tekenruimte. Vergrendelde teksten, blockinhoud en xrefs worden niet gewijzigd. De oorspronkelijke Lisp hoeft niet geladen te worden; het bestaande `RICHTINGEN`-commando wordt niet overschreven.
 
 ## Tab Lichtmasten
 
@@ -97,6 +106,9 @@ De Excel-dependencies staan per CAD-generatie in een aparte map `excel` en worde
 | --- | --- |
 | TECHBASE | Open het Techbase-paneel |
 | TBRICHTINGEN | Open de tab Richtingen |
+| TBTEKSTLS / TBTEKSTOV | Plaats de LS/OV-bron als losse teksten |
+| TBTEKSTKOPIE | Kopieer geselecteerde MText langs een gekozen richting |
+| TBTEKSTVERPLAATS | Verplaats geselecteerde MText langs een gekozen richting |
 | TBTEKENRICHTING | Kies 1 t/m 12 en teken een nieuwe richting |
 | TBMAAKRICHTING | Kies 1 t/m 12 en zet de selectie om |
 | TBLAAG | Wissel automatische laagovername aan/uit |
@@ -119,4 +131,4 @@ De concrete testresultaten en resterende praktijktests staan in `VALIDATIE.md` b
 
 ## Opnieuw bouwen
 
-Gebruik een .NET 10 SDK en voer `Build.ps1 -Dotnet <pad-naar-dotnet.exe>` uit. De build haalt Autodesk AutoCAD.NET API 25.0.1 en 26.0.0 via NuGet op en bouwt de Excel-worker voor beide runtimes. De Autodesk API-DLL's worden niet meegeleverd: die levert de hostapplicatie. De uitvoer staat in `dist/1.3.0` en in `Techbase Blocks 1.3.0.zip`. Versiegebonden DLL-mappen maken een update mogelijk zonder een reeds geladen oude DLL te overschrijven; herstart de CAD-toepassing om de nieuwe versie te laden.
+Gebruik een .NET 10 SDK en voer `Build.ps1 -Dotnet <pad-naar-dotnet.exe>` uit. De build haalt Autodesk AutoCAD.NET API 25.0.1 en 26.0.0 via NuGet op en bouwt de Excel-worker voor beide runtimes. De Autodesk API-DLL's worden niet meegeleverd: die levert de hostapplicatie. De uitvoer staat in `dist/1.3.1` en in `Techbase Blocks 1.3.1.zip`. Versiegebonden DLL-mappen maken een update mogelijk zonder een reeds geladen oude DLL te overschrijven; herstart de CAD-toepassing om de nieuwe versie te laden.

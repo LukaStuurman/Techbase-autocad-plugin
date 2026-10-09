@@ -1,0 +1,51 @@
+TBTEKSTVALIDATE
+(setvar "OSMODE" 0)
+(setvar "ATTREQ" 0)
+(setvar "INSUNITS" 0)
+_TBTEKSTLS
+0,0,0
+_TBTEKSTOV
+40,0,0
+(princ (strcat "\nBURST_TEXT_COUNT=" (itoa (sslength (ssget "_X" (list (cons 0 "MTEXT")))))))
+(setq text_a (entmakex (list (cons 0 "MTEXT") (cons 100 "AcDbEntity") (cons 8 "0") (cons 100 "AcDbMText") (cons 10 (list 100.0 20.0 0.0)) (cons 40 1.0) (cons 41 12.0) (cons 71 1) (cons 1 "Alpha"))))
+(setq text_b (entmakex (list (cons 0 "MTEXT") (cons 100 "AcDbEntity") (cons 8 "0") (cons 100 "AcDbMText") (cons 10 (list 100.0 24.0 0.0)) (cons 40 1.0) (cons 41 12.0) (cons 71 1) (cons 1 "Beta"))))
+_ZOOM
+_E
+_REGEN
+_TBTEKSTKOPIE
+100.2,19.5,0
+100.2,19.5,0
+100.2,23.5,0
+100.2,19.5,0
+
+0,40,0
+10,40,0
+0,50,0
+-10,50,0
+_Terug
+0,60,0
+0,70,0
+
+(princ (strcat "\nLAST_COPY_CONTENT=" (vl-princ-to-string (cdr (assoc 1 (entget (entlast)))))))
+(princ (strcat "\nLAST_COPY_ROTATION=" (vl-princ-to-string (cdr (assoc 50 (entget (entlast)))))))
+(princ (strcat "\nCOPY_TEXT_COUNT=" (itoa (sslength (ssget "_X" (list (cons 0 "MTEXT")))))))
+_TBTEKSTVERPLAATS
+100.2,19.5,0
+
+20,40,0
+10,40,0
+(princ (strcat "\nMOVE_LOCATION=" (vl-princ-to-string (cdr (assoc 10 (entget text_a))))))
+(princ (strcat "\nMOVE_ANCHOR=" (vl-princ-to-string (cdr (assoc 71 (entget text_a))))))
+_U
+(princ (strcat "\nUNDO_LOCATION=" (vl-princ-to-string (cdr (assoc 10 (entget text_a))))))
+_TBTEKSTVERPLAATS
+100.2,23.5,0
+
+0,80,0
+(princ)
+(princ (strcat "\nCANCEL_LOCATION=" (vl-princ-to-string (cdr (assoc 10 (entget text_b))))))
+_DXFOUT
+"C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/validation/Teksten/Richtingsteksten - commando.dxf"
+16
+_QUIT
+_Y

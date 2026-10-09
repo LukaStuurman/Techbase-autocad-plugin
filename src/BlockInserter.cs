@@ -46,7 +46,7 @@ internal static class BlockInserter
     }
 
     internal static List<ObjectId> Append(Database db, Transaction tx, BlockReference block, bool explode,
-        IReadOnlyDictionary<string, string>? values = null)
+        IReadOnlyDictionary<string, string>? values = null, bool burst = false)
     {
         var space = (BlockTableRecord)tx.GetObject(db.CurrentSpaceId, OpenMode.ForWrite);
         var inserted = new List<ObjectId> { space.AppendEntity(block) };
@@ -63,6 +63,7 @@ internal static class BlockInserter
             tx.AddNewlyCreatedDBObject(attribute, true);
             attribute.AdjustAlignment(db);
         }
+        if (burst) return BlockBurst.Append(db, tx, block);
         if (explode)
         {
             using var collection = new DBObjectCollection();
@@ -93,7 +94,7 @@ internal static class BlockInserter
         if (attribute.IsMTextAttribute) attribute.UpdateMTextAttribute();
     }
 
-    internal static bool Place(Document doc, Catalog catalog, BlockTool tool, Settings settings)
+    internal static bool Place(Document doc, Catalog catalog, BlockTool tool, Settings settings, bool burst = false)
     {
         var db = doc.Database;
         var ed = doc.Editor;
@@ -185,7 +186,7 @@ internal static class BlockInserter
                 attributes[att.Tag] = response.StringResult.Length == 0 ? att.TextString : response.StringResult;
             }
         }
-        Append(db, tx, block, tool.Explode, attributes);
+        Append(db, tx, block, tool.Explode, attributes, burst);
         tx.Commit();
         ed.WriteMessage("\nGeplaatst: " + tool.Name + " op laag " + block.Layer + ".");
         return true;
