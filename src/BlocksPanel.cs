@@ -10,6 +10,8 @@ namespace Techbase.Blocks;
 internal sealed class BlocksPanel : UserControl
 {
     private readonly CheckBox inherit = new() { Text = "Laag van object overnemen", AutoSize = true };
+    private readonly CheckBox chosenLayer = new() { Name = "UseChosenBlockLayer", Text = "Gekozen laag gebruiken", AutoSize = true, Margin = new Padding(0, 6, 8, 3) };
+    private readonly ComboBox blockLayer = new() { Name = "ChosenBlockLayer", DropDownStyle = ComboBoxStyle.DropDownList, Width = 150 };
     private readonly CheckBox repeat = new() { Text = "Herhaald plaatsen (Esc stopt)", AutoSize = true };
     private readonly TextBox search = new() { Dock = DockStyle.Fill, PlaceholderText = "Zoek een block..." };
     private readonly ComboBox groups = new() { DropDownStyle = ComboBoxStyle.DropDownList, Dock = DockStyle.Fill };
@@ -30,7 +32,14 @@ internal sealed class BlocksPanel : UserControl
         var layout = new TableLayoutPanel { Dock = DockStyle.Fill, ColumnCount = 1, RowCount = 9, Padding = new Padding(8) };
         for (var i = 0; i < 9; i++) layout.RowStyles.Add(i == 7 ? new RowStyle(SizeType.Percent, 100) : new RowStyle(SizeType.AutoSize));
         layout.Controls.Add(new Label { Text = "TECHBASE  /  BLOCKS", Font = new Font(Font, FontStyle.Bold), AutoSize = true, Padding = new Padding(0, 4, 0, 8) }, 0, 0);
-        layout.Controls.Add(inherit, 0, 1);
+        var layerOptions = new FlowLayoutPanel { AutoSize = true, Dock = DockStyle.Fill, FlowDirection = FlowDirection.TopDown, WrapContents = false };
+        layerOptions.Controls.Add(inherit);
+        var layerChoice = new FlowLayoutPanel { AutoSize = true, Dock = DockStyle.Fill, WrapContents = true };
+        for (var i = 1; i <= 12; i++) blockLayer.Items.Add("Richting " + i);
+        blockLayer.Items.Add("Bestaande kabel");
+        layerChoice.Controls.Add(chosenLayer); layerChoice.Controls.Add(blockLayer);
+        layerOptions.Controls.Add(layerChoice);
+        layout.Controls.Add(layerOptions, 0, 1);
         layout.Controls.Add(repeat, 0, 2);
         var settings = new FlowLayoutPanel { AutoSize = true, Dock = DockStyle.Fill };
         settings.Controls.Add(new Label { Text = "Zoekafstand:", AutoSize = true, Padding = new Padding(0, 5, 0, 0) });
@@ -56,6 +65,14 @@ internal sealed class BlocksPanel : UserControl
         footer.Controls.Add(place); footer.Controls.Add(status);
         layout.Controls.Add(footer, 0, 8); Controls.Add(layout);
         inherit.CheckedChanged += (_, _) => { if (!refreshing) { Plugin.Preferences.InheritLayer = inherit.Checked; Plugin.UpdateSettings(); } };
+        chosenLayer.CheckedChanged += (_, _) => { if (!refreshing) { Plugin.Preferences.UseChosenBlockLayer = chosenLayer.Checked; Plugin.UpdateSettings(); RefreshSettings(); } };
+        blockLayer.SelectedIndexChanged += (_, _) =>
+        {
+            if (refreshing || blockLayer.SelectedIndex < 0) return;
+            Plugin.Preferences.ChosenBlockLayer = blockLayer.SelectedIndex == 12 ? 0 : blockLayer.SelectedIndex + 1;
+            Plugin.UpdateSettings();
+            RefreshLayerStatus();
+        };
         repeat.CheckedChanged += (_, _) => { if (!refreshing) { Plugin.Preferences.Repeat = repeat.Checked; Plugin.UpdateSettings(); } };
         tolerance.ValueChanged += (_, _) => { if (!refreshing) { Plugin.Preferences.Tolerance = (double)tolerance.Value; Plugin.UpdateSettings(); } };
         search.TextChanged += (_, _) => Filter(); groups.SelectedIndexChanged += (_, _) => Filter();
@@ -74,10 +91,15 @@ internal sealed class BlocksPanel : UserControl
     {
         refreshing = true;
         inherit.Checked = Plugin.Preferences.InheritLayer;
+        chosenLayer.Checked = Plugin.Preferences.UseChosenBlockLayer;
+        inherit.Enabled = !chosenLayer.Checked;
+        blockLayer.Enabled = chosenLayer.Checked;
+        blockLayer.SelectedIndex = Plugin.Preferences.ChosenBlockLayer == 0 ? 12 : Plugin.Preferences.ChosenBlockLayer - 1;
         repeat.Checked = Plugin.Preferences.Repeat;
         tolerance.Value = Math.Clamp((decimal)Plugin.Preferences.Tolerance, tolerance.Minimum, tolerance.Maximum);
         refreshing = false;
         RefreshRotation();
+        RefreshLayerStatus();
     }
     private void RefreshRotation()
     {
@@ -121,8 +143,11 @@ internal sealed class BlocksPanel : UserControl
         }
         list.EndUpdate();
         RefreshRotation();
-        status.Text = list.Items.Count + " blocks · dubbelklik om te plaatsen\nTijdens plaatsen: Object = laag en plaats aanwijzen";
+        RefreshLayerStatus();
     }
+    private void RefreshLayerStatus() => status.Text = list.Items.Count + " blocks · dubbelklik om te plaatsen\n" +
+        (Plugin.Preferences.UseChosenBlockLayer ? "Gekozen laag: " + BlockLayers.Name(Plugin.Preferences.ChosenBlockLayer) + "\nObject = plaats aanwijzen; gekozen laag blijft gelden" :
+            "Tijdens plaatsen: Object = laag en plaats aanwijzen");
     private void InsertSelected()
     {
         if (list.SelectedItems.Count == 0) { status.Text = "Selecteer eerst een block."; return; }

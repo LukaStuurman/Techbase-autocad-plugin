@@ -17,7 +17,7 @@ internal static class DirectionText
     internal static string PlaceTemplate(Autodesk.AutoCAD.ApplicationServices.Document doc, bool ov)
     {
         var catalog = new Catalog(Plugin.DefaultPalette); var tool = Template(catalog, ov);
-        return BlockInserter.Place(doc, catalog, tool, Plugin.Preferences, burst: true)
+        return BlockInserter.Place(doc, catalog, tool, Plugin.Preferences, burst: true, useBlockLayerSelection: false)
             ? tool.Name + " als losse teksten geplaatst." : "Tekst plaatsen geannuleerd.";
     }
     private static MText Read(Database db, Transaction tx, ObjectId id)

@@ -19,6 +19,7 @@ internal static class Diagnostics
         RotationSettingsDiagnostics.Run(catalog, output);
         PlacementDiagnostics.Run(catalog, output);
         TypographyDiagnostics.Run(catalog, output);
+        BlockLayerDiagnostics.Run(catalog, output);
         var checks = new List<string>();
         var results = new List<object>();
         void Check(bool condition, string name) { if (!condition) throw new InvalidOperationException("Test mislukt: " + name); checks.Add(name); }

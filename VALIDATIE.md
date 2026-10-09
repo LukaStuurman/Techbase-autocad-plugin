@@ -1,3 +1,11 @@
+## Blocklaag kiezen - versie 1.5.0
+
+- Nieuwe aan/uit-schakelaar en keuzelijst in Blocks: Richting 1 t/m 12 en `01 - Bestaande kabel`.
+- Gekozen laag heeft voorrang; automatische laagovername blijft onthouden en wordt hersteld zodra de keuze uitgaat. Keuze en schakelaar blijven na herladen bewaard. LS/OV-burst in Richtingen blijft zijn eigen lagen gebruiken.
+- 37 service-/UI-controles: alle 13 lagen met hun echte bronkleuren, geplaatste blocks en laag-0-attributen; bestaande aangepaste kleur beschermd; vergrendelde/uitgeschakelde/bevroren laag gemeld; oude en ongeldige instellingen verwerkt; toggle en keuzelijst getest.
+- 29 werkelijke CAD-commandocontroles voor richting 1, 10, 12 en Bestaande kabel: plaatsen op een andere kabel houdt de gekozen laag, Object behoudt de laag, draaien werkt, Undo en Escape plaatsen geen extra block, UCS-positie klopt en CLAYER blijft intact. De opgeslagen DXF's zijn onafhankelijk teruggelezen. Ook geslaagd via automatisch laden van de lokaal geinstalleerde 1.5.0-bundle.
+- De 410 algemene blockcontroles, bronversie-/plaatsvoorbeeld-/draai-instellingcontroles en 749 lettertypecontroles geslaagd in AutoCAD 2026 Core Console. Beide API-builds voor 2025/2026 en 2027; geen afzonderlijke interactieve 2025/2027- of Civil 3D-test.
+
 ## Arial Nova Light - versie 1.4.0
 
 - Beide builds voor AutoCAD/Civil 3D 2025-2026 (R25) en 2027 (R26) samengesteld. De daadwerkelijke CAD-controle is uitgevoerd met de AutoCAD 2026 Core Console; geen afzonderlijke interactieve 2025/2027- of Civil 3D-test.

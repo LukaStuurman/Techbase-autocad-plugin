@@ -7,9 +7,11 @@ Plugin voor AutoCAD en Civil 3D op Windows met vier tabs:
 - **Enexis kabelchecker**: de richtingbouwer uit [AutoCAD-Enexis-kabels-checker](https://github.com/LukaStuurman/AutoCAD-Enexis-kabels-checker), inclusief vier kaders, gescheiden verbruik/opwek, stationsopslag en officiële Excel-export. Onderin staat **Richting-info plaatsen** voor de stroom- en lengteteksten van de geselecteerde richting.
 - **Richtingen**: kies 1 t/m 12, teken een richtingpolyline of zet bestaande 2D-polylines/LINE-lijnen om. Opmaak: global width 0,1, DASHED en lijntypeschaal 0,0035. Plaats LS/OV-richtingsteksten als losse tekst en kopieer of verplaats een gekozen tekststapel leesbaar langs de kabel.
 
+Blocks heeft ook een aan/uit-schakelaar voor een vaste laagkeuze: Richting 1 t/m 12 of Bestaande kabel. Deze keuze heeft voorrang op automatische laagovername en wordt bewaard.
+
 ## Installeren
 
-Download **Techbase Blocks 1.4.0.zip** uit de [release v1.4.0](https://github.com/LukaStuurman/Techbase-autocad-plugin/releases/tag/v1.4.0), pak hem uit en dubbelklik **Installeren.cmd**. De installer controleert en installeert ook **Arial Nova Light** via het officiele Microsoft Store-pakket als het lettertype ontbreekt. Geen aparte fontinstallatie nodig. Start AutoCAD of Civil 3D opnieuw en voer **TECHBASE** uit.
+Download **Techbase Blocks 1.5.0.zip** uit de [release v1.5.0](https://github.com/LukaStuurman/Techbase-autocad-plugin/releases/tag/v1.5.0), pak hem uit en dubbelklik **Installeren.cmd**. De installer controleert en installeert ook **Arial Nova Light** via het officiele Microsoft Store-pakket als het lettertype ontbreekt. Geen aparte fontinstallatie nodig. Start AutoCAD of Civil 3D opnieuw en voer **TECHBASE** uit.
 
 Nieuwe plaatsingen gebruiken eigen bronblocks, ook als de tekening al een oudere blockdefinitie met dezelfde naam bevat. Bestaande plaatsingen blijven intact.
 
@@ -33,6 +35,6 @@ Gebruik Windows en een .NET 10 SDK:
 
 De benodigde XTP, afbeeldingen en bron-DWG staan in `Assets/Palette`. De kader-Excels en Enexis-bronnen staan onder `vendor/AutoCAD-Enexis-kabels-checker`. De clone heeft daardoor geen lokale Techbase-map of submodule nodig. NuGet haalt de Autodesk API-referenties en Excel-dependencies op. AutoCAD zelf blijft nodig voor de CAD-engine-tests.
 
-De build maakt `dist/1.4.0/Techbase.Blocks.bundle` en `Techbase Blocks 1.4.0.zip`. Een andere bronpalette kan met `-PaletteRoot <map>` worden opgegeven.
+De build maakt `dist/1.5.0/Techbase.Blocks.bundle` en `Techbase Blocks 1.5.0.zip`. Een andere bronpalette kan met `-PaletteRoot <map>` worden opgegeven.
 
 De bronrepo bevat ook de afgeronde oudere installatiepakketten. Compiler-caches, tijdelijke bestanden en interne Git-metadata van de meegeleverde Enexis-bron worden niet opgenomen.

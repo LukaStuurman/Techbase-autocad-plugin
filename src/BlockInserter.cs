@@ -95,18 +95,21 @@ internal static class BlockInserter
         Typography.Apply(attribute, definition.TextStyleId);
     }
 
-    internal static bool Place(Document doc, Catalog catalog, BlockTool tool, Settings settings, bool burst = false)
+    internal static bool Place(Document doc, Catalog catalog, BlockTool tool, Settings settings, bool burst = false,
+        bool useBlockLayerSelection = true)
     {
         var db = doc.Database;
         var ed = doc.Editor;
         using var working = new WorkingDatabaseScope(db);
-        var inheritLayer = settings.InheritLayer;
+        var chosenLayer = useBlockLayerSelection && settings.UseChosenBlockLayer;
+        var inheritLayer = settings.InheritLayer && !chosenLayer;
         var tolerance = settings.Tolerance;
         var rotationMode = settings.GetRotationMode(tool);
         // Insertion entities are transactional; imported definitions may remain as with ordinary INSERT.
         using var tx = db.TransactionManager.StartTransaction();
         var definition = Import(db, catalog, tool);
-        var defaultLayer = DefaultLayer(db, tx, tool.Layer);
+        var defaultLayer = chosenLayer ? BlockLayers.Ensure(db, tx, settings.ChosenBlockLayer) : DefaultLayer(db, tx, tool.Layer);
+        if (chosenLayer) ed.WriteMessage("\nGekozen blocklaag: " + BlockLayers.Name(settings.ChosenBlockLayer) + ".");
         using var block = CreateReference(db, tx, definition, tool, Point3d.Origin, defaultLayer, ed.CurrentUserCoordinateSystem);
         using var jig = new PlacementJig(db, tx, block, tool.Rotation);
         var picked = Array.Empty<ObjectId>();
@@ -152,7 +155,7 @@ internal static class BlockInserter
             var selection = ed.GetEntity("\nSelecteer het object op de gewenste plaats: ");
             if (selection.Status != PromptStatus.OK) return false;
             var target = (Entity)tx.GetObject(selection.ObjectId, OpenMode.ForRead);
-            explicitLayer = LayerResolver.CheckLayer(tx, target.LayerId).LayerId;
+            if (!chosenLayer) explicitLayer = LayerResolver.CheckLayer(tx, target.LayerId).LayerId;
             jig.MoveTo(target is Curve curve ? curve.GetClosestPointTo(selection.PickedPoint, false) : selection.PickedPoint);
         }
         else if (result.Status != PromptStatus.OK) return false;

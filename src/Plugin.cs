@@ -76,7 +76,8 @@ public sealed class Plugin : IExtensionApplication
     {
         Preferences.InheritLayer = !Preferences.InheritLayer;
         UpdateSettings();
-        AcApp.DocumentManager.MdiActiveDocument?.Editor.WriteMessage("\nTechbase: laag overnemen " + (Preferences.InheritLayer ? "AAN" : "UIT") + ".");
+        AcApp.DocumentManager.MdiActiveDocument?.Editor.WriteMessage("\nTechbase: laag overnemen " + (Preferences.InheritLayer ? "AAN" : "UIT") + "." +
+            (Preferences.UseChosenBlockLayer ? " Gekozen blocklaag heeft voorrang zolang die aanstaat." : ""));
     }
     [CommandMethod("TBRICHTINGEN", CommandFlags.Modal)]
     public void ShowDirections() { Show(); if (palette != null) palette.Activate(3); }

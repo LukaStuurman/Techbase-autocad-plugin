@@ -12,6 +12,8 @@ public enum BlockRotationMode { None, BeforePoint, AfterPoint }
 public sealed class Settings
 {
     public bool InheritLayer { get; set; } = true;
+    public bool UseChosenBlockLayer { get; set; }
+    public int ChosenBlockLayer { get; set; } = 1;
     public double Tolerance { get; set; } = 0.05;
     public string? PalettePath { get; set; }
     public bool Repeat { get; set; }
@@ -35,6 +37,7 @@ public sealed class Settings
             var settings = JsonSerializer.Deserialize<Settings>(File.ReadAllText(FilePath)) ?? new Settings();
             if (!double.IsFinite(settings.Tolerance) || settings.Tolerance <= 0) settings.Tolerance = 0.05;
             if (settings.SelectedDirectionNumber is < 1 or > 12) settings.SelectedDirectionNumber = 1;
+            if (settings.ChosenBlockLayer is < 0 or > 12) settings.ChosenBlockLayer = 1;
             settings.BlockRotationModes = new Dictionary<string, BlockRotationMode>(
                 settings.BlockRotationModes ?? new(), StringComparer.OrdinalIgnoreCase);
             return settings;

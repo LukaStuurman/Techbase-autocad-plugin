@@ -1,4 +1,4 @@
-# Techbase Blocks 1.4.0
+# Techbase Blocks 1.5.0
 
 Gebruik vier tabs in AutoCAD en Civil 3D voor Windows: Blocks, Lichtmasten, Enexis kabelchecker en Richtingen.
 
@@ -19,6 +19,10 @@ Alle teksten in de vier plugintabs en alle blockteksten, attributen, losse richt
 Bestaande tekststijlen, oude blockdefinities en bron-DWG's blijven intact. Nieuwe blocks krijgen een eigen fontversie en eigen tekststijl. De officiele Microsoft-fontbestanden worden op de computer geinstalleerd en niet in deze openbare release verspreid.
 
 ## Blocks plaatsen
+
+- **Gekozen laag gebruiken**: kies **Richting 1 t/m 12** of **Bestaande kabel**. De schakelaar zet deze laagkeuze aan of uit; keuze en schakelaar blijven na herstart bewaard. De echte laagnamen zijn `Aansluiting LS K01` t/m `Aansluiting LS K12` en `01 - Bestaande kabel`.
+- Als de gekozen laag aanstaat, heeft die voorrang. **Laag van object overnemen** is dan tijdelijk grijs; uitzetten herstelt de eerdere instelling. **Object** blijft bruikbaar om een plaats op een kabel aan te wijzen, terwijl de gekozen laag behouden blijft. Het voorbeeld, het geplaatste block en de attributen die op laag 0 staan volgen deze laag.
+- Ontbrekende gekozen lagen worden met hun bronkleur en laaginstellingen uit de meegeleverde Techbase-template gehaald. Bestaande laagkleuren blijven intact. Vergrendelde, verborgen of bevroren gekozen lagen geven een melding. De huidige tekenlaag wordt niet gewijzigd. De keuze geldt voor blockplaatsen in Blocks; de LS/OV-burstknoppen in Richtingen behouden hun eigen richtingslagen.
 
 - Zoek of kies een groep. Dubbelklik op een block of klik **Plaatsen**.
 - Selecteer een block en kies onder de lijst **Eerst draaien, dan invoegpunt**, **Draaien na het invoegpunt** of **Niet automatisch draaien**. De keuze wordt direct per paletteknop opgeslagen en blijft na herstart behouden. Bij eerst draaien zie je het voorbeeld in het midden van de huidige weergave; na de hoekkeuze volgt het gedraaide voorbeeld de cursor naar het invoegpunt.
@@ -139,4 +143,4 @@ De concrete testresultaten en resterende praktijktests staan in `VALIDATIE.md` b
 
 ## Opnieuw bouwen
 
-Gebruik een .NET 10 SDK en voer `Build.ps1 -Dotnet <pad-naar-dotnet.exe>` uit. De build haalt Autodesk AutoCAD.NET API 25.0.1 en 26.0.0 via NuGet op en bouwt de Excel-worker voor beide runtimes. De Autodesk API-DLL's worden niet meegeleverd: die levert de hostapplicatie. De uitvoer staat in `dist/1.4.0` en in `Techbase Blocks 1.4.0.zip`. Versiegebonden DLL-mappen maken een update mogelijk zonder een reeds geladen oude DLL te overschrijven; herstart de CAD-toepassing om de nieuwe versie te laden.
+Gebruik een .NET 10 SDK en voer `Build.ps1 -Dotnet <pad-naar-dotnet.exe>` uit. De build haalt Autodesk AutoCAD.NET API 25.0.1 en 26.0.0 via NuGet op en bouwt de Excel-worker voor beide runtimes. De Autodesk API-DLL's worden niet meegeleverd: die levert de hostapplicatie. De uitvoer staat in `dist/1.5.0` en in `Techbase Blocks 1.5.0.zip`. Versiegebonden DLL-mappen maken een update mogelijk zonder een reeds geladen oude DLL te overschrijven; herstart de CAD-toepassing om de nieuwe versie te laden.

@@ -738,7 +738,7 @@
     "kopieren beschermt de bronstijl en fontoverride",
     "gekopieerde richtingstekst gebruikt Light zonder inhoud/kleur te verliezen",
     "verplaatste richtingstekst krijgt eveneens Light",
-    "BlocksPanel: alle 22 controles gebruiken de echte Light-familie",
+    "BlocksPanel: alle 26 controles gebruiken de echte Light-familie",
     "tabellen en kolomkoppen gebruiken Light",
     "later toegevoegde controls behouden grootte en krijgen Light",
     "LightmastPanel: alle 18 controles gebruiken de echte Light-familie",

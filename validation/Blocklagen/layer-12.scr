@@ -1,0 +1,44 @@
+(setvar "ATTREQ" 0)
+(setvar "INSUNITS" 0)
+(setvar "OSMODE" 0)
+(entmake (list (cons 0 "LAYER") (cons 2 "TEST_MAIN") (cons 70 0) (cons 62 1)))
+(entmake (list (cons 0 "LINE") (cons 8 "TEST_MAIN") (cons 10 (list 0.0 0.0 0.0)) (cons 11 (list 20.0 0.0 0.0))))
+_TBPLAATS
+547536b5125144edbc8868691121d217
+5,0,0
+(princ (strcat "\nFIXED=" (cdr (assoc 8 (entget (entlast))))))
+_ZOOM
+_E
+_REGEN
+_TBPLAATS
+547536b5125144edbc8868691121d217
+_Object
+15,0,0
+(princ (strcat "\nOBJECT=" (cdr (assoc 8 (entget (entlast))))))
+_TBPLAATS
+9dbea1c0c575423e80d3feede50deff1
+30,20,0
+90
+(princ (strcat "\nROTATED=" (cdr (assoc 8 (entget (entlast))))))
+(princ (strcat "\nCURRENT=" (getvar "CLAYER")))
+(princ (strcat "\nCOLOR=" (itoa (cdr (assoc 62 (tblsearch "LAYER" "Aansluiting LS K12"))))))
+_U
+_TBPLAATS
+9dbea1c0c575423e80d3feede50deff1
+50,20,0
+(princ)
+(princ (strcat "\nINSERTS=" (itoa (sslength (ssget "_X" (list (cons 0 "INSERT")))))))
+_UCS
+_Z
+90
+_TBPLAATS
+547536b5125144edbc8868691121d217
+20,-70,0
+(princ (strcat "\nUCS=" (cdr (assoc 8 (entget (entlast))))))
+_UCS
+_W
+_DXFOUT
+"C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/validation/Blocklagen/layer-12.dxf"
+16
+_QUIT
+_Y

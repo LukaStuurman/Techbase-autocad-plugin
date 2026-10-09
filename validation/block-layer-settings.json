@@ -1,0 +1,10 @@
+{
+  "InheritLayer": true,
+  "UseChosenBlockLayer": true,
+  "ChosenBlockLayer": 0,
+  "Tolerance": 0.05,
+  "PalettePath": null,
+  "Repeat": false,
+  "SelectedDirectionNumber": 1,
+  "BlockRotationModes": {}
+}

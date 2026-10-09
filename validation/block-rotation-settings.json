@@ -1,5 +1,7 @@
 {
   "InheritLayer": false,
+  "UseChosenBlockLayer": false,
+  "ChosenBlockLayer": 1,
   "Tolerance": 0.123,
   "PalettePath": null,
   "Repeat": true,
