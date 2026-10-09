@@ -1,6 +1,16 @@
-# Controle versie 1.2.3 â€” 9 oktober 2026
+# Controle versie 1.2.4 â€” 9 oktober 2026
 
 De plugin is gebouwd en lokaal geÃ¯nstalleerd. De automatische controles draaien in de echte AutoCAD 2026 Core Console (ACADVER 25.1), zonder de bron-DWG of gebruikersinstellingen te wijzigen.
+
+## Oude blocknamen en bronversies 1.2.4
+
+De import gebruikt eigen `TB_`-blockdefinities met een SHA-256-herkomst van de volledige bron-DWG. Gewone naamgenoten in de tekening worden niet hergebruikt of opnieuw gedefinieerd. Ook de gewone geneste blockdefinities krijgen een eigen bronnaam. Anonieme/dynamische records blijven onder beheer van AutoCAD. Lagen en tekststijlen volgen de bestaande importregels.
+
+Bij herhaald plaatsen en na het heropenen van de tekening wordt dezelfde gemarkeerde brondefinitie hergebruikt. Een gewijzigde bron krijgt een nieuwe definitie. Als een gegenereerde naam al bezet is zonder de juiste herkomst, wordt een eigen alternatief gekozen. De bron-DWG wordt alleen in geheugen hernoemd en blijft op schijf intact.
+
+**20 geslaagde controles** simuleren een echte oude paletteblock zonder attributen, controleren actuele attribuutteksten en dynamische bronfunctie bij een nieuwe plaatsing, beschermen de oude definitie en plaatsing en lezen de tekst terug uit opgeslagen CAD. Een afzonderlijke geneste fixture bevat oude definities onder zowel gewone als gegenereerde namen; een tweede bronversie wijzigt alleen de volgende import. Bronbestanden, eerdere versies en bestaande geometrie blijven intact.
+
+Bewijs: `validation/blockversies.json`, `Blockversies - controle.dwg`/`.dxf` en de afzonderlijke testbron. De bestaande block-, attribuut-, draai-, instelling-, laagovername- en Undo-controles slagen opnieuw. Volledige desktopbediening en de overige productversies moeten nog praktisch worden getest.
 
 ## Draai-instelling per block 1.2.3
 

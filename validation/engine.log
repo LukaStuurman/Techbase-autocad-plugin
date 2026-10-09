@@ -1,4 +1,4 @@
-Redirect stdout (file: C:\Users\LUKAST~1\AppData\Local\Temp\accc412642).
+Redirect stdout (file: C:\Users\LUKAST~1\AppData\Local\Temp\accc486842).
 AcCoreConsole: StdOutConsoleMode: processed-output: disabled,auto
 AutoCAD Core Engine Console - Copyright 2025 Autodesk, Inc.  All rights reserved. (W.122.0.0)
 
@@ -203,13 +203,22 @@ Loading AECC ETransmit...
 
 ************************MessageBox****************************
 Exception in c:\program files\autodesk\civil 3d 2026 object enabler\aecccorebase.crx ARX Command
-Unhandled Exception c0000027 (c0000027h) at address fdc4506dh
+Unhandled Exception c0000027 (c0000027h) at address a857506dh
 >>>Responding: OK.
 **************************************************************
 Loading AECC Plan Production...
 Loading AECC Hydrology...
 Loading AECC Bridge...
 Loading AECC Rail...
+CoreHeartBeat
+Unable to find the rules file: C:\C3DPipeRules.xml
+Unable to find the rules file: C:\C3DPipeRules.xml
+Unable to find the rules file: C:\C3DPipeRules.xml
+Unable to find the rules file: C:\C3DPipeRules.xml
+Unable to find the rules file: C:\C3DPipeRules.xml
+Unable to find the rules file: C:\C3DPipeRules.xml
+Unable to find the rules file: C:\C3DPipeRules.xml
+Unable to find the rules file: C:\C3DPipeRules.xml
 CoreHeartBeat
 Unable to find the rules file: C:\C3DPipeRules.xml
 Unable to find the rules file: C:\C3DPipeRules.xml

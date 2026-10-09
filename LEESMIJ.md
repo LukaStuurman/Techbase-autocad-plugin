@@ -1,4 +1,4 @@
-# Techbase Blocks 1.2.3
+# Techbase Blocks 1.2.4
 
 Gebruik drie tabs in AutoCAD en Civil 3D voor Windows: Blocks, Lichtmasten en Enexis kabelchecker.
 
@@ -32,7 +32,7 @@ De schakelaar regelt plaatsingen vanuit deze plugin. De oorspronkelijke palette 
 
 De installatie bevat een kopie van de XTP, bijbehorende afbeeldingen en de benodigde bron-DWG. Hierdoor werkt de meegeleverde palette zonder de gedeelde Techbase-map. De kopie is een momentopname; bronhashes staan in `Contents/Assets/bronversies.json`. **Vernieuwen** leest de huidige geselecteerde XTP opnieuw. Kies **Bron...** om een andere XTP te gebruiken; daarbij worden de eigen DWG-paden uit die XTP gebruikt, met ondersteuning voor `%UserProfileFolder%` en relatieve paden.
 
-Een blockdefinitie die al in de tekening bestaat wordt hergebruikt. Bestaande blocks worden niet opnieuw gedefinieerd of gewijzigd. Nieuwe blockdefinities worden afzonderlijk uit de bron-DWG geÃƒÂ¯mporteerd, inclusief dynamische eigenschappen en afhankelijkheden. Annuleren laat geen ingevoegd block achter. Invoegeenheden worden tussen block en tekening omgerekend als beide een eenheid hebben; de paletfactor (bijvoorbeeld Flatkast 0,5) wordt daarop toegepast.
+De plugin gebruikt eigen blockdefinities uit de gekozen bron-DWG, inclusief dynamische eigenschappen en geneste blocks. Een oud block met dezelfde naam wordt niet voor nieuwe plaatsingen gebruikt en bestaande plaatsingen worden niet gewijzigd. De CAD-definitienaam begint met `TB_` en bevat een bronversie; in de palette blijven de gewone namen staan. Dezelfde bronversie hergebruikt haar eigen definitie. Als de bron-DWG verandert, krijgen volgende plaatsingen een nieuwe definitie en blijven eerdere plaatsingen intact. Annuleren laat geen ingevoegd block achter. Invoegeenheden worden tussen block en tekening omgerekend als beide een eenheid hebben; de paletfactor (bijvoorbeeld Flatkast 0,5) wordt daarop toegepast.
 
 Instellingen staan in `%APPDATA%\Techbase\Blocks\settings.json` en blijven bewaard na herstart.
 
@@ -105,4 +105,4 @@ De concrete testresultaten en resterende praktijktests staan in `VALIDATIE.md` b
 
 ## Opnieuw bouwen
 
-Gebruik een .NET 10 SDK en voer `Build.ps1 -Dotnet <pad-naar-dotnet.exe>` uit. De build haalt Autodesk AutoCAD.NET API 25.0.1 en 26.0.0 via NuGet op en bouwt de Excel-worker voor beide runtimes. De Autodesk API-DLL's worden niet meegeleverd: die levert de hostapplicatie. De uitvoer staat in `dist/1.2.3` en in `Techbase Blocks 1.2.3.zip`. Versiegebonden DLL-mappen maken een update mogelijk zonder een reeds geladen oude DLL te overschrijven; herstart de CAD-toepassing om de nieuwe versie te laden.
+Gebruik een .NET 10 SDK en voer `Build.ps1 -Dotnet <pad-naar-dotnet.exe>` uit. De build haalt Autodesk AutoCAD.NET API 25.0.1 en 26.0.0 via NuGet op en bouwt de Excel-worker voor beide runtimes. De Autodesk API-DLL's worden niet meegeleverd: die levert de hostapplicatie. De uitvoer staat in `dist/1.2.4` en in `Techbase Blocks 1.2.4.zip`. Versiegebonden DLL-mappen maken een update mogelijk zonder een reeds geladen oude DLL te overschrijven; herstart de CAD-toepassing om de nieuwe versie te laden.

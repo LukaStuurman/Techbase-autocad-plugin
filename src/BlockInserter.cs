@@ -15,24 +15,7 @@ namespace Techbase.Blocks;
 internal static class BlockInserter
 {
     internal static ObjectId Import(Database target, Catalog catalog, BlockTool tool)
-    {
-        using (var tx = target.TransactionManager.StartTransaction())
-        {
-            var table = (BlockTable)tx.GetObject(target.BlockTableId, OpenMode.ForRead);
-            if (table.Has(tool.BlockName)) return table[tool.BlockName];
-        }
-        using var source = new Database(false, true);
-        source.ReadDwgFile(catalog.ResolveSource(tool), FileOpenMode.OpenForReadAndAllShare, true, null);
-        source.CloseInput(true);
-        using var tr = source.TransactionManager.StartTransaction();
-        var blocks = (BlockTable)tr.GetObject(source.BlockTableId, OpenMode.ForRead);
-        if (!blocks.Has(tool.BlockName)) throw new InvalidOperationException("Block '" + tool.BlockName + "' ontbreekt in " + catalog.ResolveSource(tool));
-        var sourceId = blocks[tool.BlockName];
-        var map = new IdMapping();
-        source.WblockCloneObjects(new ObjectIdCollection(new[] { sourceId }), target.BlockTableId, map, DuplicateRecordCloning.Ignore, false);
-        tr.Commit();
-        return map[sourceId].Value;
-    }
+        => SourceBlockImporter.Import(target, catalog.ResolveSource(tool), tool.BlockName);
 
     internal static ObjectId DefaultLayer(Database db, Transaction tx, string name)
     {

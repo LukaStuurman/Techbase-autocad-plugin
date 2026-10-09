@@ -1,0 +1,28 @@
+{
+  "Status": "PASS",
+  "SourceBlock": "MOF bestaand-nieuw",
+  "Dynamic": true,
+  "AttributeCount": 1,
+  "Checks": [
+    "oude plaatsing zonder tekst als echte uitgangssituatie",
+    "plugin gebruikt eigen brondefinitie bij gelijke blocknaam",
+    "nieuwe plaatsing bevat alle actuele attribuutteksten",
+    "dynamische bronfunctie behouden naast oude versie",
+    "oude blockdefinitie en geometrie ongewijzigd",
+    "bestaande plaatsing niet veranderd of van tekst voorzien",
+    "dezelfde bronversie hergebruikt eigen definitie",
+    "bronherkomst blijft na opslaan en heropenen bruikbaar",
+    "actuele tekst teruggelezen uit opgeslagen CAD",
+    "meegeleverde bron-DWG niet gewijzigd",
+    "bezette pluginnaam zonder herkomst wordt niet vertrouwd",
+    "geneste brondefinitie krijgt ook eigen versie",
+    "nieuwe geneste tekst ondanks twee naamconflicten",
+    "bestaande definitie beschermd: Parent",
+    "bestaande definitie beschermd: Child",
+    "bestaande definitie beschermd: TB_Parent__AB8242BFA7D1_71540074",
+    "bestaande definitie beschermd: TB_Child__AB8242BFA7D1_31AE76FA",
+    "eigen alternatief bij naamconflict wordt hergebruikt",
+    "gewijzigde bron krijgt automatisch nieuwe definitie",
+    "eerdere bronversie blijft ongewijzigd"
+  ]
+}
