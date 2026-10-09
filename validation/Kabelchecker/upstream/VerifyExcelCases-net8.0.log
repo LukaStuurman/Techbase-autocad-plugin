@@ -1,0 +1,21 @@
+  Determining projects to restore...
+  Restored C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase.Blocks\vendor\AutoCAD-Enexis-kabels-checker\src\Enexis.KabelChecker.Core\Enexis.KabelChecker.Core.csproj (in 183 ms).
+  Restored C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase.Blocks\vendor\AutoCAD-Enexis-kabels-checker\tools\VerifyExcelCases\VerifyExcelCases.csproj (in 191 ms).
+  Enexis.KabelChecker.Core -> C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase.Blocks\vendor\AutoCAD-Enexis-kabels-checker\src\Enexis.KabelChecker.Core\bin\Release\net8.0\Enexis.KabelChecker.Core.dll
+  VerifyExcelCases -> C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase.Blocks\vendor\AutoCAD-Enexis-kabels-checker\tools\VerifyExcelCases\bin\Release\net8.0\VerifyExcelCases.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:01.44
+OK - Controle_kabel_evenredig voorbeeld: 200 A gG / 180 A / Z=0,068688 Ω
+OK - Controle_kabel_laatste_helft voorbeeld: 160 A gG / 144 A / Z=0,082074 Ω
+OK - tekststroom '25' => 25 A
+OK - tekststroom '25,5' => 25,5 A
+OK - tekststroom '25.5 A' => 25,5 A
+OK - ambigue/ongeldige tekst geweigerd: 'groep 1: 25,5 A'
+OK - ambigue/ongeldige tekst geweigerd: 'geen stroomwaarde'
+OK - virtuele knip => 72,5 (Start)
+OK - virtuele knip => 27,5 (End)
+Alle Excel-referentiecontroles, tekststroom-parsercontroles en virtuele-knipcontroles zijn geslaagd.

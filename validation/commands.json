@@ -1,0 +1,12 @@
+{
+  "Status": "PASS",
+  "Checks": [
+    "CHECK_ON=TEST_MAIN",
+    "CHECK_OFF=0",
+    "CHECK_OBJECT=TEST_MAIN",
+    "CHECK_CURRENT=0",
+    "CHECK_UCS_LAYER=TEST_MAIN",
+    "CHECK_UCS_POSITION=100,5",
+    "CHECK_AFTER_UNDO=3"
+  ]
+}

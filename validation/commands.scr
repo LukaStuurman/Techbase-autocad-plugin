@@ -1,0 +1,41 @@
+_NETLOAD
+"C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.2.1/Techbase.Blocks.bundle/Contents/R25-1.2.1/Techbase.Blocks.dll"
+(setvar "ATTREQ" 0)
+(setvar "INSUNITS" 0)
+(entmake (list (cons 0 "LAYER") (cons 2 "TEST_MAIN") (cons 70 0) (cons 62 1)))
+(entmake (list (cons 0 "LINE") (cons 8 "TEST_MAIN") (cons 10 (list 0.0 0.0 0.0)) (cons 11 (list 20.0 0.0 0.0))))
+_TBPLAATS
+547536b5125144edbc8868691121d217
+5,0,0
+(princ (strcat "\nCHECK_ON=" (cdr (assoc 8 (entget (entlast))))))
+_TBLAAG
+_TBPLAATS
+547536b5125144edbc8868691121d217
+10,0,0
+(princ (strcat "\nCHECK_OFF=" (cdr (assoc 8 (entget (entlast))))))
+_TBLAAG
+_ZOOM
+_E
+_REGEN
+_TBPLAATS
+547536b5125144edbc8868691121d217
+_Object
+15,0,0
+(princ (strcat "\nCHECK_OBJECT=" (cdr (assoc 8 (entget (entlast))))))
+(princ (strcat "\nCHECK_CURRENT=" (getvar "CLAYER")))
+(entmake (list (cons 0 "LINE") (cons 8 "TEST_MAIN") (cons 10 (list 100.0 0.0 0.0)) (cons 11 (list 100.0 20.0 0.0))))
+_UCS
+_Z
+90
+_TBPLAATS
+547536b5125144edbc8868691121d217
+5,-100,0
+(princ (strcat "\nCHECK_UCS_LAYER=" (cdr (assoc 8 (entget (entlast))))))
+(princ (strcat "\nCHECK_UCS_POSITION=" (rtos (car (cdr (assoc 10 (entget (entlast))))) 2 3) "," (rtos (cadr (cdr (assoc 10 (entget (entlast))))) 2 3)))
+_UCS
+_W
+_UNDO
+2
+(princ (strcat "\nCHECK_AFTER_UNDO=" (itoa (sslength (ssget "_X" (list (cons 0 "INSERT")))))))
+_QUIT
+_Y

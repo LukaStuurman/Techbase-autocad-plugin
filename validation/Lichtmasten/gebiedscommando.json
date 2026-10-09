@@ -1,0 +1,9 @@
+{
+  "Status": "PASS",
+  "Checks": [
+    "tekenen en Enter sluiten",
+    "Terug en Sluiten tijdens tekenen",
+    "bestaande polyline kiezen",
+    "tekenen bij gedraaid UCS"
+  ]
+}

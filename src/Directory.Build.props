@@ -1,0 +1,7 @@
+<Project>
+  <PropertyGroup>
+    <ApiSeries Condition="'$(ApiSeries)' == ''">R25</ApiSeries>
+    <BaseIntermediateOutputPath>obj/$(ApiSeries)/</BaseIntermediateOutputPath>
+    <DefaultItemExcludes>$(DefaultItemExcludes);obj/**;bin/**</DefaultItemExcludes>
+  </PropertyGroup>
+</Project>

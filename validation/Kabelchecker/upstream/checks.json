@@ -1,0 +1,27 @@
+[
+  {
+    "Tool": "VerifyExcelCases",
+    "Runtime": "net8.0",
+    "Status": "PASS"
+  },
+  {
+    "Tool": "VerifyKaderTemplates",
+    "Runtime": "net8.0-windows",
+    "Status": "PASS"
+  },
+  {
+    "Tool": "VerifyExcelIsolation",
+    "Runtime": "net8.0-windows",
+    "Status": "PASS"
+  },
+  {
+    "Tool": "VerifyKaderTemplates",
+    "Runtime": "net10.0-windows",
+    "Status": "PASS"
+  },
+  {
+    "Tool": "VerifyExcelIsolation",
+    "Runtime": "net10.0-windows",
+    "Status": "PASS"
+  }
+]

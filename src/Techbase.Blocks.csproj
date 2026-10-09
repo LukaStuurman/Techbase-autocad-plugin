@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <ApiSeries Condition="'$(ApiSeries)' == ''">R25</ApiSeries>
+    <TargetFramework Condition="'$(ApiSeries)' == 'R25'">net8.0-windows</TargetFramework>
+    <TargetFramework Condition="'$(ApiSeries)' == 'R26'">net10.0-windows</TargetFramework>
+    <ApiVersion Condition="'$(ApiSeries)' == 'R25'">25.0.1</ApiVersion>
+    <ApiVersion Condition="'$(ApiSeries)' == 'R26'">26.0.0</ApiVersion>
+    <UseWindowsForms>true</UseWindowsForms>
+    <UseWPF>true</UseWPF>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>Techbase.Blocks</AssemblyName>
+    <Version>1.2.1</Version>
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>bin/$(ApiSeries)/$(Configuration)/</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="AutoCAD.NET" Version="$(ApiVersion)" ExcludeAssets="runtime" PrivateAssets="all" />
+    <Compile Include="../vendor/AutoCAD-Enexis-kabels-checker/src/Enexis.KabelChecker.Core/*.cs" Link="Enexis/Core/%(Filename)%(Extension)" />
+    <Compile Include="../vendor/AutoCAD-Enexis-kabels-checker/src/Enexis.KabelChecker.AutoCAD/*.cs"
+      Exclude="../vendor/AutoCAD-Enexis-kabels-checker/src/Enexis.KabelChecker.AutoCAD/Plugin.cs;../vendor/AutoCAD-Enexis-kabels-checker/src/Enexis.KabelChecker.AutoCAD/KabelCheckerForm.cs;../vendor/AutoCAD-Enexis-kabels-checker/src/Enexis.KabelChecker.AutoCAD/KabelCheckerFormV2.cs;../vendor/AutoCAD-Enexis-kabels-checker/src/Enexis.KabelChecker.AutoCAD/CurrentLoadPanel.cs;../vendor/AutoCAD-Enexis-kabels-checker/src/Enexis.KabelChecker.AutoCAD/DeleteAllDirectionsButtonInstaller.cs;../vendor/AutoCAD-Enexis-kabels-checker/src/Enexis.KabelChecker.AutoCAD/DirectionInfoBlockPlacer.cs"
+      Link="Enexis/AutoCAD/%(Filename)%(Extension)" />
+    <EmbeddedResource Include="../vendor/AutoCAD-Enexis-kabels-checker/src/Enexis.KabelChecker.AutoCAD/Resources/*.xlsx" />
+  </ItemGroup>
+  <Target Name="ValidateSeries" BeforeTargets="PrepareForBuild">
+    <Error Condition="'$(ApiSeries)' != 'R25' and '$(ApiSeries)' != 'R26'" Text="ApiSeries moet R25 of R26 zijn." />
+  </Target>
+</Project>

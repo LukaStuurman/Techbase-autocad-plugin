@@ -1,0 +1,18 @@
+  Determining projects to restore...
+  Restored C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase.Blocks\vendor\AutoCAD-Enexis-kabels-checker\tools\VerifyKaderTemplates\VerifyKaderTemplates.csproj (in 233 ms).
+  2 of 3 projects are up-to-date for restore.
+  Enexis.KabelChecker.ExcelWorker -> C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase.Blocks\vendor\AutoCAD-Enexis-kabels-checker\src\Enexis.KabelChecker.ExcelWorker\bin\Release\net8.0-windows\Enexis.KabelChecker.ExcelWorker.dll
+  Enexis.KabelChecker.Core -> C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase.Blocks\vendor\AutoCAD-Enexis-kabels-checker\src\Enexis.KabelChecker.Core\bin\Release\net8.0\Enexis.KabelChecker.Core.dll
+  VerifyKaderTemplates -> C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase.Blocks\vendor\AutoCAD-Enexis-kabels-checker\tools\VerifyKaderTemplates\bin\Release\net8.0-windows\VerifyKaderTemplates.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:01.56
+OK - 2024 — Eea-0205.K 1.0: beide kabel/trafo-kolommen, faseverdeling, drie modi en stationexport van richtingen 1 + 12.
+OK - 2025 — Eea-0205.K 2.0: beide kabel/trafo-kolommen, faseverdeling, drie modi en stationexport van richtingen 1 + 12.
+OK - 2026 — Eea-0205.K 3.2: beide kabel/trafo-kolommen, faseverdeling, drie modi en stationexport van richtingen 1 + 12.
+OK - 2026 — Eea-0205.K 3.0: beide kabel/trafo-kolommen, faseverdeling, drie modi en stationexport van richtingen 1 + 12.
+OK - 2026 — Eea-0205.K 3.0: 49 opties in alle 12 richtingen, beide kabelprofielen, lege ongebruikte richtingen en behoud van templateformules.
+OK - 2026 — Eea-0205.K 3.2: 51 opties in alle 12 richtingen, beide kabelprofielen, lege ongebruikte richtingen en behoud van templateformules.

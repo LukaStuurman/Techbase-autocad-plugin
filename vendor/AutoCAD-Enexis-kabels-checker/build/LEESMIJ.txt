@@ -1,0 +1,62 @@
+ENEXIS KABEL CHECKER - AUTOCAD 2025 EN NIEUWER
+==============================================
+
+Gemaakt door Luka Stuurman
+
+INSTALLEREN
+1. Sluit AutoCAD volledig.
+2. Pak deze ZIP helemaal uit naar een normale map.
+3. Dubbelklik INSTALLEREN.bat.
+4. Bevestig de Windows UAC-melding.
+5. Start AutoCAD 2025, 2026, 2027 of een nieuwere compatibele AutoCAD-versie / AutoCAD-gebaseerd product.
+6. Typ ENEXISKABELCHECK in de AutoCAD-opdrachtregel.
+
+COMPATIBILITEIT
+- AutoCAD 2025/2026 gebruikt de .NET 8-build tegen AutoCAD API R25.
+- AutoCAD 2027 gebruikt de .NET 10-build tegen AutoCAD API R26.0.
+- Nieuwere AutoCAD-versies mogen automatisch de .NET 10-build laden zolang Autodesk binary compatibility met R26 behoudt.
+- Als Autodesk in een toekomstige release opnieuw de Managed .NET API/runtime binary-incompatibel maakt, is daarvoor een nieuwe buildtarget nodig. De release hoeft dan niet meer opnieuw van nul te worden ingericht: de bundle en CI zijn al opgesplitst per AutoCAD API-generatie.
+
+GEBRUIK KABELRICHTING
+- Kies een kabeltype, bijvoorbeeld 4*150mm2 Al.
+- Klik 'Hele polyline' om de volledige polylinelengte toe te voegen.
+- Of klik 'Deel tot knippunt': selecteer de polyline, klik een virtueel knippunt en klik daarna op de zijde die je wilt meenemen.
+- De originele AutoCAD-polyline wordt bij virtueel knippen niet gewijzigd.
+- Kabeltype en lengte zijn na toevoegen direct bewerkbaar in de tabel.
+- Onder de kabeltabel staat altijd de totale lengte van alle kabelsegmenten samen.
+- Gebruik 'Verwijder rij' om alleen het geselecteerde kabelsegment te verwijderen.
+- Klik 'Bereken richting'. Het resultaatblok toont alleen de hoogste toegestane gG-zekering.
+- Een wijziging aan kabeltype, kabellengte of belastingsprofiel maakt alleen de kabelberekening ongeldig. De reeds opgebouwde ontwerpstroomtabel blijft staan.
+- De onderste knop 'Reset' is een volledige reset: kabelsegmenten, zekeringresultaat, profiel, ontwerpstroomrijen, geselecteerde tekstobjecten en cirkelstraal worden teruggezet. De cirkelstraal gaat terug naar 3,0 m.
+
+ONTWERPSTROOM CONTROLEREN UIT TEXT/MTEXT
+1. Ontwerpstroom en kabelrichting zijn onafhankelijk. Je mag dus eerst ontwerpstroom selecteren en pas daarna de kabelrichting opbouwen/berekenen, of andersom.
+2. Gebruik 'Cirkel' voor de ronde selectieborstel. De standaard 'Cirkelstraal [m]' is 3,0 m.
+3. Een losse linkerklik voegt alle geldige TEXT/MTEXT-objecten binnen de cirkel toe.
+4. Houd de linker muisknop ingedrukt en sleep om de cirkel als echte selectieborstel te gebruiken. Alle geldige teksten waar de cirkel tijdens de sleepbeweging overheen komt worden meegenomen.
+5. Het loslaten van de linker muisknop wordt direct door AutoCAD als eindpunt van de sleepbeweging verwerkt. Er is dus geen extra linkerklik meer nodig na het slepen.
+6. De borstel vult ook tussenpunten tussen opeenvolgende cursorposities op, zodat snel slepen geen gaten in het selectiepad geeft.
+7. Houd SHIFT ingedrukt tijdens klikken of slepen om eerder geselecteerde TEXT/MTEXT-objecten binnen het borstelpad te DESELECTEREN.
+8. Tijdens de cirkelselectie blijven geselecteerde tekstobjecten met AutoCAD's selectie-highlight zichtbaar. Enter rondt de cirkelselectie af.
+9. Gebruik 'Handmatig' wanneer je liever de normale AutoCAD-meervoudige selectie gebruikt. Handmatig geselecteerde tekstobjecten worden eveneens op objectniveau bijgehouden en kunnen later met Shift+cirkel worden gedeselecteerd.
+10. Hetzelfde TEXT/MTEXT-object wordt niet dubbel geteld wanneer je het nogmaals selecteert.
+11. Nieuwe Cirkel- en Handmatig-selecties worden bij de bestaande ontwerpstroomtabel opgeteld.
+12. De tabel toont Ontwerpstroom [A], Aantal en Subtotaal [A]. Ontwerpstroom en Aantal zijn direct per cel bewerkbaar; Subtotaal wordt automatisch bijgewerkt.
+13. Je kunt vrij tussen meerdere rijen/cellen klikken. Een handmatige celwijziging bouwt de DataGridView niet opnieuw op en springt dus niet terug naar de bovenste rij.
+14. Gelijke ontwerpstroomwaarden die via tekstselectie binnenkomen worden samengevoegd tot één rij. Een handmatige celwijziging wordt in-place verwerkt zodat de actieve rij behouden blijft.
+15. Gebruik 'Verwijder rij' om alleen de rij van de actieve cel te verwijderen.
+16. Onder de tabel staat het gezamenlijke totaal. Zonder actuele kabelberekening blijft dit totaal gewoon zichtbaar; na 'Bereken richting' verschijnt direct de groen/rode vergelijking met de maximaal toegestane ontwerpstroom.
+17. Waarden zoals 25, 25,5, 25.5 en 25,5 A worden ondersteund.
+
+VERWIJDEREN
+Dubbelklik VERWIJDEREN.bat en start AutoCAD/Civil 3D daarna opnieuw.
+
+INSTALLATIEMAP
+C:\Program Files\Autodesk\ApplicationPlugins\EnexisKabelChecker.bundle
+
+VERSIE
+Zie de GitHub Release en ZIP-bestandsnaam voor het actuele versienummer.
+
+OPMERKING
+De bundle gebruikt Platform="AutoCAD*" en is daarmee ook bedoeld voor compatibele AutoCAD-gebaseerde producten, zoals Civil 3D van dezelfde API-generatie.
+De precieze selectie-highlight volgt de actieve AutoCAD-instellingen voor selectie-effecten.

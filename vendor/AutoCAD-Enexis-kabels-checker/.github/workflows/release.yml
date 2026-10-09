@@ -1,0 +1,138 @@
+name: Build AutoCAD installer release
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - release-version.txt
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-release:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 8 and .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+            10.0.x
+
+      - name: Read release version
+        id: version
+        shell: pwsh
+        run: |
+          $version = (Get-Content release-version.txt -Raw).Trim()
+          if ([string]::IsNullOrWhiteSpace($version)) { throw 'release-version.txt is leeg.' }
+          "version=$version" >> $env:GITHUB_OUTPUT
+          "tag=v$version" >> $env:GITHUB_OUTPUT
+
+      - name: Build, test and package AutoCAD 2025/2026/2027+
+        shell: pwsh
+        run: .\build.ps1 -Configuration Release
+
+      - name: Make installable ZIP
+        id: package
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $version = '${{ steps.version.outputs.version }}'
+          $releaseName = "EnexisKabelChecker-AutoCAD-2025-plus-v$version"
+          $releaseRoot = Join-Path 'dist' $releaseName
+          $builtBundle = 'dist\EnexisKabelChecker.bundle'
+
+          if (-not (Test-Path $builtBundle)) { throw 'Gebouwde EnexisKabelChecker.bundle ontbreekt.' }
+          if (Test-Path $releaseRoot) { Remove-Item $releaseRoot -Recurse -Force }
+          New-Item -ItemType Directory -Path $releaseRoot -Force | Out-Null
+
+          Copy-Item $builtBundle (Join-Path $releaseRoot 'EnexisKabelChecker.bundle') -Recurse -Force
+          Copy-Item 'build\INSTALLEREN.bat' $releaseRoot -Force
+          Copy-Item 'build\VERWIJDEREN.bat' $releaseRoot -Force
+          Copy-Item 'build\LEESMIJ.txt' $releaseRoot -Force
+
+          $zip = Join-Path 'dist' "$releaseName.zip"
+          if (Test-Path $zip) { Remove-Item $zip -Force }
+          Compress-Archive -Path "$releaseRoot\*" -DestinationPath $zip -CompressionLevel Optimal
+
+          if (-not (Test-Path $zip)) { throw 'Release-ZIP is niet aangemaakt.' }
+
+          foreach ($root in @(
+            (Join-Path $releaseRoot 'EnexisKabelChecker.bundle\Contents\Windows\net8'),
+            (Join-Path $releaseRoot 'EnexisKabelChecker.bundle\Contents\Windows\net10')
+          )) {
+            foreach ($required in @('Enexis.KabelChecker.AutoCAD.dll', 'Enexis.KabelChecker.Core.dll')) {
+              if (-not (Test-Path (Join-Path $root $required))) {
+                throw "$required ontbreekt in release-map $root."
+              }
+            }
+            if (Test-Path (Join-Path $root 'ClosedXML.dll')) {
+              throw "ClosedXML.dll mag niet naast de AutoCAD-plugin staan: $root"
+            }
+
+            $excel = Join-Path $root 'excel'
+            foreach ($required in @('Enexis.KabelChecker.ExcelWorker.dll', 'ClosedXML.dll')) {
+              if (-not (Test-Path (Join-Path $excel $required))) {
+                throw "$required ontbreekt in geïsoleerde Excel-map $excel."
+              }
+            }
+          }
+
+          "zip=$zip" >> $env:GITHUB_OUTPUT
+          Write-Host "Gemaakt: $zip"
+          Get-ChildItem $releaseRoot -Recurse | Select-Object FullName, Length
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: EnexisKabelChecker-AutoCAD-${{ steps.version.outputs.version }}
+          path: ${{ steps.package.outputs.zip }}
+
+      - name: Create GitHub Release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $tag = '${{ steps.version.outputs.tag }}'
+          $version = '${{ steps.version.outputs.version }}'
+          $zip = '${{ steps.package.outputs.zip }}'
+          $title = "Enexis Kabel Checker v$version - AutoCAD 2025/2026/2027+"
+          $notes = @"
+          Makkelijk installeerbare AutoCAD-release voor Windows 64-bit.
+
+          Compatibiliteit:
+          - AutoCAD 2025/2026: .NET 8-build tegen AutoCAD API R25.
+          - AutoCAD 2027 en nieuwer: .NET 10-build tegen AutoCAD API R26.0.
+
+          Ontwerpstroom voor alle vier kaders (1.0, 2.0, 3.0 en 3.2):
+          - Kies Automatisch (standaard), Verbruik of Opwek per kader. De keuze wordt met het station opgeslagen.
+          - Automatisch vergelijkt eerst de afzonderlijke totalen; kabelrichting en station gebruiken hun eigen kabel- en trafowaarden.
+          - Uit kader laat je het aansluittype en aantal direct kiezen; beide kabelkolommen en de gezamenlijke trafototalen zijn zichtbaar.
+          - De Excel-export gebruikt de gekozen stroombasis voor de kabel en vult de gezamenlijke aantallen op het trafoblad, ook bij 1.0 en 2.0.
+          - De export herstelt ontbrekende of externe richtingkoppelingen in het 3.2-trafoblad en de kabeltotaalformule.
+          - De verwijderde voorbeeldwaarde in 3.0 (1)!B46 blijft verwijderd.
+          - De build controleert alle 136 aansluitopties, drie stroombases, kabel- en trafototalen en opslag van stations op .NET 8 en .NET 10.
+          - De geïsoleerde Excel-worker voorkomt conflicten met Autodesk's eigen ClosedXML-versie.
+
+          Installeren:
+          1. Download en pak de ZIP uit.
+          2. Sluit AutoCAD volledig.
+          3. Dubbelklik INSTALLEREN.bat en bevestig de UAC-melding.
+          4. Start AutoCAD opnieuw.
+          5. Typ ENEXISKABELCHECK.
+
+          De ZIP bevat beide AutoCAD-builds en per build een geïsoleerde Excel-worker; AutoCAD kiest via PackageContents.xml automatisch de juiste plugin-DLL.
+          "@
+
+          gh release view $tag *> $null
+          if ($LASTEXITCODE -eq 0) {
+            gh release upload $tag $zip --clobber
+          } else {
+            gh release create $tag $zip --target $env:GITHUB_SHA --title $title --notes $notes
+          }

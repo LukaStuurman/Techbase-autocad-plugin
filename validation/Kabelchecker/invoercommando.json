@@ -1,0 +1,11 @@
+{
+  "Status": "PASS",
+  "Checks": [
+    "hele polyline en omrekening mm naar m",
+    "virtuele kniplengte",
+    "richtingnummer uit laagnaam",
+    "oorspronkelijke polyline behouden",
+    "richting-info via echte plaatsopdracht",
+    "twee teksten op eigen richtingslaag"
+  ]
+}

@@ -1,0 +1,110 @@
+Redirect stdout (file: C:\Users\LUKAST~1\AppData\Local\Temp\accc156842).
+AcCoreConsole: StdOutConsoleMode: processed-output: disabled,auto
+AutoCAD Core Engine Console - Copyright 2025 Autodesk, Inc.  All rights reserved. (W.122.0.0)
+
+Execution Path:
+C:\Program Files\Autodesk\AutoCAD 2026\accoreconsole.exe
+Current Directory: C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\validation
+
+Version Number: W.122.0.0 (UNICODE)
+LogFilePath has been set to the working folder.
+CoreHeartBeat
+Regenerating model.
+CoreHeartBeat
+Drawing created using acadiso.dwt from AutoCAD profile: <<Unnamed Profile>>
+**** System Variable Changed ****
+2 of the monitored system variables have changed from the preferred value. Use SYSVARMONITOR command to view changes.
+
+
+AutoCAD menu utilities loaded.
+Command:
+Command:
+
+Command:
+Command: _NETLOAD
+Assembly file name: "C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.2.1/Techbase.Blocks.bundle/Contents/R25-1.2.1/Techbase.Blocks.dll"
+
+Command: TBKABELVALIDATE
+CoreHeartBeat
+
+KABELCHECKER VALIDATION PASS: 49 checks.
+Command: (setvar "INSUNITS" 4)
+4
+
+Command: (entmake (list (cons 0 "LAYER") (cons 100 "AcDbSymbolTableRecord") (cons 100 "AcDbLayerTableRecord") (cons 2 "Aansluiting LS K03 150Al") (cons 70 0) (cons 62 3)))
+((0 . "LAYER") (100 . "AcDbSymbolTableRecord") (100 . "AcDbLayerTableRecord") (2 . "Aansluiting LS K03 150Al") (70 . 0) (62 . 3))
+
+Command: (entmake (list (cons 0 "LWPOLYLINE") (cons 100 "AcDbEntity") (cons 8 "Aansluiting LS K03 150Al") (cons 100 "AcDbPolyline") (cons 90 2) (cons 70 0) (cons 10 (list 0.0 0.0)) (cons 10 (list 100000.0 0.0))))
+((0 . "LWPOLYLINE") (100 . "AcDbEntity") (8 . "Aansluiting LS K03 150Al") (100 . "AcDbPolyline") (90 . 2) (70 . 0) (10 0.0 0.0) (10 100000.0 0.0))
+
+Command: _ZOOM
+
+Specify corner of window, enter a scale factor (nX or nXP), or
+[All/Center/Dynamic/Extents/Previous/Scale/Window/Object] <real time>: _E
+Regenerating model.
+
+Command: _REGEN
+Regenerating model.
+
+Command: TBKABELINPUTTEST
+
+Kabelselectietest [Volledig/Knip]: _Volledig
+
+Selecteer de polyline voor 4*150mm2 Al: 50000,0,0
+
+KABEL_FULL_INPUT_PASS
+Command: TBKABELINPUTTEST
+
+Kabelselectietest [Volledig/Knip]: _Knip
+
+Selecteer de polyline voor 4*150mm2 Al: 50000,0,0
+
+Klik het virtuele knippunt op of nabij de polyline: 75000,0,0
+
+Klik op het deel van de polyline waarvan je de lengte wilt gebruiken: 20000,0,0
+
+KABEL_CUT_INPUT_PASS
+Command: (princ (strcat "\nKABEL_ORIGINAL_ENDPOINT=" (rtos (car (cdr (last (vl-remove-if-not (function (lambda (x) (= (car x) 10))) (entget (entlast)))))) 2 0)))
+
+KABEL_ORIGINAL_ENDPOINT=100000"\nKABEL_ORIGINAL_ENDPOINT=100000"
+
+Command: (entmake (list (cons 0 "LAYER") (cons 100 "AcDbSymbolTableRecord") (cons 100 "AcDbLayerTableRecord") (cons 2 "Aansluiting LS K03") (cons 70 0) (cons 62 3)))
+((0 . "LAYER") (100 . "AcDbSymbolTableRecord") (100 . "AcDbLayerTableRecord") (2 . "Aansluiting LS K03") (70 . 0) (62 . 3))
+
+Command: _UCS
+
+Current ucs name:  *WORLD*
+Specify origin of UCS or [Face/NAmed/OBject/Previous/View/World/X/Y/Z/ZAxis] <World>: _Z
+
+Specify rotation angle about Z axis <90>: 90
+
+Command: TBINFOSETUPTEST
+
+Command: TBRICHTINGINFO
+
+Plaats de bovenste richting-info tekst K03: 5,-100,0
+Regenerating model.
+
+Richting 3: 57,8Amp. en 105,37Met. geplaatst op Aansluiting LS K03.
+Command: (princ (strcat "\nINFO_TEXT=" (cdr (assoc 1 (entget (entlast))))))
+
+INFO_TEXT=105,37Met."\nINFO_TEXT=105,37Met."
+
+Command: (princ (strcat "\nINFO_LAYER=" (cdr (assoc 8 (entget (entlast))))))
+
+INFO_LAYER=Aansluiting LS K03"\nINFO_LAYER=Aansluiting LS K03"
+
+Command: (princ (strcat "\nINFO_COUNT=" (itoa (sslength (ssget "_X" (list (cons 0 "TEXT") (cons 8 "Aansluiting LS K03")))))))
+
+INFO_COUNT=2"\nINFO_COUNT=2"
+
+Command: _UCS
+
+Current ucs name:  *NO NAME*
+Specify origin of UCS or [Face/NAmed/OBject/Previous/View/World/X/Y/Z/ZAxis] <World>: _W
+
+Command: _QUIT
+_Y
+Really want to discard all changes to drawing? <N> _Y
+
+LogFilePath has been restored to ''.

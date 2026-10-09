@@ -1,0 +1,52 @@
+import argparse
+import json
+import os
+import subprocess
+from package_paths import ROOT, dll
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--autoload', action='store_true')
+args = parser.parse_args()
+output = ROOT / 'validation'
+output.mkdir(exist_ok=True)
+script = output / 'kabelchecker.scr'
+load = '' if args.autoload else f'_NETLOAD\n"{dll().as_posix()}"\n'
+lines = [
+    'TBKABELVALIDATE',
+    '(setvar "INSUNITS" 4)',
+    '(entmake (list (cons 0 "LAYER") (cons 100 "AcDbSymbolTableRecord") (cons 100 "AcDbLayerTableRecord") (cons 2 "Aansluiting LS K03 150Al") (cons 70 0) (cons 62 3)))',
+    '(entmake (list (cons 0 "LWPOLYLINE") (cons 100 "AcDbEntity") (cons 8 "Aansluiting LS K03 150Al") (cons 100 "AcDbPolyline") (cons 90 2) (cons 70 0) (cons 10 (list 0.0 0.0)) (cons 10 (list 100000.0 0.0))))',
+    '_ZOOM', '_E', '_REGEN',
+    'TBKABELINPUTTEST', '_Volledig', '50000,0,0',
+    'TBKABELINPUTTEST', '_Knip', '50000,0,0', '75000,0,0', '20000,0,0',
+    '(princ (strcat "\\nKABEL_ORIGINAL_ENDPOINT=" (rtos (car (cdr (last (vl-remove-if-not (function (lambda (x) (= (car x) 10))) (entget (entlast)))))) 2 0)))',
+    '(entmake (list (cons 0 "LAYER") (cons 100 "AcDbSymbolTableRecord") (cons 100 "AcDbLayerTableRecord") (cons 2 "Aansluiting LS K03") (cons 70 0) (cons 62 3)))',
+    '_UCS', '_Z', '90',
+    'TBINFOSETUPTEST', 'TBRICHTINGINFO', '5,-100,0',
+    '(princ (strcat "\\nINFO_TEXT=" (cdr (assoc 1 (entget (entlast))))))',
+    '(princ (strcat "\\nINFO_LAYER=" (cdr (assoc 8 (entget (entlast))))))',
+    '(princ (strcat "\\nINFO_COUNT=" (itoa (sslength (ssget "_X" (list (cons 0 "TEXT") (cons 8 "Aansluiting LS K03")))))))',
+    '_UCS', '_W',
+    '_QUIT', '_Y'
+]
+script.write_text(load + '\n'.join(lines) + '\n', encoding='ascii')
+env = dict(os.environ, TECHBASE_TEST_OUTPUT=str(output), TECHBASE_SETTINGS_FILE=str(output / 'checker-settings.json'))
+with (output / 'kabelchecker.raw.log').open('wb') as log:
+    result = subprocess.run([r'C:\Program Files\Autodesk\AutoCAD 2026\accoreconsole.exe', '/s', str(script), '/l', 'en-US'], cwd=output, env=env, stdout=log, stderr=subprocess.STDOUT, timeout=180)
+clean = (output / 'kabelchecker.raw.log').read_bytes().decode('utf-16-le', errors='replace').replace('\x00', '').replace('\r\r', '\r')
+(output / 'kabelchecker.log').write_text(clean, encoding='utf-8')
+report = output / 'Kabelchecker/validatie-kabelchecker.json'
+if not report.exists() or report.stat().st_mtime < script.stat().st_mtime:
+    print(clean[-4500:])
+    failure = output / 'kabelchecker-failure.log'
+    if failure.exists():
+        print(failure.read_text(encoding='utf-8'))
+    raise SystemExit('No current passing cable-checker report.')
+data = json.loads(report.read_text(encoding='utf-8'))
+assert data['Status'] == 'PASS'
+for marker in ['KABEL_FULL_INPUT_PASS', 'KABEL_CUT_INPUT_PASS', 'KABEL_ORIGINAL_ENDPOINT=100000', 'INFO_TEXT=105,37Met.', 'INFO_LAYER=Aansluiting LS K03', 'INFO_COUNT=2']:
+    if marker not in clean:
+        print(clean[-5000:])
+        raise SystemExit('Missing cable input check: ' + marker)
+print(json.dumps({'Status': data['Status'], 'Checks': len(data['Checks']), 'Host': data['Host'], 'SourceCommit': data['SourceCommit']}))
+(output / 'Kabelchecker/invoercommando.json').write_text(json.dumps({'Status': 'PASS', 'Checks': ['hele polyline en omrekening mm naar m', 'virtuele kniplengte', 'richtingnummer uit laagnaam', 'oorspronkelijke polyline behouden', 'richting-info via echte plaatsopdracht', 'twee teksten op eigen richtingslaag']}, indent=2), encoding='utf-8')

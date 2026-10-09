@@ -1,0 +1,17 @@
+  Determining projects to restore...
+C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase.Blocks\vendor\AutoCAD-Enexis-kabels-checker\tools\VerifyExcelIsolation\VerifyExcelIsolation.csproj : warning NU1903: Package 'System.IO.Packaging' 6.0.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-f32c-w444-8ppv
+C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase.Blocks\vendor\AutoCAD-Enexis-kabels-checker\tools\VerifyExcelIsolation\VerifyExcelIsolation.csproj : warning NU1903: Package 'System.IO.Packaging' 6.0.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-qj66-m88j-hmgj
+  All projects are up-to-date for restore.
+C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase.Blocks\vendor\AutoCAD-Enexis-kabels-checker\tools\VerifyExcelIsolation\VerifyExcelIsolation.csproj : warning NU1903: Package 'System.IO.Packaging' 6.0.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-f32c-w444-8ppv [TargetFramework=net10.0-windows]
+C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase.Blocks\vendor\AutoCAD-Enexis-kabels-checker\tools\VerifyExcelIsolation\VerifyExcelIsolation.csproj : warning NU1903: Package 'System.IO.Packaging' 6.0.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-qj66-m88j-hmgj [TargetFramework=net10.0-windows]
+  VerifyExcelIsolation -> C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase.Blocks\vendor\AutoCAD-Enexis-kabels-checker\tools\VerifyExcelIsolation\bin\Release\net10.0-windows\VerifyExcelIsolation.dll
+
+Build succeeded.
+
+C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase.Blocks\vendor\AutoCAD-Enexis-kabels-checker\tools\VerifyExcelIsolation\VerifyExcelIsolation.csproj : warning NU1903: Package 'System.IO.Packaging' 6.0.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-f32c-w444-8ppv [TargetFramework=net10.0-windows]
+C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase.Blocks\vendor\AutoCAD-Enexis-kabels-checker\tools\VerifyExcelIsolation\VerifyExcelIsolation.csproj : warning NU1903: Package 'System.IO.Packaging' 6.0.0 has a known high severity vulnerability, https://github.com/advisories/GHSA-qj66-m88j-hmgj [TargetFramework=net10.0-windows]
+    2 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:00.56
+OK: Default ClosedXML 0.102.2.0; isolated worker ClosedXML 0.105.1.0.
