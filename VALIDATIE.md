@@ -1,3 +1,11 @@
+## Bijgewerkte BESTAANDE MOF - versie 1.5.1
+
+- Actuele gebruikersbron `Techbase template LS en OV.dwg` overgenomen in de pluginbibliotheek. SHA-256: `40955691265e0ef638434c265b549f7cae047b8a4c372e9c4a17dd78d54b7c4c` (1.114.306 bytes). De oorspronkelijke gebruikersbron is niet gewijzigd.
+- Vergelijking met versie 1.5.0: cirkel en arcering zijn kleiner; de cirkel staat nu op laag 0. Attribuut Bestaand behouden. Vergelijking afgeleid uit beide CAD-bronnen, zonder nieuwe geometrie te bedenken.
+- 9 gerichte controles geslaagd. Nieuwe brongeometrie, tekst en attributen vergeleken met de geimporteerde en daadwerkelijk opgeslagen nieuwe blockdefinitie. Zowel een oude gelijknamige definitie als een eerder geimporteerde pluginversie blijven beschermd; nieuwe plaatsingen gebruiken de nieuwe bronversie.
+- Opgeslagen DXF onafhankelijk gecontroleerd: nieuwe geplaatste definitie hoort bij bronhash `40955691265E`, cirkelradius 0,305 op laag 0; oude gelijknamige definitie blijft radius 0,5 op Knooppunt LS AM.
+- 410 algemene blockcontroles, plaatsvoorbeeld-/lettertype-/laagkeuzecontroles en 7 werkelijke plaats-/Undo-/UCS-controles geslaagd in AutoCAD 2026 Core Console. Builds voor R25 en R26. Geen afzonderlijke interactieve 2025/2027- of Civil 3D-test.
+
 ## Blocklaag kiezen - versie 1.5.0
 
 - Nieuwe aan/uit-schakelaar en keuzelijst in Blocks: Richting 1 t/m 12 en `01 - Bestaande kabel`.

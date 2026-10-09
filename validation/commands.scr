@@ -1,5 +1,5 @@
 _NETLOAD
-"C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.5.0/Techbase.Blocks.bundle/Contents/R25-1.5.0/Techbase.Blocks.dll"
+"C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.5.1/Techbase.Blocks.bundle/Contents/R25-1.5.1/Techbase.Blocks.dll"
 (setvar "ATTREQ" 0)
 (setvar "INSUNITS" 0)
 (entmake (list (cons 0 "LAYER") (cons 2 "TEST_MAIN") (cons 70 0) (cons 62 1)))
