@@ -43,6 +43,8 @@ internal static class ExistingMofUpdateDiagnostics
             using var tx = source.TransactionManager.StartTransaction();
             Typography.NormalizeSource(source, tx, "TB_COMPARE_MOF");
             var table = (BlockTable)tx.GetObject(source.BlockTableId, OpenMode.ForRead);
+            if (Plugin.Preferences.BlockTextHeight(tool.BlockName) is double height)
+                BlockTextHeight.Apply(source, tx, table[tool.BlockName], height);
             expected = Signature(tx, table[tool.BlockName]);
         }
         Check(oldSignature != expected, "BESTAANDE MOF in nieuwe bron verschilt daadwerkelijk van 1.5.0");

@@ -17,7 +17,7 @@
     "{\u0022Type\u0022:\u0022Hatch\u0022,\u0022Layer\u0022:\u002201 - Bestaande kabel\u0022,\u0022Geometry\u0022:{\u0022Min\u0022:[-0.5,-0.5,0],\u0022Max\u0022:[0.5,0.5,0]}}"
   ],
   "Updated": [
-    "{\u0022Type\u0022:\u0022AttributeDefinition\u0022,\u0022Layer\u0022:\u00220\u0022,\u0022Geometry\u0022:{\u0022Text\u0022:\u0022Bestaand\u0022,\u0022Position\u0022:[1.13020574,-0.23775991,0],\u0022Height\u0022:0.45,\u0022Rotation\u0022:0}}",
+    "{\u0022Type\u0022:\u0022AttributeDefinition\u0022,\u0022Layer\u0022:\u00220\u0022,\u0022Geometry\u0022:{\u0022Text\u0022:\u0022Bestaand\u0022,\u0022Position\u0022:[1.13020574,-0.53775991,0],\u0022Height\u0022:0.75,\u0022Rotation\u0022:0}}",
     "{\u0022Type\u0022:\u0022Circle\u0022,\u0022Layer\u0022:\u00220\u0022,\u0022Geometry\u0022:{\u0022Min\u0022:[-0.305,-0.305,0],\u0022Max\u0022:[0.305,0.305,0]}}",
     "{\u0022Type\u0022:\u0022Hatch\u0022,\u0022Layer\u0022:\u002201 - Bestaande kabel\u0022,\u0022Geometry\u0022:{\u0022Min\u0022:[-0.305,-0.305,0],\u0022Max\u0022:[0.305,0.305,0]}}"
   ]

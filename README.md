@@ -1,6 +1,6 @@
 # Techbase AutoCAD Plugin
 
-Plugin voor AutoCAD en Civil 3D op Windows met vier tabs:
+Plugin voor AutoCAD en Civil 3D op Windows met vijf tabs:
 
 - **Blocks**: de 58 blockknoppen uit de Techbase toolpalette, een cursorvoorbeeld met meedraaiende attribuutteksten, een bewaarde draai-instelling per block, zoeken, groepen en een schakelaar voor laagovername van het object waarop je plaatst.
 - **Lichtmasten**: kies een xref, lichtmastlagen en eventueel blocktypen. Werk met een bestaande gesloten polyline, alles in de gekozen xref of een zelf getekende polygoon.
@@ -9,9 +9,11 @@ Plugin voor AutoCAD en Civil 3D op Windows met vier tabs:
 
 Blocks heeft ook een aan/uit-schakelaar voor een vaste laagkeuze: Richting 1 t/m 12 of Bestaande kabel. Deze keuze heeft voorrang op automatische laagovername en wordt bewaard.
 
+Er is ook een tab **Instellingen** met afzonderlijke teksthoogtes voor MOF-blocks en LS/OV-richtingsteksten: standaard **0,75**, alternatief **0,45**. De keuze blijft bewaard.
+
 ## Installeren
 
-Download **Techbase Blocks 1.5.2.zip** uit de [release v1.5.2](https://github.com/LukaStuurman/Techbase-autocad-plugin/releases/tag/v1.5.2), pak hem uit en dubbelklik **Installeren.cmd**. De installer controleert en installeert ook **Arial Nova Light** via het officiele Microsoft Store-pakket als het lettertype ontbreekt. Geen aparte fontinstallatie nodig. Start AutoCAD of Civil 3D opnieuw en voer **TECHBASE** uit.
+Download **Techbase Blocks 1.6.0.zip** uit de [release v1.6.0](https://github.com/LukaStuurman/Techbase-autocad-plugin/releases/tag/v1.6.0), pak hem uit en dubbelklik **Installeren.cmd**. De installer controleert en installeert ook **Arial Nova Light** via het officiele Microsoft Store-pakket als het lettertype ontbreekt. Geen aparte fontinstallatie nodig. Start AutoCAD of Civil 3D opnieuw en voer **TECHBASE** uit.
 
 Nieuwe plaatsingen gebruiken eigen bronblocks, ook als de tekening al een oudere blockdefinitie met dezelfde naam bevat. Bestaande plaatsingen blijven intact.
 
@@ -35,6 +37,6 @@ Gebruik Windows en een .NET 10 SDK:
 
 De benodigde XTP, afbeeldingen en bron-DWG staan in `Assets/Palette`. De kader-Excels en Enexis-bronnen staan onder `vendor/AutoCAD-Enexis-kabels-checker`. De clone heeft daardoor geen lokale Techbase-map of submodule nodig. NuGet haalt de Autodesk API-referenties en Excel-dependencies op. AutoCAD zelf blijft nodig voor de CAD-engine-tests.
 
-De build maakt `dist/1.5.2/Techbase.Blocks.bundle` en `Techbase Blocks 1.5.2.zip`. Een andere bronpalette kan met `-PaletteRoot <map>` worden opgegeven.
+De build maakt `dist/1.6.0/Techbase.Blocks.bundle` en `Techbase Blocks 1.6.0.zip`. Een andere bronpalette kan met `-PaletteRoot <map>` worden opgegeven.
 
 De bronrepo bevat ook de afgeronde oudere installatiepakketten. Compiler-caches, tijdelijke bestanden en interne Git-metadata van de meegeleverde Enexis-bron worden niet opgenomen.

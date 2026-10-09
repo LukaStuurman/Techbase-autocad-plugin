@@ -1,0 +1,12 @@
+{
+  "InheritLayer": true,
+  "UseChosenBlockLayer": false,
+  "ChosenBlockLayer": 1,
+  "Tolerance": 0.05,
+  "PalettePath": null,
+  "Repeat": false,
+  "SelectedDirectionNumber": 1,
+  "MofTextHeight": 0.45,
+  "DirectionTextHeight": 0.45,
+  "BlockRotationModes": {}
+}

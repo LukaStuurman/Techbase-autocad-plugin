@@ -1,6 +1,6 @@
-# Techbase Blocks 1.5.2
+# Techbase Blocks 1.6.0
 
-Gebruik vier tabs in AutoCAD en Civil 3D voor Windows: Blocks, Lichtmasten, Enexis kabelchecker en Richtingen.
+Gebruik vijf tabs in AutoCAD en Civil 3D voor Windows: Blocks, Lichtmasten, Enexis kabelchecker, Richtingen en Instellingen.
 
 ## Installeren
 
@@ -12,11 +12,20 @@ De plugin staat daarna onder `%APPDATA%\Autodesk\ApplicationPlugins`. Bestaande 
 
 ## Lettertype
 
-Alle teksten in de vier plugintabs en alle blockteksten, attributen, losse richtingsteksten en richting-info die de plugin plaatst gebruiken **Arial Nova Light**. Bij kopieren of verplaatsen van richtingsteksten krijgt het resultaat ook dit lettertype. Hoogtes, kleuren en overige tekstopmaak blijven behouden; expliciete fontoverrides in MText worden verwijderd.
+Alle teksten in de vijf plugintabs en alle blockteksten, attributen, losse richtingsteksten en richting-info die de plugin plaatst gebruiken **Arial Nova Light**. Bij kopieren of verplaatsen van richtingsteksten krijgt het resultaat ook dit lettertype. Hoogtes, kleuren en overige tekstopmaak blijven behouden; expliciete fontoverrides in MText worden verwijderd.
 
 **Installeren.cmd regelt het lettertype automatisch.** De installer gebruikt een bestaande Windows-installatie of het officiele Arial Nova-pakket uit de Microsoft Store. Ontbreekt het pakket, dan downloadt en installeert Windows het via App Installer (winget). Daarvoor zijn internet en toegestane Store-toegang nodig. De Light-variant wordt voor de huidige gebruiker geregistreerd, zonder beheerdersrechten. Een ontbrekende of geblokkeerde Store-installatie wordt gemeld voordat de plugin wordt vervangen. Het lettertype hoeft dus niet apart te worden geinstalleerd.
 
 Bestaande tekststijlen, oude blockdefinities en bron-DWG's blijven intact. Nieuwe blocks krijgen een eigen fontversie en eigen tekststijl. De officiele Microsoft-fontbestanden worden op de computer geinstalleerd en niet in deze openbare release verspreid.
+
+## Instellingen
+
+De nieuwe tab **Instellingen** bevat twee onafhankelijke keuzes:
+
+- **Teksthoogte MOF-blocks**: voor NIEUWE MOF, MOF bestaand-nieuw en BESTAANDE MOF.
+- **Teksthoogte richtingsteksten (LS/OV)**: voor RICHTINGEN TEKST LS en RICHTINGEN TEKST OV, zowel in Blocks als via de burstknoppen in Richtingen.
+
+Beide staan standaard op **0,75**. De tweede keuze is **0,45**. De keuze wordt direct opgeslagen en blijft na herstart behouden. Plaatsvoorbeeld en uiteindelijke plaatsing gebruiken dezelfde hoogte. Alleen de teksthoogte verandert; het symbool wordt niet geschaald. Iedere hoogte gebruikt een eigen blockdefinitie, zodat eerdere plaatsingen intact blijven. Reeds geplaatste blocks en losse teksten worden niet aangepast. Afzekerings-/rekblocks en andere blocks behouden hun eigen teksthoogtes.
 
 ## Blocks plaatsen
 
@@ -145,4 +154,4 @@ De concrete testresultaten en resterende praktijktests staan in `VALIDATIE.md` b
 
 ## Opnieuw bouwen
 
-Gebruik een .NET 10 SDK en voer `Build.ps1 -Dotnet <pad-naar-dotnet.exe>` uit. De build haalt Autodesk AutoCAD.NET API 25.0.1 en 26.0.0 via NuGet op en bouwt de Excel-worker voor beide runtimes. De Autodesk API-DLL's worden niet meegeleverd: die levert de hostapplicatie. De uitvoer staat in `dist/1.5.2` en in `Techbase Blocks 1.5.2.zip`. Versiegebonden DLL-mappen maken een update mogelijk zonder een reeds geladen oude DLL te overschrijven; herstart de CAD-toepassing om de nieuwe versie te laden.
+Gebruik een .NET 10 SDK en voer `Build.ps1 -Dotnet <pad-naar-dotnet.exe>` uit. De build haalt Autodesk AutoCAD.NET API 25.0.1 en 26.0.0 via NuGet op en bouwt de Excel-worker voor beide runtimes. De Autodesk API-DLL's worden niet meegeleverd: die levert de hostapplicatie. De uitvoer staat in `dist/1.6.0` en in `Techbase Blocks 1.6.0.zip`. Versiegebonden DLL-mappen maken een update mogelijk zonder een reeds geladen oude DLL te overschrijven; herstart de CAD-toepassing om de nieuwe versie te laden.

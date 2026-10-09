@@ -6,5 +6,7 @@
   "PalettePath": null,
   "Repeat": false,
   "SelectedDirectionNumber": 1,
+  "MofTextHeight": 0.75,
+  "DirectionTextHeight": 0.75,
   "BlockRotationModes": {}
 }

@@ -1,4 +1,4 @@
-Redirect stdout (file: C:\Users\LUKAST~1\AppData\Local\Temp\accc48482).
+Redirect stdout (file: C:\Users\LUKAST~1\AppData\Local\Temp\accc272842).
 
 AcCoreConsole: StdOutConsoleMode: processed-output: disabled,auto
 
@@ -46,7 +46,7 @@ Command:
 
 Command: _NETLOAD
 
-Assembly file name: "C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.5.2/Techbase.Blocks.bundle/Contents/R25-1.5.2/Techbase.Blocks.dll"
+Assembly file name: "C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.6.0/Techbase.Blocks.bundle/Contents/R25-1.6.0/Techbase.Blocks.dll"
 
 
 
@@ -427,6 +427,24 @@ Loading AECC Hydrology...
 Loading AECC Bridge...
 
 Loading AECC Rail...
+
+CoreHeartBeat
+
+Unable to find the rules file: C:\C3DPipeRules.xml
+
+Unable to find the rules file: C:\C3DPipeRules.xml
+
+Unable to find the rules file: C:\C3DPipeRules.xml
+
+Unable to find the rules file: C:\C3DPipeRules.xml
+
+Unable to find the rules file: C:\C3DPipeRules.xml
+
+Unable to find the rules file: C:\C3DPipeRules.xml
+
+Unable to find the rules file: C:\C3DPipeRules.xml
+
+Unable to find the rules file: C:\C3DPipeRules.xml
 
 CoreHeartBeat
 

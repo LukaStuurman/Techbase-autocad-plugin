@@ -1,3 +1,11 @@
+## Instellingen en teksthoogtes - versie 1.6.0
+
+- Vijfde tab Instellingen: afzonderlijke hoogtes voor MOF-blocks en LS/OV-richtingsteksten, standaard 0,75; alternatief 0,45. Oude instellingen krijgen beide standaardwaarden. Keuze blijft bewaard; ongeldige opgeslagen waarden worden hersteld.
+- 59 gerichte controles: beide hoogtes in de drie MOF-blocks en twee richtingstekstblocks; attributen en gedraaid plaatsvoorbeeld; 13 losse teksten per burst; aparte definities per hoogte; eerdere definitie intact; daadwerkelijke keuzelijst en opslaan/herladen.
+- Opgeslagen DXF onafhankelijk gelezen: 26 losse MTexten op 0,75 en 26 op 0,45; MOF-attributen op beide hoogtes. Primaire groep 40 voor TextHeight gelezen; MTEXT-kolomhoogtes zijn aparte waarden. Afzekerings-/rekblocks worden niet door de hoogte-instelling aangepast.
+- 410 algemene blockcontroles, bronversie-/plaatsvoorbeeld-/laagkeuzecontroles, 752 lettertypecontroles in vijf tabs, 36 richtingstekstservice- en 8 commandocontroles en 13 draai-/UCS-/Esc-controles geslaagd.
+- Beide API-builds gemaakt voor AutoCAD/Civil 3D 2025/2026 en 2027. CAD-tests uitgevoerd met AutoCAD 2026 Core Console; geen afzonderlijke interactieve 2025/2027- of Civil 3D-test.
+
 ## BESTAANDE MOF zwart en Continuous - versie 1.5.2
 
 - Alleen de omtrek en teksten/attribuutdefinities van BESTAANDE MOF krijgen vaste AutoCAD-kleur 7 (zwart/wit). De omtrek krijgt expliciet Continuous en schaal 1. Richtingslaagkleuren en DASHED hebben hierop geen invloed; de arcering behoudt de bronopmaak.

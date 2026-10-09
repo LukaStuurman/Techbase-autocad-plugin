@@ -14,8 +14,9 @@ namespace Techbase.Blocks;
 
 internal static class BlockInserter
 {
-    internal static ObjectId Import(Database target, Catalog catalog, BlockTool tool)
-        => SourceBlockImporter.Import(target, catalog.ResolveSource(tool), tool.BlockName);
+    internal static ObjectId Import(Database target, Catalog catalog, BlockTool tool, Settings? settings = null)
+        => SourceBlockImporter.Import(target, catalog.ResolveSource(tool), tool.BlockName,
+            (settings ?? Plugin.Preferences).BlockTextHeight(tool.BlockName));
 
     internal static ObjectId DefaultLayer(Database db, Transaction tx, string name)
     {
@@ -107,7 +108,7 @@ internal static class BlockInserter
         var rotationMode = settings.GetRotationMode(tool);
         // Insertion entities are transactional; imported definitions may remain as with ordinary INSERT.
         using var tx = db.TransactionManager.StartTransaction();
-        var definition = Import(db, catalog, tool);
+        var definition = Import(db, catalog, tool, settings);
         var defaultLayer = chosenLayer ? BlockLayers.Ensure(db, tx, settings.ChosenBlockLayer) : DefaultLayer(db, tx, tool.Layer);
         if (chosenLayer) ed.WriteMessage("\nGekozen blocklaag: " + BlockLayers.Name(settings.ChosenBlockLayer) + ".");
         using var block = CreateReference(db, tx, definition, tool, Point3d.Origin, defaultLayer, ed.CurrentUserCoordinateSystem);

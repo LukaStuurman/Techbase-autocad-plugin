@@ -21,6 +21,7 @@ public sealed class Plugin : IExtensionApplication
     private static LightmastPanel? lightmastPanel;
     private static KabelCheckerPanel? kabelCheckerPanel;
     private static DirectionPanel? directionPanel;
+    private static SettingsPanel? settingsPanel;
     internal static LightmastRequest? PendingLightmast { get; set; }
     internal static DirectionInfoRequest? PendingDirectionInfo { get; set; }
     internal static string ContentsRoot => Directory.GetParent(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!)!.FullName;
@@ -30,7 +31,7 @@ public sealed class Plugin : IExtensionApplication
         try { Typography.EnsureInstalled(); Reload(); }
         catch (System.Exception ex) { AcApp.DocumentManager.MdiActiveDocument?.Editor.WriteMessage("\nTechbase Blocks: " + ex.Message); }
     }
-    public void Terminate() { directionPanel?.Dispose(); kabelCheckerPanel?.Dispose(); lightmastPanel?.Dispose(); panel?.Dispose(); palette?.Dispose(); }
+    public void Terminate() { settingsPanel?.Dispose(); directionPanel?.Dispose(); kabelCheckerPanel?.Dispose(); lightmastPanel?.Dispose(); panel?.Dispose(); palette?.Dispose(); }
     internal static void Reload(string? path = null)
     {
         var candidate = new Catalog(path ?? Preferences.PalettePath ?? DefaultPalette);
@@ -43,6 +44,7 @@ public sealed class Plugin : IExtensionApplication
         try { Preferences.Save(); }
         catch (System.Exception ex) { AcApp.DocumentManager.MdiActiveDocument?.Editor.WriteMessage("\nInstelling kon niet worden opgeslagen: " + ex.Message); }
         panel?.RefreshSettings();
+        settingsPanel?.RefreshSettings();
     }
     [CommandMethod("TECHBASE", CommandFlags.Modal)]
     public void Show()
@@ -66,6 +68,8 @@ public sealed class Plugin : IExtensionApplication
                 palette.Add("Enexis kabelchecker", kabelCheckerPanel);
                 directionPanel = new DirectionPanel();
                 palette.Add("Richtingen", directionPanel);
+                settingsPanel = new SettingsPanel();
+                palette.Add("Instellingen", settingsPanel);
             }
             palette.Visible = true;
         }

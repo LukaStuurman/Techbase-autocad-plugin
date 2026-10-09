@@ -67,7 +67,7 @@ internal static class TypographyDiagnostics
         DirectionText.Apply(db, new[] { original }, false, Point3d.Origin, new Point3d(10, 0, 0), Matrix3d.Identity);
         using (var tx = db.TransactionManager.StartTransaction())
             Check(((MText)tx.GetObject(original, OpenMode.ForRead)).TextStyleId != protectedStyle, "verplaatste richtingstekst krijgt eveneens Light");
-        foreach (var panel in new Control[] { new BlocksPanel(), new LightmastPanel(), new DirectionPanel(), new KabelCheckerPanel() })
+        foreach (var panel in new Control[] { new BlocksPanel(), new LightmastPanel(), new DirectionPanel(), new KabelCheckerPanel(), new SettingsPanel() })
         {
             using (panel)
             {
