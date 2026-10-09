@@ -1,0 +1,68 @@
+TBRICHTINGVALIDATE
+(setvar "OSMODE" 0)
+(setvar "PLINEWID" 3.0)
+(setvar "CELTSCALE" 7.0)
+(setvar "CECOLOR" "2")
+_TBTEKENRICHTING
+10
+0,0,0
+10,0,0
+10,10,0
+
+(princ (strcat "\nDRAW_LAYER=" (vl-princ-to-string (cdr (assoc 8 (entget (entlast)))))))
+(princ (strcat "\nDRAW_WIDTH=" (vl-princ-to-string (cdr (assoc 43 (entget (entlast)))))))
+_UCS
+_Origin
+100,0,0
+_UCS
+_Z
+90
+_TBTEKENRICHTING
+2
+0,0,0
+5,0,0
+
+_UCS
+_W
+_TBTEKENRICHTING
+3
+20,0,0
+25,0,0
+25,5,0
+_Sluiten
+(princ (strcat "\nDRAW_CLOSED=" (vl-princ-to-string (cdr (assoc 70 (entget (entlast)))))))
+_TBTEKENRICHTING
+4
+30,0,0
+35,0,0
+_Terug
+30,5,0
+
+_TBTEKENRICHTING
+5
+40,0,0
+45,0,0
+(princ)
+(setq sample (entmakex (list (cons 0 "LWPOLYLINE") (cons 100 "AcDbEntity") (cons 8 "0") (cons 100 "AcDbPolyline") (cons 90 3) (cons 70 1) (cons 43 2.0) (cons 10 (list 50.0 0.0)) (cons 42 0.5) (cons 10 (list 55.0 0.0)) (cons 10 (list 55.0 5.0)))))
+(sssetfirst nil (ssadd sample))
+_TBMAAKRICHTING
+10
+(princ (strcat "\nCONVERT_LAYER=" (vl-princ-to-string (cdr (assoc 8 (entget (entlast)))))))
+(princ (strcat "\nCONVERT_WIDTH=" (vl-princ-to-string (cdr (assoc 43 (entget (entlast)))))))
+(princ (strcat "\nSAME_HANDLE=" (if (equal sample (entlast)) "YES" "NO")))
+(sssetfirst nil nil)
+(entmake (list (cons 0 "LINE") (cons 8 "0") (cons 10 (list 60.0 0.0 0.0)) (cons 11 (list 65.0 0.0 0.0))))
+_TBMAAKRICHTING
+12
+_L
+
+(princ (strcat "\nLINE_CONVERT_TYPE=" (vl-princ-to-string (cdr (assoc 0 (entget (entlast)))))))
+(princ (strcat "\nLINE_CONVERT_LAYER=" (vl-princ-to-string (cdr (assoc 8 (entget (entlast)))))))
+_U
+(princ (strcat "\nUNDO_LINE_TYPE=" (vl-princ-to-string (cdr (assoc 0 (entget (entlast)))))))
+(princ (strcat "\nGLOBAL_STATE=" (getvar "CLAYER") ";" (rtos (getvar "PLINEWID") 2 3) ";" (rtos (getvar "CELTSCALE") 2 3) ";" (getvar "CECOLOR")))
+_DXFOUT
+"C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/validation/Richtingen/Richtingen - commando.dxf"
+16
+_QUIT
+_Y

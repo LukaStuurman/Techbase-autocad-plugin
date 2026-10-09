@@ -15,6 +15,7 @@ public sealed class Settings
     public double Tolerance { get; set; } = 0.05;
     public string? PalettePath { get; set; }
     public bool Repeat { get; set; }
+    public int SelectedDirectionNumber { get; set; } = 1;
     public Dictionary<string, BlockRotationMode> BlockRotationModes { get; set; } = new(StringComparer.OrdinalIgnoreCase);
     public BlockRotationMode GetRotationMode(BlockTool tool) =>
         BlockRotationModes.TryGetValue(tool.Id, out var mode) && Enum.IsDefined(mode)
@@ -33,6 +34,7 @@ public sealed class Settings
         {
             var settings = JsonSerializer.Deserialize<Settings>(File.ReadAllText(FilePath)) ?? new Settings();
             if (!double.IsFinite(settings.Tolerance) || settings.Tolerance <= 0) settings.Tolerance = 0.05;
+            if (settings.SelectedDirectionNumber is < 1 or > 12) settings.SelectedDirectionNumber = 1;
             settings.BlockRotationModes = new Dictionary<string, BlockRotationMode>(
                 settings.BlockRotationModes ?? new(), StringComparer.OrdinalIgnoreCase);
             return settings;

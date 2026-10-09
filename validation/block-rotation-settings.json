@@ -3,6 +3,7 @@
   "Tolerance": 0.123,
   "PalettePath": null,
   "Repeat": true,
+  "SelectedDirectionNumber": 1,
   "BlockRotationModes": {
     "9dbea1c0c575423e80d3feede50deff1": "BeforePoint",
     "40b668e0a57f4c248b03d9aa3b22897a": "AfterPoint"

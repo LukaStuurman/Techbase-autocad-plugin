@@ -20,6 +20,7 @@ public sealed class Plugin : IExtensionApplication
     private static BlocksPanel? panel;
     private static LightmastPanel? lightmastPanel;
     private static KabelCheckerPanel? kabelCheckerPanel;
+    private static DirectionPanel? directionPanel;
     internal static LightmastRequest? PendingLightmast { get; set; }
     internal static DirectionInfoRequest? PendingDirectionInfo { get; set; }
     internal static string ContentsRoot => Directory.GetParent(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!)!.FullName;
@@ -29,7 +30,7 @@ public sealed class Plugin : IExtensionApplication
         try { Reload(); }
         catch (System.Exception ex) { AcApp.DocumentManager.MdiActiveDocument?.Editor.WriteMessage("\nTechbase Blocks: " + ex.Message); }
     }
-    public void Terminate() { kabelCheckerPanel?.Dispose(); lightmastPanel?.Dispose(); panel?.Dispose(); palette?.Dispose(); }
+    public void Terminate() { directionPanel?.Dispose(); kabelCheckerPanel?.Dispose(); lightmastPanel?.Dispose(); panel?.Dispose(); palette?.Dispose(); }
     internal static void Reload(string? path = null)
     {
         var candidate = new Catalog(path ?? Preferences.PalettePath ?? DefaultPalette);
@@ -63,6 +64,8 @@ public sealed class Plugin : IExtensionApplication
                 palette.Add("Lichtmasten", lightmastPanel);
                 kabelCheckerPanel = new KabelCheckerPanel(ExpandChecker, () => palette.Activate(0));
                 palette.Add("Enexis kabelchecker", kabelCheckerPanel);
+                directionPanel = new DirectionPanel();
+                palette.Add("Richtingen", directionPanel);
             }
             palette.Visible = true;
         }
@@ -74,6 +77,63 @@ public sealed class Plugin : IExtensionApplication
         Preferences.InheritLayer = !Preferences.InheritLayer;
         UpdateSettings();
         AcApp.DocumentManager.MdiActiveDocument?.Editor.WriteMessage("\nTechbase: laag overnemen " + (Preferences.InheritLayer ? "AAN" : "UIT") + ".");
+    }
+    [CommandMethod("TBRICHTINGEN", CommandFlags.Modal)]
+    public void ShowDirections() { Show(); if (palette != null) palette.Activate(3); }
+    private static int? PromptDirection()
+    {
+        var doc = AcApp.DocumentManager.MdiActiveDocument;
+        if (doc == null) return null;
+        var result = doc.Editor.GetInteger(new Autodesk.AutoCAD.EditorInput.PromptIntegerOptions("\nRichting (1 t/m 12): ")
+        { LowerLimit = 1, UpperLimit = 12, DefaultValue = Preferences.SelectedDirectionNumber, AllowNone = true });
+        return result.Status == Autodesk.AutoCAD.EditorInput.PromptStatus.OK ? result.Value :
+            result.Status == Autodesk.AutoCAD.EditorInput.PromptStatus.None ? Preferences.SelectedDirectionNumber : null;
+    }
+    private static void ReportDirection(string message)
+    { directionPanel?.Report(message); AcApp.DocumentManager.MdiActiveDocument?.Editor.WriteMessage("\n" + message); }
+    [CommandMethod("TBTEKENRICHTING", CommandFlags.Modal)]
+    public void DrawDirection()
+    {
+        try
+        {
+            var number = PromptDirection(); if (!number.HasValue) return;
+            var doc = AcApp.DocumentManager.MdiActiveDocument; if (doc == null) return;
+            ReportDirection(DirectionLines.Draw(doc, number.Value));
+        }
+        catch (System.Exception ex) { ReportDirection(ex.Message); }
+    }
+    [CommandMethod("TBMAAKRICHTING", CommandFlags.Modal | CommandFlags.UsePickSet)]
+    public void ConvertDirection()
+    {
+        try
+        {
+            var number = PromptDirection(); if (!number.HasValue) return;
+            var doc = AcApp.DocumentManager.MdiActiveDocument; if (doc == null) return;
+            var selection = doc.Editor.SelectImplied();
+            if (selection.Status != Autodesk.AutoCAD.EditorInput.PromptStatus.OK)
+                selection = doc.Editor.GetSelection(new Autodesk.AutoCAD.EditorInput.PromptSelectionOptions
+                { MessageForAdding = "\nSelecteer polylines of losse lijnen om om te zetten: " },
+                new Autodesk.AutoCAD.EditorInput.SelectionFilter(new[]
+                { new Autodesk.AutoCAD.DatabaseServices.TypedValue((int)Autodesk.AutoCAD.DatabaseServices.DxfCode.Start, "LWPOLYLINE,POLYLINE,LINE") }));
+            if (selection.Status != Autodesk.AutoCAD.EditorInput.PromptStatus.OK) { ReportDirection("Omzetten geannuleerd."); return; }
+            using var working = new WorkingDatabaseScope(doc.Database);
+            var result = DirectionLines.Convert(doc.Database, selection.Value.GetObjectIds(), number.Value);
+            doc.Editor.Regen();
+            ReportDirection($"{result.Changed} objecten omgezet naar richting {number.Value}. " +
+                $"{result.LinesConverted} losse lijnen werden polylines; {result.Skipped} objecten overgeslagen." +
+                (result.Skipped > 0 ? " Alleen bewerkbare 2D-polylines en LINE-lijnen in de huidige tekenruimte worden omgezet." : ""));
+        }
+        catch (System.Exception ex) { ReportDirection(ex.Message); }
+    }
+    [CommandMethod("TBRICHTINGVALIDATE", CommandFlags.Modal)]
+    public void ValidateDirectionLines()
+    {
+        try { DirectionLineDiagnostics.Run(); }
+        catch (System.Exception ex)
+        {
+            Error(ex); var folder = Environment.GetEnvironmentVariable("TECHBASE_TEST_OUTPUT");
+            if (folder != null) { Directory.CreateDirectory(folder); File.WriteAllText(Path.Combine(folder, "richting-failure.log"), ex.ToString()); }
+        }
     }
     [CommandMethod("TBKABELCHECK", CommandFlags.Modal)]
     public void KabelChecker()

@@ -1,6 +1,16 @@
-# Controle versie 1.2.4 â€” 9 oktober 2026
+# Controle versie 1.3.0 â€” 9 oktober 2026
 
 De plugin is gebouwd en lokaal geÃ¯nstalleerd. De automatische controles draaien in de echte AutoCAD 2026 Core Console (ACADVER 25.1), zonder de bron-DWG of gebruikersinstellingen te wijzigen.
+
+## Tab Richtingen 1.3.0
+
+De vierde tab biedt twaalf richtingskeuzes, een nieuw tekencommando en een selectie-omzetting. De entity-opmaak is breedte 0,1, DASHED, schaal 0,0035, kleur/lijndikte ByLayer. Nieuwe lagen krijgen de kleuren uit de Techbase-template; bestaande kleuren blijven intact. Lichte en oude 2D-polylines worden ter plaatse opgemaakt. LINE-objecten worden vervangen door polylines met dezelfde eindpunten; niet-planare 3D-polylines worden niet afgevlakt.
+
+- **79 service- en UI-controles slagen**: alle twaalf lagen, bronkleuren, DASHED, entity-schaal en uniforme breedte op alle segmenten; punten, bogen, sluiten, hoogte en handles van bestaande polylines; oude 2D-vertices; rechte en ruimtelijke LINE-conversie; bescherming van vergrendelde objecten, blockinhoud en ongeschikte objecttypen; vergrendelde doellaag; behoud van huidige laag en bestaande kleuren; teruglezen uit opgeslagen DWG; twaalf radiokeuzes en opgeslagen selectie.
+- **9 commandocontroles slagen**, naast onafhankelijke DXF-controles: tekenen met Enter, sluiten, Terug, een verplaatst/90° gedraaid UCS, Esc zonder nieuwe polyline, een vooraf geselecteerde polyline naar richting 10, selectie van een LINE naar richting 12, Undo van die conversie en behoud van CLAYER, PLINEWID, CELTSCALE en CECOLOR. De vijf definitieve polylines zijn uit DXF teruggelezen, inclusief exacte punten, een bestaande boog en entity-opmaak.
+- Beide CAD-generaties bouwen zonder fouten. Het nieuwe paneel is offscreen gerenderd en visueel bekeken; volledige desktopbediening en andere productversies moeten nog praktisch worden getest.
+
+Bewijs: `validation/Richtingen/richtingen.json`, `command-checks.json`, `richtingen.log`, `Richtingen - controle.dwg`/`.dxf`, `Richtingen - commando.dxf` en `Richtingen-tab.png`. De controles gebruiken zelfstandige testtekeningen en geÃ¯soleerde instellingen.
 
 ## Oude blocknamen en bronversies 1.2.4
 
@@ -60,10 +70,10 @@ Volledige bediening in de AutoCAD/Civil 3D desktop-GUI en de overige CAD-product
 
 De functionaliteit van `LICHTMAST.LSP` is opgenomen in een tweede tab. De nieuwe tab biedt xref-invoegingen, lichtmastlagen, een optioneel blockfilter en gebiedsopties bestaande gesloten polyline, alles en zelf polygoon tekenen.
 
-- **28 geslaagde servicecontroles** met een zelfstandig gemaakte test-xref: meerdere invoegingen apart kiezen; lagen/blocktypen filteren; niet-uniforme xref-schaal, verplaatsing, 90Â° rotatie, xref-basispunt en hoogte; een genest block met eigen rotatie en schaal; laag-0-overerving; gebiedsselectie in wereldcoÃ¶rdinaten; samengesteld block en zijn interne onderdelen eenmaal tellen; herhaling zonder dubbelen.
+- **28 geslaagde servicecontroles** met een zelfstandig gemaakte test-xref: meerdere invoegingen apart kiezen; lagen/blocktypen filteren; niet-uniforme xref-schaal, verplaatsing, 90° rotatie, xref-basispunt en hoogte; een genest block met eigen rotatie en schaal; laag-0-overerving; gebiedsselectie in wereldcoÃ¶rdinaten; samengesteld block en zijn interne onderdelen eenmaal tellen; herhaling zonder dubbelen.
 - Het getekende symbool volgt de Lisp: drie polylijnen, cirkeldiameter 1,1977, breedte 0,2, laag 0 intern en referenties op Bestaand met kleur ByLayer en schaal 1.
 - Controles op rechte, concave en ronde gebieden, positieve/negatieve bulges, exacte booggrenzen, grenspunten, open polylines en zelfkruisende rechte polygonen.
-- **4 geslaagde invoercontroles via de echte gebiedsprompts**: klikken en Enter sluiten, Terug/Sluiten tijdens tekenen, bestaande polyline aanwijzen en zelf tekenen in een 90Â° gedraaid UCS.
+- **4 geslaagde invoercontroles via de echte gebiedsprompts**: klikken en Enter sluiten, Terug/Sluiten tijdens tekenen, bestaande polyline aanwijzen en zelf tekenen in een 90° gedraaid UCS.
 - De opgeslagen DWG is opnieuw geopend en de symboollagen en wereldposities zijn teruggelezen. De xref-DWG heeft vÃ³Ã³r en na uitvoering dezelfde SHA-256.
 - De geÃ¯nstalleerde versie 1.1.0 laadt op het nieuwe TBMASTVALIDATE-commando automatisch, zonder NETLOAD, en doorloopt dezelfde 28 service- en 4 gebiedsinvoercontroles. De installatie werkt bestaande startregistraties van uitsluitend deze plugin bij, met een backup van de oude waarden.
 
@@ -78,7 +88,7 @@ De volledige modeless tab is nog niet visueel getest in de AutoCAD/Civil 3D-gebr
 - **410 geslaagde controles**: importeren en plaatsen van alle tools, paletfactoren waaronder Flatkast 0,5, attributen, beide explode-tools, dynamische varianten waar de bron keuzewaarden aanbiedt, laagtoewijzing en opnieuw openen van de opgeslagen DWG.
 - Laagdetectie bij een lijn, polyline, cirkel, binnen/buiten tolerantie, 3D-afstand, meerdere gelijke lagen, verschillende lagen op een kruising, cursorselectie van tekst en bescherming van een vergrendelde laag.
 - Annuleren van een transactie laat geen blockreferentie achter. De huidige tekenlaag blijft behouden.
-- **7 aanvullende checks via het daadwerkelijke TBPLAATS/TBLAAG-commando**: automatische laag aan, automatische laag uit, expliciete Object-keuze, huidige laag behouden, laag bij een 90Â° gedraaid UCS, juiste wereldcoÃ¶rdinaten bij dat UCS en Undo van de plaatsing.
+- **7 aanvullende checks via het daadwerkelijke TBPLAATS/TBLAAG-commando**: automatische laag aan, automatische laag uit, expliciete Object-keuze, huidige laag behouden, laag bij een 90° gedraaid UCS, juiste wereldcoÃ¶rdinaten bij dat UCS en Undo van de plaatsing.
 - Instellingen tijdens tests zijn geÃ¯soleerd in de validatiemap. De oude Lisp-reactors worden niet verwijderd of gewijzigd.
 - De geÃ¯nstalleerde bundle is zonder NETLOAD via het geregistreerde commando automatisch geladen in AutoCAD 2026 Core Console; ook die run doorloopt alle 410 controles.
 

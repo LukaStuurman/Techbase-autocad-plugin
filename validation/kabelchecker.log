@@ -1,4 +1,4 @@
-Redirect stdout (file: C:\Users\LUKAST~1\AppData\Local\Temp\accc240282).
+Redirect stdout (file: C:\Users\LUKAST~1\AppData\Local\Temp\accc495442).
 AcCoreConsole: StdOutConsoleMode: processed-output: disabled,auto
 AutoCAD Core Engine Console - Copyright 2025 Autodesk, Inc.  All rights reserved. (W.122.0.0)
 
@@ -21,7 +21,7 @@ Command:
 
 Command:
 Command: _NETLOAD
-Assembly file name: "C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.2.2/Techbase.Blocks.bundle/Contents/R25-1.2.2/Techbase.Blocks.dll"
+Assembly file name: "C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.3.0/Techbase.Blocks.bundle/Contents/R25-1.3.0/Techbase.Blocks.dll"
 
 Command: TBKABELVALIDATE
 CoreHeartBeat

@@ -25,6 +25,7 @@ for series in [(25, 0), (25, 1), (26, 0)]:
     for component in manifest.findall('Components'):
         commands = {c.attrib['Global'] for c in component.findall('ComponentEntry/Commands/Command')}
         assert 'TECHBASE' in commands and 'TBLOCKS' not in commands
+        assert {'TBRICHTINGEN', 'TBTEKENRICHTING', 'TBMAAKRICHTING', 'TBRICHTINGVALIDATE'} <= commands
         requirement = component.find('RuntimeRequirements')
         minimum = tuple(map(int, requirement.attrib['SeriesMin'][1:].split('.')))
         maximum = tuple(map(int, requirement.attrib['SeriesMax'][1:].split('.')))

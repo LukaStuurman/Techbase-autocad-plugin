@@ -1,0 +1,8 @@
+{
+  "Status": "PASS",
+  "ServiceChecks": 79,
+  "CommandChecks": 9,
+  "SavedPolylines": 5,
+  "Host": "AutoCAD 2026 Core Console",
+  "Autoload": true
+}
