@@ -17,6 +17,9 @@ internal sealed class BlocksPanel : UserControl
     private readonly ListView list = new() { Dock = DockStyle.Fill, View = View.Details, FullRowSelect = true, MultiSelect = false, HideSelection = false };
     private readonly Label status = new() { Dock = DockStyle.Fill, AutoSize = true, Padding = new Padding(6) };
     private readonly Button place = new() { Text = "Plaatsen", Dock = DockStyle.Fill, Height = 34 };
+    private readonly Label selectedBlock = new() { Text = "Selecteer een block voor de draai-instelling", AutoSize = true, Dock = DockStyle.Fill };
+    private readonly ComboBox rotation = new() { DropDownStyle = ComboBoxStyle.DropDownList, Dock = DockStyle.Fill, Enabled = false };
+    private static readonly BlockRotationMode[] rotationModes = { BlockRotationMode.BeforePoint, BlockRotationMode.AfterPoint, BlockRotationMode.None };
     private bool refreshing;
     private ImageList? images;
     internal BlocksPanel()
@@ -48,12 +51,21 @@ internal sealed class BlocksPanel : UserControl
         list.Resize += (_, _) => list.Columns[0].Width = Math.Max(170, list.ClientSize.Width - 150);
         layout.Controls.Add(list, 0, 7);
         var footer = new TableLayoutPanel { AutoSize = true, Dock = DockStyle.Fill, ColumnCount = 1 };
+        rotation.Items.AddRange(new object[] { "Eerst draaien, dan invoegpunt", "Draaien na het invoegpunt", "Niet automatisch draaien" });
+        footer.Controls.Add(selectedBlock); footer.Controls.Add(rotation);
         footer.Controls.Add(place); footer.Controls.Add(status);
         layout.Controls.Add(footer, 0, 8); Controls.Add(layout);
         inherit.CheckedChanged += (_, _) => { if (!refreshing) { Plugin.Preferences.InheritLayer = inherit.Checked; Plugin.UpdateSettings(); } };
         repeat.CheckedChanged += (_, _) => { if (!refreshing) { Plugin.Preferences.Repeat = repeat.Checked; Plugin.UpdateSettings(); } };
         tolerance.ValueChanged += (_, _) => { if (!refreshing) { Plugin.Preferences.Tolerance = (double)tolerance.Value; Plugin.UpdateSettings(); } };
         search.TextChanged += (_, _) => Filter(); groups.SelectedIndexChanged += (_, _) => Filter();
+        list.SelectedIndexChanged += (_, _) => RefreshRotation();
+        rotation.SelectedIndexChanged += (_, _) =>
+        {
+            if (refreshing || list.SelectedItems.Count != 1 || rotation.SelectedIndex < 0) return;
+            Plugin.Preferences.SetRotationMode((BlockTool)list.SelectedItems[0].Tag!, rotationModes[rotation.SelectedIndex]);
+            Plugin.UpdateSettings();
+        };
         place.Click += (_, _) => InsertSelected(); list.DoubleClick += (_, _) => InsertSelected();
         list.KeyDown += (_, e) => { if (e.KeyCode == Keys.Enter) { InsertSelected(); e.Handled = true; } };
         RefreshSettings(); RefreshTools();
@@ -65,6 +77,20 @@ internal sealed class BlocksPanel : UserControl
         repeat.Checked = Plugin.Preferences.Repeat;
         tolerance.Value = Math.Clamp((decimal)Plugin.Preferences.Tolerance, tolerance.Minimum, tolerance.Maximum);
         refreshing = false;
+        RefreshRotation();
+    }
+    private void RefreshRotation()
+    {
+        var wasRefreshing = refreshing;
+        refreshing = true;
+        try
+        {
+            var tool = list.SelectedItems.Count == 1 ? (BlockTool)list.SelectedItems[0].Tag! : null;
+            selectedBlock.Text = tool == null ? "Selecteer een block voor de draai-instelling" : "Draaien bij plaatsen: " + tool.Name;
+            rotation.Enabled = tool != null;
+            rotation.SelectedIndex = tool == null ? -1 : Array.IndexOf(rotationModes, Plugin.Preferences.GetRotationMode(tool));
+        }
+        finally { refreshing = wasRefreshing; }
     }
     internal void RefreshTools()
     {
@@ -94,6 +120,7 @@ internal sealed class BlocksPanel : UserControl
             item.SubItems.Add(tool.Group); list.Items.Add(item);
         }
         list.EndUpdate();
+        RefreshRotation();
         status.Text = list.Items.Count + " blocks · dubbelklik om te plaatsen\nTijdens plaatsen: Object = laag en plaats aanwijzen";
     }
     private void InsertSelected()

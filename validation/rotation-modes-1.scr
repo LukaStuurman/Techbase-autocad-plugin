@@ -1,0 +1,41 @@
+_NETLOAD
+"C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.2.3/Techbase.Blocks.bundle/Contents/R25-1.2.3/Techbase.Blocks.dll"
+(setvar "ATTREQ" 0)
+(setvar "OSMODE" 0)
+(setvar "INSUNITS" 0)
+(entmake (list (cons 0 "LAYER") (cons 2 "TEST_ROTATION_MAIN") (cons 70 0) (cons 62 1)))
+(entmake (list (cons 0 "LINE") (cons 8 "TEST_ROTATION_MAIN") (cons 10 (list 0.0 0.0 0.0)) (cons 11 (list 100.0 0.0 0.0))))
+_TBPLAATS
+547536b5125144edbc8868691121d217
+90
+5,0,0
+(princ (strcat "\nMODE_BEFORE=" (rtos (cdr (assoc 50 (entget (entlast)))) 2 8) ";" (cdr (assoc 8 (entget (entlast))))))
+_TBPLAATS
+9dbea1c0c575423e80d3feede50deff1
+10,0,0
+(princ (strcat "\nMODE_OFF=" (rtos (cdr (assoc 50 (entget (entlast)))) 2 8) ";" (cdr (assoc 8 (entget (entlast))))))
+_TBPLAATS
+da8cac5bf01c4eff87c57352e8ac05ab
+15,0,0
+45
+(princ (strcat "\nMODE_AFTER=" (rtos (cdr (assoc 50 (entget (entlast)))) 2 8) ";" (cdr (assoc 8 (entget (entlast))))))
+_UCS
+_Z
+90
+_TBPLAATS
+547536b5125144edbc8868691121d217
+30
+0,-20,0
+(princ (strcat "\nMODE_UCS=" (rtos (cdr (assoc 50 (entget (entlast)))) 2 8) ";" (cdr (assoc 8 (entget (entlast))))))
+_UCS
+_W
+_TBPLAATS
+547536b5125144edbc8868691121d217
+(princ)
+_TBPLAATS
+547536b5125144edbc8868691121d217
+20
+(princ)
+(princ (strcat "\nMODE_COUNT=" (itoa (sslength (ssget "_X" (list (cons 0 "INSERT")))))))
+_QUIT
+_Y

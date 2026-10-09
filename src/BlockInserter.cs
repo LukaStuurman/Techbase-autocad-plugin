@@ -117,6 +117,7 @@ internal static class BlockInserter
         using var working = new WorkingDatabaseScope(db);
         var inheritLayer = settings.InheritLayer;
         var tolerance = settings.Tolerance;
+        var rotationMode = settings.GetRotationMode(tool);
         // Insertion entities are transactional; imported definitions may remain as with ordinary INSERT.
         using var tx = db.TransactionManager.StartTransaction();
         var definition = Import(db, catalog, tool);
@@ -142,6 +143,17 @@ internal static class BlockInserter
         }
         PromptResult result;
         var rotationChosen = false;
+        if (rotationMode == BlockRotationMode.BeforePoint)
+        {
+            // Keep the initial preview near the current view rather than WCS 0.
+            using var view = ed.GetCurrentView();
+            var viewFrame = Matrix3d.PlaneToWorld(view.ViewDirection);
+            viewFrame = Matrix3d.Displacement(view.Target - Point3d.Origin) * viewFrame;
+            viewFrame = Matrix3d.Rotation(-view.ViewTwist, view.ViewDirection, view.Target) * viewFrame;
+            jig.MoveTo(new Point3d(view.CenterPoint.X, view.CenterPoint.Y, 0).TransformBy(viewFrame));
+            if (!jig.Rotate(ed)) return false;
+            rotationChosen = true;
+        }
         while (true)
         {
             result = DragPoint();
@@ -177,7 +189,7 @@ internal static class BlockInserter
         }
         LayerResolver.CheckLayer(tx, block.LayerId);
         jig.RefreshAttributes();
-        if (tool.PromptRotation && !rotationChosen && !jig.Rotate(ed)) return false;
+        if (rotationMode == BlockRotationMode.AfterPoint && !rotationChosen && !jig.Rotate(ed)) return false;
         var attributes = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         var record = (BlockTableRecord)tx.GetObject(definition, OpenMode.ForRead);
         if (Convert.ToInt16(AcApp.GetSystemVariable("ATTREQ")) != 0)

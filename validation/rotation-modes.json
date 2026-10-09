@@ -1,0 +1,18 @@
+{
+  "Status": "PASS",
+  "Checks": [
+    "process 1: BEFORE rotation and object layer",
+    "process 1: OFF rotation and object layer",
+    "process 1: AFTER rotation and object layer",
+    "process 1: UCS rotation and object layer",
+    "process 1: saved prompt order",
+    "process 1: both cancellations leave no insert",
+    "process 2: BEFORE rotation and object layer",
+    "process 2: OFF rotation and object layer",
+    "process 2: AFTER rotation and object layer",
+    "process 2: UCS rotation and object layer",
+    "process 2: saved prompt order",
+    "process 2: both cancellations leave no insert"
+  ],
+  "Host": "AutoCAD 2026 Core Console"
+}

@@ -15,6 +15,7 @@ internal static class Diagnostics
     {
         var output = Environment.GetEnvironmentVariable("TECHBASE_TEST_OUTPUT") ?? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Techbase", "Blocks", "Validation");
         Directory.CreateDirectory(output);
+        RotationSettingsDiagnostics.Run(catalog, output);
         PlacementDiagnostics.Run(catalog, output);
         var checks = new List<string>();
         var results = new List<object>();

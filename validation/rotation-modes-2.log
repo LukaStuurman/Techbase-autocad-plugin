@@ -1,0 +1,315 @@
+Redirect stdout (file: C:\Users\LUKAST~1\AppData\Local\Temp\accc425322).
+AcCoreConsole: StdOutConsoleMode: processed-output: disabled,auto
+AutoCAD Core Engine Console - Copyright 2025 Autodesk, Inc.  All rights reserved. (W.122.0.0)
+
+Execution Path:
+C:\Program Files\Autodesk\AutoCAD 2026\accoreconsole.exe
+Current Directory: C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\validation
+
+Version Number: W.122.0.0 (UNICODE)
+LogFilePath has been set to the working folder.
+CoreHeartBeat
+Regenerating model.
+Drawing created using acadiso.dwt from AutoCAD profile: <<Unnamed Profile>>
+**** System Variable Changed ****
+2 of the monitored system variables have changed from the preferred value. Use SYSVARMONITOR command to view changes.
+
+
+AutoCAD menu utilities loaded.
+Command:
+Command:
+
+Command:
+Command: _NETLOAD
+Assembly file name: "C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.2.3/Techbase.Blocks.bundle/Contents/R25-1.2.3/Techbase.Blocks.dll"
+
+Command: (setvar "ATTREQ" 0)
+0
+
+Command: (setvar "OSMODE" 0)
+0
+
+Command: (setvar "INSUNITS" 0)
+0
+
+Command: (entmake (list (cons 0 "LAYER") (cons 2 "TEST_ROTATION_MAIN") (cons 70 0) (cons 62 1)))
+nil
+
+Command: (entmake (list (cons 0 "LINE") (cons 8 "TEST_ROTATION_MAIN") (cons 10 (list 0.0 0.0 0.0)) (cons 11 (list 100.0 0.0 0.0))))
+((0 . "LINE") (8 . "TEST_ROTATION_MAIN") (10 0.0 0.0 0.0) (11 100.0 0.0 0.0))
+
+Command: _TBPLAATS
+
+Tool-ID: 547536b5125144edbc8868691121d217
+Loading AEC Base...
+Loading AEC Base Extended...
+Loading AEC Core...
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccpressurepipes.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aecchydrology.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccroadway.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccpressurepipes.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccland.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccland.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccland.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccland.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccland.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccnetwork.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccpressurepipes.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aecchydrology.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccnetwork.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccnetwork.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccnetwork.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccland.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccplanprod.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccland.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccnetwork.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccnetwork.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccnetwork.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccpressurepipes.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccland.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccland.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccland.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccland.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccroadway.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccnetwork.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccland.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccland.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccnetwork.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccnetwork.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccland.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccland.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccland.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccland.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccplanprod.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+Loading AEC Project Base...
+Loading AEC Architectural Base...
+Loading AEC Schedule...
+Loading AECC Base...
+Loading AecCivilBase...
+Loading AECC QTO......
+Loading AECC Land...
+Loading AECC Base Core...
+Loading AECC Survey...
+Loading AECC Roadway...
+Loading AECC Pipe Part...
+Loading AECC Pipe Network...
+Unable to find the rules file: C:\C3DPipeRules.xml
+Unable to find the rules file: C:\C3DPipeRules.xml
+Unable to find the rules file: C:\C3DPipeRules.xml
+Unable to find the rules file: C:\C3DPipeRules.xml
+Unable to access Shared Pipe Catalog folder.
+
+ Please verify configuration.
+
+ Run 'setNetworkCatalog' to reset.
+Unable to access Shared Pipe Catalog folder.
+
+ Please verify configuration.
+
+ Run 'setNetworkCatalog' to reset.
+Unable to find the rules file: C:\C3DPipeRules.xml
+Unable to find the rules file: C:\C3DPipeRules.xml
+Unable to find the rules file: C:\C3DPipeRules.xml
+Unable to find the rules file: C:\C3DPipeRules.xml
+Loading AECC Pressure Pipes...
+Loading AECC Building Site...
+Loading AECC DwgIndxExtractor...
+Loading AECC Point Cloud...
+Loading AECC ETransmit...
+Loading AECC Plan Production...
+Loading AECC Hydrology...
+Loading AECC Bridge...
+Loading AECC Rail...
+
+Draaihoek <0>: 90
+
+Invoegpunt [Object/Draaien]: 5,0,0
+
+Laag overgenomen: TEST_ROTATION_MAIN
+Geplaatst: BESTAANDE MOF op laag TEST_ROTATION_MAIN.
+Command: (princ (strcat "\nMODE_BEFORE=" (rtos (cdr (assoc 50 (entget (entlast)))) 2 8) ";" (cdr (assoc 8 (entget (entlast))))))
+
+MODE_BEFORE=1.57079633;TEST_ROTATION_MAIN"\nMODE_BEFORE=1.57079633;TEST_ROTATION_MAIN"
+
+Command: _TBPLAATS
+
+Tool-ID: 9dbea1c0c575423e80d3feede50deff1
+
+Invoegpunt [Object/Draaien]: 10,0,0
+
+Laag overgenomen: TEST_ROTATION_MAIN
+Geplaatst: NIEUWE MOF op laag TEST_ROTATION_MAIN.
+Command: (princ (strcat "\nMODE_OFF=" (rtos (cdr (assoc 50 (entget (entlast)))) 2 8) ";" (cdr (assoc 8 (entget (entlast))))))
+
+MODE_OFF=0;TEST_ROTATION_MAIN"\nMODE_OFF=0;TEST_ROTATION_MAIN"
+
+Command: _TBPLAATS
+
+Tool-ID: da8cac5bf01c4eff87c57352e8ac05ab
+
+Invoegpunt [Object/Draaien]: 15,0,0
+
+Laag overgenomen: TEST_ROTATION_MAIN
+Draaihoek <0>: 45
+
+Geplaatst: Flatkast op laag TEST_ROTATION_MAIN.
+Command: (princ (strcat "\nMODE_AFTER=" (rtos (cdr (assoc 50 (entget (entlast)))) 2 8) ";" (cdr (assoc 8 (entget (entlast))))))
+
+MODE_AFTER=0.78539816;TEST_ROTATION_MAIN"\nMODE_AFTER=0.78539816;TEST_ROTATION_MAIN"
+
+Command: _UCS
+
+Current ucs name:  *WORLD*
+Specify origin of UCS or [Face/NAmed/OBject/Previous/View/World/X/Y/Z/ZAxis] <World>: _Z
+
+Specify rotation angle about Z axis <90>: 90
+
+Command: _TBPLAATS
+
+Tool-ID: 547536b5125144edbc8868691121d217
+
+Draaihoek <0>: 30
+
+Invoegpunt [Object/Draaien]: 0,-20,0
+
+Laag overgenomen: TEST_ROTATION_MAIN
+Geplaatst: BESTAANDE MOF op laag TEST_ROTATION_MAIN.
+Command: (princ (strcat "\nMODE_UCS=" (rtos (cdr (assoc 50 (entget (entlast)))) 2 8) ";" (cdr (assoc 8 (entget (entlast))))))
+
+MODE_UCS=2.0943951;TEST_ROTATION_MAIN"\nMODE_UCS=2.0943951;TEST_ROTATION_MAIN"
+
+Command: _UCS
+
+Current ucs name:  *NO NAME*
+Specify origin of UCS or [Face/NAmed/OBject/Previous/View/World/X/Y/Z/ZAxis] <World>: _W
+
+Command: _TBPLAATS
+
+Tool-ID: 547536b5125144edbc8868691121d217
+
+Draaihoek <0>: *Cancel*
+
+Command: (princ)
+
+Command: _TBPLAATS
+
+Tool-ID: 547536b5125144edbc8868691121d217
+
+Draaihoek <0>: 20
+
+Invoegpunt [Object/Draaien]: *Cancel*
+
+Command: (princ)
+
+Command: (princ (strcat "\nMODE_COUNT=" (itoa (sslength (ssget "_X" (list (cons 0 "INSERT")))))))
+
+MODE_COUNT=4"\nMODE_COUNT=4"
+
+Command: _QUIT
+_Y
+Really want to discard all changes to drawing? <N> _Y
+
+LogFilePath has been restored to ''.

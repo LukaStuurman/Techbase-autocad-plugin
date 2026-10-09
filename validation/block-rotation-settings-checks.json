@@ -1,0 +1,16 @@
+{
+  "Status": "PASS",
+  "Checks": [
+    "oude instellingen behouden palettegedrag",
+    "afzonderlijke keuzes blijven na herladen bewaard",
+    "overige instellingen behouden",
+    "uitzetten geldt alleen voor het gekozen block",
+    "palettevarianten met dezelfde blocknaam blijven onafhankelijk",
+    "terugzetten naar paletstandaard verwijdert alleen eigen uitzondering",
+    "lege draai-instellingen zijn bruikbaar",
+    "draai-instelling vraagt eerst een geselecteerd block",
+    "keuzelijst volgt geselecteerd block",
+    "keuzelijst slaat alleen gekozen block op",
+    "keuzelijst schakelt bestaande draaivraag uit"
+  ]
+}

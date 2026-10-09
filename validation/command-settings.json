@@ -2,5 +2,6 @@
   "InheritLayer": true,
   "Tolerance": 0.05,
   "PalettePath": null,
-  "Repeat": false
+  "Repeat": false,
+  "BlockRotationModes": {}
 }
