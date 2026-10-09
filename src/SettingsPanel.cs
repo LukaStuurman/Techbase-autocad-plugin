@@ -16,10 +16,10 @@ internal sealed class SettingsPanel : UserControl
         layout.Controls.Add(mof);
         layout.Controls.Add(new Label { Text = "Teksthoogte richtingsteksten (LS/OV)", AutoSize = true, Padding = new Padding(0, 14, 0, 0) });
         layout.Controls.Add(directions);
-        layout.Controls.Add(new Label { Text = "De keuze wordt automatisch bewaard.\nGeldt voor nieuwe MOF-blocks en richtingstekstblocks, ook via de LS/OV-burstknoppen.\n\nHet plaatsvoorbeeld gebruikt dezelfde teksthoogte. Bestaande geplaatste blocks en losse teksten blijven ongewijzigd.",
+        layout.Controls.Add(new Label { Text = "Breedte LS/OV-teksten: 4,80.\n\nDe keuze wordt automatisch bewaard.\nGeldt voor nieuwe MOF-blocks en richtingstekstblocks, ook via de LS/OV-burstknoppen.\n\nHet plaatsvoorbeeld gebruikt dezelfde teksthoogte. Bestaande geplaatste blocks en losse teksten blijven ongewijzigd.",
             AutoSize = true, MaximumSize = new Size(290, 0), Padding = new Padding(0, 14, 0, 0) });
         Controls.Add(layout);
-        foreach (var choice in new[] { mof, directions }) choice.Items.AddRange(new object[] { "0,75 (standaard)", "0,45" });
+        foreach (var choice in new[] { mof, directions }) choice.Items.AddRange(new object[] { "0,45 (standaard)", "0,75" });
         mof.SelectedIndexChanged += (_, _) => Save(true);
         directions.SelectedIndexChanged += (_, _) => Save(false);
         RefreshSettings(); UiTypography.Apply(this);
@@ -29,7 +29,7 @@ internal sealed class SettingsPanel : UserControl
         if (refreshing) return;
         var choice = isMof ? mof : directions;
         if (choice.SelectedIndex < 0) return;
-        var value = choice.SelectedIndex == 0 ? 0.75 : 0.45;
+        var value = choice.SelectedIndex == 0 ? 0.45 : 0.75;
         if (isMof) Plugin.Preferences.MofTextHeight = value;
         else Plugin.Preferences.DirectionTextHeight = value;
         Plugin.UpdateSettings();
@@ -37,7 +37,7 @@ internal sealed class SettingsPanel : UserControl
     internal void RefreshSettings()
     {
         refreshing = true;
-        try { mof.SelectedIndex = Plugin.Preferences.MofTextHeight == 0.45 ? 1 : 0; directions.SelectedIndex = Plugin.Preferences.DirectionTextHeight == 0.45 ? 1 : 0; }
+        try { mof.SelectedIndex = Plugin.Preferences.MofTextHeight == 0.75 ? 1 : 0; directions.SelectedIndex = Plugin.Preferences.DirectionTextHeight == 0.75 ? 1 : 0; }
         finally { refreshing = false; }
     }
 }

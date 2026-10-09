@@ -18,8 +18,8 @@ public sealed class Settings
     public string? PalettePath { get; set; }
     public bool Repeat { get; set; }
     public int SelectedDirectionNumber { get; set; } = 1;
-    public double MofTextHeight { get; set; } = 0.75;
-    public double DirectionTextHeight { get; set; } = 0.75;
+    public double MofTextHeight { get; set; } = 0.45;
+    public double DirectionTextHeight { get; set; } = 0.45;
     public double? BlockTextHeight(string name) => name.Contains("MOF", StringComparison.OrdinalIgnoreCase) ? MofTextHeight :
         name.StartsWith("RICHTINGEN TEKST", StringComparison.OrdinalIgnoreCase) ? DirectionTextHeight : null;
     public Dictionary<string, BlockRotationMode> BlockRotationModes { get; set; } = new(StringComparer.OrdinalIgnoreCase);
@@ -42,8 +42,8 @@ public sealed class Settings
             if (!double.IsFinite(settings.Tolerance) || settings.Tolerance <= 0) settings.Tolerance = 0.05;
             if (settings.SelectedDirectionNumber is < 1 or > 12) settings.SelectedDirectionNumber = 1;
             if (settings.ChosenBlockLayer is < 0 or > 12) settings.ChosenBlockLayer = 1;
-            if (settings.MofTextHeight is not (0.75 or 0.45)) settings.MofTextHeight = 0.75;
-            if (settings.DirectionTextHeight is not (0.75 or 0.45)) settings.DirectionTextHeight = 0.75;
+            if (settings.MofTextHeight is not (0.75 or 0.45)) settings.MofTextHeight = 0.45;
+            if (settings.DirectionTextHeight is not (0.75 or 0.45)) settings.DirectionTextHeight = 0.45;
             settings.BlockRotationModes = new Dictionary<string, BlockRotationMode>(
                 settings.BlockRotationModes ?? new(), StringComparer.OrdinalIgnoreCase);
             return settings;

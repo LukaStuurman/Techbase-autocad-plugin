@@ -14,7 +14,7 @@ internal static class TextHeightDiagnostics
         var checks = new List<string>();
         void Check(bool ok, string message) { if (!ok) throw new InvalidOperationException("Teksthoogte: " + message); checks.Add(message); }
         var settings = new Settings();
-        Check(settings.MofTextHeight == 0.75 && settings.DirectionTextHeight == 0.75, "nieuwe instellingen standaard beide 0,75");
+        Check(settings.MofTextHeight == 0.45 && settings.DirectionTextHeight == 0.45, "nieuwe instellingen standaard beide 0,45");
         var targets = catalog.Tools.Where(t => settings.BlockTextHeight(t.BlockName).HasValue).ToArray();
         Check(targets.Count(t => t.BlockName.Contains("MOF", StringComparison.OrdinalIgnoreCase)) == 3 && targets.Count(t => t.BlockName.StartsWith("RICHTINGEN TEKST")) == 2,
             "drie MOF-blocks en LS/OV-teksten vallen onder de instelling");
@@ -41,7 +41,7 @@ internal static class TextHeightDiagnostics
                 var isText = tool.BlockName.StartsWith("RICHTINGEN TEKST");
                 var inserted = BlockInserter.Append(db, tx, block, false, burst: isText);
                 if (isText)
-                    Check(inserted.Count == 13 && inserted.All(x => tx.GetObject(x, OpenMode.ForRead) is MText m && Math.Abs(m.TextHeight - height) < 1e-9), tool.Name + ": 13 losse burstteksten op gekozen hoogte " + height);
+                    Check(inserted.Count == 13 && inserted.All(x => tx.GetObject(x, OpenMode.ForRead) is MText m && Math.Abs(m.TextHeight - height) < 1e-9 && Math.Abs(m.Width - 4.80) < 1e-9), tool.Name + ": 13 losse burstteksten op gekozen hoogte " + height);
                 else
                     Check(block.AttributeCollection.Cast<ObjectId>().All(x => Math.Abs(((AttributeReference)tx.GetObject(x, OpenMode.ForRead)).Height - height) < 1e-9), tool.Name + ": geplaatste attributen hoogte " + height);
                 tx.Commit();
@@ -62,19 +62,19 @@ internal static class TextHeightDiagnostics
         {
             var file = Path.Combine(output, "text-height-settings.json"); Environment.SetEnvironmentVariable("TECHBASE_SETTINGS_FILE", file);
             File.WriteAllText(file, "{\"InheritLayer\":false}");
-            Check(Settings.Read().MofTextHeight == 0.75 && Settings.Read().DirectionTextHeight == 0.75 && !Settings.Read().InheritLayer, "oude instellingen krijgen 0,75 en behouden bestaande keuzes");
+            Check(Settings.Read().MofTextHeight == 0.45 && Settings.Read().DirectionTextHeight == 0.45 && !Settings.Read().InheritLayer, "oude instellingen krijgen 0,45 en behouden bestaande keuzes");
             File.WriteAllText(file, "{\"MofTextHeight\":-1,\"DirectionTextHeight\":99}");
-            Check(Settings.Read().MofTextHeight == 0.75 && Settings.Read().DirectionTextHeight == 0.75, "ongeldige opgeslagen hoogtes worden 0,75");
-            Plugin.Preferences.MofTextHeight = 0.75; Plugin.Preferences.DirectionTextHeight = 0.75;
+            Check(Settings.Read().MofTextHeight == 0.45 && Settings.Read().DirectionTextHeight == 0.45, "ongeldige opgeslagen hoogtes worden 0,45");
+            Plugin.Preferences.MofTextHeight = 0.45; Plugin.Preferences.DirectionTextHeight = 0.45;
             using var panel = new SettingsPanel { Size = new Size(380, 520) }; panel.CreateControl();
             var flags = BindingFlags.Instance | BindingFlags.NonPublic;
             var mof = (ComboBox)typeof(SettingsPanel).GetField("mof", flags)!.GetValue(panel)!;
             var directions = (ComboBox)typeof(SettingsPanel).GetField("directions", flags)!.GetValue(panel)!;
-            Check(mof.Items.Count == 2 && directions.Items.Count == 2 && mof.SelectedIndex == 0 && directions.SelectedIndex == 0, "instellingentab toont twee keuzes met 0,75 standaard");
+            Check(mof.Items.Count == 2 && directions.Items.Count == 2 && mof.SelectedIndex == 0 && directions.SelectedIndex == 0, "instellingentab toont twee keuzes met 0,45 standaard");
             mof.SelectedIndex = 1;
-            Check(Settings.Read().MofTextHeight == 0.45 && Settings.Read().DirectionTextHeight == 0.75, "MOF-keuze wordt afzonderlijk opgeslagen");
+            Check(Settings.Read().MofTextHeight == 0.75 && Settings.Read().DirectionTextHeight == 0.45, "MOF-keuze wordt afzonderlijk opgeslagen");
             directions.SelectedIndex = 1;
-            Check(Settings.Read().MofTextHeight == 0.45 && Settings.Read().DirectionTextHeight == 0.45, "richtingstekstkeuze wordt opgeslagen");
+            Check(Settings.Read().MofTextHeight == 0.75 && Settings.Read().DirectionTextHeight == 0.75, "richtingstekstkeuze wordt opgeslagen");
             using var reloaded = new SettingsPanel();
             Check(((ComboBox)typeof(SettingsPanel).GetField("mof", flags)!.GetValue(reloaded)!).SelectedIndex == 1, "nieuwe instellingentab gebruikt de gekozen hoogte");
             using var image = new Bitmap(panel.Width, panel.Height); panel.DrawToBitmap(image, new Rectangle(Point.Empty, panel.Size)); image.Save(Path.Combine(output, "Instellingen-tab.png"));

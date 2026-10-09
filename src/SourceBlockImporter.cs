@@ -15,7 +15,8 @@ internal static class SourceBlockImporter
     internal static ObjectId Import(Database target, string path, string blockName, double? textHeight = null)
     {
         var fingerprint = Fingerprint(path);
-        var variant = BlockTextHeight.Revision(textHeight);
+        var directionWidth = textHeight.HasValue && blockName.StartsWith("RICHTINGEN TEKST", StringComparison.OrdinalIgnoreCase) ? 4.80 : (double?)null;
+        var variant = BlockTextHeight.Revision(textHeight) + (directionWidth.HasValue ? "_WIDTH480" : "");
         using var targetTx = target.TransactionManager.StartTransaction();
         var targetTable = (BlockTable)targetTx.GetObject(target.BlockTableId, OpenMode.ForRead);
         var (name, existing) = FindName(targetTable, targetTx, blockName, fingerprint, variant);
@@ -34,7 +35,7 @@ internal static class SourceBlockImporter
         var sourceTable = (BlockTable)sourceTx.GetObject(source.BlockTableId, OpenMode.ForRead);
         if (!sourceTable.Has(blockName)) throw new InvalidOperationException("Block '" + blockName + "' ontbreekt in " + path);
         var sourceId = sourceTable[blockName];
-        if (textHeight.HasValue) BlockTextHeight.Apply(source, sourceTx, sourceId, textHeight.Value);
+        if (textHeight.HasValue) BlockTextHeight.Apply(source, sourceTx, sourceId, textHeight.Value, directionWidth);
         var records = sourceTable.Cast<ObjectId>().Select(id => (BlockTableRecord)sourceTx.GetObject(id, OpenMode.ForRead))
             .Where(r => !r.IsLayout && !r.IsAnonymous && !r.IsDependent).ToArray();
         var names = new List<(BlockTableRecord Record, string Original, string Name)>();

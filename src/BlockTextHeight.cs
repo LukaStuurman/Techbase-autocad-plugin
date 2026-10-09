@@ -7,7 +7,7 @@ namespace Techbase.Blocks;
 internal static class BlockTextHeight
 {
     internal static string Revision(double? height) => height.HasValue ? "_TEXT1_H" + height.Value.ToString("0.00", CultureInfo.InvariantCulture).Replace(".", "") : "";
-    internal static void Apply(Database db, Transaction tx, ObjectId root, double height)
+    internal static void Apply(Database db, Transaction tx, ObjectId root, double height, double? width = null)
     {
         using var working = new WorkingDatabaseScope(db);
         var visited = new HashSet<ObjectId>();
@@ -22,7 +22,7 @@ internal static class BlockTextHeight
                 var entity = tx.GetObject(id, OpenMode.ForRead);
                 if (entity is BlockReference reference) { Visit(reference.BlockTableRecord); continue; }
                 if (entity is MText text)
-                { text.UpgradeOpen(); text.TextHeight = height; text.Contents = Contents(text.Contents); }
+                { text.UpgradeOpen(); text.TextHeight = height; if (width.HasValue) text.Width = width.Value; text.Contents = Contents(text.Contents); }
                 else if (entity is DBText single)
                 {
                     single.UpgradeOpen(); single.Height = height;
@@ -30,6 +30,7 @@ internal static class BlockTextHeight
                     {
                         using var multiline = definition.MTextAttributeDefinition;
                         multiline.TextHeight = height; multiline.Contents = Contents(multiline.Contents);
+                        if (width.HasValue) multiline.Width = width.Value;
                         definition.MTextAttributeDefinition = multiline;
                     }
                     single.AdjustAlignment(db);

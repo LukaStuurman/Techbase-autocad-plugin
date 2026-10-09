@@ -1,7 +1,7 @@
 {
   "Status": "PASS",
   "Checks": [
-    "nieuwe instellingen standaard beide 0,75",
+    "nieuwe instellingen standaard beide 0,45",
     "drie MOF-blocks en LS/OV-teksten vallen onder de instelling",
     "afzekeringsblocks houden hun oorspronkelijke teksthoogtes",
     "RICHTINGEN TEKST LS: gelijke hoogte hergebruikt eigen definitie 0.75",
@@ -54,9 +54,9 @@
     "BESTAANDE MOF: geplaatste attributen hoogte 0.45",
     "BESTAANDE MOF: hoogtevariant krijgt eigen definitie",
     "BESTAANDE MOF: oude 0,75-definitie blijft intact na kiezen 0,45",
-    "oude instellingen krijgen 0,75 en behouden bestaande keuzes",
-    "ongeldige opgeslagen hoogtes worden 0,75",
-    "instellingentab toont twee keuzes met 0,75 standaard",
+    "oude instellingen krijgen 0,45 en behouden bestaande keuzes",
+    "ongeldige opgeslagen hoogtes worden 0,45",
+    "instellingentab toont twee keuzes met 0,45 standaard",
     "MOF-keuze wordt afzonderlijk opgeslagen",
     "richtingstekstkeuze wordt opgeslagen",
     "nieuwe instellingentab gebruikt de gekozen hoogte"

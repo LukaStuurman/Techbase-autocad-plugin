@@ -1,4 +1,4 @@
-# Techbase Blocks 1.6.0
+# Techbase Blocks 1.6.1
 
 Gebruik vijf tabs in AutoCAD en Civil 3D voor Windows: Blocks, Lichtmasten, Enexis kabelchecker, Richtingen en Instellingen.
 
@@ -25,7 +25,7 @@ De nieuwe tab **Instellingen** bevat twee onafhankelijke keuzes:
 - **Teksthoogte MOF-blocks**: voor NIEUWE MOF, MOF bestaand-nieuw en BESTAANDE MOF.
 - **Teksthoogte richtingsteksten (LS/OV)**: voor RICHTINGEN TEKST LS en RICHTINGEN TEKST OV, zowel in Blocks als via de burstknoppen in Richtingen.
 
-Beide staan standaard op **0,75**. De tweede keuze is **0,45**. De keuze wordt direct opgeslagen en blijft na herstart behouden. Plaatsvoorbeeld en uiteindelijke plaatsing gebruiken dezelfde hoogte. Alleen de teksthoogte verandert; het symbool wordt niet geschaald. Iedere hoogte gebruikt een eigen blockdefinitie, zodat eerdere plaatsingen intact blijven. Reeds geplaatste blocks en losse teksten worden niet aangepast. Afzekerings-/rekblocks en andere blocks behouden hun eigen teksthoogtes.
+Beide staan standaard op **0,45**. De tweede keuze is **0,75**. De LS/OV-richtingsteksten hebben een vaste **Defined width van 4,80**, ook na burst. De keuze wordt direct opgeslagen en blijft na herstart behouden. Plaatsvoorbeeld en uiteindelijke plaatsing gebruiken dezelfde hoogte. Alleen de teksthoogte verandert; het symbool wordt niet geschaald. Iedere hoogte gebruikt een eigen blockdefinitie, zodat eerdere plaatsingen intact blijven. Reeds geplaatste blocks en losse teksten worden niet aangepast. Afzekerings-/rekblocks en andere blocks behouden hun eigen teksthoogtes.
 
 ## Blocks plaatsen
 
@@ -154,4 +154,4 @@ De concrete testresultaten en resterende praktijktests staan in `VALIDATIE.md` b
 
 ## Opnieuw bouwen
 
-Gebruik een .NET 10 SDK en voer `Build.ps1 -Dotnet <pad-naar-dotnet.exe>` uit. De build haalt Autodesk AutoCAD.NET API 25.0.1 en 26.0.0 via NuGet op en bouwt de Excel-worker voor beide runtimes. De Autodesk API-DLL's worden niet meegeleverd: die levert de hostapplicatie. De uitvoer staat in `dist/1.6.0` en in `Techbase Blocks 1.6.0.zip`. Versiegebonden DLL-mappen maken een update mogelijk zonder een reeds geladen oude DLL te overschrijven; herstart de CAD-toepassing om de nieuwe versie te laden.
+Gebruik een .NET 10 SDK en voer `Build.ps1 -Dotnet <pad-naar-dotnet.exe>` uit. De build haalt Autodesk AutoCAD.NET API 25.0.1 en 26.0.0 via NuGet op en bouwt de Excel-worker voor beide runtimes. De Autodesk API-DLL's worden niet meegeleverd: die levert de hostapplicatie. De uitvoer staat in `dist/1.6.1` en in `Techbase Blocks 1.6.1.zip`. Versiegebonden DLL-mappen maken een update mogelijk zonder een reeds geladen oude DLL te overschrijven; herstart de CAD-toepassing om de nieuwe versie te laden.

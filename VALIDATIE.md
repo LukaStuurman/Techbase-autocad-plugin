@@ -1,3 +1,10 @@
+## Standaard 0,45 en LS/OV-breedte 4,80 - versie 1.6.1
+
+- Standaard teksthoogte voor MOF- en LS/OV-teksten is 0,45; tweede keuze 0,75. Ontbrekende/ongeldige opgeslagen waarden krijgen 0,45. Eerder bewust opgeslagen hoogtes blijven behouden; lokaal beide hoogtes op verzoek op 0,45 gezet.
+- LS/OV-richtingsteksten krijgen Defined width 4,80 in het block en na burst, bij beide hoogtekeuzes. Een aparte breedteversie voorkomt hergebruik van oudere definities.
+- 59 hoogte-/instellingencontroles, 410 algemene blockcontroles en 36 richtingstekstservice-/8 commandocontroles geslaagd in AutoCAD 2026 Core Console. Opgeslagen DXF onafhankelijk gelezen: alle 52 LS/OV-burstteksten hebben primaire groep 41 (Defined width) 4,80; beide hoogtes gecontroleerd.
+- Beide API-builds gemaakt; geen afzonderlijke interactieve 2025/2027- of Civil 3D-test.
+
 ## Instellingen en teksthoogtes - versie 1.6.0
 
 - Vijfde tab Instellingen: afzonderlijke hoogtes voor MOF-blocks en LS/OV-richtingsteksten, standaard 0,75; alternatief 0,45. Oude instellingen krijgen beide standaardwaarden. Keuze blijft bewaard; ongeldige opgeslagen waarden worden hersteld.
