@@ -1,0 +1,13 @@
+_UNDO
+_Begin
+_LINE
+0,0
+10,0
+
+_UNDO
+_End
+(princ (strcat "END=" (itoa (getvar "UNDOCTL"))))
+_U
+(princ (strcat "LINES=" (if (ssget "_X" (list (cons 0 "LINE"))) "YES" "NONE")))
+_QUIT
+_Y

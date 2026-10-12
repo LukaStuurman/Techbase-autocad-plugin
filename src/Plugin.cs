@@ -12,7 +12,7 @@ using AcApp = Autodesk.AutoCAD.ApplicationServices.Core.Application;
 
 namespace Techbase.Blocks;
 
-public sealed class Plugin : IExtensionApplication
+public sealed partial class Plugin : IExtensionApplication
 {
     internal static Settings Preferences { get; private set; } = Settings.Read();
     internal static Catalog? Blocks { get; private set; }
@@ -22,6 +22,7 @@ public sealed class Plugin : IExtensionApplication
     private static KabelCheckerPanel? kabelCheckerPanel;
     private static DirectionPanel? directionPanel;
     private static SettingsPanel? settingsPanel;
+    private static KabelgeulPanel? kabelgeulPanel;
     internal static LightmastRequest? PendingLightmast { get; set; }
     internal static DirectionInfoRequest? PendingDirectionInfo { get; set; }
     internal static string ContentsRoot => Directory.GetParent(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!)!.FullName;
@@ -31,7 +32,7 @@ public sealed class Plugin : IExtensionApplication
         try { Typography.EnsureInstalled(); Reload(); }
         catch (System.Exception ex) { AcApp.DocumentManager.MdiActiveDocument?.Editor.WriteMessage("\nTechbase Blocks: " + ex.Message); }
     }
-    public void Terminate() { settingsPanel?.Dispose(); directionPanel?.Dispose(); kabelCheckerPanel?.Dispose(); lightmastPanel?.Dispose(); panel?.Dispose(); palette?.Dispose(); }
+    public void Terminate() { kabelgeulPanel?.Dispose(); settingsPanel?.Dispose(); directionPanel?.Dispose(); kabelCheckerPanel?.Dispose(); lightmastPanel?.Dispose(); panel?.Dispose(); palette?.Dispose(); }
     internal static void Reload(string? path = null)
     {
         var candidate = new Catalog(path ?? Preferences.PalettePath ?? DefaultPalette);
@@ -70,6 +71,8 @@ public sealed class Plugin : IExtensionApplication
                 palette.Add("Richtingen", directionPanel);
                 settingsPanel = new SettingsPanel();
                 palette.Add("Instellingen", settingsPanel);
+                kabelgeulPanel = new KabelgeulPanel(ExpandChecker);
+                palette.Add("Kabelgeul", kabelgeulPanel);
             }
             palette.Visible = true;
         }

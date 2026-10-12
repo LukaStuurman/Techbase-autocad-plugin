@@ -1,0 +1,33 @@
+{
+  "Rows": [
+    {
+      "Type": "K01",
+      "Text": "Ri 1 150Al",
+      "Shape": "Combi",
+      "TwoSides": true,
+      "Text2": "Ri 1 150Al+",
+      "Shape2": "Dubbel",
+      "Mantel": "X"
+    },
+    {
+      "Type": "Bestaand",
+      "Text": "Bestaand 95Cu",
+      "Shape": "Enkel",
+      "Mantel": "A"
+    },
+    {
+      "Type": "Half rooien",
+      "Text": "Rooien 50Cu",
+      "Text2": "Behouden 50Cu",
+      "Shape": "Dubbel",
+      "NewTray": true
+    },
+    {
+      "Type": "MS Nieuw",
+      "Text": "MS 240Al",
+      "Shape": "Drie",
+      "Mantel": "A"
+    }
+  ],
+  "MantelSpec": "PVC 160"
+}

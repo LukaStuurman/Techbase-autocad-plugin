@@ -1,0 +1,71 @@
+(defun c:KGOMNI () (princ "ORIGINAL_UNCHANGED"))
+(if (not *tbkg:ready*) (load "C:/Users/LukaStuurmanHDBTechb/AppData/Roaming/Autodesk/ApplicationPlugins/Techbase.Blocks.bundle/Contents/Assets/Kabelgeul/Techbase.Kabelgeul.lsp"))
+(setvar "OSMODE" 0)
+(setvar "WIPEOUTFRAME" 2)
+(setvar "ATTREQ" 0)
+(setq oldcodesetting (getenv "TechbaseKabelGeulCodeSwitch"))
+_-LAYER
+_New
+"Aansluiting LS K01"
+_Color
+3
+"Aansluiting LS K01"
+
+(entmake (list (cons 0 "LINE") (cons 8 "Aansluiting LS K01") (cons 10 (list 0.0 0.0 0.0)) (cons 11 (list 80.0 0.0 0.0))))
+_ZOOM
+_E
+_REGEN
+_TBKABELGEUL
+10,0,0
+10,8,0
+_Direct
+(setq firstgeul (entlast))
+(princ (strcat "\nFRAME_DIRECT=" (itoa (getvar "WIPEOUTFRAME"))))
+(princ (strcat "\nSOURCE_DATA=" (vl-prin1-to-string (tbkg:copy-data-from-insert firstgeul))))
+(princ (strcat "\nGUARD=" (if (TBKG_NATIVE_GUARD firstgeul) "PASS" "FAIL")))
+_ZOOM
+_E
+_REGEN
+_TBGEULCOPY
+10,4,0
+30,0,0
+30,8,0
+_Direct
+(princ (strcat "\nFRAME_COPY=" (itoa (getvar "WIPEOUTFRAME"))))
+_TBKABELGEUL
+50,0,0
+50,8,0
+_Zwevend
+50,20,0
+(princ (strcat "\nFRAME_FLOAT=" (itoa (getvar "WIPEOUTFRAME"))))
+_TBGEULCODE
+_TBGEULCODE
+(princ (strcat "\nFRAME_CODE=" (itoa (getvar "WIPEOUTFRAME"))))
+_TBKABELGEUL
+(princ)
+(princ (strcat "\nFRAME_CANCEL=" (itoa (getvar "WIPEOUTFRAME"))))
+_TBGEULEDIT
+(princ)
+(princ (strcat "\nFRAME_EDIT_CANCEL=" (itoa (getvar "WIPEOUTFRAME"))))
+_-LAYER
+_Lock
+"E_LV_CROSS_SECTION"
+
+_TBKABELGEUL
+65,0,0
+65,8,0
+(princ (strcat "\nFRAME_LOCK=" (itoa (getvar "WIPEOUTFRAME"))))
+(princ (strcat "\nINSERTS_LOCK=" (itoa (sslength (ssget "_X" (list (cons 0 "INSERT")))))))
+_-LAYER
+_Unlock
+"E_LV_CROSS_SECTION"
+
+(princ (strcat "\nLAYER_COLOR=" (itoa (cdr (assoc 62 (tblsearch "LAYER" "Aansluiting LS K01"))))))
+(princ (strcat "\nCURRENT=" (getvar "CLAYER") " ATTREQ=" (itoa (getvar "ATTREQ")) " CMDECHO=" (itoa (getvar "CMDECHO"))))
+(c:KGOMNI)
+(if oldcodesetting (setenv "TechbaseKabelGeulCodeSwitch" oldcodesetting) (setenv "TechbaseKabelGeulCodeSwitch" "0"))
+_DXFOUT
+"C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/validation/Kabelgeul/Kabelgeul - commando.dxf"
+16
+_QUIT
+_Y

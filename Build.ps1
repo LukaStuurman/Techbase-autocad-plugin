@@ -3,6 +3,12 @@ param(
     [string]$PaletteRoot = ''
 )
 $ErrorActionPreference = 'Stop'
+$geulAssets = Join-Path $PSScriptRoot 'Assets\Kabelgeul'
+$geulVersion = Get-Content -LiteralPath (Join-Path $geulAssets 'bronversie.json') -Raw | ConvertFrom-Json
+if ((Get-FileHash -LiteralPath (Join-Path $PSScriptRoot $geulVersion.Source)).Hash -ne $geulVersion.SourceSHA256 -or
+    (Get-FileHash -LiteralPath (Join-Path $geulAssets 'Techbase.Kabelgeul.lsp')).Hash -ne $geulVersion.GeneratedSHA256) {
+    throw 'Kabelgeul-bron gewijzigd. Genereer de module opnieuw met tests/prepare_kabelgeul.py en voer de geulcontroles uit.'
+}
 if ([string]::IsNullOrWhiteSpace($PaletteRoot)) {
     $PaletteRoot = Join-Path $PSScriptRoot 'Assets\Palette'
     if (!(Test-Path -LiteralPath (Join-Path $PaletteRoot 'Techbase toolpallete.xtp'))) {
@@ -52,6 +58,7 @@ foreach ($source in $sources) {
 $hashes += [pscustomobject]@{ File = 'Techbase toolpallete.xtp'; SHA256 = (Get-FileHash -LiteralPath $xtp -Algorithm SHA256).Hash }
 $hashes | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $assets 'bronversies.json') -Encoding UTF8
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'enexis-source.json') -Destination $assets -Force
+Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'Assets\Kabelgeul') -Destination $assets -Recurse -Force
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'PackageContents.xml') -Destination $bundle -Force
 Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'Lettertype.ps1') -Destination $contents -Force
 foreach ($file in @('Installeren.ps1','Installeren.cmd','Lettertype.ps1','LEESMIJ.md','VALIDATIE.md')) { Copy-Item -LiteralPath (Join-Path $PSScriptRoot $file) -Destination $dist -Force }

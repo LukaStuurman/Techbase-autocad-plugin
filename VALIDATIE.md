@@ -1,3 +1,17 @@
+## Kabelgeul - versie 1.7.0, 12 oktober 2026
+
+De zesde tab bevat KabelGeul Omni 2026-08-06ad uit `Reference/Techbase lisp pakket.lsp`, bronhash **B3923054FBD878B09C16F1738B5D61EB676FDB42A65E5D39EF2BF519CF1F4AEC**. Alleen de Kabelgeul-module is opgenomen in de uitvoerbare, aangepaste Lisp; de lichtmast- en richtingstekstmodules uit het pakket worden niet geladen. De extractie/adapters staan in `tests/prepare_kabelgeul.py`. `Assets/Kabelgeul/bronversie.json` legt bron- en uitvoerhash vast.
+
+- Automatische detectie of handmatige tabelinvoer; 18 typen, 4 vormen, onafhankelijke zijden, Half rooien, mantelgroepen, losse mantels, specificatie en splitsen in meerdere bakken. Knoppen voor plaatsen, gegevens kopieren, teksten bewerken en codepositie wisselen.
+- 38 formulier-/uitwisselingscontroles slagen, inclusief teksten met quotes, backslashes en regeleinden, incomplete invoer, alle typen/vormen/opties, rijbewerkingen, Half rooien, de handmatige route en fontstijl. Tab gerenderd op 380 en 1040 pixels; alle controls gebruiken Arial Nova Light. De native TextBox wordt door Core Console DrawToBitmap niet afgebeeld; zijn afmetingen en positie zijn gecontroleerd.
+- **27 commando- en DXF-controles slagen** in AutoCAD 2026 Core Console: Direct, Zwevend, gegevens kopieren, behoud van alle gekopieerde typen (inclusief MS Nieuw), twee zijden, Half rooien, mantel en aparte bakken, referentiecode, Esc bij plaatsen/bewerken, vergrendelde gebruikte geullaag, ongewijzigde bestaande kleur en oorspronkelijke KGOMNI, herstel van WIPEOUTFRAME/CLAYER/ATTREQ/CMDECHO. Opgeslagen DXF bevat drie unieke geulblocks, de opgegeven teksten, eigen Light-stijl en mantelradius 0,64.
+- De geulmodule gebruikt een eigen namespace en wijzigt bij laden geen tekeninstellingen. Bestaande lagen worden behouden. Het formulier vervangt DCL; native attribuutbewerking en de bestaande maskersynchronisatie blijven gebruikt. Er wordt geen tweede algemene attribuutreactor geinstalleerd.
+- Beide API-builds zijn gemaakt. De lokaal geinstalleerde .NET-build wordt via de geulbootstrap geladen; de tab laadt de eigen Lisp-module indien nodig. Core Console scant nieuwe Lisp-bundlecomponenten niet; daarom gebruikt deze test dezelfde laadexpressie als de tab. Het manifest gebruikt de door Autodesk gedocumenteerde [Lisp-component en commandolading](https://help.autodesk.com/cloudhelp/2027/ENU/AutoCAD-Customization/files/GUID-3C25E517-8660-4BB7-9447-2310462EF06F.htm).
+
+Praktijktests blijven nodig voor de volledige desktopinteractie met het modale invoervenster, EATTEDIT en bijgewerkte tekstmaskers, Undo/Redo en AutoCAD/Civil 3D 2025/2027. UNDO Begin/End kon hier ook bij een losse standaard LINE-test in Core Console niet als volledige groep worden teruggenomen; daarom wordt geen geslaagde geul-Undo-test geclaimd. De normale Begin/End-opbouw is in de module opgenomen.
+
+Bewijs: `validation/Kabelgeul/formulier.json`, `commands.json`, `commands.log`, `Kabelgeul - commando.dxf` en de twee tabrenders. De bestaande 410 blockcontroles, bronversie-, MOF-, hoogte-, plaatsvoorbeeld-, laagkeuze- en lettertypecontroles slagen opnieuw.
+
 ## Standaard 0,45 en LS/OV-breedte 4,80 - versie 1.6.1
 
 - Standaard teksthoogte voor MOF- en LS/OV-teksten is 0,45; tweede keuze 0,75. Ontbrekende/ongeldige opgeslagen waarden krijgen 0,45. Eerder bewust opgeslagen hoogtes blijven behouden; lokaal beide hoogtes op verzoek op 0,45 gezet.

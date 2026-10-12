@@ -22,6 +22,7 @@ internal static class Diagnostics
         BlockLayerDiagnostics.Run(catalog, output);
         TextHeightDiagnostics.Run(catalog, output);
         ExistingMofUpdateDiagnostics.Run(catalog, output);
+        KabelgeulDiagnostics.Run(output);
         var checks = new List<string>();
         var results = new List<object>();
         void Check(bool condition, string name) { if (!condition) throw new InvalidOperationException("Test mislukt: " + name); checks.Add(name); }

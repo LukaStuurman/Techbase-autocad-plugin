@@ -1,0 +1,275 @@
+Redirect stdout (file: C:\Users\LUKAST~1\AppData\Local\Temp\accc27002).
+AcCoreConsole: StdOutConsoleMode: processed-output: disabled,auto
+AutoCAD Core Engine Console - Copyright 2025 Autodesk, Inc.  All rights reserved. (W.122.0.0)
+
+Execution Path:
+C:\Program Files\Autodesk\AutoCAD 2026\accoreconsole.exe
+Current Directory: C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\validation\Kabelgeul
+
+Version Number: W.122.0.0 (UNICODE)
+LogFilePath has been set to the working folder.
+CoreHeartBeat
+Regenerating model.
+Drawing created using acadiso.dwt from AutoCAD profile: <<Unnamed Profile>>
+**** System Variable Changed ****
+2 of the monitored system variables have changed from the preferred value. Use SYSVARMONITOR command to view changes.
+
+
+AutoCAD menu utilities loaded.
+Command:
+Command:
+
+Command:
+Command: (defun c:KGOMNI () (princ "ORIGINAL_UNCHANGED"))
+C:KGOMNI
+
+Command: (if (not *tbkg:ready*) (load "C:/Users/LukaStuurmanHDBTechb/AppData/Roaming/Autodesk/ApplicationPlugins/Techbase.Blocks.bundle/Contents/Assets/Kabelgeul/Techbase.Kabelgeul.lsp"))
+
+Techbase Kabelgeul geladen.C:TBGEULCODE
+
+Command: (setvar "OSMODE" 0)
+0
+
+Command: (setvar "WIPEOUTFRAME" 2)
+Regenerating model.
+2
+
+Command: (setvar "ATTREQ" 0)
+0
+
+Command: (setq oldcodesetting (getenv "TechbaseKabelGeulCodeSwitch"))
+"0"
+
+Command: _-LAYER
+
+Current layer:  "0"
+Enter an option [?/Make/Set/New/Rename/ON/OFF/Color/Ltype/LWeight/TRansparency/MATerial/Plot/Freeze/Thaw/LOck/Unlock/stAte/Description/rEconcile/Xref]: _New
+
+Enter name list for new layer(s): "Aansluiting LS K01"
+Enter an option [?/Make/Set/New/Rename/ON/OFF/Color/Ltype/LWeight/TRansparency/MATerial/Plot/Freeze/Thaw/LOck/Unlock/stAte/Description/rEconcile/Xref]: _Color
+
+New color [Truecolor/COlorbook] : 3
+
+Enter name list of layer(s) for color 3 (green) <0>: "Aansluiting LS K01"
+CoreHeartBeat
+Enter an option [?/Make/Set/New/Rename/ON/OFF/Color/Ltype/LWeight/TRansparency/MATerial/Plot/Freeze/Thaw/LOck/Unlock/stAte/Description/rEconcile/Xref]:
+
+Command: (entmake (list (cons 0 "LINE") (cons 8 "Aansluiting LS K01") (cons 10 (list 0.0 0.0 0.0)) (cons 11 (list 80.0 0.0 0.0))))
+((0 . "LINE") (8 . "Aansluiting LS K01") (10 0.0 0.0 0.0) (11 80.0 0.0 0.0))
+
+Command: _ZOOM
+
+Specify corner of window, enter a scale factor (nX or nXP), or
+[All/Center/Dynamic/Extents/Previous/Scale/Window/Object] <real time>: _E
+
+Command: _REGEN
+Regenerating model.
+
+Command: _TBKABELGEUL
+TBGEULINIT
+Command: _.UNDO Current settings: Auto = On, Control = All, Combine = Yes, Layer = Yes
+Enter the number of operations to undo or [Auto/Control/BEgin/End/Mark/Back] <1>: _Begin
+Command: Regenerating model.
+
+Selecteer eerste polyline / begin lange lijn of bestaande KabelGeul: 10,0,0
+
+Afstandspunt richting halve vierkant: 10,8,0
+
+Plaatsing kabelgeul [Direct/Zwevend] <Direct>: _Direct
+
+KabelGeul geplaatst als uniek block.Regenerating model.
+_.UNDO Current settings: Auto = On, Control = All, Combine = Yes, Layer = Yes
+Enter the number of operations to undo or [Auto/Control/BEgin/End/Mark/Back] <1>: _End
+Command:
+
+Command: (setq firstgeul (entlast))
+<Entity name: 14ffdf6d910>
+
+Command: (princ (strcat "\nFRAME_DIRECT=" (itoa (getvar "WIPEOUTFRAME"))))
+
+FRAME_DIRECT=2"\nFRAME_DIRECT=2"
+
+Command: (princ (strcat "\nSOURCE_DATA=" (vl-prin1-to-string (tbkg:copy-data-from-insert firstgeul))))
+
+SOURCE_DATA=(4 ("K01" "Bestaand" "Half rooien" "MS Nieuw") ("150Al" "Bestaand 95Cu" "Rooien 50Cu" "MS 240Al") (nil nil T nil) ("X" "A" nil "A") (nil nil T nil) (T nil nil nil) ("150Al+" "" "Behouden 50Cu" "") (nil nil nil T) "PVC 160" (T nil nil nil) (T nil nil nil) (nil nil nil nil) (nil nil nil nil))"\nSOURCE_DATA=(4 (\"K01\" \"Bestaand\" \"Half rooien\" \"MS Nieuw\") (\"150Al\" \"Bestaand 95Cu\" \"Rooien 50Cu\" \"MS 240Al\") (nil nil T nil) (\"X\" \"A\" nil \"A\") (nil nil T nil) (T nil nil nil) (\"150Al+\" \"\" \"Behouden 50Cu\" \"\") (nil nil nil T) \"PVC 160\" (T nil nil nil) (T nil nil nil) (nil nil nil nil) (nil nil nil nil))"
+
+Command: (princ (strcat "\nGUARD=" (if (TBKG_NATIVE_GUARD firstgeul) "PASS" "FAIL")))
+
+GUARD=PASS"\nGUARD=PASS"
+
+Command: _ZOOM
+
+Specify corner of window, enter a scale factor (nX or nXP), or
+[All/Center/Dynamic/Extents/Previous/Scale/Window/Object] <real time>: _E
+
+Command: _REGEN
+Regenerating model.
+
+Command: _TBGEULCOPY
+TBGEULINIT
+Command: _.UNDO Current settings: Auto = On, Control = All, Combine = Yes, Layer = Yes
+Enter the number of operations to undo or [Auto/Control/BEgin/End/Mark/Back] <1>: _Begin
+Command: Regenerating model.
+
+Selecteer KabelGeul block om gegevens over te nemen: 10,4,0
+
+Selecteer kabel/lijn voor beginpunt van de geul leader: 30,0,0
+
+Klik lengte/eindpunt en richtingzijde van de geul leader: 30,8,0
+
+Plaatsing kabelgeul [Direct/Zwevend] <Direct>: _Direct
+
+KabelGeul opnieuw aangemaakt met overgenomen gegevens.Regenerating model.
+_.UNDO Current settings: Auto = On, Control = All, Combine = Yes, Layer = Yes
+Enter the number of operations to undo or [Auto/Control/BEgin/End/Mark/Back] <1>: _End
+Command:
+
+Command: (princ (strcat "\nFRAME_COPY=" (itoa (getvar "WIPEOUTFRAME"))))
+
+FRAME_COPY=2"\nFRAME_COPY=2"
+
+Command: _TBKABELGEUL
+TBGEULINIT
+Command: _.UNDO Current settings: Auto = On, Control = All, Combine = Yes, Layer = Yes
+Enter the number of operations to undo or [Auto/Control/BEgin/End/Mark/Back] <1>: _Begin
+Command: Regenerating model.
+
+Selecteer eerste polyline / begin lange lijn of bestaande KabelGeul: 50,0,0
+
+Afstandspunt richting halve vierkant: 50,8,0
+
+Plaatsing kabelgeul [Direct/Zwevend] <Direct>: _Zwevend
+
+Klik plaats voor zwevende kabelgeul: 50,20,0
+
+KabelGeul geplaatst als uniek block.Regenerating model.
+_.UNDO Current settings: Auto = On, Control = All, Combine = Yes, Layer = Yes
+Enter the number of operations to undo or [Auto/Control/BEgin/End/Mark/Back] <1>: _End
+Command:
+
+Command: (princ (strcat "\nFRAME_FLOAT=" (itoa (getvar "WIPEOUTFRAME"))))
+
+FRAME_FLOAT=2"\nFRAME_FLOAT=2"
+
+Command: _TBGEULCODE
+TBGEULINIT
+Command: _.UNDO Current settings: Auto = On, Control = All, Combine = Yes, Layer = Yes
+Enter the number of operations to undo or [Auto/Control/BEgin/End/Mark/Back] <1>: _Begin
+Command:
+CODESWITCH staat AAN: bij toekomstige zwevende KabelGeulen komen code en mantelbuistekst omgewisseld te staan._.UNDO Current settings: Auto = On, Control = All, Combine = Yes, Layer = Yes
+Enter the number of operations to undo or [Auto/Control/BEgin/End/Mark/Back] <1>: _End
+Command:
+
+Command: _TBGEULCODE
+TBGEULINIT
+Command: _.UNDO Current settings: Auto = On, Control = All, Combine = Yes, Layer = Yes
+Enter the number of operations to undo or [Auto/Control/BEgin/End/Mark/Back] <1>: _Begin
+Command:
+CODESWITCH staat UIT: toekomstige zwevende KabelGeulen gebruiken de standaardposities._.UNDO Current settings: Auto = On, Control = All, Combine = Yes, Layer = Yes
+Enter the number of operations to undo or [Auto/Control/BEgin/End/Mark/Back] <1>: _End
+Command:
+
+Command: (princ (strcat "\nFRAME_CODE=" (itoa (getvar "WIPEOUTFRAME"))))
+
+FRAME_CODE=2"\nFRAME_CODE=2"
+
+Command: _TBKABELGEUL
+TBGEULINIT
+Command: _.UNDO Current settings: Auto = On, Control = All, Combine = Yes, Layer = Yes
+Enter the number of operations to undo or [Auto/Control/BEgin/End/Mark/Back] <1>: _Begin
+Command: Regenerating model.
+
+Selecteer eerste polyline / begin lange lijn of bestaande KabelGeul: *Cancel*
+Regenerating model.
+
+Command: (princ)
+
+Command: (princ (strcat "\nFRAME_CANCEL=" (itoa (getvar "WIPEOUTFRAME"))))
+
+FRAME_CANCEL=2"\nFRAME_CANCEL=2"
+
+Command: _TBGEULEDIT
+TBGEULINIT
+Command: _.UNDO Current settings: Auto = On, Control = All, Combine = Yes, Layer = Yes
+Enter the number of operations to undo or [Auto/Control/BEgin/End/Mark/Back] <1>: _Begin
+Command: Regenerating model.
+
+Selecteer KabelGeul block of kabel/leiding tekst: *Cancel*
+Regenerating model.
+_.UNDO Current settings: Auto = On, Control = All, Combine = Yes, Layer = Yes
+Enter the number of operations to undo or [Auto/Control/BEgin/End/Mark/Back] <1>: _End
+Command: (princ)
+
+Command: (princ (strcat "\nFRAME_EDIT_CANCEL=" (itoa (getvar "WIPEOUTFRAME"))))
+
+FRAME_EDIT_CANCEL=2"\nFRAME_EDIT_CANCEL=2"
+
+Command: _-LAYER
+
+Current layer:  "0"
+Enter an option [?/Make/Set/New/Rename/ON/OFF/Color/Ltype/LWeight/TRansparency/MATerial/Plot/Freeze/Thaw/LOck/Unlock/stAte/Description/rEconcile/Xref]: _Lock
+
+Enter name list of layer(s) to lock or <select objects>: "E_LV_CROSS_SECTION"
+CoreHeartBeat
+Enter an option [?/Make/Set/New/Rename/ON/OFF/Color/Ltype/LWeight/TRansparency/MATerial/Plot/Freeze/Thaw/LOck/Unlock/stAte/Description/rEconcile/Xref]:
+
+Command: _TBKABELGEUL
+TBGEULINIT
+Command: _.UNDO Current settings: Auto = On, Control = All, Combine = Yes, Layer = Yes
+Enter the number of operations to undo or [Auto/Control/BEgin/End/Mark/Back] <1>: _Begin
+Command: Regenerating model.
+
+Selecteer eerste polyline / begin lange lijn of bestaande KabelGeul: 65,0,0
+
+Afstandspunt richting halve vierkant: 65,8,0
+System.InvalidOperationException: Laag 'E_LV_CROSS_SECTION' is vergrendeld. Kies een andere laag of ontgrendel deze zelf.
+   at Techbase.Blocks.LayerResolver.CheckLayer(Transaction tr, ObjectId id) in C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\src\LayerResolver.cs:line 63
+   at Techbase.Blocks.Plugin.CheckKabelgeulLayer(ResultBuffer args) in C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\src\KabelgeulCommands.cs:line 98
+   at Autodesk.AutoCAD.Runtime.CommandClass.InvokeWorker(MethodInfo mi, Object commandObject, Boolean bLispFunction)
+   at Autodesk.AutoCAD.Runtime.CommandClass.InvokeWorkerWithExceptionFilter(MethodInfo mi, Object commandObject, Boolean bLispFunction)
+   at Autodesk.AutoCAD.Runtime.CommandClass.Invoke(MethodInfo mi, Boolean bLispFunction)
+   at Autodesk.AutoCAD.Runtime.CommandClass.CommandThunk.InvokeLisp()Regenerating model.
+
+Fout: ADS request error
+Command: (princ (strcat "\nFRAME_LOCK=" (itoa (getvar "WIPEOUTFRAME"))))
+
+FRAME_LOCK=2"\nFRAME_LOCK=2"
+
+Command: (princ (strcat "\nINSERTS_LOCK=" (itoa (sslength (ssget "_X" (list (cons 0 "INSERT")))))))
+
+INSERTS_LOCK=3"\nINSERTS_LOCK=3"
+
+Command: _-LAYER
+
+Current layer:  "0"
+Enter an option [?/Make/Set/New/Rename/ON/OFF/Color/Ltype/LWeight/TRansparency/MATerial/Plot/Freeze/Thaw/LOck/Unlock/stAte/Description/rEconcile/Xref]: _Unlock
+
+Enter name list of layer(s) to unlock or <select objects>: "E_LV_CROSS_SECTION"
+Enter an option [?/Make/Set/New/Rename/ON/OFF/Color/Ltype/LWeight/TRansparency/MATerial/Plot/Freeze/Thaw/LOck/Unlock/stAte/Description/rEconcile/Xref]:
+
+Command: (princ (strcat "\nLAYER_COLOR=" (itoa (cdr (assoc 62 (tblsearch "LAYER" "Aansluiting LS K01"))))))
+
+LAYER_COLOR=3"\nLAYER_COLOR=3"
+
+Command: (princ (strcat "\nCURRENT=" (getvar "CLAYER") " ATTREQ=" (itoa (getvar "ATTREQ")) " CMDECHO=" (itoa (getvar "CMDECHO"))))
+
+CURRENT=0 ATTREQ=0 CMDECHO=1"\nCURRENT=0 ATTREQ=0 CMDECHO=1"
+
+Command: (c:KGOMNI)
+ORIGINAL_UNCHANGED"ORIGINAL_UNCHANGED"
+
+Command: (if oldcodesetting (setenv "TechbaseKabelGeulCodeSwitch" oldcodesetting) (setenv "TechbaseKabelGeulCodeSwitch" "0"))
+"0"
+
+Command: _DXFOUT
+Enter DXF file name <C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\validation\Kabelgeul\Drawing1.dxf>: "C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/validation/Kabelgeul/Kabelgeul - commando.dxf"
+
+Current DXF settings: Precision= 16 Format= ASCII Preview= No Version= 2018
+
+Enter decimal places of accuracy (0 to 16) or [Binary/select Objects/Preview/Version] <16>: 16
+
+Command: _QUIT
+_Y
+Really want to discard all changes to drawing? <N> _Y
+
+LogFilePath has been restored to ''.

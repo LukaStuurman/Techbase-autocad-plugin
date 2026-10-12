@@ -1,4 +1,4 @@
-Redirect stdout (file: C:\Users\LUKAST~1\AppData\Local\Temp\accc100322).
+Redirect stdout (file: C:\Users\LUKAST~1\AppData\Local\Temp\accc449962).
 
 AcCoreConsole: StdOutConsoleMode: processed-output: disabled,auto
 
@@ -43,12 +43,6 @@ Command:
 
 
 Command:
-
-Command: _NETLOAD
-
-Assembly file name: "C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.6.1/Techbase.Blocks.bundle/Contents/R25-1.6.1/Techbase.Blocks.dll"
-
-
 
 Command: TBVALIDATE
 

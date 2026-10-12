@@ -1,6 +1,6 @@
-# Techbase Blocks 1.6.1
+# Techbase Blocks 1.7.0
 
-Gebruik vijf tabs in AutoCAD en Civil 3D voor Windows: Blocks, Lichtmasten, Enexis kabelchecker, Richtingen en Instellingen.
+Gebruik zes tabs in AutoCAD en Civil 3D voor Windows: Blocks, Lichtmasten, Enexis kabelchecker, Richtingen, Instellingen en Kabelgeul.
 
 ## Installeren
 
@@ -12,7 +12,7 @@ De plugin staat daarna onder `%APPDATA%\Autodesk\ApplicationPlugins`. Bestaande 
 
 ## Lettertype
 
-Alle teksten in de vijf plugintabs en alle blockteksten, attributen, losse richtingsteksten en richting-info die de plugin plaatst gebruiken **Arial Nova Light**. Bij kopieren of verplaatsen van richtingsteksten krijgt het resultaat ook dit lettertype. Hoogtes, kleuren en overige tekstopmaak blijven behouden; expliciete fontoverrides in MText worden verwijderd.
+Alle teksten in de zes plugintabs en alle blockteksten, attributen, losse richtingsteksten en richting-info die de plugin plaatst gebruiken **Arial Nova Light**. Bij kopieren of verplaatsen van richtingsteksten krijgt het resultaat ook dit lettertype. Hoogtes, kleuren en overige tekstopmaak blijven behouden; expliciete fontoverrides in MText worden verwijderd.
 
 **Installeren.cmd regelt het lettertype automatisch.** De installer gebruikt een bestaande Windows-installatie of het officiele Arial Nova-pakket uit de Microsoft Store. Ontbreekt het pakket, dan downloadt en installeert Windows het via App Installer (winget). Daarvoor zijn internet en toegestane Store-toegang nodig. De Light-variant wordt voor de huidige gebruiker geregistreerd, zonder beheerdersrechten. Een ontbrekende of geblokkeerde Store-installatie wordt gemeld voordat de plugin wordt vervangen. Het lettertype hoeft dus niet apart te worden geinstalleerd.
 
@@ -123,10 +123,31 @@ Opgeslagen stations blijven in de bestaande map `%APPDATA%\EnexisKabelChecker\st
 
 De Excel-dependencies staan per CAD-generatie in een aparte map `excel` en worden via de bestaande geïsoleerde laadcontext gebruikt. De volledige installatiemap is nodig voor export. Bronversie en bestandschecksums staan in `Contents/Assets/enexis-source.json`; een volgende wijziging in GitHub wordt pas na een nieuwe gecontroleerde build opgenomen.
 
+## Kabelgeul
+
+De zesde tab **Kabelgeul** gebruikt KabelGeul Omni uit het Techbase Lisp-pakket. De bron is in de installatie opgenomen; een apart geladen Lisp-bestand is niet nodig. Klik **Groter openen** om alle kolommen naast elkaar te zien. In een smalle tab kun je horizontaal door de tabel scrollen.
+
+- Met **Kabels uit de tekening overnemen** aan: klik **Kabelgeul plaatsen**, selecteer de eerste kabel/polyline en kies een afstandspunt. De leader volgt haaks de gekozen kabel. Het invulvenster wordt gevuld met de herkende kabeltypen; controleer en wijzig deze voordat je verdergaat.
+- Met de schakelaar uit: vul de kabelrijen vooraf in de tab in. Na de kabel- en afstandskeuze gebruikt plaatsen direct deze invoer.
+- Kies per rij **K01 t/m K12**, **MS Nieuw**, **MS Bestaand**, **MS Rooien**, **Bestaand**, **Rooien** of **Half rooien**. Vorm is **Enkel**, **Dubbel**, **Drie** of **Combi**. Met **2-zijdig** krijgen beide zijden hun eigen tekst en vorm. Half rooien gebruikt de dubbele voorstelling met een afzonderlijke bestaande tekst.
+- Vul bij **Mantel** `X` in voor een losse mantel of dezelfde groepscode bij kabels die samen in een mantel liggen. De mantelspecificatie staat onder de tabel. **Nieuwe bak** begint vanaf die rij een volgende bak. Rijen toevoegen, verwijderen en omdraaien kan boven de tabel.
+- Kies na de invoer **Direct** om de geul aan de leader te plaatsen, of **Zwevend** om een losse plaats te kiezen met een bijbehorende referentiecode aan de kabel.
+- **Gegevens kopieren**: selecteer een bestaande KabelGeul, kies de nieuwe kabel en een afstandspunt, controleer de overgenomen invoer en plaats Direct of Zwevend. Er ontstaat een eigen block; de brongeul blijft intact. Oude Omni-geulen kunnen ook worden uitgelezen. Nieuwe geulen bewaren het exacte kabeltype, zodat bijvoorbeeld MS Nieuw niet als K05 wordt gekopieerd.
+- **Teksten bewerken** opent de AutoCAD-attribuuteditor voor een gekozen KabelGeul of de bijbehorende zwevende code. Na afsluiten worden de tekstmaskers bijgewerkt.
+- **Codepositie wisselen** wisselt de standaardpositie van code en mantelspecificatie voor volgende zwevende geulen. Deze keuze blijft bewaard; bestaande geulen blijven op hun plaats.
+
+Nieuwe geulteksten en attributen gebruiken **Arial Nova Light**. Bestaande laagkleuren en lijntypes blijven behouden; ontbrekende lagen worden aangemaakt. Vergrendelde, verborgen en bevroren gebruikte geullagen geven een melding. Externe geulblocks worden niet bewerkt. Esc annuleert; de huidige tekenlaag, ATTREQ, CMDECHO en wipeout-instelling worden hersteld.
+
+De oorspronkelijke commando's KGOMNI/OMNI en de andere functies in het oorspronkelijke Lisp-pakket worden niet vervangen. De plugin gebruikt eigen commandonamen.
+
 ## Commando's
 
 | Commando | Functie |
 | --- | --- |
+| TBKABELGEUL | Plaats een kabelgeul via Omni |
+| TBGEULCOPY | Neem gegevens over uit een bestaande KabelGeul |
+| TBGEULEDIT | Bewerk geulteksten met de attribuuteditor |
+| TBGEULCODE | Wissel codepositie voor volgende zwevende geulen |
 | TECHBASE | Open het Techbase-paneel |
 | TBRICHTINGEN | Open de tab Richtingen |
 | TBTEKSTLS / TBTEKSTOV | Plaats de LS/OV-bron als losse teksten |
@@ -154,4 +175,4 @@ De concrete testresultaten en resterende praktijktests staan in `VALIDATIE.md` b
 
 ## Opnieuw bouwen
 
-Gebruik een .NET 10 SDK en voer `Build.ps1 -Dotnet <pad-naar-dotnet.exe>` uit. De build haalt Autodesk AutoCAD.NET API 25.0.1 en 26.0.0 via NuGet op en bouwt de Excel-worker voor beide runtimes. De Autodesk API-DLL's worden niet meegeleverd: die levert de hostapplicatie. De uitvoer staat in `dist/1.6.1` en in `Techbase Blocks 1.6.1.zip`. Versiegebonden DLL-mappen maken een update mogelijk zonder een reeds geladen oude DLL te overschrijven; herstart de CAD-toepassing om de nieuwe versie te laden.
+Gebruik een .NET 10 SDK en voer `Build.ps1 -Dotnet <pad-naar-dotnet.exe>` uit. De build haalt Autodesk AutoCAD.NET API 25.0.1 en 26.0.0 via NuGet op en bouwt de Excel-worker voor beide runtimes. De Autodesk API-DLL's worden niet meegeleverd: die levert de hostapplicatie. De uitvoer staat in `dist/1.7.0` en in `Techbase Blocks 1.7.0.zip`. Versiegebonden DLL-mappen maken een update mogelijk zonder een reeds geladen oude DLL te overschrijven; herstart de CAD-toepassing om de nieuwe versie te laden.

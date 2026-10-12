@@ -9,6 +9,10 @@ from package_paths import ROOT, BUNDLE, ASSETS, VERSION, dll as plugin_dll
 root = ROOT
 bundle = BUNDLE
 assets = ASSETS
+geul_version = json.loads((assets / 'Kabelgeul/bronversie.json').read_text(encoding='utf-8'))
+assert hashlib.sha256((root / geul_version['Source']).read_bytes()).hexdigest() == geul_version['SourceSHA256']
+assert hashlib.sha256((assets / 'Kabelgeul/Techbase.Kabelgeul.lsp').read_bytes()).hexdigest() == geul_version['GeneratedSHA256']
+assert (assets / 'Kabelgeul/Techbase.Kabelgeul.lsp').read_bytes() == (root / 'Assets/Kabelgeul/Techbase.Kabelgeul.lsp').read_bytes()
 xtp = ET.parse(assets / 'Techbase toolpallete.xtp')
 source_tools = [t for t in xtp.findall('.//Palette/Tools/Tool') if t.find('Data/Block') is not None]
 report = json.loads((root / 'validation/validatie.json').read_text(encoding='utf-8'))
@@ -23,6 +27,11 @@ manifest = ET.parse(bundle / 'PackageContents.xml')
 for series in [(25, 0), (25, 1), (26, 0)]:
     compatible = []
     for component in manifest.findall('Components'):
+        if component.find('ComponentEntry').attrib.get('AppType') == 'Lisp':
+            entry = component.find('ComponentEntry')
+            assert (bundle / entry.attrib['ModuleName']).is_file()
+            assert {'TBKABELGEUL', 'TBGEULCOPY', 'TBGEULEDIT', 'TBGEULCODE'} == {c.attrib['Global'] for c in entry.findall('Commands/Command')}
+            continue
         commands = {c.attrib['Global'] for c in component.findall('ComponentEntry/Commands/Command')}
         assert 'TECHBASE' in commands and 'TBLOCKS' not in commands
         assert {'TBRICHTINGEN', 'TBTEKENRICHTING', 'TBMAAKRICHTING', 'TBRICHTINGVALIDATE'} <= commands

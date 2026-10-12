@@ -1,0 +1,33 @@
+{
+  "Status": "PASS",
+  "Autoload": true,
+  "Checks": [
+    "FRAME_DIRECT=2",
+    "FRAME_COPY=2",
+    "FRAME_FLOAT=2",
+    "FRAME_CODE=2",
+    "FRAME_CANCEL=2",
+    "FRAME_EDIT_CANCEL=2",
+    "FRAME_LOCK=2",
+    "GUARD=PASS",
+    "LAYER_COLOR=3",
+    "CURRENT=0 ATTREQ=0 CMDECHO=1",
+    "ORIGINAL_UNCHANGED",
+    "KabelGeul opnieuw aangemaakt met overgenomen gegevens.",
+    "KabelGeul geplaatst als uniek block.",
+    "SOURCE_DATA=(4 (\"K01\" \"Bestaand\" \"Half rooien\" \"MS Nieuw\")",
+    "Laag 'E_LV_CROSS_SECTION' is vergrendeld.",
+    "INSERTS_LOCK=3",
+    "three unique inserted geuls: Direct, copied data, Zwevend",
+    "saved attributes contain Ri 1 150Al",
+    "saved attributes contain Ri 1 150Al+",
+    "saved attributes contain Bestaand 95Cu",
+    "saved attributes contain Rooien 50Cu",
+    "saved attributes contain Behouden 50Cu",
+    "saved attributes contain MS 240Al",
+    "saved attributes contain PVC 160",
+    "all saved attributes use the private Arial Nova Light style",
+    "saved mantel radius is 0.64",
+    "saved floating geul contains reference code"
+  ]
+}
