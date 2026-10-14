@@ -1,0 +1,28 @@
+{
+  "Status": "PASS",
+  "Checks": [
+    "edit: COPY_UNCHANGED=PASS",
+    "edit: CODE_KEPT=PASS",
+    "edit: SWAP_KEPT=1",
+    "edit: INSERT_COUNT=3",
+    "edit: FRAME=2 CURRENT=0 ATTREQ=0 CMDECHO=1",
+    "edit: UCS_ORIGIN=(100.0 200.0 0.0)",
+    "edit: DEFINITION_CHANGED=YES",
+    "edit: Kabelgeul volledig bijgewerkt.",
+    "edit: FAILURE_KEPT=PASS",
+    "edit: TEMP_CREATED=PASS",
+    "edit: saved drawing preserves insert transform and independent shared copy",
+    "edited texts, retained copy text, Light font and aborted temporary objects read back from DXF",
+    "saved new K10 icon has three circles; MS Bestaand icons and two-sided shapes, mantel and new tray match edited data",
+    "saved leader retains endpoints and original insert handle; shared copy retains old K01 icons",
+    "cancel: COPY_UNCHANGED=PASS",
+    "cancel: CODE_KEPT=PASS",
+    "cancel: SWAP_KEPT=1",
+    "cancel: INSERT_COUNT=3",
+    "cancel: FRAME=2 CURRENT=0 ATTREQ=0 CMDECHO=1",
+    "cancel: UCS_ORIGIN=(100.0 200.0 0.0)",
+    "cancel: DEFINITION_CHANGED=NO",
+    "cancel: Kabelgeul bewerken geannuleerd.",
+    "cancel: saved drawing preserves insert transform and independent shared copy"
+  ]
+}

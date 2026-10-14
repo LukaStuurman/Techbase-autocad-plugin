@@ -1,0 +1,229 @@
+Redirect stdout (file: C:\Users\LUKAST~1\AppData\Local\Temp\accc351282).
+AcCoreConsole: StdOutConsoleMode: processed-output: disabled,auto
+AutoCAD Core Engine Console - Copyright 2025 Autodesk, Inc.  All rights reserved. (W.122.0.0)
+
+Execution Path:
+C:\Program Files\Autodesk\AutoCAD 2026\accoreconsole.exe
+Current Directory: C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\validation\Kabelgeul
+
+Version Number: W.122.0.0 (UNICODE)
+LogFilePath has been set to the working folder.
+CoreHeartBeat
+Regenerating model.
+Drawing created using acadiso.dwt from AutoCAD profile: <<Unnamed Profile>>
+**** System Variable Changed ****
+2 of the monitored system variables have changed from the preferred value. Use SYSVARMONITOR command to view changes.
+
+
+AutoCAD menu utilities loaded.
+Command:
+Command:
+
+Command:
+Command: _NETLOAD
+Assembly file name: "C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.8.0/Techbase.Blocks.bundle/Contents/R25-1.8.0/Techbase.Blocks.dll"
+
+Command: (load "C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.8.0/Techbase.Blocks.bundle/Contents/Assets/Kabelgeul/Techbase.Kabelgeul.lsp")
+
+Techbase Kabelgeul geladen.C:TBGEULCODE
+
+Command: (setvar "OSMODE" 0)
+0
+
+Command: (setvar "WIPEOUTFRAME" 2)
+Regenerating model.
+2
+
+Command: (setvar "ATTREQ" 0)
+0
+
+Command: (entmake (list (cons 0 "LINE") (cons 10 (list 0.0 0.0 0.0)) (cons 11 (list 80.0 0.0 0.0))))
+((0 . "LINE") (10 0.0 0.0 0.0) (11 80.0 0.0 0.0))
+
+Command: _ZOOM
+
+Specify corner of window, enter a scale factor (nX or nXP), or
+[All/Center/Dynamic/Extents/Previous/Scale/Window/Object] <real time>: _E
+
+Command: _REGEN
+Regenerating model.
+
+Command: _TBKABELGEUL
+TBGEULINIT
+Command: _.UNDO Current settings: Auto = On, Control = All, Combine = Yes, Layer = Yes
+Enter the number of operations to undo or [Auto/Control/BEgin/End/Mark/Back] <1>: _Begin
+Command: Regenerating model.
+
+Selecteer eerste polyline / begin lange lijn of bestaande KabelGeul: 10,0,0
+
+Afstandspunt richting halve vierkant: 10,8,0
+
+Plaatsing kabelgeul [Direct/Zwevend] <Direct>: _Direct
+
+KabelGeul geplaatst als uniek block.Regenerating model.
+_.UNDO Current settings: Auto = On, Control = All, Combine = Yes, Layer = Yes
+Enter the number of operations to undo or [Auto/Control/BEgin/End/Mark/Back] <1>: _End
+Command:
+
+Command: (setq original (entlast) olddef (cdr (assoc 2 (entget original))))
+"KabelGeul_20261014_10101_1"
+
+Command: (setq untouched (TBKG_NATIVE_COPY original (list 0.0 0.0 0.0) (list 20.0 0.0 0.0)))
+<Entity name: 25f6ae7e1d0>
+
+Command: (entmod (subst (cons 50 (/ pi 2.0)) (assoc 50 (entget original)) (entget original)))
+((-1 . <Entity name: 25f6ae7e130>) (0 . "INSERT") (330 . <Entity name: 25f665269f0>) (5 . "38B") (100 . "AcDbEntity") (67 . 0) (410 . "Model") (8 . "0") (100 . "AcDbBlockReference") (66 . 1) (2 . "KabelGeul_20261014_10101_1") (10 10.0 8.0 0.0) (41 . 1.0) (42 . 1.0) (43 . 1.0) (50 . 1.5708) (70 . 0) (71 . 0) (44 . 0.0) (45 . 0.0) (210 0.0 0.0 1.0))
+
+Command: (entmod (subst (cons 41 1.5) (assoc 41 (entget original)) (entget original)))
+((-1 . <Entity name: 25f6ae7e130>) (0 . "INSERT") (330 . <Entity name: 25f665269f0>) (5 . "38B") (100 . "AcDbEntity") (67 . 0) (410 . "Model") (8 . "0") (100 . "AcDbBlockReference") (66 . 1) (2 . "KabelGeul_20261014_10101_1") (10 10.0 8.0 0.0) (41 . 1.5) (42 . 1.0) (43 . 1.0) (50 . 1.5708) (70 . 0) (71 . 0) (44 . 0.0) (45 . 0.0) (210 0.0 0.0 1.0))
+
+Command: (entmod (subst (cons 42 1.5) (assoc 42 (entget original)) (entget original)))
+((-1 . <Entity name: 25f6ae7e130>) (0 . "INSERT") (330 . <Entity name: 25f665269f0>) (5 . "38B") (100 . "AcDbEntity") (67 . 0) (410 . "Model") (8 . "0") (100 . "AcDbBlockReference") (66 . 1) (2 . "KabelGeul_20261014_10101_1") (10 10.0 8.0 0.0) (41 . 1.5) (42 . 1.5) (43 . 1.0) (50 . 1.5708) (70 . 0) (71 . 0) (44 . 0.0) (45 . 0.0) (210 0.0 0.0 1.0))
+
+Command: (entmod (subst (cons 43 1.5) (assoc 43 (entget original)) (entget original)))
+((-1 . <Entity name: 25f6ae7e130>) (0 . "INSERT") (330 . <Entity name: 25f665269f0>) (5 . "38B") (100 . "AcDbEntity") (67 . 0) (410 . "Model") (8 . "0") (100 . "AcDbBlockReference") (66 . 1) (2 . "KabelGeul_20261014_10101_1") (10 10.0 8.0 0.0) (41 . 1.5) (42 . 1.5) (43 . 1.5) (50 . 1.5708) (70 . 0) (71 . 0) (44 . 0.0) (45 . 0.0) (210 0.0 0.0 1.0))
+
+Command: (entupd original)
+<Entity name: 25f6ae7e130>
+
+Command: _ZOOM
+
+Specify corner of window, enter a scale factor (nX or nXP), or
+[All/Center/Dynamic/Extents/Previous/Scale/Window/Object] <real time>: _E
+
+Command: _REGEN
+Regenerating model.
+
+Command: _UCS
+
+Current ucs name:  *WORLD*
+Specify origin of UCS or [Face/NAmed/OBject/Previous/View/World/X/Y/Z/ZAxis] <World>: _Origin
+
+Specify new origin point <0,0,0>: 100,200,0
+
+Command: _UCS
+
+Current ucs name:  *NO NAME*
+Specify origin of UCS or [Face/NAmed/OBject/Previous/View/World/X/Y/Z/ZAxis] <World>: _Z
+
+Specify rotation angle about Z axis <90>: 90
+
+Command: _TBGEULEDIT
+TBGEULINIT
+Command: _.UNDO Current settings: Auto = On, Control = All, Combine = Yes, Layer = Yes
+Enter the number of operations to undo or [Auto/Control/BEgin/End/Mark/Back] <1>: _Begin
+Command:
+Selecteer KabelGeul of zwevende referentie om volledig te bewerken: -192,84,0
+
+Kabelgeul bewerken geannuleerd._.UNDO Current settings: Auto = On, Control = All, Combine = Yes, Layer = Yes
+Enter the number of operations to undo or [Auto/Control/BEgin/End/Mark/Back] <1>: _End
+Command:
+
+Command: _TBGEULEDIT
+TBGEULINIT
+Command: _.UNDO Current settings: Auto = On, Control = All, Combine = Yes, Layer = Yes
+Enter the number of operations to undo or [Auto/Control/BEgin/End/Mark/Back] <1>: _Begin
+Command:
+Selecteer KabelGeul of zwevende referentie om volledig te bewerken: -192,84,0
+
+Kabelgeul bewerken geannuleerd._.UNDO Current settings: Auto = On, Control = All, Combine = Yes, Layer = Yes
+Enter the number of operations to undo or [Auto/Control/BEgin/End/Mark/Back] <1>: _End
+Command:
+
+Command: (princ (strcat "\nOLD_HANDLE=" (cdr (assoc 5 (entget original)))))
+
+OLD_HANDLE=38B"\nOLD_HANDLE=38B"
+
+Command: (princ (strcat "\nCOPY_UNCHANGED=" (if (= olddef (cdr (assoc 2 (entget untouched)))) "PASS" "FAIL")))
+
+COPY_UNCHANGED=PASS"\nCOPY_UNCHANGED=PASS"
+
+Command: (princ (strcat "\nDEFINITION_CHANGED=" (if (= olddef (cdr (assoc 2 (entget original)))) "NO" "YES")))
+
+DEFINITION_CHANGED=NO"\nDEFINITION_CHANGED=NO"
+
+Command: (princ (strcat "\nUCS_ORIGIN=" (vl-prin1-to-string (getvar "UCSORG")) " UCS_X=" (vl-prin1-to-string (getvar "UCSXDIR"))))
+
+UCS_ORIGIN=(100.0 200.0 0.0) UCS_X=(-2.22045e-16 1.0 0.0)"\nUCS_ORIGIN=(100.0 200.0 0.0) UCS_X=(-2.22045e-16 1.0 0.0)"
+
+Command: _UCS
+
+Current ucs name:  *NO NAME*
+Specify origin of UCS or [Face/NAmed/OBject/Previous/View/World/X/Y/Z/ZAxis] <World>: _W
+
+Command: (setq *tbkg:future-code-switch* T)
+T
+
+Command: _TBKABELGEUL
+TBGEULINIT
+Command: _.UNDO Current settings: Auto = On, Control = All, Combine = Yes, Layer = Yes
+Enter the number of operations to undo or [Auto/Control/BEgin/End/Mark/Back] <1>: _Begin
+Command: Regenerating model.
+
+Selecteer eerste polyline / begin lange lijn of bestaande KabelGeul: 50,0,0
+
+Afstandspunt richting halve vierkant: 50,8,0
+
+Plaatsing kabelgeul [Direct/Zwevend] <Direct>: _Zwevend
+
+Klik plaats voor zwevende kabelgeul: 50,20,0
+
+KabelGeul geplaatst als uniek block.Regenerating model.
+_.UNDO Current settings: Auto = On, Control = All, Combine = Yes, Layer = Yes
+Enter the number of operations to undo or [Auto/Control/BEgin/End/Mark/Back] <1>: _End
+Command:
+
+Command: (setq floating (entlast) codebefore (tbkg:insert-attribute-value floating "ZWEVEND_CODE"))
+"001A"
+
+Command: (setq *tbkg:future-code-switch* nil)
+nil
+
+Command: _ZOOM
+
+Specify corner of window, enter a scale factor (nX or nXP), or
+[All/Center/Dynamic/Extents/Previous/Scale/Window/Object] <real time>: _E
+
+Command: _REGEN
+Regenerating model.
+
+Command: _TBGEULEDIT
+TBGEULINIT
+Command: _.UNDO Current settings: Auto = On, Control = All, Combine = Yes, Layer = Yes
+Enter the number of operations to undo or [Auto/Control/BEgin/End/Mark/Back] <1>: _Begin
+Command:
+Selecteer KabelGeul of zwevende referentie om volledig te bewerken: 50,19.5,0
+
+Kabelgeul bewerken geannuleerd._.UNDO Current settings: Auto = On, Control = All, Combine = Yes, Layer = Yes
+Enter the number of operations to undo or [Auto/Control/BEgin/End/Mark/Back] <1>: _End
+Command:
+
+Command: (princ (strcat "\nCODE_KEPT=" (if (= codebefore (tbkg:insert-attribute-value floating "ZWEVEND_CODE")) "PASS" "FAIL")))
+
+CODE_KEPT=PASS"\nCODE_KEPT=PASS"
+
+Command: (princ (strcat "\nSWAP_KEPT=" (cdr (assoc 1 (entget (tbkg:block-attdef-ent (tblobjname "BLOCK" (cdr (assoc 2 (entget floating)))) "TB_CODESWAP"))))))
+
+SWAP_KEPT=1"\nSWAP_KEPT=1"
+
+Command: (princ (strcat "\nINSERT_COUNT=" (itoa (sslength (ssget "_X" (list (cons 0 "INSERT")))))))
+
+INSERT_COUNT=3"\nINSERT_COUNT=3"
+
+Command: (princ (strcat "\nFRAME=" (itoa (getvar "WIPEOUTFRAME")) " CURRENT=" (getvar "CLAYER") " ATTREQ=" (itoa (getvar "ATTREQ")) " CMDECHO=" (itoa (getvar "CMDECHO"))))
+
+FRAME=2 CURRENT=0 ATTREQ=0 CMDECHO=1"\nFRAME=2 CURRENT=0 ATTREQ=0 CMDECHO=1"
+
+Command: _DXFOUT
+Enter DXF file name <C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\validation\Kabelgeul\Drawing1.dxf>: "C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/validation/Kabelgeul/Kabelgeul - cancel.dxf"
+
+Current DXF settings: Precision= 16 Format= ASCII Preview= No Version= 2018
+
+Enter decimal places of accuracy (0 to 16) or [Binary/select Objects/Preview/Version] <16>: 16
+CoreHeartBeat
+
+Command: _QUIT
+_Y
+Really want to discard all changes to drawing? <N> _Y
+
+LogFilePath has been restored to ''.

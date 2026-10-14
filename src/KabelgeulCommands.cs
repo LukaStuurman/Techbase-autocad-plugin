@@ -8,13 +8,17 @@ using AcApp = Autodesk.AutoCAD.ApplicationServices.Core.Application;
 
 namespace Techbase.Blocks;
 
-internal sealed record KabelgeulRequest(Document Document, KabelgeulData Data, bool Automatic);
+internal sealed record KabelgeulRequest(Document Document);
 internal static class KabelgeulCommands
 {
     internal static KabelgeulRequest? Pending { get; set; }
     internal static KabelgeulRequest? Active { get; set; }
     private static Action? restore;
-    internal static void Finish() { var action = restore; restore = null; action?.Invoke(); Active = null; }
+    internal static void Finish()
+    {
+        try { KabelgeulEditing.Abort(); }
+        finally { var action = restore; restore = null; try { action?.Invoke(); } finally { Active = null; } }
+    }
     internal static string Initialize()
     {
         var doc = AcApp.DocumentManager.MdiActiveDocument ?? throw new InvalidOperationException("Open eerst een tekening.");
@@ -53,25 +57,27 @@ public sealed partial class Plugin
     {
         var test = Environment.GetEnvironmentVariable("TECHBASE_KABELGEUL_TEST_CONFIG");
         var detected = KabelgeulData.Parse((string)args.AsArray()[0].Value);
-        if (test != null) return args.AsArray().ElementAtOrDefault(1).Value as string == "KABELGEULCOPY" ? detected.Lisp() : (JsonSerializer.Deserialize<KabelgeulData>(File.ReadAllText(test)) ?? detected).Lisp();
-        var request = KabelgeulCommands.Active;
-        if (request != null && !request.Automatic) return request.Data.Lisp();
-        return ShowKabelgeulDialog(detected);
+        var action = args.AsArray().ElementAtOrDefault(1).Value as string ?? "KABELGEUL";
+        if (action == "KABELGEUL") detected = detected.WithDefaults(Preferences);
+        if (test == "DEFAULTS") return detected.Lisp();
+        var editTest = Environment.GetEnvironmentVariable("TECHBASE_KABELGEUL_TEST_EDIT");
+        if (action == "KABELGEULEDIT" && editTest != null) return editTest == "CANCEL" ? "nil" : (JsonSerializer.Deserialize<KabelgeulData>(File.ReadAllText(editTest)) ?? detected).Lisp();
+        if (test != null) return action is "KABELGEULCOPY" or "KABELGEULEDIT" ? detected.Lisp() : (JsonSerializer.Deserialize<KabelgeulData>(File.ReadAllText(test)) ?? detected).Lisp();
+        return ShowKabelgeulDialog(detected, action == "KABELGEULEDIT");
     }
     [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
-    private static string ShowKabelgeulDialog(KabelgeulData detected)
+    private static string ShowKabelgeulDialog(KabelgeulData detected, bool editing)
     {
-        using var form = new Form { Text = "Kabelgeul - kabels en zijden", Size = new System.Drawing.Size(1040, 590), MinimumSize = new System.Drawing.Size(700, 400), StartPosition = FormStartPosition.CenterParent };
+        using var form = new Form { Text = editing ? "Kabelgeul bewerken - kabels en zijden" : "Kabelgeul - kabels en zijden", Size = new System.Drawing.Size(1040, 590), MinimumSize = new System.Drawing.Size(700, 400), StartPosition = FormStartPosition.CenterParent };
         using var editor = new KabelgeulEditor(detected);
         var footer = new FlowLayoutPanel { Dock = DockStyle.Bottom, Height = 42, FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft };
-        var accept = new Button { Text = "Plaatsen", AutoSize = true };
+        var accept = new Button { Text = editing ? "Wijzigingen opslaan" : "Plaatsen", AutoSize = true };
         var cancel = new Button { Text = "Annuleren", AutoSize = true, DialogResult = DialogResult.Cancel };
         KabelgeulData? result = null;
         accept.Click += (_, _) => { try { result = editor.CaptureData(); form.DialogResult = DialogResult.OK; } catch (System.Exception ex) { MessageBox.Show(form, ex.Message, "Kabelgeul"); } };
         footer.Controls.Add(accept); footer.Controls.Add(cancel);
         form.Controls.Add(editor); form.Controls.Add(footer); form.AcceptButton = accept; form.CancelButton = cancel; UiTypography.Apply(form);
         if (Autodesk.AutoCAD.ApplicationServices.Application.ShowModalDialog(form) != DialogResult.OK || result == null) return "nil";
-        kabelgeulPanel?.Editor.Set(result);
         return result.Lisp();
     }
 

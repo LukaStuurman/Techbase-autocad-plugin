@@ -1,0 +1,20 @@
+{
+  "KabelgeulDefaults": {
+    "K10": {
+      "Type": "K10",
+      "Text": "150Al preset",
+      "Shape": "Drie",
+      "Mantel": "X"
+    },
+    "K01": {
+      "Type": "K01",
+      "Text": "185Al preset",
+      "Shape": "Combi",
+      "TwoSides": true,
+      "Text2": "16Cu preset",
+      "Shape2": "Dubbel",
+      "NewTray": true
+    }
+  },
+  "KabelgeulMantelSpec": "PE 250 preset"
+}

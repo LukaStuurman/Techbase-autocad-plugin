@@ -1,3 +1,14 @@
+## Kabelgeul-instellingen en volledige bewerking - versie 1.8.0, 14 oktober 2026
+
+- De tab is een vaste instellingenpagina per kabeltype. Standaardteksten, vormen, twee zijden, mantel, nieuwe bak en mantelspecificatie worden opgeslagen in de bestaande gebruikersinstellingen. Plaatsen behoudt het kabel-/afstandspuntvenster met detectie; kopieren en bewerken gebruiken de bestaande geuldata zonder defaults opnieuw toe te passen.
+- 50 formulier-/instellingencontroles slagen: rij voor/na selectie (midden, begin, einde), behoud van rijwaarden en maximum 100, automatisch opslaan/herladen van teksten en opmaak, typen zonder de tekstbewerking te onderbreken, vaste typerijen en Light-font. Smalle en brede tab opnieuw gerenderd.
+- **8 daadwerkelijke standaardplaatsing/DXF-controles slagen**: K10 en K01 uit twee kabels herkend, bewaarde teksten, Drie/Combi, twee zijden, tweede vorm, nieuwe bak, manteltekst en drie werkelijk opgeslagen K10-cirkels gecontroleerd.
+- **23 bewerkings-/DXF-controles slagen**: twee keer dezelfde geul bewerken, kabeltype en werkelijke iconen veranderen, beide zijden en mantel-/bakmetadata, eigen nieuwe definitie en behoud van een gedeelde kopie, invoeghandle/leader/rotatie/schaal, een verschoven en gedraaid UCS, zwevende referentiecode en opgeslagen codepositie, annuleren en herstel na een bewust mislukte tijdelijke herbouw. De oorspronkelijke referentie wordt in een transactie omgezet; tijdelijke opbouw wordt bij falen opgeruimd.
+- De native attribuuteditor is vervangen door hetzelfde invoervenster als plaatsen. Maskers en iconen worden opnieuw opgebouwd met de tekst. Herhaald bewerken slaat eerder gewiste attribuut-ID's over. De echte leader wordt onderscheiden van aanvullende bakken; opbouw gebeurt in World UCS en herstelt daarna het gebruikers-UCS.
+- De bestaande **27 geulcommando-/DXF-controles**, **410 blockcontroles**, MOF-/hoogte-/bron-/plaatsvoorbeeld-/laagkeuze-/lettertypecontroles slagen opnieuw in AutoCAD 2026 Core Console. Beide API-builds zijn gemaakt.
+
+Bewijs: `validation/Kabelgeul/formulier.json`, `defaults.json`, `editing.json`, de bijbehorende scripts/logs en opgeslagen DXF. De modale desktopbediening en andere AutoCAD/Civil 3D-productversies vragen nog een praktijktest; headless tests gebruiken dezelfde dialoogdata met een geisoleerde testinvoer. De eerdere Core Console-beperking bij UNDO Begin/End blijft gelden; geen nieuwe geslaagde geul-Undo-test wordt geclaimd.
+
 ## Kabelgeul - versie 1.7.0, 12 oktober 2026
 
 De zesde tab bevat KabelGeul Omni 2026-08-06ad uit `Reference/Techbase lisp pakket.lsp`, bronhash **B3923054FBD878B09C16F1738B5D61EB676FDB42A65E5D39EF2BF519CF1F4AEC**. Alleen de Kabelgeul-module is opgenomen in de uitvoerbare, aangepaste Lisp; de lichtmast- en richtingstekstmodules uit het pakket worden niet geladen. De extractie/adapters staan in `tests/prepare_kabelgeul.py`. `Assets/Kabelgeul/bronversie.json` legt bron- en uitvoerhash vast.

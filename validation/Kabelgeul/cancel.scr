@@ -1,0 +1,62 @@
+_NETLOAD
+"C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.8.0/Techbase.Blocks.bundle/Contents/R25-1.8.0/Techbase.Blocks.dll"
+(load "C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.8.0/Techbase.Blocks.bundle/Contents/Assets/Kabelgeul/Techbase.Kabelgeul.lsp")
+(setvar "OSMODE" 0)
+(setvar "WIPEOUTFRAME" 2)
+(setvar "ATTREQ" 0)
+(entmake (list (cons 0 "LINE") (cons 10 (list 0.0 0.0 0.0)) (cons 11 (list 80.0 0.0 0.0))))
+_ZOOM
+_E
+_REGEN
+_TBKABELGEUL
+10,0,0
+10,8,0
+_Direct
+(setq original (entlast) olddef (cdr (assoc 2 (entget original))))
+(setq untouched (TBKG_NATIVE_COPY original (list 0.0 0.0 0.0) (list 20.0 0.0 0.0)))
+(entmod (subst (cons 50 (/ pi 2.0)) (assoc 50 (entget original)) (entget original)))
+(entmod (subst (cons 41 1.5) (assoc 41 (entget original)) (entget original)))
+(entmod (subst (cons 42 1.5) (assoc 42 (entget original)) (entget original)))
+(entmod (subst (cons 43 1.5) (assoc 43 (entget original)) (entget original)))
+(entupd original)
+_ZOOM
+_E
+_REGEN
+_UCS
+_Origin
+100,200,0
+_UCS
+_Z
+90
+_TBGEULEDIT
+-192,84,0
+_TBGEULEDIT
+-192,84,0
+(princ (strcat "\nOLD_HANDLE=" (cdr (assoc 5 (entget original)))))
+(princ (strcat "\nCOPY_UNCHANGED=" (if (= olddef (cdr (assoc 2 (entget untouched)))) "PASS" "FAIL")))
+(princ (strcat "\nDEFINITION_CHANGED=" (if (= olddef (cdr (assoc 2 (entget original)))) "NO" "YES")))
+(princ (strcat "\nUCS_ORIGIN=" (vl-prin1-to-string (getvar "UCSORG")) " UCS_X=" (vl-prin1-to-string (getvar "UCSXDIR"))))
+_UCS
+_W
+(setq *tbkg:future-code-switch* T)
+_TBKABELGEUL
+50,0,0
+50,8,0
+_Zwevend
+50,20,0
+(setq floating (entlast) codebefore (tbkg:insert-attribute-value floating "ZWEVEND_CODE"))
+(setq *tbkg:future-code-switch* nil)
+_ZOOM
+_E
+_REGEN
+_TBGEULEDIT
+50,19.5,0
+(princ (strcat "\nCODE_KEPT=" (if (= codebefore (tbkg:insert-attribute-value floating "ZWEVEND_CODE")) "PASS" "FAIL")))
+(princ (strcat "\nSWAP_KEPT=" (cdr (assoc 1 (entget (tbkg:block-attdef-ent (tblobjname "BLOCK" (cdr (assoc 2 (entget floating)))) "TB_CODESWAP"))))))
+(princ (strcat "\nINSERT_COUNT=" (itoa (sslength (ssget "_X" (list (cons 0 "INSERT")))))))
+(princ (strcat "\nFRAME=" (itoa (getvar "WIPEOUTFRAME")) " CURRENT=" (getvar "CLAYER") " ATTREQ=" (itoa (getvar "ATTREQ")) " CMDECHO=" (itoa (getvar "CMDECHO"))))
+_DXFOUT
+"C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/validation/Kabelgeul/Kabelgeul - cancel.dxf"
+16
+_QUIT
+_Y

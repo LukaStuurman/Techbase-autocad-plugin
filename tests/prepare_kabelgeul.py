@@ -45,7 +45,7 @@ replace_function('tbkg:show-dialog', '''(defun tbkg:show-dialog (/ result)
   (setq result (read (TBKG_CONFIG_STRING (vl-prin1-to-string (list *tbkg:last-count* *tbkg:last-types* *tbkg:last-labels*
     *tbkg:last-doubles* *tbkg:last-mantels* *tbkg:last-splits* *tbkg:last-combis*
     *tbkg:last-existing-labels* *tbkg:last-triples* *tbkg:last-mantel-spec*
-    *tbkg:last-twosideds* *tbkg:last-side2-doubles* *tbkg:last-side2-triples* *tbkg:last-side2-combis*)) *tbkg:action*)))
+    *tbkg:last-twosideds* *tbkg:last-side2-doubles* *tbkg:last-side2-triples* *tbkg:last-side2-combis*)) (if *tbkg:copy-stage* "KABELGEULCOPY" *tbkg:action*))))
   (if result
     (progn
       (foreach layer '("E_LV_CROSS_SECTION" "E_LV_CABLE_POINT" "Mantelbuis") (TBKG_NATIVE_CHECK_LAYER layer))
@@ -54,6 +54,42 @@ replace_function('tbkg:show-dialog', '''(defun tbkg:show-dialog (/ result)
         (TBKG_NATIVE_CHECK_LAYER (tbkg:type->text-layer typ))
         (if (= typ "Half rooien") (TBKG_NATIVE_CHECK_LAYER "01 - Bestaande kabel")))))
   result)'''.replace('(/ result)', '(/ result layer typ)'))
+replace_function('C:TBKG_KGEDIT', '''(defun C:TBKG_KGEDIT (/ *error* sel original data context replacement oldfloating oldswitch world-set)
+  (setq oldfloating *tbkg:floating-code* oldswitch *tbkg:future-code-switch*)
+  (defun *error* (msg)
+    (setq *tbkg:floating-code* oldfloating *tbkg:future-code-switch* oldswitch *tbkg:copy-stage* nil)
+    (TBKG_NATIVE_FINISH)
+    (if world-set (command-s "_.UCS" "_Previous"))
+    (command-s "_.UNDO" "_End")
+    (if (and msg (not (wcmatch (strcase msg) "*CANCEL*,*QUIT*"))) (princ (strcat "\\nKabelgeul bewerken: " msg)))
+    (princ))
+  (setq sel (entsel "\\nSelecteer KabelGeul of zwevende referentie om volledig te bewerken: "))
+  (if (and sel (setq original (tbkg:selected-insert (car sel))))
+    (progn
+      (setq data (tbkg:copy-data-from-insert original) *tbkg:copy-stage* nil)
+      (if data
+        (progn
+          (tbkg:seed-dialog-data data)
+          (setq *tbkg:action* "KABELGEULEDIT" data (tbkg:show-dialog))
+          (if data
+            (progn
+              (command "_.UCS" "_World")
+              (setq world-set T)
+              (setq context (read (TBKG_NATIVE_BEGIN_EDIT original)))
+              (setq *tbkg:floating-code* (if (= (nth 2 context) "") nil (nth 2 context)) *tbkg:future-code-switch* (nth 3 context))
+              (setq replacement (tbkg:draw-trench-at-end (car context) (cadr context)
+                (cadr data) (caddr data) (cadddr data) (nth 4 data) (nth 5 data) (nth 6 data) (nth 7 data)
+                (nth 8 data) (nth 9 data) (nth 10 data) (nth 11 data) (nth 12 data) (nth 13 data)))
+              (if replacement
+                (progn (TBKG_NATIVE_COMMIT_EDIT replacement) (princ "\\nKabelgeul volledig bijgewerkt."))
+                (princ "\\nGeul kon niet opnieuw worden opgebouwd; oorspronkelijke geul behouden."))
+              (command "_.UCS" "_Previous")
+              (setq world-set nil))
+            (princ "\\nKabelgeul bewerken geannuleerd.")))
+        (princ "\\nDeze geul bevat geen bruikbare kabelgegevens.")))
+    (princ "\\nGeen bewerkbare KabelGeul geselecteerd."))
+  (setq *tbkg:floating-code* oldfloating *tbkg:future-code-switch* oldswitch *tbkg:copy-stage* nil)
+  (princ))''')
 # Retain the original lookup (including floating reference codes), then guard the result.
 text = text.replace('(defun tbkg:selected-insert ', '(defun tbkg:selected-insert-original ', 1)
 text += '''
@@ -84,6 +120,12 @@ assert needle in text
 text = text.replace(needle, needle + '''
     (tbkg:make-attribute (nth 5 item) 0.10 text-ang (tbkg:index-tag "TBTYPE" attr-index)
       "Kabeltype:" (car item) "E_LV_CROSS_SECTION" text-just 3)''')
+# Save the floating layout with the block, independent of future-placement settings.
+needle = '(setq attr-index 1)\n  (foreach item sorted-items'
+assert needle in text
+text = text.replace(needle, '''(tbkg:make-attribute p2 0.10 text-ang "TB_CODESWAP" "Codepositie:"
+    (if *tbkg:future-code-switch* "1" "0") "E_LV_CROSS_SECTION" text-just 3)
+  ''' + needle)
 needle = '(if has-half-attribute (setq typ "Half rooien"))'
 assert needle in text
 text = text.replace(needle, '''(if (tbkg:block-option-metadata blkrec "TBTYPE" (car item))
@@ -104,5 +146,5 @@ target.write_text('\n'.join(line.rstrip() for line in text.splitlines()).rstrip(
     'Source': 'Reference/Techbase lisp pakket.lsp', 'SourceSHA256': hashlib.sha256(source.read_bytes()).hexdigest(),
     'GeneratedSHA256': hashlib.sha256(target.read_bytes()).hexdigest(),
     'Module': 'KabelGeul Omni 2026-08-06ad',
-    'Adapters': ['private command/function namespace', 'managed layer/copy helpers', 'Arial Nova Light', 'managed configuration UI', 'host block guards', 'no load-time drawing changes', 'exact cable type metadata', 'restore command state', 'Undo Begin/End']
+    'Adapters': ['private command/function namespace', 'managed layer/copy helpers', 'Arial Nova Light', 'managed configuration UI', 'host block guards', 'no load-time drawing changes', 'exact cable type metadata', 'restore command state', 'Undo Begin/End', 'full geul editing with unique rebuild and rollback', 'stored floating code layout']
 }, indent=2), encoding='utf-8')

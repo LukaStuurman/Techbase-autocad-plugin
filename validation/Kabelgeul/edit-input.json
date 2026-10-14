@@ -1,0 +1,27 @@
+{
+  "Rows": [
+    {
+      "Type": "K10",
+      "Text": "150Al gewijzigd",
+      "Shape": "Drie",
+      "Mantel": "X"
+    },
+    {
+      "Type": "MS Bestaand",
+      "Text": "MS 95Cu gewijzigd",
+      "Shape": "Combi",
+      "TwoSides": true,
+      "Text2": "Zijde 2 gewijzigd",
+      "Shape2": "Drie",
+      "Mantel": "B",
+      "NewTray": true
+    },
+    {
+      "Type": "Rooien",
+      "Text": "50Cu gewijzigd",
+      "Shape": "Dubbel",
+      "Mantel": "B"
+    }
+  ],
+  "MantelSpec": "HDPE 200 gewijzigd"
+}

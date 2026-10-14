@@ -8,5 +8,7 @@
   "SelectedDirectionNumber": 1,
   "MofTextHeight": 0.45,
   "DirectionTextHeight": 0.45,
+  "KabelgeulDefaults": {},
+  "KabelgeulMantelSpec": "",
   "BlockRotationModes": {}
 }

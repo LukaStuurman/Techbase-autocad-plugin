@@ -1,12 +1,22 @@
 namespace Techbase.Blocks;
 
-internal sealed record KabelgeulRow(string Type = "K01", string Text = "", string Shape = "Enkel", bool TwoSides = false,
+public sealed record KabelgeulRow(string Type = "K01", string Text = "", string Shape = "Enkel", bool TwoSides = false,
     string Text2 = "", string Shape2 = "Enkel", string Mantel = "", bool NewTray = false);
 internal sealed record KabelgeulData(KabelgeulRow[] Rows, string MantelSpec = "")
 {
     internal static readonly string[] Types = Enumerable.Range(1, 12).Select(i => $"K{i:00}").Concat(new[] { "MS Nieuw", "MS Bestaand", "MS Rooien", "Bestaand", "Rooien", "Half rooien" }).ToArray();
     internal static readonly string[] Shapes = { "Enkel", "Dubbel", "Drie", "Combi" };
     internal static KabelgeulData Default => new(new[] { new KabelgeulRow(), new KabelgeulRow("K02"), new KabelgeulRow("Bestaand") });
+    internal static KabelgeulRow Rule(Settings settings, string type)
+    {
+        var row = settings.KabelgeulDefaults.GetValueOrDefault(type) ?? new KabelgeulRow(type);
+        return row with { Type = type, Text = row.Text ?? "", Text2 = row.Text2 ?? "", Mantel = row.Mantel ?? "",
+            Shape = type == "Half rooien" ? "Dubbel" : Shapes.Contains(row.Shape) ? row.Shape : "Enkel",
+            Shape2 = Shapes.Contains(row.Shape2) ? row.Shape2 : "Enkel", TwoSides = type != "Half rooien" && row.TwoSides };
+    }
+    internal static KabelgeulData Rules(Settings settings) => new(Types.Select(type => Rule(settings, type)).ToArray(), settings.KabelgeulMantelSpec);
+    internal KabelgeulData WithDefaults(Settings settings) => new(Rows.Select(row => Rule(settings, row.Type)).ToArray(), settings.KabelgeulMantelSpec);
+    internal static string Quote(string text) => Encode(text);
     internal object?[] Values() => new object?[] { Rows.Length, Rows.Select(r => r.Type).ToArray(), Rows.Select(r => r.Text).ToArray(),
         Rows.Select(r => Flag(r.Shape == "Dubbel" || r.Type == "Half rooien")).ToArray(), Rows.Select(r => r.Mantel.Length == 0 ? null : r.Mantel).ToArray(),
         Rows.Select(r => Flag(r.NewTray)).ToArray(), Rows.Select(r => Flag(r.Shape == "Combi")).ToArray(), Rows.Select(r => r.Text2).ToArray(),

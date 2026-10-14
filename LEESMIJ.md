@@ -1,4 +1,4 @@
-# Techbase Blocks 1.7.0
+# Techbase Blocks 1.8.0
 
 Gebruik zes tabs in AutoCAD en Civil 3D voor Windows: Blocks, Lichtmasten, Enexis kabelchecker, Richtingen, Instellingen en Kabelgeul.
 
@@ -125,20 +125,19 @@ De Excel-dependencies staan per CAD-generatie in een aparte map `excel` en worde
 
 ## Kabelgeul
 
-De zesde tab **Kabelgeul** gebruikt KabelGeul Omni uit het Techbase Lisp-pakket. De bron is in de installatie opgenomen; een apart geladen Lisp-bestand is niet nodig. Klik **Groter openen** om alle kolommen naast elkaar te zien. In een smalle tab kun je horizontaal door de tabel scrollen.
+De zesde tab **Kabelgeul** is nu een **instellingenpagina**. De tabel bevat een vaste regel voor elk van de 18 kabeltypen. Stel per type de standaardtekst voor beide zijden, vormen (Enkel/Dubbel/Drie/Combi), twee-zijdigheid, mantel en eventueel een nieuwe bak in. De standaard mantelspecificatie staat onder de tabel. Wijzigingen worden automatisch opgeslagen en blijven na herstart behouden. De automatische Ri-nummering en Rooien-prefix uit Omni blijven actief.
 
-- Met **Kabels uit de tekening overnemen** aan: klik **Kabelgeul plaatsen**, selecteer de eerste kabel/polyline en kies een afstandspunt. De leader volgt haaks de gekozen kabel. Het invulvenster wordt gevuld met de herkende kabeltypen; controleer en wijzig deze voordat je verdergaat.
-- Met de schakelaar uit: vul de kabelrijen vooraf in de tab in. Na de kabel- en afstandskeuze gebruikt plaatsen direct deze invoer.
-- Kies per rij **K01 t/m K12**, **MS Nieuw**, **MS Bestaand**, **MS Rooien**, **Bestaand**, **Rooien** of **Half rooien**. Vorm is **Enkel**, **Dubbel**, **Drie** of **Combi**. Met **2-zijdig** krijgen beide zijden hun eigen tekst en vorm. Half rooien gebruikt de dubbele voorstelling met een afzonderlijke bestaande tekst.
-- Vul bij **Mantel** `X` in voor een losse mantel of dezelfde groepscode bij kabels die samen in een mantel liggen. De mantelspecificatie staat onder de tabel. **Nieuwe bak** begint vanaf die rij een volgende bak. Rijen toevoegen, verwijderen en omdraaien kan boven de tabel.
-- Kies na de invoer **Direct** om de geul aan de leader te plaatsen, of **Zwevend** om een losse plaats te kiezen met een bijbehorende referentiecode aan de kabel.
-- **Gegevens kopieren**: selecteer een bestaande KabelGeul, kies de nieuwe kabel en een afstandspunt, controleer de overgenomen invoer en plaats Direct of Zwevend. Er ontstaat een eigen block; de brongeul blijft intact. Oude Omni-geulen kunnen ook worden uitgelezen. Nieuwe geulen bewaren het exacte kabeltype, zodat bijvoorbeeld MS Nieuw niet als K05 wordt gekopieerd.
-- **Teksten bewerken** opent de AutoCAD-attribuuteditor voor een gekozen KabelGeul of de bijbehorende zwevende code. Na afsluiten worden de tekstmaskers bijgewerkt.
-- **Codepositie wisselen** wisselt de standaardpositie van code en mantelspecificatie voor volgende zwevende geulen. Deze keuze blijft bewaard; bestaande geulen blijven op hun plaats.
+**Kabelgeul plaatsen** werkt zoals hiervoor: selecteer de eerste kabel/polyline en een afstandspunt. Het invoervenster toont de herkende kabels en gebruikt de bewaarde standaarden van hun kabeltypen. Je kunt de invoer daar wijzigen voordat je Direct of Zwevend kiest. De tabel in de tab is dus geen lijst met kabels die alvast geplaatst wordt.
 
-Nieuwe geulteksten en attributen gebruiken **Arial Nova Light**. Bestaande laagkleuren en lijntypes blijven behouden; ontbrekende lagen worden aangemaakt. Vergrendelde, verborgen en bevroren gebruikte geullagen geven een melding. Externe geulblocks worden niet bewerkt. Esc annuleert; de huidige tekenlaag, ATTREQ, CMDECHO en wipeout-instelling worden hersteld.
+In het invoervenster staan **Rij voor** en **Rij na**. Selecteer de gewenste rij en voeg op die positie een nieuwe rij toe, ook tussen bestaande rijen. De nieuwe rij gebruikt de standaarden van het geselecteerde kabeltype. De andere rijen behouden hun waarden. Rijen verwijderen en de volgorde omdraaien blijven beschikbaar. Half rooien gebruikt automatisch zijn dubbele voorstelling met een aparte bestaande tekst.
 
-De oorspronkelijke commando's KGOMNI/OMNI en de andere functies in het oorspronkelijke Lisp-pakket worden niet vervangen. De plugin gebruikt eigen commandonamen.
+**Kabelgeul bewerken** vervangt de vroegere knop Teksten bewerken. Selecteer een bestaande KabelGeul of een bijbehorende zwevende referentie. Hetzelfde invoervenster wordt gevuld met de huidige geul. Je kunt alle rijgegevens aanpassen: kabeltypen/iconen, teksten, vormen, beide zijden, mantels, specificatie en bakverdeling. Kies **Wijzigingen opslaan** om de geul opnieuw op te bouwen. Het invoegpunt, de leader, draaiing, schaal en invoeglaag blijven behouden. Andere geulen, ook met dezelfde oude blockdefinitie, blijven intact. Een zwevende geul houdt haar code en codepositie. Annuleren behoudt de oorspronkelijke geul.
+
+**Gegevens kopieren** blijft een nieuwe geul maken vanuit de gegevens van een bestaande geul. Kies daarna de nieuwe kabel, afstand en Direct/Zwevend. Kopieren en bewerken gebruiken de bestaande waarden; nieuwe standaardinstellingen overschrijven die niet.
+
+**Codepositie wisselen** bepaalt de positie van code en mantelspecificatie voor volgende zwevende geulen. Bestaande geulen houden hun eigen codepositie.
+
+De bron van KabelGeul Omni is meegeleverd; een apart geladen Lisp-bestand is niet nodig. Gebruik **Groter openen** om alle kolommen naast elkaar te zien, of scroll horizontaal. Nieuwe geulteksten gebruiken Arial Nova Light. Bestaande lagen blijven behouden; vergrendelde/verborgen gebruikte geullagen geven een melding. Externe geulblocks worden niet bewerkt. Het oorspronkelijke KGOMNI/OMNI-commando blijft beschikbaar.
 
 ## Commando's
 
@@ -146,7 +145,7 @@ De oorspronkelijke commando's KGOMNI/OMNI en de andere functies in het oorspronk
 | --- | --- |
 | TBKABELGEUL | Plaats een kabelgeul via Omni |
 | TBGEULCOPY | Neem gegevens over uit een bestaande KabelGeul |
-| TBGEULEDIT | Bewerk geulteksten met de attribuuteditor |
+| TBGEULEDIT | Bewerk alle kabelrijen, teksten, symbolen en bakken van een geul |
 | TBGEULCODE | Wissel codepositie voor volgende zwevende geulen |
 | TECHBASE | Open het Techbase-paneel |
 | TBRICHTINGEN | Open de tab Richtingen |
@@ -175,4 +174,4 @@ De concrete testresultaten en resterende praktijktests staan in `VALIDATIE.md` b
 
 ## Opnieuw bouwen
 
-Gebruik een .NET 10 SDK en voer `Build.ps1 -Dotnet <pad-naar-dotnet.exe>` uit. De build haalt Autodesk AutoCAD.NET API 25.0.1 en 26.0.0 via NuGet op en bouwt de Excel-worker voor beide runtimes. De Autodesk API-DLL's worden niet meegeleverd: die levert de hostapplicatie. De uitvoer staat in `dist/1.7.0` en in `Techbase Blocks 1.7.0.zip`. Versiegebonden DLL-mappen maken een update mogelijk zonder een reeds geladen oude DLL te overschrijven; herstart de CAD-toepassing om de nieuwe versie te laden.
+Gebruik een .NET 10 SDK en voer `Build.ps1 -Dotnet <pad-naar-dotnet.exe>` uit. De build haalt Autodesk AutoCAD.NET API 25.0.1 en 26.0.0 via NuGet op en bouwt de Excel-worker voor beide runtimes. De Autodesk API-DLL's worden niet meegeleverd: die levert de hostapplicatie. De uitvoer staat in `dist/1.8.0` en in `Techbase Blocks 1.8.0.zip`. Versiegebonden DLL-mappen maken een update mogelijk zonder een reeds geladen oude DLL te overschrijven; herstart de CAD-toepassing om de nieuwe versie te laden.

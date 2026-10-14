@@ -20,6 +20,8 @@ public sealed class Settings
     public int SelectedDirectionNumber { get; set; } = 1;
     public double MofTextHeight { get; set; } = 0.45;
     public double DirectionTextHeight { get; set; } = 0.45;
+    public Dictionary<string, KabelgeulRow> KabelgeulDefaults { get; set; } = new(StringComparer.OrdinalIgnoreCase);
+    public string KabelgeulMantelSpec { get; set; } = "";
     public double? BlockTextHeight(string name) => name.Contains("MOF", StringComparison.OrdinalIgnoreCase) ? MofTextHeight :
         name.StartsWith("RICHTINGEN TEKST", StringComparison.OrdinalIgnoreCase) ? DirectionTextHeight : null;
     public Dictionary<string, BlockRotationMode> BlockRotationModes { get; set; } = new(StringComparer.OrdinalIgnoreCase);
@@ -46,6 +48,8 @@ public sealed class Settings
             if (settings.DirectionTextHeight is not (0.75 or 0.45)) settings.DirectionTextHeight = 0.45;
             settings.BlockRotationModes = new Dictionary<string, BlockRotationMode>(
                 settings.BlockRotationModes ?? new(), StringComparer.OrdinalIgnoreCase);
+            settings.KabelgeulDefaults = new Dictionary<string, KabelgeulRow>(settings.KabelgeulDefaults ?? new(), StringComparer.OrdinalIgnoreCase);
+            settings.KabelgeulMantelSpec ??= "";
             return settings;
         }
         catch (IOException) { return new Settings(); }

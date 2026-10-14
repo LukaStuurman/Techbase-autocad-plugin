@@ -2119,7 +2119,7 @@
   (setq result (read (TBKG_CONFIG_STRING (vl-prin1-to-string (list *tbkg:last-count* *tbkg:last-types* *tbkg:last-labels*
     *tbkg:last-doubles* *tbkg:last-mantels* *tbkg:last-splits* *tbkg:last-combis*
     *tbkg:last-existing-labels* *tbkg:last-triples* *tbkg:last-mantel-spec*
-    *tbkg:last-twosideds* *tbkg:last-side2-doubles* *tbkg:last-side2-triples* *tbkg:last-side2-combis*)) *tbkg:action*)))
+    *tbkg:last-twosideds* *tbkg:last-side2-doubles* *tbkg:last-side2-triples* *tbkg:last-side2-combis*)) (if *tbkg:copy-stage* "KABELGEULCOPY" *tbkg:action*))))
   (if result
     (progn
       (foreach layer '("E_LV_CROSS_SECTION" "E_LV_CABLE_POINT" "Mantelbuis") (TBKG_NATIVE_CHECK_LAYER layer))
@@ -2480,6 +2480,8 @@
       ;; Zijde 2 gebruikt zijn eigen gekozen vorm.
       (tbkg:draw-cable-icon (nth 11 item) ang (car item) (nth 12 item) (nth 13 item) nil (nth 14 item))))
 
+  (tbkg:make-attribute p2 0.10 text-ang "TB_CODESWAP" "Codepositie:"
+    (if *tbkg:future-code-switch* "1" "0") "E_LV_CROSS_SECTION" text-just 3)
   (setq attr-index 1)
   (foreach item sorted-items
     (setq attr-pts
@@ -2643,19 +2645,41 @@
 
 (defun C:TBKG_KG () (C:TBKG_KABELGEUL))
 
-(defun C:TBKG_KGEDIT (/ sel insert-ent)
-  (tbkg:hide-wipeout-frames)
-  (setq sel (entsel "\nSelecteer KabelGeul block of kabel/leiding tekst: "))
-  (if sel
+(defun C:TBKG_KGEDIT (/ *error* sel original data context replacement oldfloating oldswitch world-set)
+  (setq oldfloating *tbkg:floating-code* oldswitch *tbkg:future-code-switch*)
+  (defun *error* (msg)
+    (setq *tbkg:floating-code* oldfloating *tbkg:future-code-switch* oldswitch *tbkg:copy-stage* nil)
+    (TBKG_NATIVE_FINISH)
+    (if world-set (command-s "_.UCS" "_Previous"))
+    (command-s "_.UNDO" "_End")
+    (if (and msg (not (wcmatch (strcase msg) "*CANCEL*,*QUIT*"))) (princ (strcat "\nKabelgeul bewerken: " msg)))
+    (princ))
+  (setq sel (entsel "\nSelecteer KabelGeul of zwevende referentie om volledig te bewerken: "))
+  (if (and sel (setq original (tbkg:selected-insert (car sel))))
     (progn
-      (setq insert-ent (tbkg:selected-insert (car sel)))
-      (if insert-ent
+      (setq data (tbkg:copy-data-from-insert original) *tbkg:copy-stage* nil)
+      (if data
         (progn
-          (tbkg:remove-direction-attributes insert-ent)
-          (if (tbkg:open-enhanced-attribute-editor insert-ent)
-            (tbkg:update-text-wipeouts-for-insert insert-ent)))
-        (princ "\nSelectie is geen block met attributen.")))
-    (princ "\nGeen block geselecteerd."))
+          (tbkg:seed-dialog-data data)
+          (setq *tbkg:action* "KABELGEULEDIT" data (tbkg:show-dialog))
+          (if data
+            (progn
+              (command "_.UCS" "_World")
+              (setq world-set T)
+              (setq context (read (TBKG_NATIVE_BEGIN_EDIT original)))
+              (setq *tbkg:floating-code* (if (= (nth 2 context) "") nil (nth 2 context)) *tbkg:future-code-switch* (nth 3 context))
+              (setq replacement (tbkg:draw-trench-at-end (car context) (cadr context)
+                (cadr data) (caddr data) (cadddr data) (nth 4 data) (nth 5 data) (nth 6 data) (nth 7 data)
+                (nth 8 data) (nth 9 data) (nth 10 data) (nth 11 data) (nth 12 data) (nth 13 data)))
+              (if replacement
+                (progn (TBKG_NATIVE_COMMIT_EDIT replacement) (princ "\nKabelgeul volledig bijgewerkt."))
+                (princ "\nGeul kon niet opnieuw worden opgebouwd; oorspronkelijke geul behouden."))
+              (command "_.UCS" "_Previous")
+              (setq world-set nil))
+            (princ "\nKabelgeul bewerken geannuleerd.")))
+        (princ "\nDeze geul bevat geen bruikbare kabelgegevens.")))
+    (princ "\nGeen bewerkbare KabelGeul geselecteerd."))
+  (setq *tbkg:floating-code* oldfloating *tbkg:future-code-switch* oldswitch *tbkg:copy-stage* nil)
   (princ))
 
 

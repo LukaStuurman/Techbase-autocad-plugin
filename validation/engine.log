@@ -1,4 +1,4 @@
-Redirect stdout (file: C:\Users\LUKAST~1\AppData\Local\Temp\accc449962).
+Redirect stdout (file: C:\Users\LUKAST~1\AppData\Local\Temp\accc143962).
 
 AcCoreConsole: StdOutConsoleMode: processed-output: disabled,auto
 
@@ -21,8 +21,6 @@ LogFilePath has been set to the working folder.
 CoreHeartBeat
 
 Regenerating model.
-
-CoreHeartBeat
 
 Drawing created using acadiso.dwt from AutoCAD profile: <<Unnamed Profile>>
 
@@ -408,7 +406,7 @@ Loading AECC ETransmit...
 
 Exception in c:\program files\autodesk\civil 3d 2026 object enabler\aecccorebase.crx ARX Command
 
-Unhandled Exception c0000027 (c0000027h) at address bb3a506dh
+Unhandled Exception c0000027 (c0000027h) at address 3717506dh
 
 >>>Responding: OK.
 

@@ -1,0 +1,87 @@
+Redirect stdout (file: C:\Users\LUKAST~1\AppData\Local\Temp\accc23242).
+AcCoreConsole: StdOutConsoleMode: processed-output: disabled,auto
+AutoCAD Core Engine Console - Copyright 2025 Autodesk, Inc.  All rights reserved. (W.122.0.0)
+
+Execution Path:
+C:\Program Files\Autodesk\AutoCAD 2026\accoreconsole.exe
+Current Directory: C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\validation\Kabelgeul
+
+Version Number: W.122.0.0 (UNICODE)
+LogFilePath has been set to the working folder.
+CoreHeartBeat
+Regenerating model.
+Drawing created using acadiso.dwt from AutoCAD profile: <<Unnamed Profile>>
+**** System Variable Changed ****
+2 of the monitored system variables have changed from the preferred value. Use SYSVARMONITOR command to view changes.
+
+
+AutoCAD menu utilities loaded.
+Command:
+Command:
+
+Command:
+Command: _NETLOAD
+Assembly file name: "C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.8.0/Techbase.Blocks.bundle/Contents/R25-1.8.0/Techbase.Blocks.dll"
+
+Command: (load "C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.8.0/Techbase.Blocks.bundle/Contents/Assets/Kabelgeul/Techbase.Kabelgeul.lsp")
+
+Techbase Kabelgeul geladen.C:TBGEULCODE
+
+Command: (setvar "OSMODE" 0)
+0
+
+Command: (setvar "WIPEOUTFRAME" 2)
+Regenerating model.
+2
+
+Command: (setvar "ATTREQ" 0)
+0
+
+Command: (entmake (list (cons 0 "LINE") (cons 8 "Aansluiting LS K10") (cons 10 (list 0.0 0.0 0.0)) (cons 11 (list 80.0 0.0 0.0))))
+((0 . "LINE") (8 . "Aansluiting LS K10") (10 0.0 0.0 0.0) (11 80.0 0.0 0.0))
+
+Command: (entmake (list (cons 0 "LINE") (cons 8 "Aansluiting LS K01") (cons 10 (list 0.0 2.0 0.0)) (cons 11 (list 80.0 2.0 0.0))))
+((0 . "LINE") (8 . "Aansluiting LS K01") (10 0.0 2.0 0.0) (11 80.0 2.0 0.0))
+
+Command: _ZOOM
+
+Specify corner of window, enter a scale factor (nX or nXP), or
+[All/Center/Dynamic/Extents/Previous/Scale/Window/Object] <real time>: _E
+
+Command: _REGEN
+Regenerating model.
+
+Command: _TBKABELGEUL
+TBGEULINIT
+Command: _.UNDO Current settings: Auto = On, Control = All, Combine = Yes, Layer = Yes
+Enter the number of operations to undo or [Auto/Control/BEgin/End/Mark/Back] <1>: _Begin
+Command: Regenerating model.
+
+Selecteer eerste polyline / begin lange lijn of bestaande KabelGeul: 50,0,0
+
+Afstandspunt richting halve vierkant: 50,8,0
+
+Plaatsing kabelgeul [Direct/Zwevend] <Direct>: _Direct
+
+KabelGeul geplaatst als uniek block.Regenerating model.
+_.UNDO Current settings: Auto = On, Control = All, Combine = Yes, Layer = Yes
+Enter the number of operations to undo or [Auto/Control/BEgin/End/Mark/Back] <1>: _End
+Command:
+
+Command: (princ (strcat "\nDETECTED=" (vl-prin1-to-string *tbkg:last-types*)))
+
+DETECTED=("K10" "K01")"\nDETECTED=(\"K10\" \"K01\")"
+
+Command: _DXFOUT
+Enter DXF file name <C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\validation\Kabelgeul\Drawing1.dxf>: "C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/validation/Kabelgeul/Kabelgeul - defaults.dxf"
+
+Current DXF settings: Precision= 16 Format= ASCII Preview= No Version= 2018
+
+Enter decimal places of accuracy (0 to 16) or [Binary/select Objects/Preview/Version] <16>: 16
+CoreHeartBeat
+
+Command: _QUIT
+_Y
+Really want to discard all changes to drawing? <N> _Y
+
+LogFilePath has been restored to ''.

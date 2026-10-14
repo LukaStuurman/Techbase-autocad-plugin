@@ -1,0 +1,195 @@
+{
+  "InheritLayer": true,
+  "UseChosenBlockLayer": false,
+  "ChosenBlockLayer": 1,
+  "Tolerance": 0.05,
+  "PalettePath": null,
+  "Repeat": false,
+  "SelectedDirectionNumber": 1,
+  "MofTextHeight": 0.45,
+  "DirectionTextHeight": 0.45,
+  "KabelgeulDefaults": {
+    "K01": {
+      "Type": "K01",
+      "Text": "",
+      "Shape": "Enkel",
+      "TwoSides": false,
+      "Text2": "",
+      "Shape2": "Enkel",
+      "Mantel": "",
+      "NewTray": false
+    },
+    "K02": {
+      "Type": "K02",
+      "Text": "",
+      "Shape": "Enkel",
+      "TwoSides": false,
+      "Text2": "",
+      "Shape2": "Enkel",
+      "Mantel": "",
+      "NewTray": false
+    },
+    "K03": {
+      "Type": "K03",
+      "Text": "",
+      "Shape": "Enkel",
+      "TwoSides": false,
+      "Text2": "",
+      "Shape2": "Enkel",
+      "Mantel": "",
+      "NewTray": false
+    },
+    "K04": {
+      "Type": "K04",
+      "Text": "",
+      "Shape": "Enkel",
+      "TwoSides": false,
+      "Text2": "",
+      "Shape2": "Enkel",
+      "Mantel": "",
+      "NewTray": false
+    },
+    "K05": {
+      "Type": "K05",
+      "Text": "",
+      "Shape": "Enkel",
+      "TwoSides": false,
+      "Text2": "",
+      "Shape2": "Enkel",
+      "Mantel": "",
+      "NewTray": false
+    },
+    "K06": {
+      "Type": "K06",
+      "Text": "",
+      "Shape": "Enkel",
+      "TwoSides": false,
+      "Text2": "",
+      "Shape2": "Enkel",
+      "Mantel": "",
+      "NewTray": false
+    },
+    "K07": {
+      "Type": "K07",
+      "Text": "",
+      "Shape": "Enkel",
+      "TwoSides": false,
+      "Text2": "",
+      "Shape2": "Enkel",
+      "Mantel": "",
+      "NewTray": false
+    },
+    "K08": {
+      "Type": "K08",
+      "Text": "",
+      "Shape": "Enkel",
+      "TwoSides": false,
+      "Text2": "",
+      "Shape2": "Enkel",
+      "Mantel": "",
+      "NewTray": false
+    },
+    "K09": {
+      "Type": "K09",
+      "Text": "",
+      "Shape": "Enkel",
+      "TwoSides": false,
+      "Text2": "",
+      "Shape2": "Enkel",
+      "Mantel": "",
+      "NewTray": false
+    },
+    "K10": {
+      "Type": "K10",
+      "Text": "150Al standaard",
+      "Shape": "Combi",
+      "TwoSides": false,
+      "Text2": "",
+      "Shape2": "Enkel",
+      "Mantel": "",
+      "NewTray": false
+    },
+    "K11": {
+      "Type": "K11",
+      "Text": "",
+      "Shape": "Enkel",
+      "TwoSides": false,
+      "Text2": "",
+      "Shape2": "Enkel",
+      "Mantel": "",
+      "NewTray": false
+    },
+    "K12": {
+      "Type": "K12",
+      "Text": "",
+      "Shape": "Enkel",
+      "TwoSides": false,
+      "Text2": "",
+      "Shape2": "Enkel",
+      "Mantel": "",
+      "NewTray": false
+    },
+    "MS Nieuw": {
+      "Type": "MS Nieuw",
+      "Text": "",
+      "Shape": "Enkel",
+      "TwoSides": false,
+      "Text2": "",
+      "Shape2": "Enkel",
+      "Mantel": "",
+      "NewTray": false
+    },
+    "MS Bestaand": {
+      "Type": "MS Bestaand",
+      "Text": "",
+      "Shape": "Enkel",
+      "TwoSides": false,
+      "Text2": "",
+      "Shape2": "Enkel",
+      "Mantel": "",
+      "NewTray": false
+    },
+    "MS Rooien": {
+      "Type": "MS Rooien",
+      "Text": "",
+      "Shape": "Enkel",
+      "TwoSides": false,
+      "Text2": "",
+      "Shape2": "Enkel",
+      "Mantel": "",
+      "NewTray": false
+    },
+    "Bestaand": {
+      "Type": "Bestaand",
+      "Text": "",
+      "Shape": "Enkel",
+      "TwoSides": false,
+      "Text2": "",
+      "Shape2": "Enkel",
+      "Mantel": "",
+      "NewTray": false
+    },
+    "Rooien": {
+      "Type": "Rooien",
+      "Text": "",
+      "Shape": "Enkel",
+      "TwoSides": false,
+      "Text2": "",
+      "Shape2": "Enkel",
+      "Mantel": "",
+      "NewTray": false
+    },
+    "Half rooien": {
+      "Type": "Half rooien",
+      "Text": "",
+      "Shape": "Dubbel",
+      "TwoSides": false,
+      "Text2": "",
+      "Shape2": "Enkel",
+      "Mantel": "",
+      "NewTray": false
+    }
+  },
+  "KabelgeulMantelSpec": "HDPE 160 standaard",
+  "BlockRotationModes": {}
+}

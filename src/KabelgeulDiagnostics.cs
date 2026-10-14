@@ -29,23 +29,36 @@ internal static class KabelgeulDiagnostics
             var rejected = false; try { KabelgeulData.Parse(broken); } catch (FormatException) { rejected = true; }
             Check(rejected, "onvolledige Lisp-invoer geeft een gecontroleerde fout");
         }
-        using var panel = new KabelgeulPanel(); panel.Editor.Set(parsed);
-        var grid = panel.Editor.Grid;
+        using var editor = new KabelgeulEditor(parsed);
+        var grid = editor.Grid;
         Check(grid.Rows.Count == 18 && grid.Columns.Count == 8, "formulier ondersteunt alle achttien kabeltypen en acht velden");
-        var half = grid.Rows.Cast<DataGridViewRow>().Single(r => (string)r.Cells[0].Value == "Half rooien");
+        var half = grid.Rows.Cast<DataGridViewRow>().Single(r => Convert.ToString(r.Cells[0].Value) == "Half rooien");
         Check(half.Cells[2].ReadOnly && half.Cells[3].ReadOnly && !half.Cells[4].ReadOnly && half.Cells[5].ReadOnly, "Half rooien toont dubbele kabel en onafhankelijke bestaande tekst");
-        Check(panel.Editor.CaptureData().Lisp() == parsed.Lisp(), "formulier bewaart alle gegevens bij lezen/schrijven");
+        Check(editor.CaptureData().Lisp() == parsed.Lisp(), "formulier bewaart alle gegevens bij lezen/schrijven");
         IEnumerable<Control> Descendants(Control control)
         { yield return control; foreach (Control child in control.Controls) foreach (var descendant in Descendants(child)) yield return descendant; }
-        var controls = Descendants(panel).ToArray();
+        var controls = Descendants(editor).ToArray();
         var reverse = controls.OfType<Button>().Single(b => b.Text == "Volgorde omdraaien"); reverse.PerformClick();
-        Check(panel.Editor.CaptureData().Rows[0] == parsed.Rows[^1], "volgorde omdraaien bewaart alle rijgegevens"); reverse.PerformClick();
-        controls.OfType<Button>().Single(b => b.Text == "Rij toevoegen").PerformClick();
-        Check(grid.Rows.Count == 19, "nieuwe kabelrij toevoegen"); grid.CurrentCell = grid.Rows[^1].Cells[0];
+        Check(editor.CaptureData().Rows[0] == parsed.Rows[^1], "volgorde omdraaien bewaart alle rijgegevens"); reverse.PerformClick();
+        grid.CurrentCell = grid.Rows[8].Cells[0];
+        var originalRow = parsed.Rows[8];
+        controls.OfType<Button>().Single(b => b.Text == "Rij vóór").PerformClick();
+        Check(grid.Rows.Count == 19 && editor.CaptureData().Rows[9] == originalRow && grid.CurrentRow!.Index == 8, "rij vóór geselecteerde rij invoegen en selecteren");
+        controls.OfType<Button>().Single(b => b.Text == "Rij na").PerformClick();
+        Check(grid.Rows.Count == 20 && editor.CaptureData().Rows[10] == originalRow && grid.CurrentRow!.Index == 9, "rij tussen bestaande rijen na selectie invoegen");
+        controls.OfType<Button>().Single(b => b.Text == "Rij verwijderen").PerformClick(); grid.CurrentCell = grid.Rows[8].Cells[0];
         controls.OfType<Button>().Single(b => b.Text == "Rij verwijderen").PerformClick();
-        Check(grid.Rows.Count == 18 && panel.Editor.CaptureData().Lisp() == parsed.Lisp(), "gekozen rij verwijderen bewaart overige rijen");
-        Check(controls.All(c => c.Font.Name == Typography.Family), "hele tab gebruikt Arial Nova Light");
-        panel.Editor.Set(KabelgeulData.Default);
+        Check(grid.Rows.Count == 18 && editor.CaptureData().Lisp() == parsed.Lisp(), "invoegen/verwijderen bewaart alle oorspronkelijke rijgegevens");
+        grid.CurrentCell = grid.Rows[0].Cells[0]; editor.InsertRow(false);
+        Check(grid.CurrentRow!.Index == 0 && editor.CaptureData().Rows[1] == parsed.Rows[0], "invoegen voor eerste rij");
+        editor.Set(parsed); grid.CurrentCell = grid.Rows[^1].Cells[0]; editor.InsertRow(true);
+        Check(grid.CurrentRow!.Index == 18 && editor.CaptureData().Rows[17] == parsed.Rows[^1], "invoegen na laatste rij");
+        editor.Set(new KabelgeulData(Enumerable.Repeat(new KabelgeulRow(),100).ToArray())); editor.InsertRow(true);
+        Check(grid.Rows.Count == 100, "maximum van honderd kabelrijen bewaakt");
+        Check(controls.All(c => c.Font.Name == Typography.Family), "hele invoervenster gebruikt Arial Nova Light");
+        using var panel = new KabelgeulPanel();
+        Check(panel.Editor.Grid.Rows.Count == 18 && panel.Editor.Grid.Columns[0].ReadOnly, "tab is een vaste instelling per kabeltype");
+        Check(!Descendants(panel).OfType<Button>().Any(b => b.Text.StartsWith("Rij ")), "tab bevat geen misleidende lijst met plaatsingsrijen");
         foreach (var width in new[] { 380, 1040 })
         {
             panel.Size = new Size(width, 650); panel.CreateControl(); panel.PerformLayout();
@@ -56,13 +69,40 @@ internal static class KabelgeulDiagnostics
             bitmap.Save(Path.Combine(output, $"Kabelgeul-tab-{width}.png"));
             Check(panel.Editor.Grid.Height > 100, "formulier houdt bruikbare kabeltabel bij breedte " + width);
         }
+        var previous = Environment.GetEnvironmentVariable("TECHBASE_SETTINGS_FILE");
+        var previousDefaults = Plugin.Preferences.KabelgeulDefaults;
+        var previousMantel = Plugin.Preferences.KabelgeulMantelSpec;
+        var settingsPath = Path.Combine(output, "defaults-test.json");
+        try
+        {
+            Environment.SetEnvironmentVariable("TECHBASE_SETTINGS_FILE", settingsPath);
+            var settings = new Settings { KabelgeulMantelSpec = "PVC 160" };
+            settings.KabelgeulDefaults["K10"] = new KabelgeulRow("K10", "150Al", "Combi", true, "OV 16Cu", "Dubbel", "A", true);
+            settings.Save(); var reloaded = Settings.Read();
+            Check(KabelgeulData.Rule(reloaded,"K10") == settings.KabelgeulDefaults["K10"] && reloaded.KabelgeulMantelSpec == "PVC 160", "standaardteksten en alle opmaakregels blijven na herstart bewaard");
+            var detected = new KabelgeulData(new[] { new KabelgeulRow("K10"), new KabelgeulRow("K01") }).WithDefaults(reloaded);
+            Check(detected.Rows[0] == settings.KabelgeulDefaults["K10"] && detected.Rows[1].Type == "K01", "standaarden volgen gedetecteerd kabeltype en behouden kabelvolgorde");
+            reloaded.KabelgeulDefaults["Half rooien"] = new KabelgeulRow("Half rooien", Shape:"Combi", TwoSides:true);
+            Check(KabelgeulData.Rule(reloaded,"Half rooien").Shape == "Dubbel" && !KabelgeulData.Rule(reloaded,"Half rooien").TwoSides, "Half rooien blijft geldig bij afwijkende opgeslagen regels");
+            using var settingsPanel = new KabelgeulPanel(); settingsPanel.Size = new Size(1040,650); settingsPanel.CreateControl();
+            var settingsGrid = settingsPanel.Editor.Grid; _ = settingsGrid.Handle;
+            settingsGrid.CurrentCell = settingsGrid.Rows[9].Cells[1];
+            Check(settingsGrid.BeginEdit(true), "standaardtekst is in de echte tabel bewerkbaar");
+            var input = (DataGridViewTextBoxEditingControl)settingsGrid.EditingControl;
+            input.Text = "150"; settingsGrid.NotifyCurrentCellDirty(true);
+            Check(settingsGrid.IsCurrentCellInEditMode, "tekstbewerking blijft actief tijdens typen");
+            input.Text += "Al standaard"; settingsGrid.EndEdit();
+            settingsGrid.Rows[9].Cells[2].Value = "Combi";
+            settingsPanel.Editor.MantelSpecBox.Text = "HDPE 160 standaard";
+            var savedUi = Settings.Read();
+            Check(savedUi.KabelgeulDefaults["K10"].Text == "150Al standaard" && savedUi.KabelgeulDefaults["K10"].Shape == "Combi" && savedUi.KabelgeulMantelSpec == "HDPE 160 standaard", "tekst, vorm en mantelspecificatie worden door de tab automatisch opgeslagen");
+            using var reopened = new KabelgeulPanel();
+            Check(Convert.ToString(reopened.Editor.Grid.Rows[9].Cells[1].Value) == "150Al standaard", "opnieuw geopende tab toont de bewaarde regels");
+        }
+        finally { Environment.SetEnvironmentVariable("TECHBASE_SETTINGS_FILE", previous); Plugin.Preferences.KabelgeulDefaults = previousDefaults; Plugin.Preferences.KabelgeulMantelSpec = previousMantel; }
         var doc = AcApp.DocumentManager.MdiActiveDocument;
-        var frame = AcApp.GetSystemVariable("WIPEOUTFRAME");
-        KabelgeulCommands.Pending = new(doc, parsed, false);
-        var style = KabelgeulCommands.Initialize();
-        using var args = new ResultBuffer(new TypedValue((int)LispDataType.Text, KabelgeulData.Default.Lisp()), new TypedValue((int)LispDataType.Text, "KABELGEUL"));
-        Check(Plugin.ConfigureKabelgeul(args) == parsed.Lisp(), "handmatige tabinvoer heeft voorrang op gedetecteerde kabels zonder dialoog");
-        KabelgeulCommands.Finish();
+        var frame = AcApp.GetSystemVariable("WIPEOUTFRAME"); KabelgeulCommands.Pending = new(doc);
+        var style = KabelgeulCommands.Initialize(); KabelgeulCommands.Finish();
         Check(AcApp.GetSystemVariable("WIPEOUTFRAME").Equals(frame) && KabelgeulCommands.Active == null, "commandocontext en wipeoutinstelling hersteld");
         Check(style.StartsWith("TECHBASE_ARIAL_NOVA_LIGHT"), "geultekst gebruikt de eigen Light-stijl");
         File.WriteAllText(Path.Combine(output, "formulier.json"), JsonSerializer.Serialize(new { Status = "PASS", Checks = checks }, new JsonSerializerOptions { WriteIndented = true }));
