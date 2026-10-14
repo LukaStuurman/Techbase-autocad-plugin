@@ -91,7 +91,8 @@ internal static class BlockInserter
     {
         attribute.SetAttributeFromBlock(definition, block.BlockTransform);
         attribute.TextString = value;
-        if (definition.Layer == "0") attribute.LayerId = block.LayerId;
+        // Keep the definition's layer (including 0), so an attached attribute
+        // follows its owning insert when that insert changes layer later.
         attribute.AdjustAlignment(db);
         if (attribute.IsMTextAttribute) attribute.UpdateMTextAttribute();
         Typography.Apply(attribute, definition.TextStyleId);
@@ -235,7 +236,16 @@ internal sealed class PlacementJig : DrawJig, IDisposable
     internal void RefreshAttributes()
     {
         foreach (var (definition, attribute) in attributes)
+        {
             BlockInserter.UpdateAttribute(db, block, attribute, definition, definition.TextString);
+            // Preview attributes are drawn separately and have no owning insert.
+            // Resolve layer 0 only for these transient display objects.
+            if (definition.Layer == "0")
+            {
+                attribute.LayerId = block.LayerId;
+                if (attribute.IsMTextAttribute) attribute.UpdateMTextAttribute();
+            }
+        }
     }
     internal bool Rotate(Editor ed)
     {

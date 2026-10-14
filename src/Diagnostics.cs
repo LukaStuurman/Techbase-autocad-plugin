@@ -20,6 +20,7 @@ internal static class Diagnostics
         PlacementDiagnostics.Run(catalog, output);
         TypographyDiagnostics.Run(catalog, output);
         BlockLayerDiagnostics.Run(catalog, output);
+        BlockAttributeLayerDiagnostics.Run(catalog, output);
         TextHeightDiagnostics.Run(catalog, output);
         DirectionAppearanceDiagnostics.Run(catalog, output);
         Plugin.CheckSettingsPersistence(output);

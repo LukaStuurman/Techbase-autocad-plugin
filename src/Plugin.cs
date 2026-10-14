@@ -109,6 +109,26 @@ public sealed partial class Plugin : IExtensionApplication
         }
         catch (System.Exception ex) { Error(ex); }
     }
+    [CommandMethod("TBBLOCKTEKSTLAAG", CommandFlags.Modal | CommandFlags.UsePickSet)]
+    public void RepairBlockTextLayers()
+    {
+        var doc = AcApp.DocumentManager.MdiActiveDocument;
+        if (doc == null) return;
+        try
+        {
+            var selection = doc.Editor.SelectImplied();
+            if (selection.Status != Autodesk.AutoCAD.EditorInput.PromptStatus.OK)
+                selection = doc.Editor.GetSelection(new Autodesk.AutoCAD.EditorInput.PromptSelectionOptions
+                { MessageForAdding = "\nSelecteer pluginblocks waarvan de tekst de blocklaag moet volgen: " },
+                new Autodesk.AutoCAD.EditorInput.SelectionFilter(new[]
+                { new Autodesk.AutoCAD.DatabaseServices.TypedValue((int)Autodesk.AutoCAD.DatabaseServices.DxfCode.Start, "INSERT") }));
+            if (selection.Status != Autodesk.AutoCAD.EditorInput.PromptStatus.OK) return;
+            var result = BlockAttributeLayers.Repair(doc.Database, selection.Value.GetObjectIds());
+            doc.Editor.Regen();
+            doc.Editor.WriteMessage($"\nBlocktekstlaag: {result.Changed} attributen hersteld; {result.Skipped} objecten overgeslagen. Tekstwaarden en opmaak behouden.");
+        }
+        catch (System.Exception ex) { Error(ex); }
+    }
     [CommandMethod("TBRICHTINGEN", CommandFlags.Modal)]
     public void ShowDirections() { Show(); if (palette != null) palette.Activate(3); }
     private static int? PromptDirection()

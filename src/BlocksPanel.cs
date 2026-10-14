@@ -55,6 +55,9 @@ internal sealed class BlocksPanel : UserControl
         var rtBack = new Button { Text = "RT-maskers naar achter", AutoSize = true };
         rtBack.Click += (_, _) => AcApp.DocumentManager.MdiActiveDocument?.SendStringToExecute("_TBRTACHTER ", true, false, false);
         sources.Controls.Add(rtBack);
+        var textLayer = new Button { Text = "Blocktekst laag herstellen", AutoSize = true };
+        textLayer.Click += (_, _) => AcApp.DocumentManager.MdiActiveDocument?.SendStringToExecute("_TBBLOCKTEKSTLAAG ", true, false, false);
+        sources.Controls.Add(textLayer);
         layout.Controls.Add(sources, 0, 4);
         search.Margin = new Padding(0, 4, 0, 5);
         groups.Margin = new Padding(0, 0, 0, 6);

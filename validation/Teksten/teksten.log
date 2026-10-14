@@ -1,4 +1,4 @@
-Redirect stdout (file: C:\Users\LUKAST~1\AppData\Local\Temp\accc411322).
+Redirect stdout (file: C:\Users\LUKAST~1\AppData\Local\Temp\accc282762).
 
 AcCoreConsole: StdOutConsoleMode: processed-output: disabled,auto
 
@@ -22,8 +22,6 @@ CoreHeartBeat
 
 Regenerating model.
 
-CoreHeartBeat
-
 Drawing created using acadiso.dwt from AutoCAD profile: <<Unnamed Profile>>
 
 **** System Variable Changed ****
@@ -46,7 +44,7 @@ Command:
 
 Command: _NETLOAD
 
-Assembly file name: "C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.11.0/Techbase.Blocks.bundle/Contents/R25-1.11.0/Techbase.Blocks.dll"
+Assembly file name: "C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.12.1/Techbase.Blocks.bundle/Contents/R25-1.12.1/Techbase.Blocks.dll"
 
 
 
@@ -414,7 +412,7 @@ Loading AECC ETransmit...
 
 Exception in c:\program files\autodesk\civil 3d 2026 object enabler\aecccorebase.crx ARX Command
 
-Unhandled Exception c0000027 (c0000027h) at address 4b75506dh
+Unhandled Exception c0000027 (c0000027h) at address 51d4506dh
 
 >>>Responding: OK.
 
@@ -520,13 +518,13 @@ BURST_TEXT_COUNT=26"\nBURST_TEXT_COUNT=26"
 
 Command: (setq text_a (entmakex (list (cons 0 "MTEXT") (cons 100 "AcDbEntity") (cons 8 "0") (cons 100 "AcDbMText") (cons 10 (list 100.0 20.0 0.0)) (cons 40 1.0) (cons 41 12.0) (cons 71 1) (cons 1 "Alpha"))))
 
-<Entity name: 29642656a70>
+<Entity name: 27d81ed7270>
 
 
 
 Command: (setq text_b (entmakex (list (cons 0 "MTEXT") (cons 100 "AcDbEntity") (cons 8 "0") (cons 100 "AcDbMText") (cons 10 (list 100.0 24.0 0.0)) (cons 40 1.0) (cons 41 12.0) (cons 71 1) (cons 1 "Beta"))))
 
-<Entity name: 29642656a90>
+<Entity name: 27d81ed7290>
 
 
 

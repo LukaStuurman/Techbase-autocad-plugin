@@ -1,0 +1,26 @@
+{
+  "Status": "PASS",
+  "Checks": [
+    "NIEUWE MOF: bronlaag en bronkleur behouden",
+    "NIEUWE MOF: laagwisseling zet attribuut niet vast op oude kabel",
+    "NIEUWE MOF: tekst erft oranje van richting 6 zonder ATTSYNC",
+    "NIEUWE MOF: los cursorvoorbeeld volgt blocklaag",
+    "BESTAANDE MOF: bronlaag en bronkleur behouden",
+    "BESTAANDE MOF: laagwisseling zet attribuut niet vast op oude kabel",
+    "BESTAANDE MOF: vaste tekstkleur 7 blijft behouden",
+    "BESTAANDE MOF: los cursorvoorbeeld volgt blocklaag",
+    "MOF bestaand-nieuw: bronlaag en bronkleur behouden",
+    "MOF bestaand-nieuw: laagwisseling zet attribuut niet vast op oude kabel",
+    "MOF bestaand-nieuw: los cursorvoorbeeld volgt blocklaag",
+    "RT 1-12 LS: bronlaag en bronkleur behouden",
+    "RT 1-12 LS: laagwisseling zet attribuut niet vast op oude kabel",
+    "RT 1-12 LS: los cursorvoorbeeld volgt blocklaag",
+    "oude pluginattribuutlaag hersteld",
+    "herstel bewaart eigen tekst, positie en hoogte",
+    "herhaald herstel heeft geen bijwerkingen",
+    "opnieuw geopende bronlaag/laagovername 10D",
+    "opnieuw geopende bronlaag/laagovername 119",
+    "opnieuw geopende bronlaag/laagovername 131",
+    "opnieuw geopende bronlaag/laagovername 168"
+  ]
+}

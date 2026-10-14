@@ -1,0 +1,27 @@
+(setvar "OSMODE" 0)
+(setvar "INSUNITS" 0)
+(setvar "PICKFIRST" 1)
+(command "_-LAYER" "_New" "01 - Bestaande kabel" "_Color" "125" "01 - Bestaande kabel" "_New" "Aansluiting LS K06" "_Color" "30" "Aansluiting LS K06" "")
+(entmake (list (cons 0 "LINE") (cons 8 "01 - Bestaande kabel") (cons 10 (list 0.0 0.0 0.0)) (cons 11 (list 20.0 0.0 0.0))))
+_TBPLAATS
+9dbea1c0c575423e80d3feede50deff1
+5,0,0
+(setq original (entlast))
+(princ (strcat "\nINITIAL_LAYER=" (cdr (assoc 8 (entget original)))))
+(command "_CHPROP" original "" "_LA" "Aansluiting LS K06" "")
+(command "_COPY" original "" "_Multiple" "0,0,0" "10,0,0" "")
+_TBPLAATS
+9dbea1c0c575423e80d3feede50deff1
+8,0,0
+(setq old (entlast) attribute (entnext old) data (entget attribute))
+(entmod (subst (cons 8 "01 - Bestaande kabel") (assoc 8 data) (subst (cons 1 "Eigen EM tekst") (assoc 1 data) data)))
+(command "_CHPROP" old "" "_LA" "Aansluiting LS K06" "")
+(sssetfirst nil (ssadd old))
+_TBBLOCKTEKSTLAAG
+(sssetfirst nil (ssadd old))
+_TBBLOCKTEKSTLAAG
+_DXFOUT
+"C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/validation/Attribuutlagen/Laagwisseling commando.dxf"
+16
+_QUIT
+_Y

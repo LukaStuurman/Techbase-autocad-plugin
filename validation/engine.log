@@ -1,4 +1,4 @@
-Redirect stdout (file: C:\Users\LUKAST~1\AppData\Local\Temp\accc649162).
+Redirect stdout (file: C:\Users\LUKAST~1\AppData\Local\Temp\accc553082).
 
 AcCoreConsole: StdOutConsoleMode: processed-output: disabled,auto
 
@@ -22,8 +22,6 @@ CoreHeartBeat
 
 Regenerating model.
 
-CoreHeartBeat
-
 Drawing created using acadiso.dwt from AutoCAD profile: <<Unnamed Profile>>
 
 **** System Variable Changed ****
@@ -46,7 +44,7 @@ Command:
 
 Command: _NETLOAD
 
-Assembly file name: "C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.12.0/Techbase.Blocks.bundle/Contents/R25-1.12.0/Techbase.Blocks.dll"
+Assembly file name: "C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.12.1/Techbase.Blocks.bundle/Contents/R25-1.12.1/Techbase.Blocks.dll"
 
 
 
@@ -483,6 +481,22 @@ Unable to find the rules file: C:\C3DPipeRules.xml
 Unable to find the rules file: C:\C3DPipeRules.xml
 
 CoreHeartBeat
+
+Unable to find the rules file: C:\C3DPipeRules.xml
+
+Unable to find the rules file: C:\C3DPipeRules.xml
+
+Unable to find the rules file: C:\C3DPipeRules.xml
+
+Unable to find the rules file: C:\C3DPipeRules.xml
+
+Unable to find the rules file: C:\C3DPipeRules.xml
+
+Unable to find the rules file: C:\C3DPipeRules.xml
+
+Unable to find the rules file: C:\C3DPipeRules.xml
+
+Unable to find the rules file: C:\C3DPipeRules.xml
 
 Unable to find the rules file: C:\C3DPipeRules.xml
 

@@ -53,7 +53,7 @@ internal static class PlacementDiagnostics
                     }
                 }
                 preview.LayerId = destinationLayer; jig.RefreshAttributes();
-                Check(jig.Attributes.Where(a => references.First(r => r.Tag == a.Tag).LayerId == layer)
+                Check(jig.Attributes.Where(a => references.First(r => r.Tag == a.Tag).Layer == "0")
                     .All(a => a.LayerId == destinationLayer), tool.Name + ": laag-0-tekst erft nieuwe laag");
                 Check(preview.ObjectId.IsNull && space.Cast<ObjectId>().Count() == before,
                     tool.Name + ": cursorvoorbeeld voegt geen tijdelijk object toe");

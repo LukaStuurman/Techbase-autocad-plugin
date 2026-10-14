@@ -1,0 +1,315 @@
+Redirect stdout (file: C:\Users\LUKAST~1\AppData\Local\Temp\accc629442).
+AcCoreConsole: StdOutConsoleMode: processed-output: disabled,auto
+AutoCAD Core Engine Console - Copyright 2025 Autodesk, Inc.  All rights reserved. (W.122.0.0)
+
+Execution Path:
+C:\Program Files\Autodesk\AutoCAD 2026\accoreconsole.exe
+Current Directory: C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\validation\Attribuutlagen
+
+Version Number: W.122.0.0 (UNICODE)
+LogFilePath has been set to the working folder.
+CoreHeartBeat
+Regenerating model.
+Drawing created using acadiso.dwt from AutoCAD profile: <<Unnamed Profile>>
+**** System Variable Changed ****
+2 of the monitored system variables have changed from the preferred value. Use SYSVARMONITOR command to view changes.
+
+
+AutoCAD menu utilities loaded.
+Command:
+Command:
+
+Command:
+Command: (setvar "OSMODE" 0)
+0
+
+Command: (setvar "INSUNITS" 0)
+0
+
+Command: (setvar "PICKFIRST" 1)
+1
+
+Command: (command "_-LAYER" "_New" "01 - Bestaande kabel" "_Color" "125" "01 - Bestaande kabel" "_New" "Aansluiting LS K06" "_Color" "30" "Aansluiting LS K06" "")
+_-LAYER
+Current layer:  "0"
+Enter an option [?/Make/Set/New/Rename/ON/OFF/Color/Ltype/LWeight/TRansparency/MATerial/Plot/Freeze/Thaw/LOck/Unlock/stAte/Description/rEconcile/Xref]: _New
+Enter name list for new layer(s): 01 - Bestaande kabel Enter an option [?/Make/Set/New/Rename/ON/OFF/Color/Ltype/LWeight/TRansparency/MATerial/Plot/Freeze/Thaw/LOck/Unlock/stAte/Description/rEconcile/Xref]: _Color
+New color [Truecolor/COlorbook] : 125
+Enter name list of layer(s) for color 125 <0>: 01 - Bestaande kabel Enter an option [?/Make/Set/New/Rename/ON/OFF/Color/Ltype/LWeight/TRansparency/MATerial/Plot/Freeze/Thaw/LOck/Unlock/stAte/Description/rEconcile/Xref]: _New
+Enter name list for new layer(s): Aansluiting LS K06 Enter an option [?/Make/Set/New/Rename/ON/OFF/Color/Ltype/LWeight/TRansparency/MATerial/Plot/Freeze/Thaw/LOck/Unlock/stAte/Description/rEconcile/Xref]: _Color
+New color [Truecolor/COlorbook] : 30
+Enter name list of layer(s) for color 30 <0>: Aansluiting LS K06 Enter an option [?/Make/Set/New/Rename/ON/OFF/Color/Ltype/LWeight/TRansparency/MATerial/Plot/Freeze/Thaw/LOck/Unlock/stAte/Description/rEconcile/Xref]:
+Command: nil
+
+Command: (entmake (list (cons 0 "LINE") (cons 8 "01 - Bestaande kabel") (cons 10 (list 0.0 0.0 0.0)) (cons 11 (list 20.0 0.0 0.0))))
+((0 . "LINE") (8 . "01 - Bestaande kabel") (10 0.0 0.0 0.0) (11 20.0 0.0 0.0))
+
+Command: _TBPLAATS
+
+Tool-ID: 9dbea1c0c575423e80d3feede50deff1
+Loading AEC Base...
+Loading AEC Base Extended...
+Loading AEC Core...
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccpressurepipes.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aecchydrology.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccroadway.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccpressurepipes.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccland.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccland.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccland.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccland.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccland.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccnetwork.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccpressurepipes.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aecchydrology.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccnetwork.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccnetwork.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccnetwork.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccland.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccplanprod.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccland.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccnetwork.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccnetwork.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccnetwork.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccpressurepipes.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccland.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccland.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccland.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccland.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccroadway.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccnetwork.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccland.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccland.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccnetwork.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccnetwork.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccland.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccland.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccland.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccland.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccplanprod.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+
+c:\program files\autodesk\civil 3d 2026 object enabler\aeccparampart.dbx cannot find a dll or other file that it needs.
+Loading AEC Project Base...
+Loading AEC Architectural Base...
+Loading AEC Schedule...
+Loading AECC Base...
+Loading AecCivilBase...
+Loading AECC QTO......
+Loading AECC Land...
+Loading AECC Base Core...
+Loading AECC Survey...
+Loading AECC Roadway...
+Loading AECC Pipe Part...
+Loading AECC Pipe Network...
+Unable to find the rules file: C:\C3DPipeRules.xml
+Unable to find the rules file: C:\C3DPipeRules.xml
+Unable to find the rules file: C:\C3DPipeRules.xml
+Unable to find the rules file: C:\C3DPipeRules.xml
+Unable to access Shared Pipe Catalog folder.
+
+ Please verify configuration.
+
+ Run 'setNetworkCatalog' to reset.
+Unable to access Shared Pipe Catalog folder.
+
+ Please verify configuration.
+
+ Run 'setNetworkCatalog' to reset.
+Unable to find the rules file: C:\C3DPipeRules.xml
+Unable to find the rules file: C:\C3DPipeRules.xml
+Unable to find the rules file: C:\C3DPipeRules.xml
+Unable to find the rules file: C:\C3DPipeRules.xml
+Loading AECC Pressure Pipes...
+Loading AECC Building Site...
+Loading AECC DwgIndxExtractor...
+Loading AECC Point Cloud...
+Loading AECC ETransmit...
+Loading AECC Plan Production...
+Loading AECC Hydrology...
+Loading AECC Bridge...
+Loading AECC Rail...
+
+Invoegpunt [Object/Draaien]: 5,0,0
+
+Laag overgenomen: 01 - Bestaande kabel
+Geplaatst: NIEUWE MOF op laag 01 - Bestaande kabel.
+Command: (setq original (entlast))
+<Entity name: 15ed8166710>
+
+Command: (princ (strcat "\nINITIAL_LAYER=" (cdr (assoc 8 (entget original)))))
+
+INITIAL_LAYER=01 - Bestaande kabel"\nINITIAL_LAYER=01 - Bestaande kabel"
+
+Command: (command "_CHPROP" original "" "_LA" "Aansluiting LS K06" "")
+_CHPROP
+Select objects:   1 found
+
+Select objects:
+Enter property to change [Color/LAyer/LType/ltScale/LWeight/Thickness/TRansparency/Material/Annotative]: _LA
+Enter new layer name <01 - Bestaande kabel>: Aansluiting LS K06
+Enter property to change [Color/LAyer/LType/ltScale/LWeight/Thickness/TRansparency/Material/Annotative]:
+Command: nil
+
+Command: (command "_COPY" original "" "_Multiple" "0,0,0" "10,0,0" "")
+_COPY
+Select objects:   1 found
+
+Select objects:
+Specify base point or [Displacement/Multiple] <Displacement>: _Multiple
+Specify base point or [Displacement] <Displacement>: 0,0,0
+Specify second point or [Array] <use first point as displacement>: 10,0,0
+Specify second point or [Array/Exit/Undo] <Exit>:
+Command: nil
+
+Command: _TBPLAATS
+
+Tool-ID: 9dbea1c0c575423e80d3feede50deff1
+
+Invoegpunt [Object/Draaien]: 8,0,0
+
+Laag overgenomen: 01 - Bestaande kabel
+Geplaatst: NIEUWE MOF op laag 01 - Bestaande kabel.
+Command: (setq old (entlast) attribute (entnext old) data (entget attribute))
+((-1 . <Entity name: 15ed9011810>) (0 . "ATTRIB") (330 . <Entity name: 15ed8166770>) (5 . "559") (100 . "AcDbEntity") (67 . 0) (410 . "Model") (8 . "0") (100 . "AcDbText") (10 9.17674 0.483335 0.0) (40 . 0.45) (1 . "EM 150Al (was ????-??)") (50 . 0.0) (41 . 1.0) (51 . 0.0) (7 . "TECHBASE_ARIAL_NOVA_LIGHT") (71 . 0) (72 . 0) (11 9.17674 0.933335 0.0) (210 0.0 0.0 1.0) (100 . "AcDbAttribute") (280 . 0) (2 . "MOF_TEKST") (70 . 0) (73 . 0) (74 . 3) (280 . 0) (71 . 2) (72 . 0) (11 9.17674 0.933335 0.0) (101 . "Embedded Object") (10 9.17674 0.933335 0.0) (40 . 0.45) (41 . 0.0) (46 . 0.0) (71 . 1) (72 . 5) (1 . "EM 150Al (was ????-??)") (7 . "TECHBASE_ARIAL_NOVA_LIGHT") (210 0.0 0.0 1.0) (11 1.0 0.0 0.0) (42 . 6.44181) (43 . 0.589666) (50 . 0.0) (73 . 1) (44 . 1.0) (90 . 3) (63 . 256) (45 . 1.5) (441 . 0))
+
+Command: (entmod (subst (cons 8 "01 - Bestaande kabel") (assoc 8 data) (subst (cons 1 "Eigen EM tekst") (assoc 1 data) data)))
+((-1 . <Entity name: 15ed9011810>) (0 . "ATTRIB") (330 . <Entity name: 15ed8166770>) (5 . "559") (100 . "AcDbEntity") (67 . 0) (410 . "Model") (8 . "01 - Bestaande kabel") (100 . "AcDbText") (10 9.17674 0.483335 0.0) (40 . 0.45) (1 . "Eigen EM tekst") (50 . 0.0) (41 . 1.0) (51 . 0.0) (7 . "TECHBASE_ARIAL_NOVA_LIGHT") (71 . 0) (72 . 0) (11 9.17674 0.933335 0.0) (210 0.0 0.0 1.0) (100 . "AcDbAttribute") (280 . 0) (2 . "MOF_TEKST") (70 . 0) (73 . 0) (74 . 3) (280 . 0) (71 . 2) (72 . 0) (11 9.17674 0.933335 0.0) (101 . "Embedded Object") (10 9.17674 0.933335 0.0) (40 . 0.45) (41 . 0.0) (46 . 0.0) (71 . 1) (72 . 5) (1 . "Eigen EM tekst") (7 . "TECHBASE_ARIAL_NOVA_LIGHT") (210 0.0 0.0 1.0) (11 1.0 0.0 0.0) (42 . 6.44181) (43 . 0.589666) (50 . 0.0) (73 . 1) (44 . 1.0) (90 . 3) (63 . 256) (45 . 1.5) (441 . 0))
+
+Command: (command "_CHPROP" old "" "_LA" "Aansluiting LS K06" "")
+_CHPROP
+Select objects:   1 found
+
+Select objects:
+Enter property to change [Color/LAyer/LType/ltScale/LWeight/Thickness/TRansparency/Material/Annotative]: _LA
+Enter new layer name <01 - Bestaande kabel>: Aansluiting LS K06
+Enter property to change [Color/LAyer/LType/ltScale/LWeight/Thickness/TRansparency/Material/Annotative]:
+Command: nil
+
+Command: (sssetfirst nil (ssadd old))
+(nil <Selection set: 4>)
+
+Command: _TBBLOCKTEKSTLAAG
+Regenerating model.
+
+Blocktekstlaag: 1 attributen hersteld; 0 objecten overgeslagen. Tekstwaarden en opmaak behouden.
+Command: (sssetfirst nil (ssadd old))
+(nil <Selection set: b>)
+
+Command: _TBBLOCKTEKSTLAAG
+Regenerating model.
+
+Blocktekstlaag: 0 attributen hersteld; 0 objecten overgeslagen. Tekstwaarden en opmaak behouden.
+Command: _DXFOUT
+Enter DXF file name <C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\validation\Attribuutlagen\Drawing1.dxf>: "C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/validation/Attribuutlagen/Laagwisseling commando.dxf"
+
+Current DXF settings: Precision= 16 Format= ASCII Preview= No Version= 2018
+
+Enter decimal places of accuracy (0 to 16) or [Binary/select Objects/Preview/Version] <16>: 16
+CoreHeartBeat
+
+Command: _QUIT
+_Y
+Really want to discard all changes to drawing? <N> _Y
+
+LogFilePath has been restored to ''.

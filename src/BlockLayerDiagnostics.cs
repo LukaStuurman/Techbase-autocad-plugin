@@ -34,8 +34,8 @@ internal static class BlockLayerDiagnostics
             Check(record.Name == BlockLayers.Name(number) && record.Color.ColorValue == colors[record.Name], "juiste laag en Techbase-bronkleur: " + record.Name);
             using var block = BlockInserter.CreateReference(db, tx, definition, tool, new Point3d(number * 10, 0, 0), layer, Matrix3d.Identity);
             BlockInserter.Append(db, tx, block, false);
-            Check(block.LayerId == layer && block.AttributeCollection.Cast<ObjectId>().Select(id => (AttributeReference)tx.GetObject(id, OpenMode.ForRead)).All(a => a.LayerId == layer),
-                "block en laag-0-attributen volgen gekozen laag " + number);
+            Check(block.LayerId == layer && block.AttributeCollection.Cast<ObjectId>().Select(id => (AttributeReference)tx.GetObject(id, OpenMode.ForRead)).All(a => a.Layer == "0"),
+                "block op gekozen laag; laag-0-attributen erven blijvend van block " + number);
             tx.Commit();
         }
         using (var tx = db.TransactionManager.StartTransaction())

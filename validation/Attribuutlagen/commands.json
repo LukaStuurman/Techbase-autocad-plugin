@@ -1,0 +1,14 @@
+{
+  "Status": "PASS",
+  "Checks": [
+    "geplaatst op bestaande kabel met laagovername",
+    "CHPROP naar richting 6 zonder ATTSYNC",
+    "kopie behoudt laagovername",
+    "drie opgeslagen blocks op richting 6",
+    "attribuutlaag 0 en ByLayer: effectieve kleur 30",
+    "oude vastgezette tekstlaag hersteld",
+    "eigen tekstwaarde behouden",
+    "herhaald herstel wijzigt niets"
+  ],
+  "Autoload": true
+}
