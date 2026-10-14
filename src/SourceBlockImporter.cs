@@ -42,7 +42,7 @@ internal static class SourceBlockImporter
                 if (sourceTx.GetObject(id, OpenMode.ForRead) is MText text)
                 {
                     text.UpgradeOpen();
-                    text.Contents = "{" + AutomaticDirectionText.DefaultText(blockName.EndsWith("OV", StringComparison.OrdinalIgnoreCase), ExistingCableColors.Matches(text.Layer)) + "}";
+                    text.Contents = "{" + AutomaticDirectionText.Contents(AutomaticDirectionText.DefaultText(blockName.EndsWith("OV", StringComparison.OrdinalIgnoreCase), ExistingCableColors.Matches(text.Layer), settings)) + "}";
                 }
         }
         if (textHeight.HasValue) BlockTextHeight.Apply(source, sourceTx, sourceId, textHeight.Value);

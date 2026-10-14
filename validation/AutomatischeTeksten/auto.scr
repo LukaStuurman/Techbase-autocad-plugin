@@ -1,5 +1,5 @@
 _NETLOAD
-"C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.10.1/Techbase.Blocks.bundle/Contents/R25-1.10.1/Techbase.Blocks.dll"
+"C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.11.0/Techbase.Blocks.bundle/Contents/R25-1.11.0/Techbase.Blocks.dll"
 TBAUTOTEKSTVALIDATE
 (setvar "OSMODE" 0)
 (entmake (list (cons 0 "LINE") (cons 8 "Aansluiting LS K01") (cons 10 (list 0.0 0.0 0.0)) (cons 11 (list 20.0 0.0 0.0))))

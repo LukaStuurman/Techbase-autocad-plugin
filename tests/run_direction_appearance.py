@@ -4,7 +4,9 @@ from package_paths import ROOT,dll
 parser=argparse.ArgumentParser();parser.add_argument('--autoload',action='store_true');args=parser.parse_args()
 out=ROOT/'validation/Tekstopmaak';out.mkdir(exist_ok=True);checks=[]
 for case,height,normal,existing,mask,border,drawing,rgb in [('045',.45,4.8,6.8,True,1.3,True,0xFFFFFF),('075',.75,7.7,10.7,True,1.3,True,0xFFFFFF),('custom',.75,8.3,11.9,True,1.65,False,0x14283C),('off',.75,8.3,11.9,False,1.65,False,0x14283C)]:
-    settings=out/f'{case}-settings.json';settings.write_text(json.dumps({'DirectionTextHeight':height,'DirectionTextWidth045':normal,'DirectionTextWidth075':normal,'ExistingDirectionTextWidth045':existing,'ExistingDirectionTextWidth075':existing,'DirectionTextMask':mask,'DirectionTextMaskBorder':border,'DirectionTextMaskDrawingColor':drawing,'DirectionTextMaskRgb':rgb}),encoding='utf-8')
+    options={'DirectionTextHeight':height,'DirectionTextWidth045':normal,'DirectionTextWidth075':normal,'ExistingDirectionTextWidth045':existing,'ExistingDirectionTextWidth075':existing,'DirectionTextMask':mask,'DirectionTextMaskBorder':border,'DirectionTextMaskDrawingColor':drawing,'DirectionTextMaskRgb':rgb}
+    options.update({'DirectionLsText':'185AL / eigen LS','DirectionExistingLsText':'95CU / eigen bestaand LS','DirectionOvText':'10CU / eigen OV','DirectionExistingOvText':'16CU / eigen bestaand OV'} if case=='custom' else {'DirectionLsText':'150AL / ????-00','DirectionExistingLsText':'95AL / (was ????-00)','DirectionOvText':'6CU / ????-00','DirectionExistingOvText':'6CU / (was ????-00)'})
+    settings=out/f'{case}-settings.json';settings.write_text(json.dumps(options),encoding='utf-8')
     lines=([] if args.autoload else ['_NETLOAD',f'"{dll().as_posix()}"'])+['(setvar "OSMODE" 0)','(setvar "INSUNITS" 0)','_TBTEKSTLS','0,0,0','_TBTEKSTOV','30,0,0',
         '(entmake (list (cons 0 "LINE") (cons 8 "Aansluiting LS K10") (cons 10 (list 0.0 20.0 0.0)) (cons 11 (list 20.0 20.0 0.0))))',
         '(entmake (list (cons 0 "LINE") (cons 8 "01 - Bestaande kabel") (cons 10 (list 0.0 22.0 0.0)) (cons 11 (list 20.0 22.0 0.0))))',
@@ -25,12 +27,15 @@ for case,height,normal,existing,mask,border,drawing,rgb in [('045',.45,4.8,6.8,T
             if pair[1]=='ENDSEC':section=''
         rec.append(pair)
     texts=[{k:next(v for c,v in r if c==k) for k,_ in r} for r in records if r[0]==(0,'MTEXT')];assert len(texts)==30
-    for t in texts:
+    for i,t in enumerate(texts):
+        ov=13<=i<26 or i>=28;old=t[8]=='01 - Bestaande kabel';key=('DirectionExisting' if old else 'Direction')+('OvText' if ov else 'LsText')
+        contents=t[1][1:-1] if t[1].startswith('{') and t[1].endswith('}') else t[1]
+        assert contents==options[key],(case,i,contents,options[key])
         assert abs(float(t[40])-height)<1e-8 and abs(float(t[41])-(existing if t[8]=='01 - Bestaande kabel' else normal))<1e-8,t
         flag=int(t.get(90,0));assert bool(flag&1)==mask,t
         if mask:
             assert abs(float(t[45])-border)<1e-8 and bool(flag&2)==drawing,t
             if not drawing:assert int(t[421])==rgb,t
-    checks.extend([case+': actual burst and automatic LS/OV placement',case+': saved normal/existing widths and height',case+': saved mask toggle, border and drawing/RGB color'])
+    checks.extend([case+': actual burst and automatic LS/OV placement',case+': saved normal/existing widths and height',case+': saved mask toggle, border and drawing/RGB color',case+': saved four default/custom direction labels'])
 (out/'commands.json').write_text(json.dumps({'Status':'PASS','Checks':checks,'Autoload':args.autoload},indent=2),encoding='utf-8')
 print(json.dumps({'Status':'PASS','Checks':len(checks),'Autoload':args.autoload}))

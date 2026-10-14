@@ -1,3 +1,13 @@
+## Bewerkbare LS/OV-standaardteksten - versie 1.11.0, 14 oktober 2026
+
+- Richtingen heeft vier tekstvelden voor gewone/bestaande LS en OV. Standaard LS blijft `150AL / ????-00`; bestaande LS wordt `95AL / (was ????-00)`. OV blijft `6CU / ????-00` en bestaand OV `6CU / (was ????-00)`.
+- Tekstwijzigingen worden tijdens typen opgeslagen en gelden voor nieuwe automatische tekststapels, LS/OV-burst en tekstblocks. Een eigen bronvariant bevat de vier tekstkeuzes in de fingerprint, zodat oudere definities/plaatsingen behouden blijven. Backslashes/accolades worden letterlijk geplaatst. Bewust lege tekst blijft leeg.
+- **13 gerichte UI-/brontekstcontroles** slagen: vier velden, 95AL-default, onmiddellijk opslaan, heropenen, eigen definities, oude definities behouden, 13 burstteksten per template en automatische gewone/bestaande teksten. Reset van de vier tekstkeuzes is toegevoegd aan de **13 opslag-/resetcontroles**.
+- **16 daadwerkelijke opmaak-/tekstcommando-controles** slagen in vier profielen, inclusief vier aangepaste teksten in gewone/bestaande LS/OV-burst en automatische plaatsing. **10 controles in twee verse AutoCAD-processen** bevestigen herladen en werkelijk gebruik van opgeslagen/resetwaarden, inclusief gewone/bestaande LS-tekst.
+- 410 blockcontroles, 40 automatische tekstservice-/15 commandocontroles en 36 richtingstekstservice-/8 commandocontroles slagen opnieuw. Beide API-builds gemaakt. De tab is gerenderd; native TextBox-inhoud en randen worden door Core Console DrawToBitmap niet afgebeeld, maar de echte tekstwaarden en wijzigingsgebeurtenissen zijn gecontroleerd.
+
+Bewijs: `validation/Richtingstandaarden/defaults.json`, `Standaardteksten.dwg/.dxf`, tabrender; `validation/Tekstopmaak/commands.json` en vier commando-DXF's; `validation/Instellingen/herstart.json`. Tests in AutoCAD 2026 Core Console; volledige desktopbediening en AutoCAD/Civil 3D 2025/2027 vragen nog een praktijktest.
+
 ## Onthouden, reset en Kabelgeul-volgorde - versie 1.10.1, 14 oktober 2026
 
 - Standaardbreedte voor bestaande richtingstekst op 0,45 is **6,80**; gewone breedte 4,80 en de 0,75-breedtes 7,70/10,70 blijven gelijk. Bestaande eigen instellingen worden door de installer behouden.

@@ -23,6 +23,7 @@ internal static class Diagnostics
         TextHeightDiagnostics.Run(catalog, output);
         DirectionAppearanceDiagnostics.Run(catalog, output);
         Plugin.CheckSettingsPersistence(output);
+        DirectionDefaultsDiagnostics.Run(catalog,output);
         ExistingMofUpdateDiagnostics.Run(catalog, output);
         KabelgeulDiagnostics.Run(output);
         var checks = new List<string>();

@@ -31,9 +31,10 @@ for case in ['custom','reset']:
     texts=[{k:next(v for c,v in r if c==k) for k,_ in r} for section,r in records if section=='ENTITIES' and r[0]==(0,'MTEXT')];assert len(texts)==2
     assert all(abs(float(t[40])-height)<1e-8 and abs(float(t[41])-(existing if t[8]=='01 - Bestaande kabel' else width))<1e-8 for t in texts)
     assert all(bool(int(t.get(90,0))&1)==data['DirectionTextMask'] for t in texts)
+    assert texts[0][1]==data['DirectionLsText'] and texts[1][1]==data['DirectionExistingLsText']
     attrs=[dict(r) for section,r in records if section=='ENTITIES' and r[0]==(0,'ATTRIB')]
     assert any(a.get(1)==('Eigen tekst' if case=='custom' else 'Ri 10') for a in attrs),attrs
     layer=next(dict(r) for section,r in records if r[0]==(0,'LAYER') and dict(r)[2]=='01 - Bestaande kabel')
     assert layer.get(420)=='0' if data['ExistingCableBlack'] else layer[62]=='125'
-    checks.extend([case+': saved widths/height after a fresh process',case+': mask preference preserved',case+': saved Kabelgeul default text used',case+': layer color preference preserved'])
+    checks.extend([case+': saved widths/height after a fresh process',case+': mask preference preserved',case+': saved Kabelgeul default text used',case+': layer color preference preserved',case+': saved normal/existing LS defaults used'])
 (out/'herstart.json').write_text(json.dumps({'Status':'PASS','Checks':checks,'Autoload':args.autoload},indent=2),encoding='utf-8');print(json.dumps({'Status':'PASS','Checks':len(checks),'Autoload':args.autoload}))

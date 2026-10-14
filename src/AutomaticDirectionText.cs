@@ -9,7 +9,8 @@ namespace Techbase.Blocks;
 internal sealed record DirectionCrossing(int Number, ObjectId Curve, ObjectId Layer, Point3d Point, Vector3d Tangent, double Distance);
 internal static class AutomaticDirectionText
 {
-    internal static string DefaultText(bool ov, bool existing = false) => (ov ? "6CU / " : "150AL / ") + (existing ? "(was ????-00)" : "????-00");
+    internal static string DefaultText(bool ov, bool existing = false, Settings? settings = null) => (settings ?? Plugin.Preferences).DirectionLabel(ov, existing);
+    internal static string Contents(string text) => text.Replace("\\", "\\\\").Replace("{", "\\{").Replace("}", "\\}").Replace("\r\n", "\n").Replace("\r", "\n").Replace("\n", "\\P");
     internal static int Number(string layer)
     {
         var match = Regex.Match(layer, @"^Aansluiting LS K(0[1-9]|1[0-2])$", RegexOptions.IgnoreCase);
@@ -60,7 +61,7 @@ internal static class AutomaticDirectionText
             {
                 var layer = (LayerTableRecord)tx.GetObject(hit.Layer, OpenMode.ForRead);
                 if (layer.IsLocked || layer.IsDependent || layer.IsOff || layer.IsFrozen) throw new InvalidOperationException("Richtingslaag '" + layer.Name + "' is vergrendeld, extern of verborgen.");
-                var text = new MText { Contents = DefaultText(ov, hit.Number == 0), TextHeight = height, LayerId = hit.Layer,
+                var text = new MText { Contents = Contents(DefaultText(ov, hit.Number == 0)), TextHeight = height, LayerId = hit.Layer,
                     TextStyleId = style, ColorIndex = 256, LineWeight = LineWeight.ByLayer };
                 texts.Add(text); DirectionTextAppearance.Apply(text, hit.Number == 0, height, Plugin.Preferences);
             }

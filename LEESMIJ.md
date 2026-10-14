@@ -1,4 +1,4 @@
-# Techbase Blocks 1.10.1
+# Techbase Blocks 1.11.0
 
 Gebruik zes tabs in AutoCAD en Civil 3D voor Windows: Blocks, Lichtmasten, Enexis kabelchecker, Richtingen, Instellingen en Kabelgeul.
 
@@ -41,7 +41,7 @@ Kies eerst de hoogte en wijzig de twee breedtevelden. De eigen breedtes blijven 
 
 Getypte Kabelgeul-standaardteksten en geldige breedtes/maskerranden worden ook opgeslagen voordat je het veld verlaat. De instellingen staan per Windows-gebruiker in `%APPDATA%\Techbase\Blocks\settings.json` en blijven na herstart en een pluginupdate behouden. Eigen opgeslagen waarden worden bij een update niet door nieuwe standaarden vervangen.
 
-Bovenaan Instellingen staat **Reset plugininstellingen**. Deze knop herstelt hoogtes, breedtes, masker, kabelkleur, gekozen laag/richting, plaatsopties, zoekafstand, bronpalette, draai-instellingen per block en Kabelgeul-standaardteksten/opmaak. Eerst wordt een kopie gemaakt naast `settings.json` met `before-reset` in de naam. De geopende tabs worden meteen vernieuwd. Het gaat om pluginvoorkeuren; bestaande tekenobjecten en opgeslagen checkerprojecten worden hiermee niet gewijzigd.
+Bovenaan Instellingen staat **Reset plugininstellingen**. Deze knop herstelt hoogtes, breedtes, masker, kabelkleur, gekozen laag/richting, plaatsopties, zoekafstand, bronpalette, draai-instellingen per block en Kabelgeul-standaardteksten/opmaak en de vier LS/OV-standaardteksten. Eerst wordt een kopie gemaakt naast `settings.json` met `before-reset` in de naam. De geopende tabs worden meteen vernieuwd. Het gaat om pluginvoorkeuren; bestaande tekenobjecten en opgeslagen checkerprojecten worden hiermee niet gewijzigd.
 
 ## Blocks plaatsen
 
@@ -88,10 +88,13 @@ Een vergrendelde, externe, uitgeschakelde of bevroren doellaag moet je eerst zel
 
 ### Richtingsteksten boven kabels
 
+Boven de tekstknoppen staan vier bewerkbare velden: **Standaard LS**, **Standaard LS bestaande kabel**, **Standaard OV** en **Standaard OV bestaande kabel**. Iedere wijziging wordt tijdens typen opgeslagen en blijft na herstart behouden. De teksten gelden voor nieuwe automatische tekststapels, de 13 losse teksten uit de LS/OV-burstknoppen en de LS/OV-tekstblocks in Blocks. Bestaande geplaatste teksten worden niet veranderd. Met Reset plugininstellingen herstel je de vier standaardteksten.
+
+
 - **LS automatisch langs lijn** of **OV automatisch langs lijn**: kies een kabel en geef een afstandspunt dwars over de kabelbundel. De detectielijn wordt tijdelijk gebruikt en komt niet in de tekening. Met **Lijn** kun je een bestaande rechte LINE aanwijzen; **TweePunten** maakt een detectielijn tussen twee gekozen punten.
 - De plugin herkent de richtingslagen 1 t/m 12 en bestaande kabellagen in de hoofdtekening, in de volgorde waarin de lijn ze kruist. Elke richting krijgt eenmaal tekst; iedere gekruiste bestaande kabel krijgt een eigen tekst. Verborgen lagen en xrefs worden overgeslagen. Een vergrendelde gebruikte laag geeft een melding en breekt de plaatsing af.
 - Het cursorvoorbeeld toont de gevonden teksten onder elkaar, langs de lokale kabelrichting. Klik een plek voor de stapel of druk **Enter** om hem boven de buitenste gevonden kabel te plaatsen. De eerste tekst heeft 0,4 afstand; volgende teksten staan op werkelijke hoogte plus minstens 0,2 afstand, met extra ruimte als het masker daarom vraagt. Hoogte, gewone/bestaande breedte en masker volgen Instellingen. Esc plaatst niets. Er wordt geen kabelgeul toegevoegd; de achtergrond is het eigen MText-masker.
-- Standaard LS: **150AL / ????-00**. Standaard OV: **6CU / ????-00**. Voor bestaande kabels: **150AL / (was ????-00)** en **6CU / (was ????-00)**. Het zijn bewerkbare placeholders; kabeltype/codenummer worden niet uit de bron berekend. Ook de volledige LS/OV-templates gebruiken deze teksten; eerder geplaatste teksten blijven behouden.
+- Standaard LS: **150AL / ????-00**. Standaard OV: **6CU / ????-00**. Voor bestaande kabels: **95AL / (was ????-00)** en **6CU / (was ????-00)**. Deze waarden zijn de oorspronkelijke defaults van de vier velden. Het zijn bewerkbare placeholders; kabeltype/codenummer worden niet uit de bron berekend. Ook de volledige LS/OV-templates gebruiken deze teksten; eerder geplaatste teksten blijven behouden.
 
 - **LS-tekst plaatsen (burst)** en **OV-tekst plaatsen (burst)** plaatsen de meegeleverde `RICHTINGEN TEKST LS` / `RICHTINGEN TEKST OV` als losse, bewerkbare MTexten. Per template zijn dat 13 teksten met de hierboven genoemde standaardinhoud, kleuren en lagen. De LS-paletteknop gebruikt in de bron-DWG de blocknaam `RICHTINGEN TEKST`. Eventuele attribuutwaarden worden bij burst als tekst bewaard.
 - **Tekst kopiëren** en **Tekst verplaatsen** gebruiken het gedrag van `RICHTINGEN` uit het Techbase Lisp-pakket. Klik MTexten in de gewenste volgorde. Nogmaals dezelfde tekst aanklikken verwijdert haar uit de selectie. Enter sluit de selectie.
@@ -197,4 +200,4 @@ De concrete testresultaten en resterende praktijktests staan in `VALIDATIE.md` b
 
 ## Opnieuw bouwen
 
-Gebruik een .NET 10 SDK en voer `Build.ps1 -Dotnet <pad-naar-dotnet.exe>` uit. De build haalt Autodesk AutoCAD.NET API 25.0.1 en 26.0.0 via NuGet op en bouwt de Excel-worker voor beide runtimes. De Autodesk API-DLL's worden niet meegeleverd: die levert de hostapplicatie. De uitvoer staat in `dist/1.10.1` en in `Techbase Blocks 1.10.1.zip`. Versiegebonden DLL-mappen maken een update mogelijk zonder een reeds geladen oude DLL te overschrijven; herstart de CAD-toepassing om de nieuwe versie te laden.
+Gebruik een .NET 10 SDK en voer `Build.ps1 -Dotnet <pad-naar-dotnet.exe>` uit. De build haalt Autodesk AutoCAD.NET API 25.0.1 en 26.0.0 via NuGet op en bouwt de Excel-worker voor beide runtimes. De Autodesk API-DLL's worden niet meegeleverd: die levert de hostapplicatie. De uitvoer staat in `dist/1.11.0` en in `Techbase Blocks 1.11.0.zip`. Versiegebonden DLL-mappen maken een update mogelijk zonder een reeds geladen oude DLL te overschrijven; herstart de CAD-toepassing om de nieuwe versie te laden.

@@ -4,15 +4,19 @@
     "045: actual burst and automatic LS/OV placement",
     "045: saved normal/existing widths and height",
     "045: saved mask toggle, border and drawing/RGB color",
+    "045: saved four default/custom direction labels",
     "075: actual burst and automatic LS/OV placement",
     "075: saved normal/existing widths and height",
     "075: saved mask toggle, border and drawing/RGB color",
+    "075: saved four default/custom direction labels",
     "custom: actual burst and automatic LS/OV placement",
     "custom: saved normal/existing widths and height",
     "custom: saved mask toggle, border and drawing/RGB color",
+    "custom: saved four default/custom direction labels",
     "off: actual burst and automatic LS/OV placement",
     "off: saved normal/existing widths and height",
-    "off: saved mask toggle, border and drawing/RGB color"
+    "off: saved mask toggle, border and drawing/RGB color",
+    "off: saved four default/custom direction labels"
   ],
-  "Autoload": false
+  "Autoload": true
 }

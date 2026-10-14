@@ -9,9 +9,10 @@ internal static class DirectionTextAppearance
 {
     internal static string Revision(Settings settings, double height)
     {
-        var values = string.Join(";", new[] { settings.DirectionWidth(height, false).ToString("R", CultureInfo.InvariantCulture),
+        var values = System.Text.Json.JsonSerializer.Serialize(new[] { settings.DirectionWidth(height, false).ToString("R", CultureInfo.InvariantCulture),
             settings.DirectionWidth(height, true).ToString("R", CultureInfo.InvariantCulture), settings.DirectionTextMask.ToString(),
-            settings.DirectionTextMaskBorder.ToString("R", CultureInfo.InvariantCulture), settings.DirectionTextMaskDrawingColor.ToString(), settings.DirectionTextMaskRgb.ToString(CultureInfo.InvariantCulture) });
+            settings.DirectionTextMaskBorder.ToString("R", CultureInfo.InvariantCulture), settings.DirectionTextMaskDrawingColor.ToString(), settings.DirectionTextMaskRgb.ToString(CultureInfo.InvariantCulture),
+            settings.DirectionLsText, settings.DirectionExistingLsText, settings.DirectionOvText, settings.DirectionExistingOvText });
         return "_AP1_" + Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(values)))[..16];
     }
     internal static void Apply(MText text, bool existing, double height, Settings settings)

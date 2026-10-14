@@ -12,6 +12,10 @@ internal sealed class DirectionPanel : UserControl
     private int selected = Plugin.Preferences.SelectedDirectionNumber;
     private readonly List<RadioButton> buttons = new();
     private bool refreshing;
+    private readonly TextBox lsText = new() { Name = "DefaultLsText", Dock = DockStyle.Top };
+    private readonly TextBox lsExistingText = new() { Name = "DefaultExistingLsText", Dock = DockStyle.Top };
+    private readonly TextBox ovText = new() { Name = "DefaultOvText", Dock = DockStyle.Top };
+    private readonly TextBox ovExistingText = new() { Name = "DefaultExistingOvText", Dock = DockStyle.Top };
     internal DirectionPanel()
     {
         Dock = DockStyle.Fill; Font = new Font("Segoe UI", 9); BackColor = Color.FromArgb(245, 247, 249);
@@ -40,6 +44,12 @@ internal sealed class DirectionPanel : UserControl
         layout.Controls.Add(draw); layout.Controls.Add(convert);
         layout.Controls.Add(new Label { Text = "Tekenen: klik punten, Enter = klaar.\nTerug verwijdert het laatste punt; Sluiten sluit de lijn.\nOmzetten: kies polylines of losse LINE-lijnen.\nPolylines behouden hun punten en bochten.", AutoSize = true, MaximumSize = new Size(340, 0), Padding = new Padding(0, 10, 0, 0) });
         layout.Controls.Add(new Label { Text = "TEKSTEN BOVEN KABELS", AutoSize = true, Font = new Font(Font, FontStyle.Bold), Padding = new Padding(0, 12, 0, 6) });
+        foreach (var field in new[] { ("Standaard LS", lsText), ("Standaard LS bestaande kabel", lsExistingText), ("Standaard OV", ovText), ("Standaard OV bestaande kabel", ovExistingText) })
+        {
+            layout.Controls.Add(new Label { Text = field.Item1, AutoSize = true }); layout.Controls.Add(field.Item2);
+            field.Item2.TextChanged += (_, _) => SaveTexts();
+        }
+        layout.Controls.Add(new Label { Text = "Teksten worden automatisch bewaard en gelden voor nieuwe automatische tekststapels en LS/OV-burstteksten. Reset via Instellingen.", AutoSize = true, MaximumSize = new Size(340, 0), Padding = new Padding(0, 4, 0, 8) });
         var textButtons = new TableLayoutPanel { Dock = DockStyle.Top, AutoSize = true, ColumnCount = 2, RowCount = 3 };
         textButtons.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50)); textButtons.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
         foreach (var buttonInfo in new[] { ("LS automatisch langs lijn", "TBAUTOTEKSTLS"), ("OV automatisch langs lijn", "TBAUTOTEKSTOV"), ("LS-tekst plaatsen (burst)", "TBTEKSTLS"), ("OV-tekst plaatsen (burst)", "TBTEKSTOV"),
@@ -49,17 +59,31 @@ internal sealed class DirectionPanel : UserControl
             var command = buttonInfo.Item2; button.Click += (_, _) => Queue(command, false); textButtons.Controls.Add(button);
         }
         layout.Controls.Add(textButtons);
-        layout.Controls.Add(new Label { Text = "Automatisch: kies een kabel en trek een detectielijn dwars over de richtingen. Of kies Lijn/TweePunten.\nPlaats de gevonden teksten als stapel; Enter = boven de kabels.\nLS: 150AL / ????-00   OV: 6CU / ????-00\nBestaand: 150AL / (was ????-00) of 6CU / (was ????-00)", AutoSize = true, MaximumSize = new Size(340, 0), Padding = new Padding(0, 6, 0, 0) });
+        layout.Controls.Add(new Label { Text = "Automatisch: kies een kabel en trek een detectielijn dwars over de richtingen. Of kies Lijn/TweePunten.\nPlaats de gevonden teksten als stapel; Enter = boven de kabels.", AutoSize = true, MaximumSize = new Size(340, 0), Padding = new Padding(0, 6, 0, 0) });
         layout.Controls.Add(new Label { Text = "LS/OV plaatst de losse richtingsteksten.\nKies daarna MTexten in klikvolgorde en twee punten langs de kabel. Kopiëren: herhalen; Terug wist de laatste kopie.", AutoSize = true,
             MaximumSize = new Size(340, 0), Padding = new Padding(0, 6, 0, 0) });
-        layout.Controls.Add(status); Controls.Add(layout); RefreshLayer(); UiTypography.Apply(this);
+        layout.Controls.Add(status); Controls.Add(layout); RefreshSettings(); UiTypography.Apply(this);
     }
     private void RefreshLayer() => layer.Text = "Laag: " + DirectionLines.LayerName(selected);
     internal void RefreshSettings()
     {
         refreshing = true;
-        try { selected = Plugin.Preferences.SelectedDirectionNumber; for (var i = 0; i < buttons.Count; i++) buttons[i].Checked = selected == i + 1; RefreshLayer(); }
+        try
+        {
+            var settings = Plugin.Preferences; selected = settings.SelectedDirectionNumber;
+            for (var i = 0; i < buttons.Count; i++) buttons[i].Checked = selected == i + 1;
+            lsText.Text = settings.DirectionLsText; lsExistingText.Text = settings.DirectionExistingLsText; ovText.Text = settings.DirectionOvText; ovExistingText.Text = settings.DirectionExistingOvText;
+            RefreshLayer();
+        }
         finally { refreshing = false; }
+    }
+    private void SaveTexts()
+    {
+        if (refreshing) return;
+        var settings = Plugin.Preferences;
+        settings.DirectionLsText = lsText.Text; settings.DirectionExistingLsText = lsExistingText.Text; settings.DirectionOvText = ovText.Text; settings.DirectionExistingOvText = ovExistingText.Text;
+        try { settings.Save(); Report("Standaardteksten opgeslagen."); }
+        catch (Exception ex) { Report("Teksten konden niet worden opgeslagen: " + ex.Message); }
     }
     private void Queue(string command, bool withDirection = true)
     {

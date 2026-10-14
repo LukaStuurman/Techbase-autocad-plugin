@@ -1,0 +1,18 @@
+{
+  "Status": "PASS",
+  "Checks": [
+    "vier velden zichtbaar; LS bestaand standaard 95AL",
+    "alle vier getypte teksten onmiddellijk opgeslagen",
+    "nieuwe tab toont bewaarde teksten",
+    "tekstwijziging gebruikt nieuwe bronvariant",
+    "oude definitie en eerdere inhoud behouden",
+    "13 burstteksten gebruiken gewone/bestaande standaard",
+    "automatische LS/OV-stapel gebruikt dezelfde bewaarde teksten",
+    "tekstwijziging gebruikt nieuwe bronvariant",
+    "oude definitie en eerdere inhoud behouden",
+    "13 burstteksten gebruiken gewone/bestaande standaard",
+    "automatische LS/OV-stapel gebruikt dezelfde bewaarde teksten",
+    "bewust lege standaardtekst blijft bewaard",
+    "backslash en accolades blijven letterlijke standaardtekst"
+  ]
+}

@@ -20,6 +20,11 @@ public sealed class Settings
     public int SelectedDirectionNumber { get; set; } = 1;
     public double MofTextHeight { get; set; } = 0.45;
     public double DirectionTextHeight { get; set; } = 0.45;
+    public string DirectionLsText { get; set; } = "150AL / ????-00";
+    public string DirectionExistingLsText { get; set; } = "95AL / (was ????-00)";
+    public string DirectionOvText { get; set; } = "6CU / ????-00";
+    public string DirectionExistingOvText { get; set; } = "6CU / (was ????-00)";
+    public string DirectionLabel(bool ov, bool existing) => ov ? existing ? DirectionExistingOvText : DirectionOvText : existing ? DirectionExistingLsText : DirectionLsText;
     public double DirectionTextWidth045 { get; set; } = 4.80;
     public double DirectionTextWidth075 { get; set; } = 7.70;
     public double ExistingDirectionTextWidth045 { get; set; } = 6.80;
@@ -59,6 +64,10 @@ public sealed class Settings
             if (settings.ChosenBlockLayer is < 0 or > 12) settings.ChosenBlockLayer = 1;
             if (settings.MofTextHeight is not (0.75 or 0.45)) settings.MofTextHeight = 0.45;
             if (settings.DirectionTextHeight is not (0.75 or 0.45)) settings.DirectionTextHeight = 0.45;
+            settings.DirectionLsText ??= "150AL / ????-00";
+            settings.DirectionExistingLsText ??= "95AL / (was ????-00)";
+            settings.DirectionOvText ??= "6CU / ????-00";
+            settings.DirectionExistingOvText ??= "6CU / (was ????-00)";
             double Width(double value, double fallback) => double.IsFinite(value) && value >= .01 && value <= 10000 ? value : fallback;
             settings.DirectionTextWidth045 = Width(settings.DirectionTextWidth045, 4.80);
             settings.DirectionTextWidth075 = Width(settings.DirectionTextWidth075, 7.70);

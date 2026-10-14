@@ -5,10 +5,12 @@
     "custom: mask preference preserved",
     "custom: saved Kabelgeul default text used",
     "custom: layer color preference preserved",
+    "custom: saved normal/existing LS defaults used",
     "reset: saved widths/height after a fresh process",
     "reset: mask preference preserved",
     "reset: saved Kabelgeul default text used",
-    "reset: layer color preference preserved"
+    "reset: layer color preference preserved",
+    "reset: saved normal/existing LS defaults used"
   ],
   "Autoload": true
 }

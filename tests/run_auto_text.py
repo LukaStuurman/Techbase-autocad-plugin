@@ -48,8 +48,8 @@ assert len(texts)==15,texts
 assert [t[8] for t in texts[:3]]==['Aansluiting LS K01','Aansluiting LS K10','Aansluiting LS K12']
 assert [t[8] for t in texts[8:11]]==['Aansluiting LS K12','Aansluiting LS K10','Aansluiting LS K01']
 assert all(t[1]=='150AL / ????-00' for t in texts[:3]+texts[8:11]+texts[11:14]) and all(t[1]=='6CU / ????-00' for t in texts[4:7])
-assert texts[3][1]=='150AL / (was ????-00)' and texts[7][1]=='6CU / (was ????-00)'
-assert texts[14][1]=='150AL / (was ????-00)'
+assert texts[3][1]=='95AL / (was ????-00)' and texts[7][1]=='6CU / (was ????-00)'
+assert texts[14][1]=='95AL / (was ????-00)'
 assert abs(float(texts[11][10])-20)<1e-8 and abs(float(texts[11][20])-15.4)<1e-8, texts[11]
 assert all(abs(float(t[40])-.45)<1e-8 and abs(float(t[41])-(6.8 if t[8]=='01 - Bestaande kabel' else 4.8))<1e-8 and t[7].startswith('TECHBASE_ARIAL_NOVA_LIGHT') for t in texts)
 assert all(int(t[90]) & 3 == 3 and abs(float(t[45])-1.3)<1e-8 for t in texts)

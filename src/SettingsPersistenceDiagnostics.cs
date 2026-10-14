@@ -16,7 +16,8 @@ public sealed partial class Plugin
             var file=Path.Combine(output,"persistent.json");Environment.SetEnvironmentVariable("TECHBASE_SETTINGS_FILE",file);
             Preferences = new Settings { InheritLayer=false, UseChosenBlockLayer=true, ChosenBlockLayer=10, Repeat=true,Tolerance=.123,SelectedDirectionNumber=12,
                 MofTextHeight=.75,DirectionTextHeight=.75,DirectionTextWidth045=5.21,ExistingDirectionTextWidth045=8.12,DirectionTextWidth075=8.31,ExistingDirectionTextWidth075=11.41,
-                DirectionTextMask=false,DirectionTextMaskBorder=1.8,DirectionTextMaskDrawingColor=false,DirectionTextMaskRgb=0x123456,ExistingCableBlack=true,KabelgeulTextFormat=1,KabelgeulMantelSpec="Eigen mantel" };
+                DirectionTextMask=false,DirectionTextMaskBorder=1.8,DirectionTextMaskDrawingColor=false,DirectionTextMaskRgb=0x123456,ExistingCableBlack=true,KabelgeulTextFormat=1,KabelgeulMantelSpec="Eigen mantel",
+                DirectionLsText="Eigen LS", DirectionExistingLsText="Eigen bestaande LS", DirectionOvText="Eigen OV", DirectionExistingOvText="Eigen bestaande OV" };
             Preferences.KabelgeulDefaults["K10"]=new KabelgeulRow("K10","Eigen tekst",TwoSides:true,Text2:"",Shape:"Drie");
             Preferences.BlockRotationModes["eigen-knop"]=BlockRotationMode.BeforePoint; Preferences.Save();
             var json=File.ReadAllText(file);
@@ -31,6 +32,7 @@ public sealed partial class Plugin
                 var reset=(Button)All(panel).Single(c=>c.Name=="ResetPluginSettings");reset.PerformClick();
                 var restored=Settings.Read();
                 Check(restored.ExistingDirectionTextWidth045==6.8 && restored.DirectionTextWidth075==7.7 && restored.ExistingDirectionTextWidth075==10.7,"resetknop herstelt nieuwe standaardbreedtes");
+                Check(restored.DirectionLsText=="150AL / ????-00" && restored.DirectionExistingLsText=="95AL / (was ????-00)" && restored.DirectionOvText=="6CU / ????-00" && restored.DirectionExistingOvText=="6CU / (was ????-00)","reset herstelt vier richtingsteksten met 95AL bestaand LS");
                 Check(restored.MofTextHeight==.45 && restored.DirectionTextHeight==.45 && restored.DirectionTextMask && restored.DirectionTextMaskDrawingColor && restored.DirectionTextMaskBorder==1.3,"reset herstelt hoogtes en masker");
                 Check(restored.InheritLayer && !restored.UseChosenBlockLayer && !restored.Repeat && restored.ChosenBlockLayer==1 && restored.SelectedDirectionNumber==1 && restored.Tolerance==.05 && !restored.ExistingCableBlack,"reset herstelt laagkeuze, richting, kleur en plaatsopties");
                 Check(restored.KabelgeulDefaults.Count==0 && restored.KabelgeulMantelSpec=="" && restored.BlockRotationModes.Count==0 && restored.PalettePath==null,"reset herstelt Kabelgeul- en blockstandaarden");
