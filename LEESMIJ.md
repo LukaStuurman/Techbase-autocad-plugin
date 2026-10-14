@@ -1,4 +1,4 @@
-# Techbase Blocks 1.9.1
+# Techbase Blocks 1.9.2
 
 Gebruik zes tabs in AutoCAD en Civil 3D voor Windows: Blocks, Lichtmasten, Enexis kabelchecker, Richtingen, Instellingen en Kabelgeul.
 
@@ -24,7 +24,7 @@ De nieuwe tab **Instellingen** bevat deze keuzes:
 
 - **Teksthoogte MOF-blocks**: voor NIEUWE MOF, MOF bestaand-nieuw en BESTAANDE MOF.
 - **Teksthoogte richtingsteksten (LS/OV)**: voor de automatische tekststapel en RICHTINGEN TEKST LS/OV, zowel in Blocks als via de burstknoppen in Richtingen.
-- **Kleur bestaande kabellagen**: donkergroen (standaard, AutoCAD-kleur 125) of zwart (kleur 7: zwart op wit, wit op een donkere achtergrond). De kleur wordt meteen op de huidige tekening toegepast. Klik **Op huidige tekening toepassen** na het wisselen van tekening of als er nog een commando actief was. De keuze blijft bewaard en geldt ook voor nieuw geimporteerde bestaande kabellagen. Alleen eigen lagen met bestaand en kabel in hun naam veranderen; xreflagen en vergrendelde lagen worden beschermd. Een import wijzigt geen bestaande laagkleur.
+- **Kleur bestaande kabellagen en Bestaand**: donkergroen (standaard, AutoCAD-kleur 125) of echt zwart (True Color RGB 0,0,0, ook op een donkere achtergrond). De kleur wordt meteen op de huidige tekening toegepast. Klik **Op huidige tekening toepassen** na het wisselen van tekening of als er nog een commando actief was. De keuze blijft bewaard en geldt ook voor nieuw aangemaakte of geimporteerde bestaande kabellagen en Bestaand. Reeds aanwezige lagen worden via **Op huidige tekening toepassen** bijgewerkt. Eigen lagen met bestaand en kabel in hun naam en de laag met de exacte naam Bestaand veranderen; xreflagen en vergrendelde lagen worden beschermd. Een import wijzigt geen bestaande laagkleur.
 
 Beide teksthoogtes staan standaard op **0,45**. De tweede keuze is **0,75**. De LS/OV-richtingsteksten hebben een vaste **Defined width van 4,80**, ook na burst. De keuze wordt direct opgeslagen en blijft na herstart behouden. Plaatsvoorbeeld en uiteindelijke plaatsing gebruiken dezelfde hoogte. Alleen de teksthoogte verandert; het symbool wordt niet geschaald. Iedere hoogte gebruikt een eigen blockdefinitie, zodat eerdere plaatsingen intact blijven. Reeds geplaatste blocks en losse teksten worden niet aangepast. Afzekerings-/rekblocks en andere blocks behouden hun eigen teksthoogtes.
 
@@ -180,4 +180,4 @@ De concrete testresultaten en resterende praktijktests staan in `VALIDATIE.md` b
 
 ## Opnieuw bouwen
 
-Gebruik een .NET 10 SDK en voer `Build.ps1 -Dotnet <pad-naar-dotnet.exe>` uit. De build haalt Autodesk AutoCAD.NET API 25.0.1 en 26.0.0 via NuGet op en bouwt de Excel-worker voor beide runtimes. De Autodesk API-DLL's worden niet meegeleverd: die levert de hostapplicatie. De uitvoer staat in `dist/1.9.1` en in `Techbase Blocks 1.9.1.zip`. Versiegebonden DLL-mappen maken een update mogelijk zonder een reeds geladen oude DLL te overschrijven; herstart de CAD-toepassing om de nieuwe versie te laden.
+Gebruik een .NET 10 SDK en voer `Build.ps1 -Dotnet <pad-naar-dotnet.exe>` uit. De build haalt Autodesk AutoCAD.NET API 25.0.1 en 26.0.0 via NuGet op en bouwt de Excel-worker voor beide runtimes. De Autodesk API-DLL's worden niet meegeleverd: die levert de hostapplicatie. De uitvoer staat in `dist/1.9.2` en in `Techbase Blocks 1.9.2.zip`. Versiegebonden DLL-mappen maken een update mogelijk zonder een reeds geladen oude DLL te overschrijven; herstart de CAD-toepassing om de nieuwe versie te laden.

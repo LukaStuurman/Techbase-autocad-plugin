@@ -1,4 +1,4 @@
-Redirect stdout (file: C:\Users\LUKAST~1\AppData\Local\Temp\accc967362).
+Redirect stdout (file: C:\Users\LUKAST~1\AppData\Local\Temp\accc659722).
 AcCoreConsole: StdOutConsoleMode: processed-output: disabled,auto
 AutoCAD Core Engine Console - Copyright 2025 Autodesk, Inc.  All rights reserved. (W.122.0.0)
 
@@ -39,13 +39,28 @@ Command: nil
 Command: (entmake (list (cons 0 "LAYER") (cons 100 "AcDbSymbolTableRecord") (cons 100 "AcDbLayerTableRecord") (cons 2 "Te rooien kabel") (cons 70 0) (cons 62 3) (cons 6 "Continuous")))
 ((0 . "LAYER") (100 . "AcDbSymbolTableRecord") (100 . "AcDbLayerTableRecord") (2 . "Te rooien kabel") (70 . 0) (62 . 3) (6 . "Continuous"))
 
+Command: (entmake (list (cons 0 "LAYER") (cons 100 "AcDbSymbolTableRecord") (cons 100 "AcDbLayerTableRecord") (cons 2 "Bestaand") (cons 70 0) (cons 62 3) (cons 6 "Continuous")))
+((0 . "LAYER") (100 . "AcDbSymbolTableRecord") (100 . "AcDbLayerTableRecord") (2 . "Bestaand") (70 . 0) (62 . 3) (6 . "Continuous"))
+
 Command: _TBBESTAANDEKLEUR
 Regenerating model.
 
-1 bestaande kabellagen zwart. 1 vergrendelde lagen overgeslagen.
+2 bestaande kabellagen/Bestaand zwart (RGB 0,0,0). 1 vergrendelde lagen overgeslagen.
+Command: (princ (strcat "\nRGB=" (if (assoc 420 (entget (tblobjname "LAYER" "01 - Bestaande kabel"))) (itoa (cdr (assoc 420 (entget (tblobjname "LAYER" "01 - Bestaande kabel")))) ) "ACI")))
+
+RGB=0"\nRGB=0"
+
+Command: (princ (strcat "\nBESTAAND=" (itoa (cdr (assoc 62 (tblsearch "LAYER" "Bestaand"))))))
+
+BESTAAND=18"\nBESTAAND=18"
+
+Command: (princ (strcat "\nBESTAAND_RGB=" (if (assoc 420 (entget (tblobjname "LAYER" "Bestaand"))) (itoa (cdr (assoc 420 (entget (tblobjname "LAYER" "Bestaand")))) ) "ACI")))
+
+BESTAAND_RGB=0"\nBESTAAND_RGB=0"
+
 Command: (princ (strcat "\nCOLOR=" (itoa (cdr (assoc 62 (tblsearch "LAYER" "01 - Bestaande kabel"))))))
 
-COLOR=7"\nCOLOR=7"
+COLOR=18"\nCOLOR=18"
 
 Command: (princ (strcat "\nLOCKED=" (itoa (cdr (assoc 62 (tblsearch "LAYER" "Bestaande kabel OV"))))))
 

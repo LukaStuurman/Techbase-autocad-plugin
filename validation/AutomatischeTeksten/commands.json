@@ -17,6 +17,6 @@
     "only loose MText; no Kabelgeul blocks",
     "actual shifted/rotated UCS point input and jig world placement"
   ],
-  "ServiceChecks": 36,
-  "Autoload": true
+  "ServiceChecks": 40,
+  "Autoload": false
 }

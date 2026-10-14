@@ -1,3 +1,12 @@
+## Echt zwart en laag Bestaand - versie 1.9.2, 14 oktober 2026
+
+- De zwarte keuze voor bestaande kabellagen gebruikt nu **True Color RGB 0,0,0**. ACI 7 was achtergrondafhankelijk en werd op donker wit; die kleur wordt voor deze instelling niet meer gebruikt. Donkergroen blijft ACI 125.
+- De exacte laagnaam **Bestaand** volgt dezelfde keuze (hoofdletterongevoelig). De instelling geldt bij toepassen op de huidige tekening en bij nieuwe lagen/import. Bestaande lagen blijven bij gewone import behouden. De uitgebreidere kleurselectie verandert de kabeldetectie niet: algemene objecten op Bestaand worden niet als richtingkabel beschouwd.
+- **40 servicecontroles en 16 kleurcommando-/DXF-controles slagen**: RGB-kleurmethode en 0,0,0 gecontroleerd, DXF-groep 420 is exact 0 voor beide lagen; bij donkergroen is groep 62 gelijk aan 125 en groep 420 verwijderd. Echte xref, bronhash, vergrendelde en overige lagen beschermd. Nieuwe bronlaag en nieuwe Bestaand-laag gebruiken de bewaarde kleurkeuze.
+- **15 automatische tekstplaatsings-/DXF-controles**, **28 lichtmastservice-/4 gebiedscommando-controles** en **410 algemene blockcontroles** slagen opnieuw in AutoCAD 2026 Core Console. Beide API-builds gemaakt.
+
+Bewijs: `validation/AutomatischeTeksten/service.json`, `color-commands.json`, `Kleur-black.dxf`, `Kleur-green.dxf` en de scripts/logs. Volledige desktopbediening en AutoCAD/Civil 3D 2025/2027 vragen nog een praktijktest. Herstart na installatie en klik **Instellingen > Op huidige tekening toepassen** om eerder gebruikte ACI-kleuren in de tekening bij te werken.
+
 ## Volledige kabelgeulteksten behouden - versie 1.9.1, 14 oktober 2026
 
 - De tab toont de volledige standaardtekst voor beide zijden: Ri 1 t/m Ri 12 en de oorspronkelijke defaults voor de overige kabeltypen. De tekst is bewerkbaar en wordt letterlijk geplaatst; leeg blijft leeg. Nieuwe instellingen hebben een tekstformaatversie. Oude bewaarde regels krijgen eenmaal het voorheen bij tekenen toegevoegde voorvoegsel; een nieuwe wijziging wordt niet opnieuw aangevuld.

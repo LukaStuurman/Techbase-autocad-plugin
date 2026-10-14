@@ -15,7 +15,7 @@ internal static class AutomaticTextDiagnostics
         var checks = new List<string>();
         void Check(bool ok, string name) { if (!ok) throw new InvalidOperationException(name); checks.Add(name); }
         using var db = new Database(true, true); using var working = new WorkingDatabaseScope(db);
-        ObjectId hidden, locked, existing, excluded;
+        ObjectId hidden, locked, existing, excluded, bestaand;
         using (var tx = db.TransactionManager.StartTransaction())
         {
             var space = (BlockTableRecord)tx.GetObject(db.CurrentSpaceId, OpenMode.ForWrite);
@@ -34,6 +34,7 @@ internal static class AutomaticTextDiagnostics
             existing = ((Curve)tx.GetObject(excluded, OpenMode.ForRead)).LayerId;
             Add(new Line(new Point3d(0, 14, 0), new Point3d(20, 14, 0)), "01 - Bestaande kabel");
             Add(new Line(new Point3d(0, 15, 0), new Point3d(20, 15, 0)), "OVERIG");
+            bestaand = ((Curve)tx.GetObject(Add(new Line(new Point3d(0, 15.5, 0), new Point3d(20, 15.5, 0)), "Bestaand"), OpenMode.ForRead)).LayerId;
             Add(new Line(new Point3d(0, 16, 0), new Point3d(20, 16, 0)), "xref|01 - Bestaande kabel");
             Add(new Circle(new Point3d(50, 0, 0), Vector3d.ZAxis, 1), DirectionLines.LayerName(2));
             hidden = BlockInserter.DefaultLayer(db, tx, DirectionLines.LayerName(3));
@@ -110,7 +111,9 @@ internal static class AutomaticTextDiagnostics
         {
             var result = ExistingCableColors.Apply(db, black);
             using var tx = db.TransactionManager.StartTransaction(); var layer = (LayerTableRecord)tx.GetObject(existing, OpenMode.ForRead);
-            Check(result.Changed == 1 && result.Locked == 1 && layer.Color.ColorIndex == (black ? 7 : 125), "kleur wisselt tussen 7/125; vergrendeld gemeld");
+            bool Correct(LayerTableRecord item) => black ? item.Color.ColorMethod == Autodesk.AutoCAD.Colors.ColorMethod.ByColor && item.Color.ColorValue.ToArgb() == System.Drawing.Color.Black.ToArgb() : item.Color.ColorMethod == Autodesk.AutoCAD.Colors.ColorMethod.ByAci && item.Color.ColorIndex == 125;
+            Check(result.Changed == 2 && result.Locked == 1 && Correct(layer), "kleur wisselt tussen RGB 0,0,0 en ACI 125; vergrendeld gemeld");
+            Check(Correct((LayerTableRecord)tx.GetObject(bestaand, OpenMode.ForRead)), "laag Bestaand volgt dezelfde kleurkeuze");
             Check(layer.IsFrozen && layer.LineWeight == LineWeight.LineWeight050, "kleurwissel behoudt laagstatus en lijndikte");
             Check(new[] { lockedExisting, unrelated, xref }.All(id => ((LayerTableRecord)tx.GetObject(id, OpenMode.ForRead)).Color.ColorIndex == 125), "xref, rooien en vergrendelde laag behouden kleur");
         }
@@ -130,7 +133,9 @@ internal static class AutomaticTextDiagnostics
                 {
                     var layers = (LayerTable)tx.GetObject(target.LayerTableId, OpenMode.ForRead);
                     var layer = (LayerTableRecord)tx.GetObject(layers["01 - Bestaande kabel"], OpenMode.ForWrite);
-                    Check(layer.Color.ColorIndex == (black ? 7 : 125), "nieuwe bronlaag gebruikt bewaarde kleurkeuze");
+                    Check(black ? layer.Color.ColorMethod == Autodesk.AutoCAD.Colors.ColorMethod.ByColor && layer.Color.ColorValue.ToArgb() == System.Drawing.Color.Black.ToArgb() : layer.Color.ColorIndex == 125, "nieuwe bronlaag gebruikt bewaarde RGB/ACI-kleurkeuze");
+                    var newBestaand = (LayerTableRecord)tx.GetObject(BlockInserter.DefaultLayer(target, tx, "Bestaand"), OpenMode.ForRead);
+                    Check(black ? newBestaand.Color.ColorMethod == Autodesk.AutoCAD.Colors.ColorMethod.ByColor && newBestaand.Color.ColorValue.ToArgb() == System.Drawing.Color.Black.ToArgb() : newBestaand.Color.ColorIndex == 125, "nieuwe laag Bestaand gebruikt bewaarde RGB/ACI-kleurkeuze");
                     layer.Color = Autodesk.AutoCAD.Colors.Color.FromColorIndex(Autodesk.AutoCAD.Colors.ColorMethod.ByAci, 3); tx.Commit();
                 }
                 BlockInserter.Import(target, catalog, DirectionText.Template(catalog, true));

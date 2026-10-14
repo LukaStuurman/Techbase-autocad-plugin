@@ -178,7 +178,7 @@ public sealed partial class Plugin
         try
         {
             var result = ExistingCableColors.Apply(doc.Database, Preferences.ExistingCableBlack); doc.Editor.Regen();
-            var message = $"{result.Changed} bestaande kabellagen {(Preferences.ExistingCableBlack ? "zwart" : "donkergroen")}. {result.Locked} vergrendelde lagen overgeslagen.";
+            var message = $"{result.Changed} bestaande kabellagen/Bestaand {(Preferences.ExistingCableBlack ? "zwart (RGB 0,0,0)" : "donkergroen")}. {result.Locked} vergrendelde lagen overgeslagen.";
             settingsPanel?.ReportColor(message); doc.Editor.WriteMessage("\n" + message);
         }
         catch (Exception ex) { settingsPanel?.ReportColor(ex.Message); doc.Editor.WriteMessage("\n" + ex.Message); }

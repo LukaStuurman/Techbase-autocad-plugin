@@ -10,13 +10,13 @@ Plugin voor AutoCAD en Civil 3D op Windows met zes tabs:
 
 Blocks heeft ook een aan/uit-schakelaar voor een vaste laagkeuze: Richting 1 t/m 12 of Bestaande kabel. Deze keuze heeft voorrang op automatische laagovername en wordt bewaard.
 
-Er is ook een tab **Instellingen** met afzonderlijke teksthoogtes voor MOF-blocks en LS/OV-richtingsteksten: standaard **0,45**, alternatief **0,75**. De keuze blijft bewaard. Bestaande kabellagen kunnen donkergroen of zwart worden. Kies de kleur en pas deze op de huidige tekening toe; de keuze geldt ook voor nieuwe geimporteerde kabellagen.
+Er is ook een tab **Instellingen** met afzonderlijke teksthoogtes voor MOF-blocks en LS/OV-richtingsteksten: standaard **0,45**, alternatief **0,75**. De keuze blijft bewaard. Bestaande kabellagen en de laag Bestaand kunnen donkergroen of echt zwart (RGB 0,0,0) worden. Kies de kleur en pas deze op de huidige tekening toe; de keuze geldt ook voor nieuwe geimporteerde kabellagen.
 
 LS-teksten zijn **150AL / ????-00**, OV-teksten **6CU / ????-00**. Voor bestaande kabels: **150AL / (was ????-00)** en **6CU / (was ????-00)**.
 
 ## Installeren
 
-Download **Techbase.Blocks.1.9.1.zip** uit de [release v1.9.1](https://github.com/LukaStuurman/Techbase-autocad-plugin/releases/tag/v1.9.1), pak hem uit en dubbelklik **Installeren.cmd**. De installer controleert en installeert ook **Arial Nova Light** via het officiele Microsoft Store-pakket als het lettertype ontbreekt. Geen aparte fontinstallatie nodig. Start AutoCAD of Civil 3D opnieuw en voer **TECHBASE** uit.
+Download **Techbase.Blocks.1.9.2.zip** uit de [release v1.9.2](https://github.com/LukaStuurman/Techbase-autocad-plugin/releases/tag/v1.9.2), pak hem uit en dubbelklik **Installeren.cmd**. De installer controleert en installeert ook **Arial Nova Light** via het officiele Microsoft Store-pakket als het lettertype ontbreekt. Geen aparte fontinstallatie nodig. Start AutoCAD of Civil 3D opnieuw en voer **TECHBASE** uit.
 
 Nieuwe plaatsingen gebruiken eigen bronblocks, ook als de tekening al een oudere blockdefinitie met dezelfde naam bevat. Bestaande plaatsingen blijven intact.
 
@@ -40,7 +40,7 @@ Gebruik Windows en een .NET 10 SDK:
 
 De benodigde XTP, afbeeldingen en bron-DWG staan in `Assets/Palette`. De kader-Excels en Enexis-bronnen staan onder `vendor/AutoCAD-Enexis-kabels-checker`. De clone heeft daardoor geen lokale Techbase-map of submodule nodig. NuGet haalt de Autodesk API-referenties en Excel-dependencies op. AutoCAD zelf blijft nodig voor de CAD-engine-tests.
 
-De build maakt `dist/1.9.1/Techbase.Blocks.bundle` en `Techbase Blocks 1.9.1.zip`. Een andere bronpalette kan met `-PaletteRoot <map>` worden opgegeven.
+De build maakt `dist/1.9.2/Techbase.Blocks.bundle` en `Techbase Blocks 1.9.2.zip`. Een andere bronpalette kan met `-PaletteRoot <map>` worden opgegeven.
 
 De meegeleverde Kabelgeul-bron staat in `Assets/Kabelgeul`; herkomst en hashes staan in `bronversie.json`. De bewerkte module wordt reproduceerbaar gemaakt met `python tests/prepare_kabelgeul.py` uit de vastgelegde `Reference/Techbase lisp pakket.lsp`. De build controleert de hashes en heeft geen Python nodig.
 

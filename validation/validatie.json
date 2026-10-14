@@ -1,8 +1,8 @@
 {
   "Status": "PASS",
   "Host": "25.1",
-  "Timestamp": "2026-10-14T10:53:48.9363748+02:00",
-  "Palette": "C:\\Users\\LukaStuurmanHDBTechb\\Documents\\Automatic VO\\Techbase-autocad-plugin\\dist\\1.9.1\\Techbase.Blocks.bundle\\Contents\\Assets\\Techbase toolpallete.xtp",
+  "Timestamp": "2026-10-14T11:01:09.021644+02:00",
+  "Palette": "C:\\Users\\LukaStuurmanHDBTechb\\Documents\\Automatic VO\\Techbase-autocad-plugin\\dist\\1.9.2\\Techbase.Blocks.bundle\\Contents\\Assets\\Techbase toolpallete.xtp",
   "ToolCount": 58,
   "Checks": [
     "lijnlaag",

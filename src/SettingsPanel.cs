@@ -18,10 +18,10 @@ internal sealed class SettingsPanel : UserControl
         layout.Controls.Add(mof);
         layout.Controls.Add(new Label { Text = "Teksthoogte richtingsteksten (LS/OV)", AutoSize = true, Padding = new Padding(0, 14, 0, 0) });
         layout.Controls.Add(directions);
-        layout.Controls.Add(new Label { Text = "Kleur bestaande kabellagen", AutoSize = true, Padding = new Padding(0, 14, 0, 0) });
+        layout.Controls.Add(new Label { Text = "Kleur bestaande kabellagen en Bestaand", AutoSize = true, Padding = new Padding(0, 14, 0, 0) });
         existingColor.Items.AddRange(new object[] { "Donkergroen (standaard)", "Zwart" }); layout.Controls.Add(existingColor);
         var apply = new Button { Text = "Op huidige tekening toepassen", AutoSize = true }; apply.Click += (_, _) => QueueColor(); layout.Controls.Add(apply);
-        layout.Controls.Add(new Label { Text = "Keuze blijft bewaard. Geldt voor bestaande kabellagen in de hoofdtekening en nieuwe geimporteerde lagen. Bij een andere tekening: klik Toepassen. Vergrendelde lagen worden gemeld.", AutoSize = true, MaximumSize = new Size(290, 0) });
+        layout.Controls.Add(new Label { Text = "Zwart is RGB 0,0,0. Keuze blijft bewaard voor bestaande kabellagen en de laag Bestaand. Bij een andere tekening: klik Toepassen. Vergrendelde lagen worden gemeld.", AutoSize = true, MaximumSize = new Size(290, 0) });
         layout.Controls.Add(colorStatus);
         layout.Controls.Add(new Label { Text = "Breedte LS/OV-teksten: 4,80.\n\nDe keuze wordt automatisch bewaard.\nGeldt voor nieuwe MOF-blocks en richtingstekstblocks, ook via de LS/OV-burstknoppen.\n\nHet plaatsvoorbeeld gebruikt dezelfde teksthoogte. Bestaande geplaatste blocks en losse teksten blijven ongewijzigd.",
             AutoSize = true, MaximumSize = new Size(290, 0), Padding = new Padding(0, 14, 0, 0) });

@@ -25,6 +25,7 @@ internal static class BlockInserter
         if (table.Has(name)) return table[name];
         table.UpgradeOpen();
         using var layer = new LayerTableRecord { Name = name };
+        if (ExistingCableColors.AppliesTo(name)) layer.Color = ExistingCableColors.Choice(Plugin.Preferences.ExistingCableBlack);
         var id = table.Add(layer);
         tx.AddNewlyCreatedDBObject(layer, true);
         return id;

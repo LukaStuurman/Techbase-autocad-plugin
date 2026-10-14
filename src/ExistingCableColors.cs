@@ -7,7 +7,8 @@ namespace Techbase.Blocks;
 internal static class ExistingCableColors
 {
     internal static bool Matches(string name) => !name.Contains('|') && name.Contains("bestaand", StringComparison.OrdinalIgnoreCase) && name.Contains("kabel", StringComparison.OrdinalIgnoreCase);
-    internal static Color Choice(bool black) => Color.FromColorIndex(ColorMethod.ByAci, (short)(black ? 7 : 125));
+    internal static bool AppliesTo(string name) => name.Equals("Bestaand", StringComparison.OrdinalIgnoreCase) || Matches(name);
+    internal static Color Choice(bool black) => black ? Color.FromRgb(0, 0, 0) : Color.FromColorIndex(ColorMethod.ByAci, 125);
     internal static void ApplyNew(Database db, Transaction tx, HashSet<ObjectId> previous)
     {
         var table = (LayerTable)tx.GetObject(db.LayerTableId, OpenMode.ForRead);
@@ -15,7 +16,7 @@ internal static class ExistingCableColors
         {
             if (previous.Contains(id)) continue;
             var layer = (LayerTableRecord)tx.GetObject(id, OpenMode.ForRead);
-            if (layer.IsDependent || !Matches(layer.Name)) continue;
+            if (layer.IsDependent || !AppliesTo(layer.Name)) continue;
             layer.UpgradeOpen(); layer.Color = Choice(Plugin.Preferences.ExistingCableBlack);
         }
     }
@@ -27,7 +28,7 @@ internal static class ExistingCableColors
         foreach (ObjectId id in table)
         {
             var layer = (LayerTableRecord)tx.GetObject(id, OpenMode.ForRead);
-            if (layer.IsDependent || !Matches(layer.Name)) continue;
+            if (layer.IsDependent || !AppliesTo(layer.Name)) continue;
             if (layer.IsLocked) { locked++; continue; }
             layer.UpgradeOpen(); layer.Color = Choice(black); changed++;
         }
