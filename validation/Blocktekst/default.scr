@@ -1,0 +1,12 @@
+(setvar "OSMODE" 0)
+(setvar "INSUNITS" 0)
+(setvar "ATTREQ" 1)
+_TBPLAATS
+9dbea1c0c575423e80d3feede50deff1
+0,0,0
+(princ (strcat "\nATTREQ_UNCHANGED=" (itoa (getvar "ATTREQ"))))
+_DXFOUT
+"C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/validation/Blocktekst/default.dxf"
+16
+_QUIT
+_Y

@@ -1,0 +1,21 @@
+{
+  "Source": "Reference/Techbase lisp pakket.lsp",
+  "SourceSHA256": "b3923054fbd878b09c16f1738b5d61eb676fdb42a65e5d39ef2bf519cf1f4aec",
+  "GeneratedSHA256": "b64068d66ca64e6c337f9ebd9ae8c21fb70f6cbc7cdd194226ffa5e85fdd4043",
+  "Module": "KabelGeul Omni 2026-08-06ad",
+  "Adapters": [
+    "private command/function namespace",
+    "managed layer/copy helpers",
+    "Arial Nova Light",
+    "managed configuration UI",
+    "host block guards",
+    "no load-time drawing changes",
+    "exact cable type metadata",
+    "restore command state",
+    "Undo Begin/End",
+    "full geul editing with unique rebuild and rollback",
+    "stored floating code layout",
+    "complete editable labels preserved verbatim; no prefix reapplication",
+    "recover input row order along the stored six-vertex incoming leader"
+  ]
+}

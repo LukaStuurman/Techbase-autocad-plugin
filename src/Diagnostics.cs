@@ -25,6 +25,7 @@ internal static class Diagnostics
         Plugin.CheckSettingsPersistence(output);
         DirectionDefaultsDiagnostics.Run(catalog,output);
         ExistingMofUpdateDiagnostics.Run(catalog, output);
+        RtDrawOrderDiagnostics.Run(catalog, output);
         KabelgeulDiagnostics.Run(output);
         var checks = new List<string>();
         var results = new List<object>();

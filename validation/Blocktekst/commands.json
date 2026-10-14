@@ -1,0 +1,18 @@
+{
+  "Status": "PASS",
+  "Checks": [
+    "default: juiste tekstvraag",
+    "default: opgeslagen attribuuttekst",
+    "default: AutoCAD ATTREQ behouden",
+    "default: bewaarde voorkeur behouden",
+    "on: juiste tekstvraag",
+    "on: opgeslagen attribuuttekst",
+    "on: AutoCAD ATTREQ behouden",
+    "on: bewaarde voorkeur behouden",
+    "off: juiste tekstvraag",
+    "off: opgeslagen attribuuttekst",
+    "off: AutoCAD ATTREQ behouden",
+    "off: bewaarde voorkeur behouden"
+  ],
+  "Autoload": true
+}

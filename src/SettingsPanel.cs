@@ -15,6 +15,7 @@ internal sealed class SettingsPanel : UserControl
     private readonly Button maskColor = new() { Name = "DirectionTextMaskColor", Text = "Eigen maskerkleur kiezen", AutoSize = true };
     private readonly Label maskRgb = new() { AutoSize = true };
     private readonly Label colorStatus = new() { AutoSize = true, MaximumSize = new Size(290, 0) };
+    private readonly CheckBox promptBlockText = new() { Name = "PromptBlockText", Text = "Tekst bewerken tijdens block plaatsen", AutoSize = true };
     private bool refreshing;
     private static NumericUpDown Number(string name, decimal min, decimal max) => new() { Name = name, Minimum = min, Maximum = max, DecimalPlaces = 2, Increment = .10m, Width = 220 };
     internal SettingsPanel()
@@ -26,6 +27,8 @@ internal sealed class SettingsPanel : UserControl
         reset.Click += (_, _) => { try { colorStatus.Text = Plugin.ResetSettings(); RefreshSettings(); } catch (Exception ex) { colorStatus.Text = "Reset mislukt: " + ex.Message; } };
         layout.Controls.Add(reset);
         layout.Controls.Add(new Label { Text = "Herstelt alle plugininstellingen en Kabelgeul-standaardteksten. Je vorige instellingen worden eerst als kopie bewaard.", AutoSize = true, MaximumSize = new Size(290, 0) });
+        layout.Controls.Add(promptBlockText);
+        layout.Controls.Add(new Label { Text = "Standaard uit: plaatst de bestaande blocktekst zonder vragen. Aan: vraagt om de bewerkbare attribuutteksten tijdens plaatsen.", AutoSize = true, MaximumSize = new Size(290, 0) });
         layout.Controls.Add(new Label { Text = "Teksthoogte MOF-blocks", AutoSize = true });
         layout.Controls.Add(mof);
         layout.Controls.Add(new Label { Text = "Teksthoogte richtingsteksten (LS/OV)", AutoSize = true, Padding = new Padding(0, 14, 0, 0) });
@@ -46,6 +49,7 @@ internal sealed class SettingsPanel : UserControl
         Controls.Add(layout);
         foreach (var choice in new[] { mof, directions }) choice.Items.AddRange(new object[] { "0,45 (standaard)", "0,75" });
         mof.SelectedIndexChanged += (_, _) => Save(true);
+        promptBlockText.CheckedChanged += (_, _) => { if (!refreshing) { Plugin.Preferences.PromptBlockText = promptBlockText.Checked; Plugin.UpdateSettings(); } };
         directions.SelectedIndexChanged += (_, _) => Save(false);
         width.ValueChanged += (_, _) => SaveAppearance(width); existingWidth.ValueChanged += (_, _) => SaveAppearance(existingWidth);
         foreach (var numeric in new[] { width, existingWidth, border }) numeric.TextChanged += (_, _) => SaveTypedNumber(numeric);
@@ -98,6 +102,7 @@ internal sealed class SettingsPanel : UserControl
         try
         {
             var settings = Plugin.Preferences;
+            promptBlockText.Checked = settings.PromptBlockText;
             mof.SelectedIndex = settings.MofTextHeight == .75 ? 1 : 0; directions.SelectedIndex = settings.DirectionTextHeight == .75 ? 1 : 0; existingColor.SelectedIndex = settings.ExistingCableBlack ? 1 : 0;
             width.Value = (decimal)settings.DirectionWidth(settings.DirectionTextHeight, false); existingWidth.Value = (decimal)settings.DirectionWidth(settings.DirectionTextHeight, true);
             mask.Checked = settings.DirectionTextMask; border.Value = (decimal)settings.DirectionTextMaskBorder; drawingColor.Checked = settings.DirectionTextMaskDrawingColor;

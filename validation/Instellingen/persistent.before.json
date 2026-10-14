@@ -5,6 +5,7 @@
   "Tolerance": 0.123,
   "PalettePath": null,
   "Repeat": true,
+  "PromptBlockText": true,
   "SelectedDirectionNumber": 12,
   "MofTextHeight": 0.75,
   "DirectionTextHeight": 0.75,

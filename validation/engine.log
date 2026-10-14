@@ -1,4 +1,4 @@
-Redirect stdout (file: C:\Users\LUKAST~1\AppData\Local\Temp\accc292842).
+Redirect stdout (file: C:\Users\LUKAST~1\AppData\Local\Temp\accc649162).
 
 AcCoreConsole: StdOutConsoleMode: processed-output: disabled,auto
 
@@ -46,7 +46,7 @@ Command:
 
 Command: _NETLOAD
 
-Assembly file name: "C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.11.0/Techbase.Blocks.bundle/Contents/R25-1.11.0/Techbase.Blocks.dll"
+Assembly file name: "C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.12.0/Techbase.Blocks.bundle/Contents/R25-1.12.0/Techbase.Blocks.dll"
 
 
 
@@ -414,7 +414,7 @@ Loading AECC ETransmit...
 
 Exception in c:\program files\autodesk\civil 3d 2026 object enabler\aecccorebase.crx ARX Command
 
-Unhandled Exception c0000027 (c0000027h) at address 4b75506dh
+Unhandled Exception c0000027 (c0000027h) at address 51d4506dh
 
 >>>Responding: OK.
 
@@ -535,6 +535,24 @@ Unable to find the rules file: C:\C3DPipeRules.xml
 Unable to find the rules file: C:\C3DPipeRules.xml
 
 Unable to find the rules file: C:\C3DPipeRules.xml
+
+Unable to find the rules file: C:\C3DPipeRules.xml
+
+Unable to find the rules file: C:\C3DPipeRules.xml
+
+Unable to find the rules file: C:\C3DPipeRules.xml
+
+Unable to find the rules file: C:\C3DPipeRules.xml
+
+Unable to find the rules file: C:\C3DPipeRules.xml
+
+Unable to find the rules file: C:\C3DPipeRules.xml
+
+Unable to find the rules file: C:\C3DPipeRules.xml
+
+Unable to find the rules file: C:\C3DPipeRules.xml
+
+CoreHeartBeat
 
 Unable to find the rules file: C:\C3DPipeRules.xml
 

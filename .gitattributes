@@ -1,0 +1,2 @@
+# Spaces at the end of DXF text values and names are part of the CAD data.
+*.dxf whitespace=-blank-at-eol

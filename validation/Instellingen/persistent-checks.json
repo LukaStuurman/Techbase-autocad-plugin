@@ -2,8 +2,12 @@
   "Status": "PASS",
   "Checks": [
     "alle instellingen, standaardteksten, lege tekst en draai-instellingen herladen zonder verlies",
+    "tekstvragen-keuze zichtbaar na heropenen",
+    "tekstvragen uit direct opgeslagen",
+    "tekstvragen aan direct opgeslagen",
     "getypte breedte onmiddellijk opgeslagen zonder het veld te verlaten",
     "andere instelling wijzigen overschrijft de nog getypte breedte niet",
+    "reset herstelt tekstvragen standaard uit",
     "resetknop herstelt nieuwe standaardbreedtes",
     "reset herstelt vier richtingsteksten met 95AL bestaand LS",
     "reset herstelt hoogtes en masker",

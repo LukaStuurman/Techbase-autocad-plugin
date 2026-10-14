@@ -17,7 +17,7 @@ internal static class SourceBlockImporter
         var fingerprint = Fingerprint(path);
         settings ??= Plugin.Preferences;
         var directionDefaults = blockName.StartsWith("RICHTINGEN TEKST", StringComparison.OrdinalIgnoreCase);
-        var variant = BlockTextHeight.Revision(textHeight) + (directionDefaults ? "_DEFAULT00_WAS" + DirectionTextAppearance.Revision(settings, textHeight ?? settings.DirectionTextHeight) : "");
+        var variant = RtDrawOrder.Revision(blockName) + BlockTextHeight.Revision(textHeight) + (directionDefaults ? "_DEFAULT00_WAS" + DirectionTextAppearance.Revision(settings, textHeight ?? settings.DirectionTextHeight) : "");
         using var targetTx = target.TransactionManager.StartTransaction();
         var targetTable = (BlockTable)targetTx.GetObject(target.BlockTableId, OpenMode.ForRead);
         var (name, existing) = FindName(targetTable, targetTx, blockName, fingerprint, variant);
@@ -33,6 +33,7 @@ internal static class SourceBlockImporter
         var targetStyle = (TextStyleTableRecord)targetTx.GetObject(Typography.Style(target, targetTx), OpenMode.ForRead);
         Typography.NormalizeSource(source, sourceTx, targetStyle.Name);
         ExistingMofAppearance.Apply(source, sourceTx);
+        RtDrawOrder.Apply(source, sourceTx);
         var sourceTable = (BlockTable)sourceTx.GetObject(source.BlockTableId, OpenMode.ForRead);
         if (!sourceTable.Has(blockName)) throw new InvalidOperationException("Block '" + blockName + "' ontbreekt in " + path);
         var sourceId = sourceTable[blockName];
@@ -72,7 +73,9 @@ internal static class SourceBlockImporter
         source.WblockCloneObjects(new ObjectIdCollection(new[] { sourceId }), target.BlockTableId, map, DuplicateRecordCloning.Ignore, false);
         ExistingCableColors.ApplyNew(target, targetTx, previousLayers);
         var imported = map[sourceId].Value;
-        sourceTx.Commit(); targetTx.Commit();
+        sourceTx.Commit();
+        if (RtDrawOrder.IsRt(blockName)) RtDrawOrder.ApplyDefinition(imported, targetTx);
+        targetTx.Commit();
         return imported;
     }
 
@@ -93,6 +96,16 @@ internal static class SourceBlockImporter
             var record = (BlockTableRecord)tx.GetObject(table[name], OpenMode.ForRead);
             if (Matches(record, tx, original, fingerprint, variant)) return (name, record.ObjectId);
         }
+    }
+
+    internal static string? OriginalName(BlockTableRecord record, Transaction tx)
+    {
+        if (record.ExtensionDictionary.IsNull) return null;
+        var dictionary = (DBDictionary)tx.GetObject(record.ExtensionDictionary, OpenMode.ForRead);
+        if (!dictionary.Contains(MetadataKey) || tx.GetObject(dictionary.GetAt(MetadataKey), OpenMode.ForRead) is not Xrecord metadata) return null;
+        using var buffer = metadata.Data;
+        var values = buffer?.AsArray().Select(v => v.Value as string).ToArray();
+        return values != null && ((values.Length == 3 && values[0] == "2") || (values.Length == 4 && values[0] == "3")) ? values[1] : null;
     }
 
     private static bool Matches(BlockTableRecord record, Transaction tx, string original, string fingerprint, string variant)

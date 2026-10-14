@@ -182,7 +182,7 @@ internal static class BlockInserter
         if (rotationMode == BlockRotationMode.AfterPoint && !rotationChosen && !jig.Rotate(ed)) return false;
         var attributes = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         var record = (BlockTableRecord)tx.GetObject(definition, OpenMode.ForRead);
-        if (Convert.ToInt16(AcApp.GetSystemVariable("ATTREQ")) != 0)
+        if (settings.PromptBlockText)
         {
             foreach (ObjectId id in record)
             {

@@ -95,6 +95,20 @@ public sealed partial class Plugin : IExtensionApplication
         AcApp.DocumentManager.MdiActiveDocument?.Editor.WriteMessage("\nTechbase: laag overnemen " + (Preferences.InheritLayer ? "AAN" : "UIT") + "." +
             (Preferences.UseChosenBlockLayer ? " Gekozen blocklaag heeft voorrang zolang die aanstaat." : ""));
     }
+    [CommandMethod("TBRTACHTER", CommandFlags.Modal)]
+    public void RtBack()
+    {
+        var doc = AcApp.DocumentManager.MdiActiveDocument;
+        if (doc == null) return;
+        try
+        {
+            using var tx = doc.Database.TransactionManager.StartTransaction();
+            var count = RtDrawOrder.Apply(doc.Database, tx);
+            tx.Commit(); doc.Editor.Regen();
+            doc.Editor.WriteMessage($"\nRT-maskers: {count} blockdefinities bijgewerkt; wipeouts staan helemaal achteraan.");
+        }
+        catch (System.Exception ex) { Error(ex); }
+    }
     [CommandMethod("TBRICHTINGEN", CommandFlags.Modal)]
     public void ShowDirections() { Show(); if (palette != null) palette.Activate(3); }
     private static int? PromptDirection()

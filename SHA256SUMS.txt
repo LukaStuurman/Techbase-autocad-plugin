@@ -1,1 +1,1 @@
-af988af41e408f4d102e32b723eda00f5deecd0a822b2e92b4104b4fb430907d  Techbase.Blocks.1.8.0.zip
+e8249764a95f595f96ebc177daeefa5559acde995b00bd832cb207da9162aa0f  Techbase.Blocks.1.12.0.zip

@@ -52,6 +52,9 @@ internal sealed class BlocksPanel : UserControl
         var reload = new Button { Text = "Vernieuwen", AutoSize = true };
         reload.Click += (_, _) => { try { Plugin.Reload(); } catch (Exception ex) { ShowError(ex); } };
         sources.Controls.Add(source); sources.Controls.Add(reload);
+        var rtBack = new Button { Text = "RT-maskers naar achter", AutoSize = true };
+        rtBack.Click += (_, _) => AcApp.DocumentManager.MdiActiveDocument?.SendStringToExecute("_TBRTACHTER ", true, false, false);
+        sources.Controls.Add(rtBack);
         layout.Controls.Add(sources, 0, 4);
         search.Margin = new Padding(0, 4, 0, 5);
         groups.Margin = new Padding(0, 0, 0, 6);

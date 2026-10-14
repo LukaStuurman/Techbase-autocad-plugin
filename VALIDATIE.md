@@ -1,3 +1,15 @@
+## RT-wipeouts en optionele tekstvragen - versie 1.12.0, 14 oktober 2026
+
+- Wipeouts in RT-blocks gaan onder alle overige inhoud. Dit wordt zowel in de tijdelijke bron als na het klonen toegepast: klonen nam de bronvolgorde niet betrouwbaar mee. Een nieuwe importvariant voorkomt hergebruik van oude ongecorrigeerde definities. Dynamische anonieme varianten worden meegenomen wanneer aanwezig.
+- Blocks heeft **RT-maskers naar achter** / **TBRTACHTER** voor eerder geplaatste pluginvarianten en oorspronkelijke RT-definities. Het commando verandert uitsluitend de tekenvolgorde; xrefs worden uitgesloten. Opnieuw toepassen is zonder verdere wijzigingen.
+- **Tekst bewerken tijdens block plaatsen** staat standaard uit in Instellingen. De bestaande attribuuttekst wordt zonder vraag geplaatst; aanzetten vraagt weer de bewerkbare attribuutteksten. Keuze wordt direct opgeslagen, blijft na herstart behouden en reset zet haar uit. ATTREQ/ATTDIA blijven ongewijzigd.
+- **91 RT-servicecontroles** slagen voor alle 11 palettevarianten: import, hergebruik, herstel van bestaande pluginnamen en DWG opnieuw openen. Tien varianten bevatten elk een wipeout; RT 1-4 LS kast heeft in de bron geen wipeout.
+- **26 onafhankelijke RT-commando-/DXF-controles** lezen de opgeslagen SORTENTSTABLE-handles en controleren alle maskers onder alle andere inhoud, herhaald herstel, ongewijzigde blockinhoud, niet-RT-volgorde en oorspronkelijke bronhash.
+- **12 daadwerkelijke plaatsings-/DXF-controles** slagen met ontbrekende voorkeur (standaard uit), expliciet uit en aan: zonder vragen bij ATTREQ=1; eigen tekst kunnen invoeren bij ATTREQ=0; opgeslagen attributen en AutoCAD-voorkeur behouden. **17 opslag-/resetcontroles** controleren ook de echte Instellingen-checkbox, bewaren en resetten.
+- **410 algemene blockcontroles** voor alle 58 tools slagen opnieuw. Beide API-builds en het installatiepakket zijn gemaakt.
+
+Bewijs: `validation/RT/draw-order.json`, `commands.json`, DWG/DXF en herstel-DXF's; `validation/Blocktekst/commands.json` en drie plaatsings-DXF's; `validation/Instellingen/persistent-checks.json`. Tests in AutoCAD 2026 Core Console, ook via de geinstalleerde bundle. Volledige desktopinteractie en AutoCAD/Civil 3D 2025/2027 vragen nog een praktijktest. [Autodesk MoveToBottom](https://help.autodesk.com/cloudhelp/2026/ENU/OARX-ManagedRefGuide/files/OARX-ManagedRefGuide-Autodesk_AutoCAD_DatabaseServices_DrawOrderTable_MoveToBottom_ObjectIdCollection.html) en [DXF SORTENTSTABLE](https://help.autodesk.com/cloudhelp/2024/ENU/AutoCAD-DXF/files/GUID-462F4378-F850-4E89-90F2-3C1880F55779.htm).
+
 ## Bewerkbare LS/OV-standaardteksten - versie 1.11.0, 14 oktober 2026
 
 - Richtingen heeft vier tekstvelden voor gewone/bestaande LS en OV. Standaard LS blijft `150AL / ????-00`; bestaande LS wordt `95AL / (was ????-00)`. OV blijft `6CU / ????-00` en bestaand OV `6CU / (was ????-00)`.

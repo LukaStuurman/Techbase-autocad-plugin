@@ -1,0 +1,33 @@
+{
+  "Status": "PASS",
+  "Checks": [
+    "RT blocks.dxf: TB_RT 1-12 LS__40955691265E_2D0FA900_ANL1_RT_BACK1: maskers volledig achter",
+    "RT blocks.dxf: TB_RT 1-10 LS__40955691265E_CA5A1F55_ANL1_RT_BACK1: maskers volledig achter",
+    "RT blocks.dxf: TB_RT 1-8 LS__40955691265E_F9EFD97A_ANL1_RT_BACK1: maskers volledig achter",
+    "RT blocks.dxf: TB_RT 1-6 LS__40955691265E_C92ADE7D_ANL1_RT_BACK1: maskers volledig achter",
+    "RT blocks.dxf: TB_RT 1-4 LS__40955691265E_8F8ADB0A_ANL1_RT_BACK1: maskers volledig achter",
+    "RT blocks.dxf: TB_RT 1-4 LS kast__40955691265E_DA04E606_ANL1_RT_BACK1: maskers volledig achter",
+    "RT blocks.dxf: TB_RT 1-12 OV__40955691265E_7A08A9BD_ANL1_RT_BACK1: maskers volledig achter",
+    "RT blocks.dxf: TB_RT 1-10 OV__40955691265E_E2FCEF29_ANL1_RT_BACK1: maskers volledig achter",
+    "RT blocks.dxf: TB_RT 1-8 OV__40955691265E_F4D21E08_ANL1_RT_BACK1: maskers volledig achter",
+    "RT blocks.dxf: TB_RT 1-6 OV__40955691265E_6EBA4A7D_ANL1_RT_BACK1: maskers volledig achter",
+    "RT blocks.dxf: TB_RT 1-4 OV__40955691265E_533F9E35_ANL1_RT_BACK1: maskers volledig achter",
+    "RT hersteld.dxf: RT 1-12 LS: maskers volledig achter",
+    "RT hersteld.dxf: RT 1-10 LS: maskers volledig achter",
+    "RT hersteld.dxf: RT 1-8 LS: maskers volledig achter",
+    "RT hersteld.dxf: RT 1-6 LS: maskers volledig achter",
+    "RT hersteld.dxf: RT 1-12 OV: maskers volledig achter",
+    "RT hersteld.dxf: RT 1-10 OV: maskers volledig achter",
+    "RT hersteld.dxf: RT 1-8 OV: maskers volledig achter",
+    "RT hersteld.dxf: RT 1-6 OV: maskers volledig achter",
+    "RT hersteld.dxf: RT 1-4 OV: maskers volledig achter",
+    "RT hersteld.dxf: RT 1-4 LS: maskers volledig achter",
+    "RT hersteld.dxf: RT 1-4 LS kast: maskers volledig achter",
+    "alle blockinhoud identiek voor/na herstel",
+    "tekenvolgorde niet-RT blocks intact",
+    "herhaald herstel wijzigt niets",
+    "oorspronkelijke bron-DWG ongewijzigd"
+  ],
+  "MaskCount": 10,
+  "Autoload": true
+}

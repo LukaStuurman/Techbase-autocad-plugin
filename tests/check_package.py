@@ -33,7 +33,7 @@ for series in [(25, 0), (25, 1), (26, 0)]:
             assert {'TBKABELGEUL', 'TBGEULCOPY', 'TBGEULEDIT', 'TBGEULCODE'} == {c.attrib['Global'] for c in entry.findall('Commands/Command')}
             continue
         commands = {c.attrib['Global'] for c in component.findall('ComponentEntry/Commands/Command')}
-        assert 'TECHBASE' in commands and 'TBLOCKS' not in commands
+        assert {'TECHBASE', 'TBRTACHTER'} <= commands and 'TBLOCKS' not in commands
         assert {'TBRICHTINGEN', 'TBTEKENRICHTING', 'TBMAAKRICHTING', 'TBRICHTINGVALIDATE'} <= commands
         assert {'TBTEKSTLS', 'TBTEKSTOV', 'TBTEKSTKOPIE', 'TBTEKSTVERPLAATS', 'TBTEKSTVALIDATE'} <= commands
         assert {'TBAUTOTEKSTLS', 'TBAUTOTEKSTOV', 'TBBESTAANDEKLEUR'} <= commands

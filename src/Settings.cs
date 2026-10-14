@@ -17,6 +17,7 @@ public sealed class Settings
     public double Tolerance { get; set; } = 0.05;
     public string? PalettePath { get; set; }
     public bool Repeat { get; set; }
+    public bool PromptBlockText { get; set; }
     public int SelectedDirectionNumber { get; set; } = 1;
     public double MofTextHeight { get; set; } = 0.45;
     public double DirectionTextHeight { get; set; } = 0.45;

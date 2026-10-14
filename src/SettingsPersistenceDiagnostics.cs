@@ -14,7 +14,7 @@ public sealed partial class Plugin
         try
         {
             var file=Path.Combine(output,"persistent.json");Environment.SetEnvironmentVariable("TECHBASE_SETTINGS_FILE",file);
-            Preferences = new Settings { InheritLayer=false, UseChosenBlockLayer=true, ChosenBlockLayer=10, Repeat=true,Tolerance=.123,SelectedDirectionNumber=12,
+            Preferences = new Settings { InheritLayer=false, UseChosenBlockLayer=true, ChosenBlockLayer=10, Repeat=true,PromptBlockText=true,Tolerance=.123,SelectedDirectionNumber=12,
                 MofTextHeight=.75,DirectionTextHeight=.75,DirectionTextWidth045=5.21,ExistingDirectionTextWidth045=8.12,DirectionTextWidth075=8.31,ExistingDirectionTextWidth075=11.41,
                 DirectionTextMask=false,DirectionTextMaskBorder=1.8,DirectionTextMaskDrawingColor=false,DirectionTextMaskRgb=0x123456,ExistingCableBlack=true,KabelgeulTextFormat=1,KabelgeulMantelSpec="Eigen mantel",
                 DirectionLsText="Eigen LS", DirectionExistingLsText="Eigen bestaande LS", DirectionOvText="Eigen OV", DirectionExistingOvText="Eigen bestaande OV" };
@@ -26,11 +26,18 @@ public sealed partial class Plugin
             {
                 IEnumerable<Control> All(Control control) {foreach(Control c in control.Controls){yield return c;foreach(var child in All(c)) yield return child;}}
                 var width=(NumericUpDown)All(panel).Single(c=>c.Name=="DirectionTextWidth");width.Text=9.25m.ToString();
+                var prompt=(CheckBox)All(panel).Single(c=>c.Name=="PromptBlockText");
+                Check(prompt.Checked, "tekstvragen-keuze zichtbaar na heropenen");
+                prompt.Checked=false;
+                Check(!Settings.Read().PromptBlockText, "tekstvragen uit direct opgeslagen");
+                prompt.Checked=true;
+                Check(Settings.Read().PromptBlockText, "tekstvragen aan direct opgeslagen");
                 Check(Settings.Read().DirectionTextWidth075==9.25,"getypte breedte onmiddellijk opgeslagen zonder het veld te verlaten");
                 ((CheckBox)All(panel).Single(c=>c.Name=="DirectionTextMask")).Checked=true;
                 Check(Settings.Read().DirectionTextWidth075==9.25,"andere instelling wijzigen overschrijft de nog getypte breedte niet");
                 var reset=(Button)All(panel).Single(c=>c.Name=="ResetPluginSettings");reset.PerformClick();
                 var restored=Settings.Read();
+                Check(!restored.PromptBlockText && !prompt.Checked, "reset herstelt tekstvragen standaard uit");
                 Check(restored.ExistingDirectionTextWidth045==6.8 && restored.DirectionTextWidth075==7.7 && restored.ExistingDirectionTextWidth075==10.7,"resetknop herstelt nieuwe standaardbreedtes");
                 Check(restored.DirectionLsText=="150AL / ????-00" && restored.DirectionExistingLsText=="95AL / (was ????-00)" && restored.DirectionOvText=="6CU / ????-00" && restored.DirectionExistingOvText=="6CU / (was ????-00)","reset herstelt vier richtingsteksten met 95AL bestaand LS");
                 Check(restored.MofTextHeight==.45 && restored.DirectionTextHeight==.45 && restored.DirectionTextMask && restored.DirectionTextMaskDrawingColor && restored.DirectionTextMaskBorder==1.3,"reset herstelt hoogtes en masker");
