@@ -22,6 +22,7 @@ public sealed class Settings
     public double DirectionTextHeight { get; set; } = 0.45;
     public bool ExistingCableBlack { get; set; }
     public Dictionary<string, KabelgeulRow> KabelgeulDefaults { get; set; } = new(StringComparer.OrdinalIgnoreCase);
+    public int KabelgeulTextFormat { get; set; }
     public string KabelgeulMantelSpec { get; set; } = "";
     public double? BlockTextHeight(string name) => name.Contains("MOF", StringComparison.OrdinalIgnoreCase) ? MofTextHeight :
         name.StartsWith("RICHTINGEN TEKST", StringComparison.OrdinalIgnoreCase) ? DirectionTextHeight : null;
@@ -51,6 +52,7 @@ public sealed class Settings
                 settings.BlockRotationModes ?? new(), StringComparer.OrdinalIgnoreCase);
             settings.KabelgeulDefaults = new Dictionary<string, KabelgeulRow>(settings.KabelgeulDefaults ?? new(), StringComparer.OrdinalIgnoreCase);
             settings.KabelgeulMantelSpec ??= "";
+            KabelgeulData.MigrateText(settings);
             return settings;
         }
         catch (IOException) { return new Settings(); }

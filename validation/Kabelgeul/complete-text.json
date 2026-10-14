@@ -1,0 +1,12 @@
+{
+  "Status": "PASS",
+  "Checks": [
+    "custom labels receive no Ri or Rooien prefix",
+    "explicit empty labels stay empty",
+    "both sides preserved exactly",
+    "unchanged twice edited source with conflicting current defaults",
+    "first and repeated copy preserve all final source texts",
+    "independently read all three saved geuls"
+  ],
+  "Autoload": true
+}

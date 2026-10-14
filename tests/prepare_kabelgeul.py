@@ -41,6 +41,10 @@ replace_function('tbkg:make-layer', '(defun tbkg:make-layer (name color ltype) (
 replace_function('tbkg:ensure-layers', '(defun tbkg:ensure-layers (/ d) (foreach d (tbkg:layer-defs) (tbkg:make-layer (car d) (cadr d) (caddr d))))')
 replace_function('tbkg:clone-block-definition', '(defun tbkg:clone-block-definition (oldname newname) (TBKG_NATIVE_CLONE oldname newname))')
 replace_function('tbkg:copy-insert-to', '(defun tbkg:copy-insert-to (insert-ent base target) (TBKG_NATIVE_COPY insert-ent base target))')
+# Native forms now expose the complete final label. Drawing and rereading must
+# preserve it verbatim, including custom/empty labels and legacy Ri prefixes.
+replace_function('tbkg:prefixed-label', '(defun tbkg:prefixed-label (typ txt) (if txt txt ""))')
+replace_function('tbkg:strip-known-prefix', '(defun tbkg:strip-known-prefix (txt) (if txt txt ""))')
 replace_function('tbkg:show-dialog', '''(defun tbkg:show-dialog (/ result)
   (setq result (read (TBKG_CONFIG_STRING (vl-prin1-to-string (list *tbkg:last-count* *tbkg:last-types* *tbkg:last-labels*
     *tbkg:last-doubles* *tbkg:last-mantels* *tbkg:last-splits* *tbkg:last-combis*
@@ -146,5 +150,5 @@ target.write_text('\n'.join(line.rstrip() for line in text.splitlines()).rstrip(
     'Source': 'Reference/Techbase lisp pakket.lsp', 'SourceSHA256': hashlib.sha256(source.read_bytes()).hexdigest(),
     'GeneratedSHA256': hashlib.sha256(target.read_bytes()).hexdigest(),
     'Module': 'KabelGeul Omni 2026-08-06ad',
-    'Adapters': ['private command/function namespace', 'managed layer/copy helpers', 'Arial Nova Light', 'managed configuration UI', 'host block guards', 'no load-time drawing changes', 'exact cable type metadata', 'restore command state', 'Undo Begin/End', 'full geul editing with unique rebuild and rollback', 'stored floating code layout']
+    'Adapters': ['private command/function namespace', 'managed layer/copy helpers', 'Arial Nova Light', 'managed configuration UI', 'host block guards', 'no load-time drawing changes', 'exact cable type metadata', 'restore command state', 'Undo Begin/End', 'full geul editing with unique rebuild and rollback', 'stored floating code layout', 'complete editable labels preserved verbatim; no prefix reapplication']
 }, indent=2), encoding='utf-8')

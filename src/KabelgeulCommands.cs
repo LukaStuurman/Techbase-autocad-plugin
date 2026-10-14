@@ -63,13 +63,14 @@ public sealed partial class Plugin
         var editTest = Environment.GetEnvironmentVariable("TECHBASE_KABELGEUL_TEST_EDIT");
         if (action == "KABELGEULEDIT" && editTest != null) return editTest == "CANCEL" ? "nil" : (JsonSerializer.Deserialize<KabelgeulData>(File.ReadAllText(editTest)) ?? detected).Lisp();
         if (test != null) return action is "KABELGEULCOPY" or "KABELGEULEDIT" ? detected.Lisp() : (JsonSerializer.Deserialize<KabelgeulData>(File.ReadAllText(test)) ?? detected).Lisp();
-        return ShowKabelgeulDialog(detected, action == "KABELGEULEDIT");
+        return ShowKabelgeulDialog(detected, action);
     }
     [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
-    private static string ShowKabelgeulDialog(KabelgeulData detected, bool editing)
+    private static string ShowKabelgeulDialog(KabelgeulData detected, string action)
     {
+        var editing = action == "KABELGEULEDIT";
         using var form = new Form { Text = editing ? "Kabelgeul bewerken - kabels en zijden" : "Kabelgeul - kabels en zijden", Size = new System.Drawing.Size(1040, 590), MinimumSize = new System.Drawing.Size(700, 400), StartPosition = FormStartPosition.CenterParent };
-        using var editor = new KabelgeulEditor(detected);
+        using var editor = new KabelgeulEditor(detected, useDefaultsOnTypeChange: action == "KABELGEUL");
         var footer = new FlowLayoutPanel { Dock = DockStyle.Bottom, Height = 42, FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft };
         var accept = new Button { Text = editing ? "Wijzigingen opslaan" : "Plaatsen", AutoSize = true };
         var cancel = new Button { Text = "Annuleren", AutoSize = true, DialogResult = DialogResult.Cancel };

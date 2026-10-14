@@ -1,4 +1,4 @@
-Redirect stdout (file: C:\Users\LUKAST~1\AppData\Local\Temp\accc351282).
+Redirect stdout (file: C:\Users\LUKAST~1\AppData\Local\Temp\accc831922).
 AcCoreConsole: StdOutConsoleMode: processed-output: disabled,auto
 AutoCAD Core Engine Console - Copyright 2025 Autodesk, Inc.  All rights reserved. (W.122.0.0)
 
@@ -21,9 +21,9 @@ Command:
 
 Command:
 Command: _NETLOAD
-Assembly file name: "C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.8.0/Techbase.Blocks.bundle/Contents/R25-1.8.0/Techbase.Blocks.dll"
+Assembly file name: "C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.9.1/Techbase.Blocks.bundle/Contents/R25-1.9.1/Techbase.Blocks.dll"
 
-Command: (load "C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.8.0/Techbase.Blocks.bundle/Contents/Assets/Kabelgeul/Techbase.Kabelgeul.lsp")
+Command: (load "C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.9.1/Techbase.Blocks.bundle/Contents/Assets/Kabelgeul/Techbase.Kabelgeul.lsp")
 
 Techbase Kabelgeul geladen.C:TBGEULCODE
 
@@ -66,25 +66,25 @@ Enter the number of operations to undo or [Auto/Control/BEgin/End/Mark/Back] <1>
 Command:
 
 Command: (setq original (entlast) olddef (cdr (assoc 2 (entget original))))
-"KabelGeul_20261014_10101_1"
+"KabelGeul_20261014_105337_1"
 
 Command: (setq untouched (TBKG_NATIVE_COPY original (list 0.0 0.0 0.0) (list 20.0 0.0 0.0)))
-<Entity name: 25f6ae7e1d0>
+<Entity name: 210d25d59d0>
 
 Command: (entmod (subst (cons 50 (/ pi 2.0)) (assoc 50 (entget original)) (entget original)))
-((-1 . <Entity name: 25f6ae7e130>) (0 . "INSERT") (330 . <Entity name: 25f665269f0>) (5 . "38B") (100 . "AcDbEntity") (67 . 0) (410 . "Model") (8 . "0") (100 . "AcDbBlockReference") (66 . 1) (2 . "KabelGeul_20261014_10101_1") (10 10.0 8.0 0.0) (41 . 1.0) (42 . 1.0) (43 . 1.0) (50 . 1.5708) (70 . 0) (71 . 0) (44 . 0.0) (45 . 0.0) (210 0.0 0.0 1.0))
+((-1 . <Entity name: 210d25d5930>) (0 . "INSERT") (330 . <Entity name: 210866269f0>) (5 . "38B") (100 . "AcDbEntity") (67 . 0) (410 . "Model") (8 . "0") (100 . "AcDbBlockReference") (66 . 1) (2 . "KabelGeul_20261014_105337_1") (10 10.0 8.0 0.0) (41 . 1.0) (42 . 1.0) (43 . 1.0) (50 . 1.5708) (70 . 0) (71 . 0) (44 . 0.0) (45 . 0.0) (210 0.0 0.0 1.0))
 
 Command: (entmod (subst (cons 41 1.5) (assoc 41 (entget original)) (entget original)))
-((-1 . <Entity name: 25f6ae7e130>) (0 . "INSERT") (330 . <Entity name: 25f665269f0>) (5 . "38B") (100 . "AcDbEntity") (67 . 0) (410 . "Model") (8 . "0") (100 . "AcDbBlockReference") (66 . 1) (2 . "KabelGeul_20261014_10101_1") (10 10.0 8.0 0.0) (41 . 1.5) (42 . 1.0) (43 . 1.0) (50 . 1.5708) (70 . 0) (71 . 0) (44 . 0.0) (45 . 0.0) (210 0.0 0.0 1.0))
+((-1 . <Entity name: 210d25d5930>) (0 . "INSERT") (330 . <Entity name: 210866269f0>) (5 . "38B") (100 . "AcDbEntity") (67 . 0) (410 . "Model") (8 . "0") (100 . "AcDbBlockReference") (66 . 1) (2 . "KabelGeul_20261014_105337_1") (10 10.0 8.0 0.0) (41 . 1.5) (42 . 1.0) (43 . 1.0) (50 . 1.5708) (70 . 0) (71 . 0) (44 . 0.0) (45 . 0.0) (210 0.0 0.0 1.0))
 
 Command: (entmod (subst (cons 42 1.5) (assoc 42 (entget original)) (entget original)))
-((-1 . <Entity name: 25f6ae7e130>) (0 . "INSERT") (330 . <Entity name: 25f665269f0>) (5 . "38B") (100 . "AcDbEntity") (67 . 0) (410 . "Model") (8 . "0") (100 . "AcDbBlockReference") (66 . 1) (2 . "KabelGeul_20261014_10101_1") (10 10.0 8.0 0.0) (41 . 1.5) (42 . 1.5) (43 . 1.0) (50 . 1.5708) (70 . 0) (71 . 0) (44 . 0.0) (45 . 0.0) (210 0.0 0.0 1.0))
+((-1 . <Entity name: 210d25d5930>) (0 . "INSERT") (330 . <Entity name: 210866269f0>) (5 . "38B") (100 . "AcDbEntity") (67 . 0) (410 . "Model") (8 . "0") (100 . "AcDbBlockReference") (66 . 1) (2 . "KabelGeul_20261014_105337_1") (10 10.0 8.0 0.0) (41 . 1.5) (42 . 1.5) (43 . 1.0) (50 . 1.5708) (70 . 0) (71 . 0) (44 . 0.0) (45 . 0.0) (210 0.0 0.0 1.0))
 
 Command: (entmod (subst (cons 43 1.5) (assoc 43 (entget original)) (entget original)))
-((-1 . <Entity name: 25f6ae7e130>) (0 . "INSERT") (330 . <Entity name: 25f665269f0>) (5 . "38B") (100 . "AcDbEntity") (67 . 0) (410 . "Model") (8 . "0") (100 . "AcDbBlockReference") (66 . 1) (2 . "KabelGeul_20261014_10101_1") (10 10.0 8.0 0.0) (41 . 1.5) (42 . 1.5) (43 . 1.5) (50 . 1.5708) (70 . 0) (71 . 0) (44 . 0.0) (45 . 0.0) (210 0.0 0.0 1.0))
+((-1 . <Entity name: 210d25d5930>) (0 . "INSERT") (330 . <Entity name: 210866269f0>) (5 . "38B") (100 . "AcDbEntity") (67 . 0) (410 . "Model") (8 . "0") (100 . "AcDbBlockReference") (66 . 1) (2 . "KabelGeul_20261014_105337_1") (10 10.0 8.0 0.0) (41 . 1.5) (42 . 1.5) (43 . 1.5) (50 . 1.5708) (70 . 0) (71 . 0) (44 . 0.0) (45 . 0.0) (210 0.0 0.0 1.0))
 
 Command: (entupd original)
-<Entity name: 25f6ae7e130>
+<Entity name: 210d25d5930>
 
 Command: _ZOOM
 

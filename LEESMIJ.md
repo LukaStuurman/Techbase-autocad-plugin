@@ -1,4 +1,4 @@
-# Techbase Blocks 1.9.0
+# Techbase Blocks 1.9.1
 
 Gebruik zes tabs in AutoCAD en Civil 3D voor Windows: Blocks, Lichtmasten, Enexis kabelchecker, Richtingen, Instellingen en Kabelgeul.
 
@@ -131,7 +131,7 @@ De Excel-dependencies staan per CAD-generatie in een aparte map `excel` en worde
 
 ## Kabelgeul
 
-De zesde tab **Kabelgeul** is nu een **instellingenpagina**. De tabel bevat een vaste regel voor elk van de 18 kabeltypen. Stel per type de standaardtekst voor beide zijden, vormen (Enkel/Dubbel/Drie/Combi), twee-zijdigheid, mantel en eventueel een nieuwe bak in. De standaard mantelspecificatie staat onder de tabel. Wijzigingen worden automatisch opgeslagen en blijven na herstart behouden. De automatische Ri-nummering en Rooien-prefix uit Omni blijven actief.
+De zesde tab **Kabelgeul** is nu een **instellingenpagina**. De tabel bevat een vaste regel voor elk van de 18 kabeltypen. Stel per type de standaardtekst voor beide zijden, vormen (Enkel/Dubbel/Drie/Combi), twee-zijdigheid, mantel en eventueel een nieuwe bak in. Standaarden gelden alleen bij nieuw plaatsen en voor nieuw ingevoegde rijen. Kopieren en bewerken lezen de bestaande volledige tekst; ook bij een kabeltypewissel wordt die niet opnieuw met de standaardtekst gevuld. De standaard mantelspecificatie staat onder de tabel. Wijzigingen worden automatisch opgeslagen en blijven na herstart behouden. De volledige standaardtekst is zichtbaar en bewerkbaar: K01 t/m K12 tonen Ri 1 t/m Ri 12; ook de overige types tonen hun eigen standaardtekst. De ingevulde tekst wordt precies zo geplaatst, inclusief een bewust lege tekst. Er wordt bij tekenen geen verborgen Ri-nummer of Rooien-prefix toegevoegd. Eerder opgeslagen regels krijgen eenmalig hun vroegere impliciete voorvoegsel, zodat de bedoelde nieuwe plaatsingen gelijk blijven.
 
 **Kabelgeul plaatsen** werkt zoals hiervoor: selecteer de eerste kabel/polyline en een afstandspunt. Het invoervenster toont de herkende kabels en gebruikt de bewaarde standaarden van hun kabeltypen. Je kunt de invoer daar wijzigen voordat je Direct of Zwevend kiest. De tabel in de tab is dus geen lijst met kabels die alvast geplaatst wordt.
 
@@ -180,4 +180,4 @@ De concrete testresultaten en resterende praktijktests staan in `VALIDATIE.md` b
 
 ## Opnieuw bouwen
 
-Gebruik een .NET 10 SDK en voer `Build.ps1 -Dotnet <pad-naar-dotnet.exe>` uit. De build haalt Autodesk AutoCAD.NET API 25.0.1 en 26.0.0 via NuGet op en bouwt de Excel-worker voor beide runtimes. De Autodesk API-DLL's worden niet meegeleverd: die levert de hostapplicatie. De uitvoer staat in `dist/1.9.0` en in `Techbase Blocks 1.9.0.zip`. Versiegebonden DLL-mappen maken een update mogelijk zonder een reeds geladen oude DLL te overschrijven; herstart de CAD-toepassing om de nieuwe versie te laden.
+Gebruik een .NET 10 SDK en voer `Build.ps1 -Dotnet <pad-naar-dotnet.exe>` uit. De build haalt Autodesk AutoCAD.NET API 25.0.1 en 26.0.0 via NuGet op en bouwt de Excel-worker voor beide runtimes. De Autodesk API-DLL's worden niet meegeleverd: die levert de hostapplicatie. De uitvoer staat in `dist/1.9.1` en in `Techbase Blocks 1.9.1.zip`. Versiegebonden DLL-mappen maken een update mogelijk zonder een reeds geladen oude DLL te overschrijven; herstart de CAD-toepassing om de nieuwe versie te laden.

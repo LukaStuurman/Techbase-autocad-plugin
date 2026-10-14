@@ -9,7 +9,7 @@ from package_paths import ROOT, BUNDLE, dll
 sys.stdout.reconfigure(encoding='utf-8')
 out = ROOT / 'validation/Kabelgeul'
 edit = {'Rows': [
-    {'Type': 'K10', 'Text': '150Al gewijzigd', 'Shape': 'Drie', 'Mantel': 'X'},
+    {'Type': 'K10', 'Text': 'Ri 10 150Al gewijzigd', 'Shape': 'Drie', 'Mantel': 'X'},
     {'Type': 'MS Bestaand', 'Text': 'MS 95Cu gewijzigd', 'Shape': 'Combi', 'TwoSides': True, 'Text2': 'Zijde 2 gewijzigd', 'Shape2': 'Drie', 'Mantel': 'B', 'NewTray': True},
     {'Type': 'Rooien', 'Text': '50Cu gewijzigd', 'Shape': 'Dubbel', 'Mantel': 'B'}], 'MantelSpec': 'HDPE 200 gewijzigd'}
 edit_path = out / 'edit-input.json'

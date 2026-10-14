@@ -7,9 +7,34 @@ internal sealed record KabelgeulData(KabelgeulRow[] Rows, string MantelSpec = ""
     internal static readonly string[] Types = Enumerable.Range(1, 12).Select(i => $"K{i:00}").Concat(new[] { "MS Nieuw", "MS Bestaand", "MS Rooien", "Bestaand", "Rooien", "Half rooien" }).ToArray();
     internal static readonly string[] Shapes = { "Enkel", "Dubbel", "Drie", "Combi" };
     internal static KabelgeulData Default => new(new[] { new KabelgeulRow(), new KabelgeulRow("K02"), new KabelgeulRow("Bestaand") });
+    internal static string DefaultText(string type) => type.StartsWith("K", StringComparison.Ordinal) && Types.Contains(type)
+        ? "Ri " + int.Parse(type[1..]) : type is "Rooien" or "Half rooien" or "MS Rooien" ? "(Rooien) kabel" : type == "Bestaand" ? "Bestaande kabel" : type;
+    private static string LegacyText(string type, string? text)
+    {
+        var value = string.IsNullOrEmpty(text) ? DefaultText(type) : text;
+        if (type.StartsWith("K", StringComparison.Ordinal) && Types.Contains(type))
+        {
+            var prefix = DefaultText(type);
+            return value == prefix || value.StartsWith(prefix + " ", StringComparison.Ordinal) ? value : prefix + " " + value;
+        }
+        if (type is "Rooien" or "Half rooien" or "MS Rooien")
+        {
+            if (value.StartsWith("(Te rooien) ", StringComparison.Ordinal)) value = value[12..].Trim();
+            if (!value.StartsWith("(Rooien) ", StringComparison.Ordinal)) value = "(Rooien) " + value;
+        }
+        return value;
+    }
+    internal static void MigrateText(Settings settings)
+    {
+        if (settings.KabelgeulTextFormat >= 1) return;
+        foreach (var (type, row) in settings.KabelgeulDefaults.ToArray())
+            settings.KabelgeulDefaults[type] = row with { Text = LegacyText(type, row.Text), Text2 = LegacyText(type == "Half rooien" ? "Bestaand" : type, row.Text2) };
+        settings.KabelgeulTextFormat = 1;
+    }
     internal static KabelgeulRow Rule(Settings settings, string type)
     {
-        var row = settings.KabelgeulDefaults.GetValueOrDefault(type) ?? new KabelgeulRow(type);
+        MigrateText(settings);
+        var row = settings.KabelgeulDefaults.GetValueOrDefault(type) ?? new KabelgeulRow(type, DefaultText(type), Text2: DefaultText(type == "Half rooien" ? "Bestaand" : type));
         return row with { Type = type, Text = row.Text ?? "", Text2 = row.Text2 ?? "", Mantel = row.Mantel ?? "",
             Shape = type == "Half rooien" ? "Dubbel" : Shapes.Contains(row.Shape) ? row.Shape : "Enkel",
             Shape2 = Shapes.Contains(row.Shape2) ? row.Shape2 : "Enkel", TwoSides = type != "Half rooien" && row.TwoSides };

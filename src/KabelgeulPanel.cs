@@ -8,10 +8,12 @@ internal sealed class KabelgeulEditor : UserControl
     internal DataGridView Grid { get; } = new() { Dock = DockStyle.Fill, AllowUserToAddRows = false, AllowUserToDeleteRows = false, AutoGenerateColumns = false, RowHeadersWidth = 32, SelectionMode = DataGridViewSelectionMode.FullRowSelect };
     internal TextBox MantelSpecBox { get; } = new() { Width = 270 };
     private readonly bool rules;
+    private readonly bool useDefaultsOnTypeChange;
     private bool updating;
-    internal KabelgeulEditor(KabelgeulData data, bool rules = false)
+    internal KabelgeulEditor(KabelgeulData data, bool rules = false, bool useDefaultsOnTypeChange = true)
     {
         this.rules = rules;
+        this.useDefaultsOnTypeChange = useDefaultsOnTypeChange;
         Dock = DockStyle.Fill;
         var layout = new TableLayoutPanel { Dock = DockStyle.Fill, RowCount = 3, ColumnCount = 1 };
         layout.ColumnStyles.Add(new(SizeType.Percent, 100));
@@ -51,13 +53,12 @@ internal sealed class KabelgeulEditor : UserControl
             try
             {
                 var row = Grid.Rows[args.RowIndex];
-                if (!rules && args.ColumnIndex == 0 && row.Tag is string oldType)
+                if (!rules && useDefaultsOnTypeChange && args.ColumnIndex == 0 && row.Tag is string oldType)
                 {
                     var next = KabelgeulData.Rule(Plugin.Preferences, Convert.ToString(row.Cells[0].Value) ?? "K01");
                     var old = KabelgeulData.Rule(Plugin.Preferences, oldType);
-                    // Keep custom descriptions; replace an empty/default description with the new type's default.
-                    if (string.IsNullOrEmpty(Convert.ToString(row.Cells[1].Value)) || Convert.ToString(row.Cells[1].Value) == old.Text) row.Cells[1].Value = next.Text;
-                    if (string.IsNullOrEmpty(Convert.ToString(row.Cells[4].Value)) || Convert.ToString(row.Cells[4].Value) == old.Text2) row.Cells[4].Value = next.Text2;
+                    if (Convert.ToString(row.Cells[1].Value) == old.Text) row.Cells[1].Value = next.Text;
+                    if (Convert.ToString(row.Cells[4].Value) == old.Text2) row.Cells[4].Value = next.Text2;
                 }
                 row.Tag = Convert.ToString(row.Cells[0].Value); UpdateRow(row);
             }
@@ -116,7 +117,7 @@ internal sealed class KabelgeulPanel : UserControl
         { var button = new Button { Text = item.Item1, AutoSize = true }; var command = item.Item2; button.Click += (_, _) => Queue(command); buttons.Controls.Add(button); }
         layout.Controls.Add(buttons, 0, 2);
         var footer = new FlowLayoutPanel { AutoSize = true, Dock = DockStyle.Fill, FlowDirection = FlowDirection.TopDown };
-        var notes = new Label { Text = "Deze tabel bepaalt de standaardteksten en opmaak bij nieuwe geulen. Wijzigingen worden automatisch bewaard.\nPlaatsen opent het kabelvenster met de gevonden kabels. Daar kun je rijen vóór of na een geselecteerde rij invoegen.\nBewerken past een gekozen geul volledig aan, inclusief iconen, vormen, mantels en bakken.\nRi-nummer en Rooien-prefix worden zoals bij Omni toegevoegd. Mantel: X of een groepscode.", AutoSize = true, MaximumSize = new Size(700, 0) };
+        var notes = new Label { Text = "Deze tabel bepaalt de standaardteksten en opmaak bij nieuwe geulen. Wijzigingen worden automatisch bewaard.\nDe volledige tekst is zichtbaar en bewerkbaar, inclusief Ri-nummer. Wat je invult wordt precies zo geplaatst.\nPlaatsen opent het kabelvenster met de gevonden kabels. Daar kun je rijen vóór of na een geselecteerde rij invoegen.\nBewerken en kopiëren behouden bestaande teksten; standaarden worden niet opnieuw toegepast. Mantel: X of een groepscode.", AutoSize = true, MaximumSize = new Size(700, 0) };
         footer.Controls.Add(notes);
         SizeChanged += (_, _) => { notes.MaximumSize = new Size(Math.Max(180, ClientSize.Width - 30), 0); status.MaximumSize = notes.MaximumSize; };
         footer.Controls.Add(status); layout.Controls.Add(footer, 0, 3); Controls.Add(layout); UiTypography.Apply(this);
@@ -126,7 +127,7 @@ internal sealed class KabelgeulPanel : UserControl
     {
         if (saving) return true;
         saving = true;
-        try { var data = Editor.CaptureData(); Plugin.Preferences.KabelgeulDefaults = data.Rows.ToDictionary(r => r.Type, StringComparer.OrdinalIgnoreCase); Plugin.Preferences.KabelgeulMantelSpec = data.MantelSpec; Plugin.Preferences.Save(); Report("Standaardinstellingen opgeslagen."); return true; }
+        try { var data = Editor.CaptureData(); Plugin.Preferences.KabelgeulDefaults = data.Rows.ToDictionary(r => r.Type, StringComparer.OrdinalIgnoreCase); Plugin.Preferences.KabelgeulTextFormat = 1; Plugin.Preferences.KabelgeulMantelSpec = data.MantelSpec; Plugin.Preferences.Save(); Report("Standaardinstellingen opgeslagen."); return true; }
         catch (Exception ex) { Report(ex.Message); return false; }
         finally { saving = false; }
     }

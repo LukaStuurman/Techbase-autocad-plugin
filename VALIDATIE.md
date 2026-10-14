@@ -1,3 +1,13 @@
+## Volledige kabelgeulteksten behouden - versie 1.9.1, 14 oktober 2026
+
+- De tab toont de volledige standaardtekst voor beide zijden: Ri 1 t/m Ri 12 en de oorspronkelijke defaults voor de overige kabeltypen. De tekst is bewerkbaar en wordt letterlijk geplaatst; leeg blijft leeg. Nieuwe instellingen hebben een tekstformaatversie. Oude bewaarde regels krijgen eenmaal het voorheen bij tekenen toegevoegde voorvoegsel; een nieuwe wijziging wordt niet opnieuw aangevuld.
+- Kopieren en bewerken lezen de volledige opgeslagen attribuuttekst zonder Ri-/Rooien-prefix te strippen. De tekenadapter voegt ook geen prefix/default toe. Bij een typewissel in deze vensters behouden beide zijden hun tekst; nieuwe ingevoegde rijen krijgen de huidige standaard.
+- **56 formulier-/instellingencontroles slagen**, waaronder alle twaalf zichtbare Ri-defaults, eenmalige migratie, herladen, aanpassen/leegmaken, beide zijden en typewissels bij nieuw plaatsen versus bestaande data. Brede en smalle tab gerenderd.
+- **6 gerichte commando-/DXF-controles slagen**: eigen tekst zonder Ri-/Rooien-prefix, bewust lege tekst, beide zijden, twee opeenvolgende kopieen en tweemaal bewerken met afwijkende actuele defaults. Alle teksten per kabeltype in drie opgeslagen geulen onafhankelijk gelezen.
+- De bestaande **8 standaardplaatsingscontroles**, **27 Kabelgeul-commando-/DXF-controles**, **23 bewerkingscontroles** en **410 blockcontroles** slagen opnieuw. Een werkelijk opgeslagen nieuwe geul gebruikt de bewaarde eigen tekst zonder extra Ri-nummer. Beide API-builds gemaakt.
+
+Bewijs: `validation/Kabelgeul/formulier.json`, `complete-text.json`, `defaults.json`, `editing.json`, bijbehorende scripts/logs en DXF. Tests in AutoCAD 2026 Core Console; volledige desktopbediening en AutoCAD/Civil 3D 2025/2027 vragen nog een praktijktest. Bron-Lisp en eerder geplaatste geulen blijven behouden; de aangepaste module is reproduceerbaar uit dezelfde bronhash.
+
 ## Automatische richtingsteksten en bestaande kabelkleur - versie 1.9.0, 14 oktober 2026
 
 - LS/OV automatisch langs een tijdelijke dwarslijn, een gekozen LINE of twee punten. Kabelvolgorde, twaalf richtingen, dubbele richting eenmaal, afzonderlijke bestaande kabels, gebogen curves/tangenten, omgekeerde detectie, nul-lengte, geen raakvlak, verborgen/vergrendelde lagen en gedraaid/verschoven UCS gecontroleerd.

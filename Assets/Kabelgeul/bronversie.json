@@ -1,7 +1,7 @@
 {
   "Source": "Reference/Techbase lisp pakket.lsp",
   "SourceSHA256": "b3923054fbd878b09c16f1738b5d61eb676fdb42a65e5d39ef2bf519cf1f4aec",
-  "GeneratedSHA256": "84cd0052b7edbc261f4169fd602034f9f41a28eadac8ea7a4fabba7a1ab9229b",
+  "GeneratedSHA256": "d206b9999a7bdd0a3394d86764bef871154f748844107979dba1d3068457d92a",
   "Module": "KabelGeul Omni 2026-08-06ad",
   "Adapters": [
     "private command/function namespace",
@@ -14,6 +14,7 @@
     "restore command state",
     "Undo Begin/End",
     "full geul editing with unique rebuild and rollback",
-    "stored floating code layout"
+    "stored floating code layout",
+    "complete editable labels preserved verbatim; no prefix reapplication"
   ]
 }

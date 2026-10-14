@@ -1,4 +1,4 @@
-Redirect stdout (file: C:\Users\LUKAST~1\AppData\Local\Temp\accc973122).
+Redirect stdout (file: C:\Users\LUKAST~1\AppData\Local\Temp\accc823042).
 
 AcCoreConsole: StdOutConsoleMode: processed-output: disabled,auto
 
@@ -46,7 +46,7 @@ Command:
 
 Command: _NETLOAD
 
-Assembly file name: "C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.9.0/Techbase.Blocks.bundle/Contents/R25-1.9.0/Techbase.Blocks.dll"
+Assembly file name: "C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.9.1/Techbase.Blocks.bundle/Contents/R25-1.9.1/Techbase.Blocks.dll"
 
 
 
@@ -414,7 +414,7 @@ Loading AECC ETransmit...
 
 Exception in c:\program files\autodesk\civil 3d 2026 object enabler\aecccorebase.crx ARX Command
 
-Unhandled Exception c0000027 (c0000027h) at address 3717506dh
+Unhandled Exception c0000027 (c0000027h) at address daeb506dh
 
 >>>Responding: OK.
 

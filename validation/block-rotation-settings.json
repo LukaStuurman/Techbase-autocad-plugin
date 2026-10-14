@@ -10,6 +10,7 @@
   "DirectionTextHeight": 0.45,
   "ExistingCableBlack": false,
   "KabelgeulDefaults": {},
+  "KabelgeulTextFormat": 1,
   "KabelgeulMantelSpec": "",
   "BlockRotationModes": {
     "9dbea1c0c575423e80d3feede50deff1": "BeforePoint",

@@ -7,9 +7,9 @@ from package_paths import ROOT, BUNDLE, dll
 
 out=ROOT/'validation/Kabelgeul'
 settings=out/'placement-defaults.json'
-settings.write_text(json.dumps({'KabelgeulDefaults':{
-    'K10':{'Type':'K10','Text':'150Al preset','Shape':'Drie','Mantel':'X'},
-    'K01':{'Type':'K01','Text':'185Al preset','Shape':'Combi','TwoSides':True,'Text2':'16Cu preset','Shape2':'Dubbel','NewTray':True}},
+settings.write_text(json.dumps({'KabelgeulTextFormat':1,'KabelgeulDefaults':{
+    'K10':{'Type':'K10','Text':'Eigen tekst 150Al preset','Shape':'Drie','Mantel':'X'},
+    'K01':{'Type':'K01','Text':'Ri 1 185Al preset','Shape':'Combi','TwoSides':True,'Text2':'Ri 1 16Cu preset','Shape2':'Dubbel','NewTray':True}},
     'KabelgeulMantelSpec':'PE 250 preset'},indent=2),encoding='utf-8')
 lines=['_NETLOAD',f'"{dll().as_posix()}"',f'(load "{(BUNDLE/"Contents/Assets/Kabelgeul/Techbase.Kabelgeul.lsp").as_posix()}")',
     '(setvar "OSMODE" 0)', '(setvar "WIPEOUTFRAME" 2)', '(setvar "ATTREQ" 0)',
@@ -36,7 +36,7 @@ for i in range(0,len(rows)-1,2):
     record.append(pair)
 checks=[]
 attributes=[r for r in records if r.get(0)=='ATTRIB']
-for text in ['Ri 10 150Al preset','Ri 1 185Al preset','Ri 1 16Cu preset','PE 250 preset']:
+for text in ['Eigen tekst 150Al preset','Ri 1 185Al preset','Ri 1 16Cu preset','PE 250 preset']:
     assert any(r.get(1)==text for r in attributes),text
     checks.append('Saved default text: '+text)
 metadata={r[2]:r[1] for r in records if r.get(0)=='ATTDEF'}

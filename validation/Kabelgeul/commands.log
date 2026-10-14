@@ -1,4 +1,4 @@
-Redirect stdout (file: C:\Users\LUKAST~1\AppData\Local\Temp\accc929282).
+Redirect stdout (file: C:\Users\LUKAST~1\AppData\Local\Temp\accc102802).
 AcCoreConsole: StdOutConsoleMode: processed-output: disabled,auto
 AutoCAD Core Engine Console - Copyright 2025 Autodesk, Inc.  All rights reserved. (W.122.0.0)
 
@@ -20,13 +20,10 @@ Command:
 Command:
 
 Command:
-Command: _NETLOAD
-Assembly file name: "C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.9.0/Techbase.Blocks.bundle/Contents/R25-1.9.0/Techbase.Blocks.dll"
-
 Command: (defun c:KGOMNI () (princ "ORIGINAL_UNCHANGED"))
 C:KGOMNI
 
-Command: (if (not *tbkg:ready*) (load "C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.9.0/Techbase.Blocks.bundle/Contents/Assets/Kabelgeul/Techbase.Kabelgeul.lsp"))
+Command: (if (not *tbkg:ready*) (load "C:/Users/LukaStuurmanHDBTechb/AppData/Roaming/Autodesk/ApplicationPlugins/Techbase.Blocks.bundle/Contents/Assets/Kabelgeul/Techbase.Kabelgeul.lsp"))
 
 Techbase Kabelgeul geladen.C:TBGEULCODE
 
@@ -54,7 +51,6 @@ Enter an option [?/Make/Set/New/Rename/ON/OFF/Color/Ltype/LWeight/TRansparency/M
 New color [Truecolor/COlorbook] : 3
 
 Enter name list of layer(s) for color 3 (green) <0>: "Aansluiting LS K01"
-CoreHeartBeat
 Enter an option [?/Make/Set/New/Rename/ON/OFF/Color/Ltype/LWeight/TRansparency/MATerial/Plot/Freeze/Thaw/LOck/Unlock/stAte/Description/rEconcile/Xref]:
 
 Command: (entmake (list (cons 0 "LINE") (cons 8 "Aansluiting LS K01") (cons 10 (list 0.0 0.0 0.0)) (cons 11 (list 80.0 0.0 0.0))))
@@ -86,7 +82,7 @@ Enter the number of operations to undo or [Auto/Control/BEgin/End/Mark/Back] <1>
 Command:
 
 Command: (setq firstgeul (entlast))
-<Entity name: 1306b962930>
+<Entity name: 2b38223c930>
 
 Command: (princ (strcat "\nFRAME_DIRECT=" (itoa (getvar "WIPEOUTFRAME"))))
 
@@ -94,7 +90,7 @@ FRAME_DIRECT=2"\nFRAME_DIRECT=2"
 
 Command: (princ (strcat "\nSOURCE_DATA=" (vl-prin1-to-string (tbkg:copy-data-from-insert firstgeul))))
 
-SOURCE_DATA=(4 ("K01" "Bestaand" "Half rooien" "MS Nieuw") ("150Al" "Bestaand 95Cu" "Rooien 50Cu" "MS 240Al") (nil nil T nil) ("X" "A" nil "A") (nil nil T nil) (T nil nil nil) ("150Al+" "" "Behouden 50Cu" "") (nil nil nil T) "PVC 160" (T nil nil nil) (T nil nil nil) (nil nil nil nil) (nil nil nil nil))"\nSOURCE_DATA=(4 (\"K01\" \"Bestaand\" \"Half rooien\" \"MS Nieuw\") (\"150Al\" \"Bestaand 95Cu\" \"Rooien 50Cu\" \"MS 240Al\") (nil nil T nil) (\"X\" \"A\" nil \"A\") (nil nil T nil) (T nil nil nil) (\"150Al+\" \"\" \"Behouden 50Cu\" \"\") (nil nil nil T) \"PVC 160\" (T nil nil nil) (T nil nil nil) (nil nil nil nil) (nil nil nil nil))"
+SOURCE_DATA=(4 ("K01" "Bestaand" "Half rooien" "MS Nieuw") ("Ri 1 150Al" "Bestaand 95Cu" "Rooien 50Cu" "MS 240Al") (nil nil T nil) ("X" "A" nil "A") (nil nil T nil) (T nil nil nil) ("Ri 1 150Al+" "" "Behouden 50Cu" "") (nil nil nil T) "PVC 160" (T nil nil nil) (T nil nil nil) (nil nil nil nil) (nil nil nil nil))"\nSOURCE_DATA=(4 (\"K01\" \"Bestaand\" \"Half rooien\" \"MS Nieuw\") (\"Ri 1 150Al\" \"Bestaand 95Cu\" \"Rooien 50Cu\" \"MS 240Al\") (nil nil T nil) (\"X\" \"A\" nil \"A\") (nil nil T nil) (T nil nil nil) (\"Ri 1 150Al+\" \"\" \"Behouden 50Cu\" \"\") (nil nil nil T) \"PVC 160\" (T nil nil nil) (T nil nil nil) (nil nil nil nil) (nil nil nil nil))"
 
 Command: (princ (strcat "\nGUARD=" (if (TBKG_NATIVE_GUARD firstgeul) "PASS" "FAIL")))
 
@@ -211,6 +207,7 @@ Current layer:  "0"
 Enter an option [?/Make/Set/New/Rename/ON/OFF/Color/Ltype/LWeight/TRansparency/MATerial/Plot/Freeze/Thaw/LOck/Unlock/stAte/Description/rEconcile/Xref]: _Lock
 
 Enter name list of layer(s) to lock or <select objects>: "E_LV_CROSS_SECTION"
+CoreHeartBeat
 Enter an option [?/Make/Set/New/Rename/ON/OFF/Color/Ltype/LWeight/TRansparency/MATerial/Plot/Freeze/Thaw/LOck/Unlock/stAte/Description/rEconcile/Xref]:
 
 Command: _TBKABELGEUL
@@ -224,7 +221,7 @@ Selecteer eerste polyline / begin lange lijn of bestaande KabelGeul: 65,0,0
 Afstandspunt richting halve vierkant: 65,8,0
 System.InvalidOperationException: Laag 'E_LV_CROSS_SECTION' is vergrendeld. Kies een andere laag of ontgrendel deze zelf.
    at Techbase.Blocks.LayerResolver.CheckLayer(Transaction tr, ObjectId id) in C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\src\LayerResolver.cs:line 63
-   at Techbase.Blocks.Plugin.CheckKabelgeulLayer(ResultBuffer args) in C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\src\KabelgeulCommands.cs:line 105
+   at Techbase.Blocks.Plugin.CheckKabelgeulLayer(ResultBuffer args) in C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\src\KabelgeulCommands.cs:line 106
    at Autodesk.AutoCAD.Runtime.CommandClass.InvokeWorker(MethodInfo mi, Object commandObject, Boolean bLispFunction)
    at Autodesk.AutoCAD.Runtime.CommandClass.InvokeWorkerWithExceptionFilter(MethodInfo mi, Object commandObject, Boolean bLispFunction)
    at Autodesk.AutoCAD.Runtime.CommandClass.Invoke(MethodInfo mi, Boolean bLispFunction)

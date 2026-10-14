@@ -207,23 +207,7 @@
   (and (>= (strlen txt) n)
        (= (substr txt 1 n) prefix)))
 
-(defun tbkg:prefixed-label (typ txt / prefix base)
-  (if (null txt) (setq txt ""))
-  (setq base (if (= txt "") (tbkg:type->label typ) txt))
-  (cond
-    ((or (= typ "Rooien") (= typ "Half rooien") (= typ "MS Rooien"))
-     (setq prefix "(Rooien) ")
-     (if (tbkg:starts-with base "(Te rooien) ")
-       (setq base (tbkg:trim (substr base (1+ (strlen "(Te rooien) "))))))
-     (if (tbkg:starts-with base prefix)
-       base
-       (strcat prefix base)))
-    ((wcmatch typ "K##")
-     (setq prefix (strcat "Ri " (itoa (atoi (substr typ 2))) " "))
-     (if (tbkg:starts-with base prefix)
-       base
-       (strcat prefix base)))
-    (T base)))
+(defun tbkg:prefixed-label (typ txt) (if txt txt ""))
 
 (defun tbkg:midpoint (p1 p2)
   (mapcar '(lambda (a b) (/ (+ a b) 2.0)) p1 p2))
@@ -341,19 +325,7 @@
        (setq n (1- n)))
      result)))
 
-(defun tbkg:strip-known-prefix (txt / out n p)
-  (setq out (tbkg:trim txt))
-  (setq n 12)
-  (while (>= n 1)
-    (setq p (strcat "Ri " (itoa n) " "))
-    (if (tbkg:starts-with out p)
-      (setq out (tbkg:trim (substr out (1+ (strlen p))))))
-    (setq n (1- n)))
-  (if (tbkg:starts-with out "(Te rooien) ")
-    (setq out (tbkg:trim (substr out (1+ (strlen "(Te rooien) "))))))
-  (if (tbkg:starts-with out "(Rooien) ")
-    (setq out (tbkg:trim (substr out (1+ (strlen "(Rooien) "))))))
-  out)
+(defun tbkg:strip-known-prefix (txt) (if txt txt ""))
 
 (defun tbkg:editor-item-point (item)
   (cond

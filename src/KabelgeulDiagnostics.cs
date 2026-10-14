@@ -59,6 +59,25 @@ internal static class KabelgeulDiagnostics
         using var panel = new KabelgeulPanel();
         Check(panel.Editor.Grid.Rows.Count == 18 && panel.Editor.Grid.Columns[0].ReadOnly, "tab is een vaste instelling per kabeltype");
         Check(!Descendants(panel).OfType<Button>().Any(b => b.Text.StartsWith("Rij ")), "tab bevat geen misleidende lijst met plaatsingsrijen");
+        Check(KabelgeulData.Types.Take(12).Select((type, i) => KabelgeulData.Rule(new Settings(), type).Text == "Ri " + (i + 1)).All(ok => ok), "standaardtekst toont Ri en het nummer voor alle twaalf richtingen");
+        var migrated = new Settings(); migrated.KabelgeulDefaults["K10"] = new KabelgeulRow("K10", "150Al", TwoSides:true, Text2:"Ri 10 16Cu");
+        KabelgeulData.MigrateText(migrated);
+        Check(migrated.KabelgeulDefaults["K10"].Text == "Ri 10 150Al" && migrated.KabelgeulDefaults["K10"].Text2 == "Ri 10 16Cu", "oude bewaarde regels krijgen eenmaal het eerder impliciete voorvoegsel");
+        migrated.KabelgeulDefaults["K10"] = migrated.KabelgeulDefaults["K10"] with { Text = "Eigen tekst", Text2 = "" };
+        KabelgeulData.MigrateText(migrated);
+        Check(KabelgeulData.Rule(migrated,"K10").Text == "Eigen tekst" && KabelgeulData.Rule(migrated,"K10").Text2 == "", "aangepaste volledige tekst en bewust lege tekst worden niet opnieuw aangevuld");
+        using (var existingEditor = new KabelgeulEditor(new KabelgeulData(new[] { new KabelgeulRow("K01", "Ri 1", TwoSides:true, Text2:"" ) }), useDefaultsOnTypeChange:false))
+        {
+            existingEditor.Grid.Rows[0].Cells[0].Value = "K10";
+            Check(existingEditor.CaptureData().Rows[0].Text == "Ri 1" && existingEditor.CaptureData().Rows[0].Text2 == "", "kabeltype wijzigen bij bewerken/kopieren behoudt beide bestaande teksten zonder defaults");
+        }
+        using (var newEditor = new KabelgeulEditor(new KabelgeulData(new[] { KabelgeulData.Rule(new Settings(),"K01") })))
+        {
+            newEditor.Grid.Rows[0].Cells[0].Value = "K10";
+            Check(newEditor.CaptureData().Rows[0].Text == "Ri 10", "bij nieuw plaatsen wisselt onaangepaste standaardtekst mee met kabeltype");
+            newEditor.Grid.Rows[0].Cells[1].Value = "Eigen kabel"; newEditor.Grid.Rows[0].Cells[0].Value = "K12";
+            Check(newEditor.CaptureData().Rows[0].Text == "Eigen kabel", "eigen tekst blijft ook bij nieuw plaatsen behouden na typewissel");
+        }
         foreach (var width in new[] { 380, 1040 })
         {
             panel.Size = new Size(width, 650); panel.CreateControl(); panel.PerformLayout();
@@ -79,7 +98,7 @@ internal static class KabelgeulDiagnostics
             var settings = new Settings { KabelgeulMantelSpec = "PVC 160" };
             settings.KabelgeulDefaults["K10"] = new KabelgeulRow("K10", "150Al", "Combi", true, "OV 16Cu", "Dubbel", "A", true);
             settings.Save(); var reloaded = Settings.Read();
-            Check(KabelgeulData.Rule(reloaded,"K10") == settings.KabelgeulDefaults["K10"] && reloaded.KabelgeulMantelSpec == "PVC 160", "standaardteksten en alle opmaakregels blijven na herstart bewaard");
+            Check(KabelgeulData.Rule(reloaded,"K10") == KabelgeulData.Rule(settings,"K10") && reloaded.KabelgeulMantelSpec == "PVC 160", "standaardteksten en alle opmaakregels blijven na herstart bewaard");
             var detected = new KabelgeulData(new[] { new KabelgeulRow("K10"), new KabelgeulRow("K01") }).WithDefaults(reloaded);
             Check(detected.Rows[0] == settings.KabelgeulDefaults["K10"] && detected.Rows[1].Type == "K01", "standaarden volgen gedetecteerd kabeltype en behouden kabelvolgorde");
             reloaded.KabelgeulDefaults["Half rooien"] = new KabelgeulRow("Half rooien", Shape:"Combi", TwoSides:true);

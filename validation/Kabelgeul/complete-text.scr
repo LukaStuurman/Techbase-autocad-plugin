@@ -1,0 +1,39 @@
+(load "C:/Users/LukaStuurmanHDBTechb/AppData/Roaming/Autodesk/ApplicationPlugins/Techbase.Blocks.bundle/Contents/Assets/Kabelgeul/Techbase.Kabelgeul.lsp")
+(setvar "OSMODE" 0)
+(setvar "ATTREQ" 0)
+(entmake (list (cons 0 "LINE") (cons 10 (list 0.0 0.0 0.0)) (cons 11 (list 80.0 0.0 0.0))))
+_ZOOM
+_E
+_REGEN
+_TBKABELGEUL
+10,0,0
+10,8,0
+_Direct
+_ZOOM
+_E
+_REGEN
+_TBGEULCOPY
+10,4,0
+30,0,0
+30,8,0
+_Direct
+_ZOOM
+_E
+_REGEN
+_TBGEULCOPY
+30,4,0
+50,0,0
+50,8,0
+_Direct
+_ZOOM
+_E
+_REGEN
+_TBGEULEDIT
+10,4,0
+_TBGEULEDIT
+10,4,0
+_DXFOUT
+"C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/validation/Kabelgeul/Kabelgeul - volledige tekst.dxf"
+16
+_QUIT
+_Y

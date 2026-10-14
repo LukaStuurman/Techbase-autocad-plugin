@@ -1,17 +1,18 @@
 {
+  "KabelgeulTextFormat": 1,
   "KabelgeulDefaults": {
     "K10": {
       "Type": "K10",
-      "Text": "150Al preset",
+      "Text": "Eigen tekst 150Al preset",
       "Shape": "Drie",
       "Mantel": "X"
     },
     "K01": {
       "Type": "K01",
-      "Text": "185Al preset",
+      "Text": "Ri 1 185Al preset",
       "Shape": "Combi",
       "TwoSides": true,
-      "Text2": "16Cu preset",
+      "Text2": "Ri 1 16Cu preset",
       "Shape2": "Dubbel",
       "NewTray": true
     }
