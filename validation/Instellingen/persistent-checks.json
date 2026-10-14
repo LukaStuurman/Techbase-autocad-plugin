@@ -1,0 +1,17 @@
+{
+  "Status": "PASS",
+  "Checks": [
+    "alle instellingen, standaardteksten, lege tekst en draai-instellingen herladen zonder verlies",
+    "getypte breedte onmiddellijk opgeslagen zonder het veld te verlaten",
+    "andere instelling wijzigen overschrijft de nog getypte breedte niet",
+    "resetknop herstelt nieuwe standaardbreedtes",
+    "reset herstelt hoogtes en masker",
+    "reset herstelt laagkeuze, richting, kleur en plaatsopties",
+    "reset herstelt Kabelgeul- en blockstandaarden",
+    "reset bewaart vorige aangepaste instellingen als kopie",
+    "reset toont direct de standaardbreedte in het scherm",
+    "opnieuw geopende Kabelgeul-tab toont resetstandaard",
+    "bestaande Kabelgeul-tab vernieuwt zonder oude regels terug te schrijven",
+    "mislukte reset behoudt actieve instellingen"
+  ]
+}

@@ -47,6 +47,15 @@ public sealed partial class Plugin : IExtensionApplication
         panel?.RefreshSettings();
         settingsPanel?.RefreshSettings();
     }
+    internal static string ResetSettings()
+    {
+        var defaults = new Settings(); KabelgeulData.MigrateText(defaults);
+        var catalog = new Catalog(DefaultPalette);
+        if (File.Exists(Settings.FilePath)) File.Copy(Settings.FilePath, Settings.FilePath + ".before-reset-" + DateTime.UtcNow.ToString("yyyyMMdd-HHmmss-fffffff") + ".json");
+        defaults.Save(); Preferences = defaults; Blocks = catalog;
+        panel?.RefreshTools(); panel?.RefreshSettings(); directionPanel?.RefreshSettings(); settingsPanel?.RefreshSettings(); kabelgeulPanel?.RefreshSettings();
+        return "Plugininstellingen en Kabelgeul-standaardteksten hersteld. Vorige instellingen bewaard als kopie.";
+    }
     [CommandMethod("TECHBASE", CommandFlags.Modal)]
     public void Show()
     {

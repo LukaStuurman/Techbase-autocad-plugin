@@ -22,7 +22,7 @@ public sealed class Settings
     public double DirectionTextHeight { get; set; } = 0.45;
     public double DirectionTextWidth045 { get; set; } = 4.80;
     public double DirectionTextWidth075 { get; set; } = 7.70;
-    public double ExistingDirectionTextWidth045 { get; set; } = 7.80;
+    public double ExistingDirectionTextWidth045 { get; set; } = 6.80;
     public double ExistingDirectionTextWidth075 { get; set; } = 10.70;
     public bool DirectionTextMask { get; set; } = true;
     public double DirectionTextMaskBorder { get; set; } = 1.30;
@@ -62,7 +62,7 @@ public sealed class Settings
             double Width(double value, double fallback) => double.IsFinite(value) && value >= .01 && value <= 10000 ? value : fallback;
             settings.DirectionTextWidth045 = Width(settings.DirectionTextWidth045, 4.80);
             settings.DirectionTextWidth075 = Width(settings.DirectionTextWidth075, 7.70);
-            settings.ExistingDirectionTextWidth045 = Width(settings.ExistingDirectionTextWidth045, 7.80);
+            settings.ExistingDirectionTextWidth045 = Width(settings.ExistingDirectionTextWidth045, 6.80);
             settings.ExistingDirectionTextWidth075 = Width(settings.ExistingDirectionTextWidth075, 10.70);
             if (!double.IsFinite(settings.DirectionTextMaskBorder) || settings.DirectionTextMaskBorder < 1 || settings.DirectionTextMaskBorder > 5) settings.DirectionTextMaskBorder = 1.30;
             if (settings.DirectionTextMaskRgb is < 0 or > 0xFFFFFF) settings.DirectionTextMaskRgb = 0xFFFFFF;

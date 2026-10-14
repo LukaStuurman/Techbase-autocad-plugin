@@ -1,4 +1,4 @@
-Redirect stdout (file: C:\Users\LUKAST~1\AppData\Local\Temp\accc102802).
+Redirect stdout (file: C:\Users\LUKAST~1\AppData\Local\Temp\accc502482).
 AcCoreConsole: StdOutConsoleMode: processed-output: disabled,auto
 AutoCAD Core Engine Console - Copyright 2025 Autodesk, Inc.  All rights reserved. (W.122.0.0)
 
@@ -10,6 +10,7 @@ Version Number: W.122.0.0 (UNICODE)
 LogFilePath has been set to the working folder.
 CoreHeartBeat
 Regenerating model.
+CoreHeartBeat
 Drawing created using acadiso.dwt from AutoCAD profile: <<Unnamed Profile>>
 **** System Variable Changed ****
 2 of the monitored system variables have changed from the preferred value. Use SYSVARMONITOR command to view changes.
@@ -20,10 +21,13 @@ Command:
 Command:
 
 Command:
+Command: _NETLOAD
+Assembly file name: "C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.10.1/Techbase.Blocks.bundle/Contents/R25-1.10.1/Techbase.Blocks.dll"
+
 Command: (defun c:KGOMNI () (princ "ORIGINAL_UNCHANGED"))
 C:KGOMNI
 
-Command: (if (not *tbkg:ready*) (load "C:/Users/LukaStuurmanHDBTechb/AppData/Roaming/Autodesk/ApplicationPlugins/Techbase.Blocks.bundle/Contents/Assets/Kabelgeul/Techbase.Kabelgeul.lsp"))
+Command: (if (not *tbkg:ready*) (load "C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.10.1/Techbase.Blocks.bundle/Contents/Assets/Kabelgeul/Techbase.Kabelgeul.lsp"))
 
 Techbase Kabelgeul geladen.C:TBGEULCODE
 
@@ -82,7 +86,7 @@ Enter the number of operations to undo or [Auto/Control/BEgin/End/Mark/Back] <1>
 Command:
 
 Command: (setq firstgeul (entlast))
-<Entity name: 2b38223c930>
+<Entity name: 2647cd06130>
 
 Command: (princ (strcat "\nFRAME_DIRECT=" (itoa (getvar "WIPEOUTFRAME"))))
 

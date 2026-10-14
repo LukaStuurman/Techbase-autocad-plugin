@@ -1,0 +1,288 @@
+Redirect stdout (file: C:\Users\LUKAST~1\AppData\Local\Temp\accc350842).
+AcCoreConsole: StdOutConsoleMode: processed-output: disabled,auto
+AutoCAD Core Engine Console - Copyright 2025 Autodesk, Inc.  All rights reserved. (W.122.0.0)
+
+Execution Path:
+C:\Program Files\Autodesk\AutoCAD 2026\accoreconsole.exe
+Current Directory: C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\validation\Kabelgeul
+
+Version Number: W.122.0.0 (UNICODE)
+LogFilePath has been set to the working folder.
+CoreHeartBeat
+Regenerating model.
+CoreHeartBeat
+Drawing created using acadiso.dwt from AutoCAD profile: <<Unnamed Profile>>
+**** System Variable Changed ****
+2 of the monitored system variables have changed from the preferred value. Use SYSVARMONITOR command to view changes.
+
+
+AutoCAD menu utilities loaded.
+Command:
+Command:
+
+Command:
+Command: (load "C:/Users/LukaStuurmanHDBTechb/AppData/Roaming/Autodesk/ApplicationPlugins/Techbase.Blocks.bundle/Contents/Assets/Kabelgeul/Techbase.Kabelgeul.lsp")
+
+Techbase Kabelgeul geladen.C:TBGEULCODE
+
+Command: (setvar "OSMODE" 0)
+0
+
+Command: (setvar "ATTREQ" 0)
+0
+
+Command: (entmake (list (cons 0 "LINE") (cons 10 (list -100.0 0.0 0.0)) (cons 11 (list 100.0 0.0 0.0))))
+((0 . "LINE") (10 -100.0 0.0 0.0) (11 100.0 0.0 0.0))
+
+Command: _ZOOM
+
+Specify corner of window, enter a scale factor (nX or nXP), or
+[All/Center/Dynamic/Extents/Previous/Scale/Window/Object] <real time>: _E
+
+Command: _REGEN
+Regenerating model.
+
+Command: _TBKABELGEUL
+TBGEULINIT
+Command: _.UNDO Current settings: Auto = On, Control = All, Combine = Yes, Layer = Yes
+Enter the number of operations to undo or [Auto/Control/BEgin/End/Mark/Back] <1>: _Begin
+Command: Regenerating model.
+
+Selecteer eerste polyline / begin lange lijn of bestaande KabelGeul: 0,0,0
+
+Afstandspunt richting halve vierkant: 0,-8,0
+
+Plaatsing kabelgeul [Direct/Zwevend] <Direct>: _Direct
+
+KabelGeul geplaatst als uniek block.Regenerating model.
+_.UNDO Current settings: Auto = On, Control = All, Combine = Yes, Layer = Yes
+Enter the number of operations to undo or [Auto/Control/BEgin/End/Mark/Back] <1>: _End
+Command:
+
+Command: (setq original (entlast) expected (tbkg:copy-data-from-insert original))
+(4 ("K01" "K10" "K12" "Rooien") ("A" "B" "C" "D") (nil nil nil nil) ("X" nil nil nil) (nil T nil T) (nil T nil nil) ("A2" "" "" "") (nil nil T nil) "Eigen 160" (T nil nil nil) (nil nil nil nil) (nil nil nil nil) (nil nil nil nil))
+
+Command: (princ (strcat "\nORDER=" (vl-prin1-to-string (cadr expected))))
+
+ORDER=("K01" "K10" "K12" "Rooien")"\nORDER=(\"K01\" \"K10\" \"K12\" \"Rooien\")"
+
+Command: _ZOOM
+
+Specify corner of window, enter a scale factor (nX or nXP), or
+[All/Center/Dynamic/Extents/Previous/Scale/Window/Object] <real time>: _E
+
+Command: _REGEN
+Regenerating model.
+
+Command: _TBGEULEDIT
+TBGEULINIT
+Command: _.UNDO Current settings: Auto = On, Control = All, Combine = Yes, Layer = Yes
+Enter the number of operations to undo or [Auto/Control/BEgin/End/Mark/Back] <1>: _Begin
+Command:
+Selecteer KabelGeul of zwevende referentie om volledig te bewerken: 0,-4,0
+_.UCS
+Current ucs name:  *WORLD*
+Specify origin of UCS or [Face/NAmed/OBject/Previous/View/World/X/Y/Z/ZAxis] <World>: _World
+Command: Regenerating model.
+_.WIPEOUT Specify first point or [Frames/Polyline] <Polyline>: _Polyline
+Select a closed polyline:
+Erase polyline? [Yes/No] <No>: _Yes
+Command: _.WIPEOUT Specify first point or [Frames/Polyline] <Polyline>: _Polyline
+Select a closed polyline:
+Erase polyline? [Yes/No] <No>: _Yes
+Command: _.WIPEOUT Specify first point or [Frames/Polyline] <Polyline>: _Polyline
+Select a closed polyline:
+Erase polyline? [Yes/No] <No>: _Yes
+Command: _.WIPEOUT Specify first point or [Frames/Polyline] <Polyline>: _Polyline
+Select a closed polyline:
+Erase polyline? [Yes/No] <No>: _Yes
+Command: _.WIPEOUT Specify first point or [Frames/Polyline] <Polyline>: _Polyline
+Select a closed polyline:
+Erase polyline? [Yes/No] <No>: _Yes
+Command: _.WIPEOUT Specify first point or [Frames/Polyline] <Polyline>: _Polyline
+Select a closed polyline:
+Erase polyline? [Yes/No] <No>: _Yes
+Command: _.WIPEOUT Specify first point or [Frames/Polyline] <Polyline>: _Polyline
+Select a closed polyline:
+Erase polyline? [Yes/No] <No>: _Yes
+Command: _.WIPEOUT Specify first point or [Frames/Polyline] <Polyline>: _Polyline
+Select a closed polyline:
+Erase polyline? [Yes/No] <No>: _Yes
+Command: _.WIPEOUT Specify first point or [Frames/Polyline] <Polyline>: _Polyline
+Select a closed polyline:
+Erase polyline? [Yes/No] <No>: _Yes
+Command: _.BLOCK Current settings: Object conversion=Delete
+
+Enter block name or [?]: KabelGeul_20261014_11494801_2 Specify insertion base point or [Annotative/mOde]: _non
+Select objects:   71 found
+
+Select objects:
+Command: _.INSERT Enter block name or [?] <KabelGeul_20261014_11494801_1>: KabelGeul_20261014_11494801_2
+Units: Millimeters   Conversion: 1.00000000
+Specify insertion point or [Basepoint/Scale/X/Y/Z/Rotate/Explode/REpeat]: _non
+Enter X scale factor, specify opposite corner, or [Corner/XYZ] <1>: 1 Enter Y scale factor <use X scale factor>: 1
+Specify rotation angle <0>: 0
+Command: _.DRAWORDER
+Select objects:   1 found
+
+Select objects:
+Enter object ordering option [Above objects/Under objects/Front/Back] <Back>: _Front
+Command:
+Kabelgeul volledig bijgewerkt._.UCS
+Current ucs name:  *WORLD*
+Specify origin of UCS or [Face/NAmed/OBject/Previous/View/World/X/Y/Z/ZAxis] <World>: _Previous
+Command: Regenerating model.
+_.UNDO Current settings: Auto = On, Control = All, Combine = Yes, Layer = Yes
+Enter the number of operations to undo or [Auto/Control/BEgin/End/Mark/Back] <1>: _End
+Command:
+
+Command: _TBGEULEDIT
+TBGEULINIT
+Command: _.UNDO Current settings: Auto = On, Control = All, Combine = Yes, Layer = Yes
+Enter the number of operations to undo or [Auto/Control/BEgin/End/Mark/Back] <1>: _Begin
+Command:
+Selecteer KabelGeul of zwevende referentie om volledig te bewerken: 0,-4,0
+_.UCS
+Current ucs name:  *WORLD*
+Specify origin of UCS or [Face/NAmed/OBject/Previous/View/World/X/Y/Z/ZAxis] <World>: _World
+Command: Regenerating model.
+_.WIPEOUT Specify first point or [Frames/Polyline] <Polyline>: _Polyline
+Select a closed polyline:
+Erase polyline? [Yes/No] <No>: _Yes
+Command: _.WIPEOUT Specify first point or [Frames/Polyline] <Polyline>: _Polyline
+Select a closed polyline:
+Erase polyline? [Yes/No] <No>: _Yes
+Command: _.WIPEOUT Specify first point or [Frames/Polyline] <Polyline>: _Polyline
+Select a closed polyline:
+Erase polyline? [Yes/No] <No>: _Yes
+Command: _.WIPEOUT Specify first point or [Frames/Polyline] <Polyline>: _Polyline
+Select a closed polyline:
+Erase polyline? [Yes/No] <No>: _Yes
+Command: _.WIPEOUT Specify first point or [Frames/Polyline] <Polyline>: _Polyline
+Select a closed polyline:
+Erase polyline? [Yes/No] <No>: _Yes
+Command: _.WIPEOUT Specify first point or [Frames/Polyline] <Polyline>: _Polyline
+Select a closed polyline:
+Erase polyline? [Yes/No] <No>: _Yes
+Command: _.WIPEOUT Specify first point or [Frames/Polyline] <Polyline>: _Polyline
+Select a closed polyline:
+Erase polyline? [Yes/No] <No>: _Yes
+Command: _.WIPEOUT Specify first point or [Frames/Polyline] <Polyline>: _Polyline
+Select a closed polyline:
+Erase polyline? [Yes/No] <No>: _Yes
+Command: _.WIPEOUT Specify first point or [Frames/Polyline] <Polyline>: _Polyline
+Select a closed polyline:
+Erase polyline? [Yes/No] <No>: _Yes
+Command: _.BLOCK Current settings: Object conversion=Delete
+
+Enter block name or [?]: KabelGeul_20261014_11494801_3 Specify insertion base point or [Annotative/mOde]: _non
+Select objects:   71 found
+
+Select objects:
+Command: _.INSERT Enter block name or [?] <KabelGeul_20261014_11494801_2>: KabelGeul_20261014_11494801_3
+Units: Millimeters   Conversion: 1.00000000
+Specify insertion point or [Basepoint/Scale/X/Y/Z/Rotate/Explode/REpeat]: _non
+Enter X scale factor, specify opposite corner, or [Corner/XYZ] <1>: 1 Enter Y scale factor <use X scale factor>: 1
+Specify rotation angle <0>: 0
+Command: _.DRAWORDER
+Select objects:   1 found
+
+Select objects:
+Enter object ordering option [Above objects/Under objects/Front/Back] <Back>: _Front
+Command:
+Kabelgeul volledig bijgewerkt._.UCS
+Current ucs name:  *WORLD*
+Specify origin of UCS or [Face/NAmed/OBject/Previous/View/World/X/Y/Z/ZAxis] <World>: _Previous
+Command: Regenerating model.
+_.UNDO Current settings: Auto = On, Control = All, Combine = Yes, Layer = Yes
+Enter the number of operations to undo or [Auto/Control/BEgin/End/Mark/Back] <1>: _End
+Command:
+
+Command: (princ (strcat "\nEDIT_ORDER=" (if (equal expected (tbkg:copy-data-from-insert original)) "PASS" "FAIL")))
+
+EDIT_ORDER=PASS"\nEDIT_ORDER=PASS"
+
+Command: (entmake (list (cons 0 "LINE") (cons 10 (list 20.0 30.0 0.0)) (cons 11 (list 40.0 30.0 0.0))))
+((0 . "LINE") (10 20.0 30.0 0.0) (11 40.0 30.0 0.0))
+
+Command: _ZOOM
+
+Specify corner of window, enter a scale factor (nX or nXP), or
+[All/Center/Dynamic/Extents/Previous/Scale/Window/Object] <real time>: _E
+
+Command: _REGEN
+Regenerating model.
+
+Command: _TBGEULCOPY
+TBGEULINIT
+Command: _.UNDO Current settings: Auto = On, Control = All, Combine = Yes, Layer = Yes
+Enter the number of operations to undo or [Auto/Control/BEgin/End/Mark/Back] <1>: _Begin
+Command: Regenerating model.
+
+Selecteer KabelGeul block om gegevens over te nemen: 0,-4,0
+
+Selecteer kabel/lijn voor beginpunt van de geul leader: 30,30,0
+
+Klik lengte/eindpunt en richtingzijde van de geul leader: 30.0,22.0,0
+
+Plaatsing kabelgeul [Direct/Zwevend] <Direct>: _Direct
+
+KabelGeul opnieuw aangemaakt met overgenomen gegevens.Regenerating model.
+_.UNDO Current settings: Auto = On, Control = All, Combine = Yes, Layer = Yes
+Enter the number of operations to undo or [Auto/Control/BEgin/End/Mark/Back] <1>: _End
+Command:
+
+Command: (setq copied (entlast))
+<Entity name: 1994d3c4a40>
+
+Command: (princ (strcat "\nCOPY_ORDER=" (if (equal expected (tbkg:copy-data-from-insert copied)) "PASS" "FAIL")))
+
+COPY_ORDER=PASS"\nCOPY_ORDER=PASS"
+
+Command: (entmake (list (cons 0 "LINE") (cons 10 (list 50.0 60.0 0.0)) (cons 11 (list 70.0 60.0 0.0))))
+((0 . "LINE") (10 50.0 60.0 0.0) (11 70.0 60.0 0.0))
+
+Command: _ZOOM
+
+Specify corner of window, enter a scale factor (nX or nXP), or
+[All/Center/Dynamic/Extents/Previous/Scale/Window/Object] <real time>: _E
+
+Command: _REGEN
+Regenerating model.
+
+Command: _TBGEULCOPY
+TBGEULINIT
+Command: _.UNDO Current settings: Auto = On, Control = All, Combine = Yes, Layer = Yes
+Enter the number of operations to undo or [Auto/Control/BEgin/End/Mark/Back] <1>: _Begin
+Command: Regenerating model.
+
+Selecteer KabelGeul block om gegevens over te nemen: 30.0,26.0,0
+
+Selecteer kabel/lijn voor beginpunt van de geul leader: 60,60,0
+
+Klik lengte/eindpunt en richtingzijde van de geul leader: 60.0,52.0,0
+
+Plaatsing kabelgeul [Direct/Zwevend] <Direct>: _Direct
+
+KabelGeul opnieuw aangemaakt met overgenomen gegevens.Regenerating model.
+_.UNDO Current settings: Auto = On, Control = All, Combine = Yes, Layer = Yes
+Enter the number of operations to undo or [Auto/Control/BEgin/End/Mark/Back] <1>: _End
+Command:
+
+Command: (princ (strcat "\nREPEAT_ORDER=" (if (equal expected (tbkg:copy-data-from-insert (entlast))) "PASS" "FAIL")))
+
+REPEAT_ORDER=PASS"\nREPEAT_ORDER=PASS"
+
+Command: _DXFOUT
+Enter DXF file name <C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\validation\Kabelgeul\Drawing1.dxf>: "C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/validation/Kabelgeul/Volgorde-down.dxf"
+
+Current DXF settings: Precision= 16 Format= ASCII Preview= No Version= 2018
+
+Enter decimal places of accuracy (0 to 16) or [Binary/select Objects/Preview/Version] <16>: 16
+CoreHeartBeat
+
+Command: _QUIT
+_Y
+Really want to discard all changes to drawing? <N> _Y
+
+LogFilePath has been restored to ''.

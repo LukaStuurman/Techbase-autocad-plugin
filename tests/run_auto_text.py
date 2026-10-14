@@ -51,11 +51,11 @@ assert all(t[1]=='150AL / ????-00' for t in texts[:3]+texts[8:11]+texts[11:14]) 
 assert texts[3][1]=='150AL / (was ????-00)' and texts[7][1]=='6CU / (was ????-00)'
 assert texts[14][1]=='150AL / (was ????-00)'
 assert abs(float(texts[11][10])-20)<1e-8 and abs(float(texts[11][20])-15.4)<1e-8, texts[11]
-assert all(abs(float(t[40])-.45)<1e-8 and abs(float(t[41])-(7.8 if t[8]=='01 - Bestaande kabel' else 4.8))<1e-8 and t[7].startswith('TECHBASE_ARIAL_NOVA_LIGHT') for t in texts)
+assert all(abs(float(t[40])-.45)<1e-8 and abs(float(t[41])-(6.8 if t[8]=='01 - Bestaande kabel' else 4.8))<1e-8 and t[7].startswith('TECHBASE_ARIAL_NOVA_LIGHT') for t in texts)
 assert all(int(t[90]) & 3 == 3 and abs(float(t[45])-1.3)<1e-8 for t in texts)
 assert all(float(t[20])>5 for t in texts[:4]),texts[:4]
 assert not any(r[0]==(0,'INSERT') for r in records),'no Kabelgeul blocks'
-checks+=['saved crossing order and reversed crossing order','exact LS/OV defaults, height .45, widths 4.80/7.80, background mask 1.3/drawing color and Light font','default stack is above all detected cables','only loose MText; no Kabelgeul blocks']
+checks+=['saved crossing order and reversed crossing order','exact LS/OV defaults, height .45, widths 4.80/6.80, background mask 1.3/drawing color and Light font','default stack is above all detected cables','only loose MText; no Kabelgeul blocks']
 checks+=['actual shifted/rotated UCS point input and jig world placement']
 (out/'commands.json').write_text(json.dumps({'Status':'PASS','Checks':checks,'ServiceChecks':len(service['Checks']),'Autoload':args.autoload},indent=2),encoding='utf-8')
 print(json.dumps({'Status':'PASS','Checks':len(checks),'ServiceChecks':len(service['Checks']),'Autoload':args.autoload}))

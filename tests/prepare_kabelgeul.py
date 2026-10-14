@@ -45,6 +45,39 @@ replace_function('tbkg:copy-insert-to', '(defun tbkg:copy-insert-to (insert-ent 
 # preserve it verbatim, including custom/empty labels and legacy Ri prefixes.
 replace_function('tbkg:prefixed-label', '(defun tbkg:prefixed-label (typ txt) (if txt txt ""))')
 replace_function('tbkg:strip-known-prefix', '(defun tbkg:strip-known-prefix (txt) (if txt txt ""))')
+# Attribute tags follow readable top-to-bottom order, which can be opposite to
+# the input rows. Recover rows along the stored incoming leader, in block space.
+replace_function('tbkg:block-cross-angle', '''(defun tbkg:block-cross-angle (blkrec / next data pts)
+  (setq next (entnext blkrec))
+  (while (and next (null pts))
+    (setq data (entget next))
+    (cond
+      ((and (= (cdr (assoc 0 data)) "LWPOLYLINE") (= (cdr (assoc 8 data)) "E_LV_CROSS_SECTION"))
+       (setq pts (tbkg:lwpolyline-points data))
+       (if (/= (length pts) 6) (setq pts nil)))
+      ((= (cdr (assoc 0 data)) "ENDBLK") (setq next nil)))
+    (if (and next (null pts)) (setq next (entnext next))))
+  (if pts (angle (car pts) (cadr pts)) 0.0))''')
+needle='(setq items (tbkg:copy-attr-items insert-ent))'
+assert needle in text
+text=text.replace(needle, needle+'''
+  (setq items (vl-sort items '(lambda (a b / ap bp ax bx)
+    (setq ap (nth 3 a) bp (nth 3 b))
+    (if (and (tbkg:point-p ap) (tbkg:point-p bp))
+      (progn
+        (setq ax (+ (* (car ap) (cos ang)) (* (cadr ap) (sin ang))))
+        (setq bx (+ (* (car bp) (cos ang)) (* (cadr bp) (sin ang))))
+        (if (equal ax bx 1e-8) (< (car a) (car b)) (< ax bx)))
+      (< (car a) (car b))))))''')
+text=text.replace('(setq out-splits (if has-split-metadata (reverse splits) (tbkg:groupids->splits (reverse groupids))))', '(setq out-splits (if has-split-metadata splits (tbkg:groupids->splits groupids)))')
+needle='''(list (length types) (reverse types) (reverse labels) (reverse doubles)
+            (reverse mantels) out-splits (reverse combis)
+            (reverse existing-labels) (reverse triples) mantel-spec
+            (reverse twosideds) (reverse side2doubles)
+            (reverse side2triples) (reverse side2combis))'''
+assert needle in text
+text=text.replace(needle, '''(list (length types) types labels doubles mantels out-splits combis
+            existing-labels triples mantel-spec twosideds side2doubles side2triples side2combis)''')
 replace_function('tbkg:show-dialog', '''(defun tbkg:show-dialog (/ result)
   (setq result (read (TBKG_CONFIG_STRING (vl-prin1-to-string (list *tbkg:last-count* *tbkg:last-types* *tbkg:last-labels*
     *tbkg:last-doubles* *tbkg:last-mantels* *tbkg:last-splits* *tbkg:last-combis*
@@ -150,5 +183,5 @@ target.write_text('\n'.join(line.rstrip() for line in text.splitlines()).rstrip(
     'Source': 'Reference/Techbase lisp pakket.lsp', 'SourceSHA256': hashlib.sha256(source.read_bytes()).hexdigest(),
     'GeneratedSHA256': hashlib.sha256(target.read_bytes()).hexdigest(),
     'Module': 'KabelGeul Omni 2026-08-06ad',
-    'Adapters': ['private command/function namespace', 'managed layer/copy helpers', 'Arial Nova Light', 'managed configuration UI', 'host block guards', 'no load-time drawing changes', 'exact cable type metadata', 'restore command state', 'Undo Begin/End', 'full geul editing with unique rebuild and rollback', 'stored floating code layout', 'complete editable labels preserved verbatim; no prefix reapplication']
+    'Adapters': ['private command/function namespace', 'managed layer/copy helpers', 'Arial Nova Light', 'managed configuration UI', 'host block guards', 'no load-time drawing changes', 'exact cable type metadata', 'restore command state', 'Undo Begin/End', 'full geul editing with unique rebuild and rollback', 'stored floating code layout', 'complete editable labels preserved verbatim; no prefix reapplication', 'recover input row order along the stored six-vertex incoming leader']
 }, indent=2), encoding='utf-8')

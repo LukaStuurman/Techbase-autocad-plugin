@@ -84,10 +84,11 @@ internal sealed class KabelgeulEditor : UserControl
         row.Cells[5].ReadOnly = half || row.Cells[3].Value is not true;
     }
     internal void Set(KabelgeulData data) { updating = true; try { Grid.Rows.Clear(); foreach (var row in data.Rows) Add(row); MantelSpecBox.Text = data.MantelSpec; } finally { updating = false; } }
-    internal KabelgeulData CaptureData()
+    internal KabelgeulData CaptureData(bool commitEdit = true)
     {
-        Grid.EndEdit();
-        string Cell(DataGridViewRow r, int col) => Convert.ToString(r.Cells[col].Value) ?? "";
+        if (commitEdit) Grid.EndEdit();
+        string Cell(DataGridViewRow r, int col) => !commitEdit && Grid.IsCurrentCellInEditMode && Grid.CurrentCell?.RowIndex == r.Index && Grid.CurrentCell.ColumnIndex == col && Grid.EditingControl is TextBox edit
+            ? edit.Text : Convert.ToString(r.Cells[col].Value) ?? "";
         bool Flag(DataGridViewRow r, int col) => r.Cells[col].Value is true;
         var rows = Grid.Rows.Cast<DataGridViewRow>().Select(r => new KabelgeulRow(Cell(r, 0), Cell(r, 1), Cell(r, 2), Flag(r, 3), Cell(r, 4), Cell(r, 5), Cell(r, 6), Flag(r, 7))).ToArray();
         if (rows.Length == 0 || rows.Any(r => !KabelgeulData.Types.Contains(r.Type) || !KabelgeulData.Shapes.Contains(r.Shape) || !KabelgeulData.Shapes.Contains(r.Shape2)))
@@ -122,12 +123,18 @@ internal sealed class KabelgeulPanel : UserControl
         SizeChanged += (_, _) => { notes.MaximumSize = new Size(Math.Max(180, ClientSize.Width - 30), 0); status.MaximumSize = notes.MaximumSize; };
         footer.Controls.Add(status); layout.Controls.Add(footer, 0, 3); Controls.Add(layout); UiTypography.Apply(this);
         Editor.Grid.CellValueChanged += (_, _) => SaveRules(); Editor.Grid.CellEndEdit += (_, _) => SaveRules(); Editor.MantelSpecBox.TextChanged += (_, _) => SaveRules();
+        Editor.Grid.EditingControlShowing += (_, args) =>
+        {
+            if (args.Control is not TextBox edit) return;
+            edit.TextChanged -= SaveTypedText; edit.TextChanged += SaveTypedText;
+        };
     }
-    private bool SaveRules()
+    private void SaveTypedText(object? sender, EventArgs args) => SaveRules(false);
+    private bool SaveRules(bool commitEdit = true)
     {
         if (saving) return true;
         saving = true;
-        try { var data = Editor.CaptureData(); Plugin.Preferences.KabelgeulDefaults = data.Rows.ToDictionary(r => r.Type, StringComparer.OrdinalIgnoreCase); Plugin.Preferences.KabelgeulTextFormat = 1; Plugin.Preferences.KabelgeulMantelSpec = data.MantelSpec; Plugin.Preferences.Save(); Report("Standaardinstellingen opgeslagen."); return true; }
+        try { var data = Editor.CaptureData(commitEdit); Plugin.Preferences.KabelgeulDefaults = data.Rows.ToDictionary(r => r.Type, StringComparer.OrdinalIgnoreCase); Plugin.Preferences.KabelgeulTextFormat = 1; Plugin.Preferences.KabelgeulMantelSpec = data.MantelSpec; Plugin.Preferences.Save(); Report("Standaardinstellingen opgeslagen."); return true; }
         catch (Exception ex) { Report(ex.Message); return false; }
         finally { saving = false; }
     }
@@ -147,4 +154,10 @@ internal sealed class KabelgeulPanel : UserControl
         catch (Exception ex) { Report(ex.Message); }
     }
     internal void Report(string message) => status.Text = message;
+    internal void RefreshSettings()
+    {
+        saving = true;
+        try { Editor.Set(KabelgeulData.Rules(Plugin.Preferences)); Report("Standaardinstellingen hersteld."); }
+        finally { saving = false; }
+    }
 }

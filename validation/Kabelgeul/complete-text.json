@@ -8,5 +8,5 @@
     "first and repeated copy preserve all final source texts",
     "independently read all three saved geuls"
   ],
-  "Autoload": true
+  "Autoload": false
 }

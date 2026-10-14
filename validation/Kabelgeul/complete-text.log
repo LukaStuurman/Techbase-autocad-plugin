@@ -1,4 +1,4 @@
-Redirect stdout (file: C:\Users\LUKAST~1\AppData\Local\Temp\accc439922).
+Redirect stdout (file: C:\Users\LUKAST~1\AppData\Local\Temp\accc474162).
 AcCoreConsole: StdOutConsoleMode: processed-output: disabled,auto
 AutoCAD Core Engine Console - Copyright 2025 Autodesk, Inc.  All rights reserved. (W.122.0.0)
 
@@ -20,7 +20,10 @@ Command:
 Command:
 
 Command:
-Command: (load "C:/Users/LukaStuurmanHDBTechb/AppData/Roaming/Autodesk/ApplicationPlugins/Techbase.Blocks.bundle/Contents/Assets/Kabelgeul/Techbase.Kabelgeul.lsp")
+Command: _NETLOAD
+Assembly file name: "C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.10.1/Techbase.Blocks.bundle/Contents/R25-1.10.1/Techbase.Blocks.dll"
+
+Command: (load "C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.10.1/Techbase.Blocks.bundle/Contents/Assets/Kabelgeul/Techbase.Kabelgeul.lsp")
 
 Techbase Kabelgeul geladen.C:TBGEULCODE
 
@@ -168,11 +171,11 @@ Select a closed polyline:
 Erase polyline? [Yes/No] <No>: _Yes
 Command: _.BLOCK Current settings: Object conversion=Delete
 
-Enter block name or [?]: KabelGeul_20261014_10564701_4 Specify insertion base point or [Annotative/mOde]: _non
+Enter block name or [?]: KabelGeul_20261014_114326_4 Specify insertion base point or [Annotative/mOde]: _non
 Select objects:   109 found
 
 Select objects:
-Command: _.INSERT Enter block name or [?] <KabelGeul_20261014_10564701_3>: KabelGeul_20261014_10564701_4
+Command: _.INSERT Enter block name or [?] <KabelGeul_20261014_114326_3>: KabelGeul_20261014_114326_4
 Units: Millimeters   Conversion: 1.00000000
 Specify insertion point or [Basepoint/Scale/X/Y/Z/Rotate/Explode/REpeat]: _non
 Enter X scale factor, specify opposite corner, or [Corner/XYZ] <1>: 1 Enter Y scale factor <use X scale factor>: 1
@@ -239,11 +242,11 @@ Select a closed polyline:
 Erase polyline? [Yes/No] <No>: _Yes
 Command: _.BLOCK Current settings: Object conversion=Delete
 
-Enter block name or [?]: KabelGeul_20261014_10564701_5 Specify insertion base point or [Annotative/mOde]: _non
+Enter block name or [?]: KabelGeul_20261014_114327_5 Specify insertion base point or [Annotative/mOde]: _non
 Select objects:   109 found
 
 Select objects:
-Command: _.INSERT Enter block name or [?] <KabelGeul_20261014_10564701_4>: KabelGeul_20261014_10564701_5
+Command: _.INSERT Enter block name or [?] <KabelGeul_20261014_114326_4>: KabelGeul_20261014_114327_5
 Units: Millimeters   Conversion: 1.00000000
 Specify insertion point or [Basepoint/Scale/X/Y/Z/Rotate/Explode/REpeat]: _non
 Enter X scale factor, specify opposite corner, or [Corner/XYZ] <1>: 1 Enter Y scale factor <use X scale factor>: 1

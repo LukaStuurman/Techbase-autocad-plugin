@@ -1,4 +1,4 @@
-Redirect stdout (file: C:\Users\LUKAST~1\AppData\Local\Temp\accc518842).
+Redirect stdout (file: C:\Users\LUKAST~1\AppData\Local\Temp\accc99322).
 AcCoreConsole: StdOutConsoleMode: processed-output: disabled,auto
 AutoCAD Core Engine Console - Copyright 2025 Autodesk, Inc.  All rights reserved. (W.122.0.0)
 
@@ -21,9 +21,9 @@ Command:
 
 Command:
 Command: _NETLOAD
-Assembly file name: "C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.9.1/Techbase.Blocks.bundle/Contents/R25-1.9.1/Techbase.Blocks.dll"
+Assembly file name: "C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.10.1/Techbase.Blocks.bundle/Contents/R25-1.10.1/Techbase.Blocks.dll"
 
-Command: (load "C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.9.1/Techbase.Blocks.bundle/Contents/Assets/Kabelgeul/Techbase.Kabelgeul.lsp")
+Command: (load "C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.10.1/Techbase.Blocks.bundle/Contents/Assets/Kabelgeul/Techbase.Kabelgeul.lsp")
 
 Techbase Kabelgeul geladen.C:TBGEULCODE
 
@@ -66,25 +66,25 @@ Enter the number of operations to undo or [Auto/Control/BEgin/End/Mark/Back] <1>
 Command:
 
 Command: (setq original (entlast) olddef (cdr (assoc 2 (entget original))))
-"KabelGeul_20261014_10533401_1"
+"KabelGeul_20261014_11432_1"
 
 Command: (setq untouched (TBKG_NATIVE_COPY original (list 0.0 0.0 0.0) (list 20.0 0.0 0.0)))
-<Entity name: 1bcf40e59d0>
+<Entity name: 246d06e99d0>
 
 Command: (entmod (subst (cons 50 (/ pi 2.0)) (assoc 50 (entget original)) (entget original)))
-((-1 . <Entity name: 1bcf40e5930>) (0 . "INSERT") (330 . <Entity name: 1bcef6809f0>) (5 . "38B") (100 . "AcDbEntity") (67 . 0) (410 . "Model") (8 . "0") (100 . "AcDbBlockReference") (66 . 1) (2 . "KabelGeul_20261014_10533401_1") (10 10.0 8.0 0.0) (41 . 1.0) (42 . 1.0) (43 . 1.0) (50 . 1.5708) (70 . 0) (71 . 0) (44 . 0.0) (45 . 0.0) (210 0.0 0.0 1.0))
+((-1 . <Entity name: 246d06e9930>) (0 . "INSERT") (330 . <Entity name: 24682eb41f0>) (5 . "38B") (100 . "AcDbEntity") (67 . 0) (410 . "Model") (8 . "0") (100 . "AcDbBlockReference") (66 . 1) (2 . "KabelGeul_20261014_11432_1") (10 10.0 8.0 0.0) (41 . 1.0) (42 . 1.0) (43 . 1.0) (50 . 1.5708) (70 . 0) (71 . 0) (44 . 0.0) (45 . 0.0) (210 0.0 0.0 1.0))
 
 Command: (entmod (subst (cons 41 1.5) (assoc 41 (entget original)) (entget original)))
-((-1 . <Entity name: 1bcf40e5930>) (0 . "INSERT") (330 . <Entity name: 1bcef6809f0>) (5 . "38B") (100 . "AcDbEntity") (67 . 0) (410 . "Model") (8 . "0") (100 . "AcDbBlockReference") (66 . 1) (2 . "KabelGeul_20261014_10533401_1") (10 10.0 8.0 0.0) (41 . 1.5) (42 . 1.0) (43 . 1.0) (50 . 1.5708) (70 . 0) (71 . 0) (44 . 0.0) (45 . 0.0) (210 0.0 0.0 1.0))
+((-1 . <Entity name: 246d06e9930>) (0 . "INSERT") (330 . <Entity name: 24682eb41f0>) (5 . "38B") (100 . "AcDbEntity") (67 . 0) (410 . "Model") (8 . "0") (100 . "AcDbBlockReference") (66 . 1) (2 . "KabelGeul_20261014_11432_1") (10 10.0 8.0 0.0) (41 . 1.5) (42 . 1.0) (43 . 1.0) (50 . 1.5708) (70 . 0) (71 . 0) (44 . 0.0) (45 . 0.0) (210 0.0 0.0 1.0))
 
 Command: (entmod (subst (cons 42 1.5) (assoc 42 (entget original)) (entget original)))
-((-1 . <Entity name: 1bcf40e5930>) (0 . "INSERT") (330 . <Entity name: 1bcef6809f0>) (5 . "38B") (100 . "AcDbEntity") (67 . 0) (410 . "Model") (8 . "0") (100 . "AcDbBlockReference") (66 . 1) (2 . "KabelGeul_20261014_10533401_1") (10 10.0 8.0 0.0) (41 . 1.5) (42 . 1.5) (43 . 1.0) (50 . 1.5708) (70 . 0) (71 . 0) (44 . 0.0) (45 . 0.0) (210 0.0 0.0 1.0))
+((-1 . <Entity name: 246d06e9930>) (0 . "INSERT") (330 . <Entity name: 24682eb41f0>) (5 . "38B") (100 . "AcDbEntity") (67 . 0) (410 . "Model") (8 . "0") (100 . "AcDbBlockReference") (66 . 1) (2 . "KabelGeul_20261014_11432_1") (10 10.0 8.0 0.0) (41 . 1.5) (42 . 1.5) (43 . 1.0) (50 . 1.5708) (70 . 0) (71 . 0) (44 . 0.0) (45 . 0.0) (210 0.0 0.0 1.0))
 
 Command: (entmod (subst (cons 43 1.5) (assoc 43 (entget original)) (entget original)))
-((-1 . <Entity name: 1bcf40e5930>) (0 . "INSERT") (330 . <Entity name: 1bcef6809f0>) (5 . "38B") (100 . "AcDbEntity") (67 . 0) (410 . "Model") (8 . "0") (100 . "AcDbBlockReference") (66 . 1) (2 . "KabelGeul_20261014_10533401_1") (10 10.0 8.0 0.0) (41 . 1.5) (42 . 1.5) (43 . 1.5) (50 . 1.5708) (70 . 0) (71 . 0) (44 . 0.0) (45 . 0.0) (210 0.0 0.0 1.0))
+((-1 . <Entity name: 246d06e9930>) (0 . "INSERT") (330 . <Entity name: 24682eb41f0>) (5 . "38B") (100 . "AcDbEntity") (67 . 0) (410 . "Model") (8 . "0") (100 . "AcDbBlockReference") (66 . 1) (2 . "KabelGeul_20261014_11432_1") (10 10.0 8.0 0.0) (41 . 1.5) (42 . 1.5) (43 . 1.5) (50 . 1.5708) (70 . 0) (71 . 0) (44 . 0.0) (45 . 0.0) (210 0.0 0.0 1.0))
 
 Command: (entupd original)
-<Entity name: 1bcf40e5930>
+<Entity name: 246d06e9930>
 
 Command: _ZOOM
 
@@ -141,11 +141,11 @@ Select a closed polyline:
 Erase polyline? [Yes/No] <No>: _Yes
 Command: _.BLOCK Current settings: Object conversion=Delete
 
-Enter block name or [?]: KabelGeul_20261014_10533401_2 Specify insertion base point or [Annotative/mOde]: _non
+Enter block name or [?]: KabelGeul_20261014_11432_2 Specify insertion base point or [Annotative/mOde]: _non
 Select objects:   61 found
 
 Select objects:
-Command: _.INSERT Enter block name or [?] <KabelGeul_20261014_10533401_1>: KabelGeul_20261014_10533401_2
+Command: _.INSERT Enter block name or [?] <KabelGeul_20261014_11432_1>: KabelGeul_20261014_11432_2
 Units: Millimeters   Conversion: 1.00000000
 Specify insertion point or [Basepoint/Scale/X/Y/Z/Rotate/Explode/REpeat]: _non
 Enter X scale factor, specify opposite corner, or [Corner/XYZ] <1>: 1 Enter Y scale factor <use X scale factor>: 1
@@ -197,11 +197,11 @@ Select a closed polyline:
 Erase polyline? [Yes/No] <No>: _Yes
 Command: _.BLOCK Current settings: Object conversion=Delete
 
-Enter block name or [?]: KabelGeul_20261014_10533401_3 Specify insertion base point or [Annotative/mOde]: _non
+Enter block name or [?]: KabelGeul_20261014_11432_3 Specify insertion base point or [Annotative/mOde]: _non
 Select objects:   61 found
 
 Select objects:
-Command: _.INSERT Enter block name or [?] <KabelGeul_20261014_10533401_2>: KabelGeul_20261014_10533401_3
+Command: _.INSERT Enter block name or [?] <KabelGeul_20261014_11432_2>: KabelGeul_20261014_11432_3
 Units: Millimeters   Conversion: 1.00000000
 Specify insertion point or [Basepoint/Scale/X/Y/Z/Rotate/Explode/REpeat]: _non
 Enter X scale factor, specify opposite corner, or [Corner/XYZ] <1>: 1 Enter Y scale factor <use X scale factor>: 1
@@ -313,11 +313,11 @@ Select a closed polyline:
 Erase polyline? [Yes/No] <No>: _Yes
 Command: _.BLOCK Current settings: Object conversion=Delete
 
-Enter block name or [?]: KabelGeul_20261014_10533401_5 Specify insertion base point or [Annotative/mOde]: _non
+Enter block name or [?]: KabelGeul_20261014_114321_5 Specify insertion base point or [Annotative/mOde]: _non
 Select objects:   63 found
 
 Select objects:
-Command: _.INSERT Enter block name or [?] <KabelGeul_20261014_10533401_4>: KabelGeul_20261014_10533401_5
+Command: _.INSERT Enter block name or [?] <KabelGeul_20261014_114321_4>: KabelGeul_20261014_114321_5
 Units: Millimeters   Conversion: 1.00000000
 Specify insertion point or [Basepoint/Scale/X/Y/Z/Rotate/Explode/REpeat]: _non
 Enter X scale factor, specify opposite corner, or [Corner/XYZ] <1>: 1 Enter Y scale factor <use X scale factor>: 1
@@ -345,7 +345,7 @@ Command: (princ (strcat "\nSWAP_KEPT=" (cdr (assoc 1 (entget (tbkg:block-attdef-
 SWAP_KEPT=1"\nSWAP_KEPT=1"
 
 Command: (setq defbeforefailure (cdr (assoc 2 (entget original))))
-"KabelGeul_20261014_10533401_3"
+"KabelGeul_20261014_11432_3"
 
 Command: (TBKG_NATIVE_STYLE)
 "TECHBASE_ARIAL_NOVA_LIGHT"
@@ -381,11 +381,11 @@ Select a closed polyline:
 Erase polyline? [Yes/No] <No>: _Yes
 Command: _.BLOCK Current settings: Object conversion=Delete
 
-Enter block name or [?]: KabelGeul_20261014_10533401_6 Specify insertion base point or [Annotative/mOde]: _non
+Enter block name or [?]: KabelGeul_20261014_114321_6 Specify insertion base point or [Annotative/mOde]: _non
 Select objects:   61 found
 
 Select objects:
-Command: _.INSERT Enter block name or [?] <KabelGeul_20261014_10533401_5>: KabelGeul_20261014_10533401_6
+Command: _.INSERT Enter block name or [?] <KabelGeul_20261014_114321_5>: KabelGeul_20261014_114321_6
 Units: Millimeters   Conversion: 1.00000000
 Specify insertion point or [Basepoint/Scale/X/Y/Z/Rotate/Explode/REpeat]: _non
 Enter X scale factor, specify opposite corner, or [Corner/XYZ] <1>: 1 Enter Y scale factor <use X scale factor>: 1
@@ -395,7 +395,7 @@ Select objects:   1 found
 
 Select objects:
 Enter object ordering option [Above objects/Under objects/Front/Back] <Back>: _Front
-Command: <Entity name: 1bcf40dcc20>
+Command: <Entity name: 246d06f1c20>
 
 Command: (princ (strcat "\nTEMP_CREATED=" (if temporary "PASS" "FAIL")))
 

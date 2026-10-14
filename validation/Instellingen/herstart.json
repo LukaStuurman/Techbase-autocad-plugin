@@ -1,0 +1,14 @@
+{
+  "Status": "PASS",
+  "Checks": [
+    "custom: saved widths/height after a fresh process",
+    "custom: mask preference preserved",
+    "custom: saved Kabelgeul default text used",
+    "custom: layer color preference preserved",
+    "reset: saved widths/height after a fresh process",
+    "reset: mask preference preserved",
+    "reset: saved Kabelgeul default text used",
+    "reset: layer color preference preserved"
+  ],
+  "Autoload": true
+}

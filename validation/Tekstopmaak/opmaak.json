@@ -1,7 +1,7 @@
 {
   "Status": "PASS",
   "Checks": [
-    "standaardbreedtes 4,80/7,80 en 7,70/10,70",
+    "standaardbreedtes 4,80/6,80 en 7,70/10,70",
     "masker standaard aan, rand 1,3 en tekeningachtergrond",
     "gelijke opmaak hergebruikt eigen definitie",
     "0.45 LS default: definitie heeft gewone/bestaande breedte",

@@ -1,0 +1,26 @@
+{
+  "Status": "PASS",
+  "Checks": [
+    "down: ORDER=(\"K01\" \"K10\" \"K12\" \"Rooien\")",
+    "down: EDIT_ORDER=PASS",
+    "down: COPY_ORDER=PASS",
+    "down: REPEAT_ORDER=PASS",
+    "down: saved copied cable texts keep the same position/order relative to the leader",
+    "up: ORDER=(\"K01\" \"K10\" \"K12\" \"Rooien\")",
+    "up: EDIT_ORDER=PASS",
+    "up: COPY_ORDER=PASS",
+    "up: REPEAT_ORDER=PASS",
+    "up: saved copied cable texts keep the same position/order relative to the leader",
+    "right: ORDER=(\"K01\" \"K10\" \"K12\" \"Rooien\")",
+    "right: EDIT_ORDER=PASS",
+    "right: COPY_ORDER=PASS",
+    "right: REPEAT_ORDER=PASS",
+    "right: saved copied cable texts keep the same position/order relative to the leader",
+    "left: ORDER=(\"K01\" \"K10\" \"K12\" \"Rooien\")",
+    "left: EDIT_ORDER=PASS",
+    "left: COPY_ORDER=PASS",
+    "left: REPEAT_ORDER=PASS",
+    "left: saved copied cable texts keep the same position/order relative to the leader"
+  ],
+  "Autoload": true
+}

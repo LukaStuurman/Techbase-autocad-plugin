@@ -110,6 +110,7 @@ internal static class KabelgeulDiagnostics
             var input = (DataGridViewTextBoxEditingControl)settingsGrid.EditingControl;
             input.Text = "150"; settingsGrid.NotifyCurrentCellDirty(true);
             Check(settingsGrid.IsCurrentCellInEditMode, "tekstbewerking blijft actief tijdens typen");
+            Check(Settings.Read().KabelgeulDefaults["K10"].Text == "150", "getypte standaardtekst staat al op schijf voordat de cel wordt verlaten");
             input.Text += "Al standaard"; settingsGrid.EndEdit();
             settingsGrid.Rows[9].Cells[2].Value = "Combi";
             settingsPanel.Editor.MantelSpecBox.Text = "HDPE 160 standaard";

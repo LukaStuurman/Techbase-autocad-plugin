@@ -1,0 +1,23 @@
+(load "C:/Users/LukaStuurmanHDBTechb/AppData/Roaming/Autodesk/ApplicationPlugins/Techbase.Blocks.bundle/Contents/Assets/Kabelgeul/Techbase.Kabelgeul.lsp")
+(setvar "OSMODE" 0)
+(setvar "ATTREQ" 0)
+(entmake (list (cons 0 "LINE") (cons 8 "Aansluiting LS K10") (cons 10 (list 0.0 0.0 0.0)) (cons 11 (list 80.0 0.0 0.0))))
+(entmake (list (cons 0 "LINE") (cons 8 "01 - Bestaande kabel") (cons 10 (list 0.0 2.0 0.0)) (cons 11 (list 80.0 2.0 0.0))))
+_TBAUTOTEKSTLS
+_TweePunten
+5,0,0
+5,3,0
+5,5,0
+_ZOOM
+_E
+_REGEN
+_TBKABELGEUL
+30,0,0
+30,3,0
+_Direct
+_TBBESTAANDEKLEUR
+_DXFOUT
+"C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/validation/Instellingen/Herstart-reset.dxf"
+16
+_QUIT
+_Y

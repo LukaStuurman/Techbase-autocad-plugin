@@ -1,3 +1,15 @@
+## Onthouden, reset en Kabelgeul-volgorde - versie 1.10.1, 14 oktober 2026
+
+- Standaardbreedte voor bestaande richtingstekst op 0,45 is **6,80**; gewone breedte 4,80 en de 0,75-breedtes 7,70/10,70 blijven gelijk. Bestaande eigen instellingen worden door de installer behouden.
+- Kabelgeul-tekst wordt tijdens typen als snapshot opgeslagen zonder de celbewerking te sluiten. Geldige getypte breedtes/randfactoren staan direct op schijf; een andere instelling wijzigen schrijft geen oude NumericUpDown-waarde over de nog getypte tekst. Waardegebeurtenissen en tekstgebeurtenissen worden afzonderlijk behandeld.
+- Resetknop bovenaan Instellingen herstelt alle pluginvoorkeuren en Kabelgeul-standaardteksten, bewaart de vorige instellingen als kopie en vernieuwt alle betrokken tabs. Een mislukte opslag verandert de actieve instellingen niet. Checkerprojecten en CAD-objecten blijven buiten deze reset.
+- **12 opslag-/resetcontroles** slagen, plus **8 controles in twee nieuwe AutoCAD-processen**: aangepaste en geresette breedte/hoogte, masker, Kabelgeul-standaardtekst en kleur worden daadwerkelijk gebruikt en uit DXF gelezen. De Kabelgeul-formuliercontrole bevestigt dat tekst al voor het verlaten van de cel op schijf staat.
+- Omgekeerde Kabelgeul-rijvolgorde hersteld: de ingelezen kabels worden langs de opgeslagen inkomende leader in blockruimte geordend; tekstleesvolgorde wordt niet als invoervolgorde gebruikt. De echte leader heeft zes vertices, zodat aanvullende bakken de hoek niet kunnen bepalen. Alle gekoppelde teksten, tweede zijden, iconen, mantel- en bakvlaggen blijven bij hun rij.
+- **20 richting-/volgordecontroles** slagen: boven/beneden/links/rechts plaatsen, twee keer bewerken, twee opeenvolgende kopieen, volledige rijdata en onafhankelijk uit opgeslagen DXF gelezen relatieve tekstposities in drie geulen per geval. Ook de bestaande 27 geul-, 23 bewerkings- en 6 tekstbehoudcontroles slagen.
+- 410 algemene blockcontroles, 61 LS/OV-opmaakcontroles, 40 automatische tekstservice-/15 plaatsingscontroles en 12 LS/OV-opmaakcommando-controles slagen. Beide API-builds gemaakt.
+
+Bewijs: `validation/Instellingen/persistent-checks.json`, `herstart.json`, twee Herstart-DXF's; `validation/Kabelgeul/order.json`, vier Volgorde-DXF's en scripts/logs. Tests in AutoCAD 2026 Core Console; volledige desktopinteractie en AutoCAD/Civil 3D 2025/2027 vragen nog een praktijktest.
+
 ## Instelbare LS/OV-breedte en achtergrondmasker - versie 1.10.0, 14 oktober 2026
 
 - Breedteprofielen: 0,45 standaard 4,80 / bestaand 7,80; 0,75 standaard 7,70 / bestaand 10,70. Beide velden zijn onafhankelijk instelbaar en blijven per hoogte bewaard. Masker standaard aan, randfactor 1,30 en tekeningachtergrond; uitzetten, andere randfactor en eigen RGB-kleur zijn beschikbaar.

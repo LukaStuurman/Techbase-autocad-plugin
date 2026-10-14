@@ -10,6 +10,8 @@ internal sealed class DirectionPanel : UserControl
     private readonly Label layer = new() { AutoSize = true, Dock = DockStyle.Fill, Padding = new Padding(0, 8, 0, 8) };
     private readonly Label status = new() { AutoSize = true, Dock = DockStyle.Fill, MaximumSize = new Size(340, 0), Padding = new Padding(0, 8, 0, 0) };
     private int selected = Plugin.Preferences.SelectedDirectionNumber;
+    private readonly List<RadioButton> buttons = new();
+    private bool refreshing;
     internal DirectionPanel()
     {
         Dock = DockStyle.Fill; Font = new Font("Segoe UI", 9); BackColor = Color.FromArgb(245, 247, 249);
@@ -24,10 +26,11 @@ internal sealed class DirectionPanel : UserControl
             var button = new RadioButton { Text = "Richting " + n, AutoSize = true, Checked = n == selected, Margin = new Padding(3, 6, 3, 6) };
             button.CheckedChanged += (_, _) =>
             {
-                if (!button.Checked) return;
+                if (!button.Checked || refreshing) return;
                 selected = number; Plugin.Preferences.SelectedDirectionNumber = number; Plugin.UpdateSettings(); RefreshLayer();
             };
             grid.Controls.Add(button, (n - 1) % 3, (n - 1) / 3);
+            buttons.Add(button);
         }
         layout.Controls.Add(grid); layout.Controls.Add(layer);
         layout.Controls.Add(new Label { Text = "Global width: 0,1\nLijntype: DASHED\nLijntypeschaal: 0,0035\nKleur en lijndikte: volgens richtingslaag", AutoSize = true, Padding = new Padding(0, 4, 0, 12) });
@@ -52,6 +55,12 @@ internal sealed class DirectionPanel : UserControl
         layout.Controls.Add(status); Controls.Add(layout); RefreshLayer(); UiTypography.Apply(this);
     }
     private void RefreshLayer() => layer.Text = "Laag: " + DirectionLines.LayerName(selected);
+    internal void RefreshSettings()
+    {
+        refreshing = true;
+        try { selected = Plugin.Preferences.SelectedDirectionNumber; for (var i = 0; i < buttons.Count; i++) buttons[i].Checked = selected == i + 1; RefreshLayer(); }
+        finally { refreshing = false; }
+    }
     private void Queue(string command, bool withDirection = true)
     {
         var doc = AcApp.DocumentManager.MdiActiveDocument;

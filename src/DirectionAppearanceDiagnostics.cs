@@ -15,7 +15,7 @@ internal static class DirectionAppearanceDiagnostics
         void Check(bool ok, string message) { if (!ok) throw new InvalidOperationException("Tekstopmaak: " + message); checks.Add(message); }
         using var db = new Database(true, true); using var working = new WorkingDatabaseScope(db);
         var defaults = new Settings();
-        Check(defaults.DirectionWidth(.45,false)==4.8 && defaults.DirectionWidth(.45,true)==7.8 && defaults.DirectionWidth(.75,false)==7.7 && defaults.DirectionWidth(.75,true)==10.7, "standaardbreedtes 4,80/7,80 en 7,70/10,70");
+        Check(defaults.DirectionWidth(.45,false)==4.8 && defaults.DirectionWidth(.45,true)==6.8 && defaults.DirectionWidth(.75,false)==7.7 && defaults.DirectionWidth(.75,true)==10.7, "standaardbreedtes 4,80/6,80 en 7,70/10,70");
         Check(defaults.DirectionTextMask && defaults.DirectionTextMaskDrawingColor && defaults.DirectionTextMaskBorder==1.3, "masker standaard aan, rand 1,3 en tekeningachtergrond");
         var ids = new List<ObjectId>(); var row = 0;
         foreach (var height in new[] { .45, .75 }) foreach (var ov in new[] { false, true })
@@ -66,8 +66,8 @@ internal static class DirectionAppearanceDiagnostics
             var file=Path.Combine(output,"settings.json");Environment.SetEnvironmentVariable("TECHBASE_SETTINGS_FILE",file);File.WriteAllText(file,"{}");
             var old=Settings.Read();Check(old.DirectionWidth(.75,false)==7.7 && old.DirectionWidth(.75,true)==10.7 && old.DirectionTextMask, "oude instellingen krijgen nieuwe defaults");
             File.WriteAllText(file,"{\"DirectionTextWidth075\":-2,\"ExistingDirectionTextWidth045\":0,\"DirectionTextMaskBorder\":9,\"DirectionTextMaskRgb\":-1}");
-            var fixedSettings=Settings.Read();Check(fixedSettings.DirectionTextWidth075==7.7 && fixedSettings.ExistingDirectionTextWidth045==7.8 && fixedSettings.DirectionTextMaskBorder==1.3 && fixedSettings.DirectionTextMaskRgb==0xFFFFFF, "ongeldige breedte/rand/kleur hersteld");
-            var p=Plugin.Preferences;p.DirectionTextHeight=.45;p.DirectionTextWidth045=4.8;p.DirectionTextWidth075=7.7;p.ExistingDirectionTextWidth045=7.8;p.ExistingDirectionTextWidth075=10.7;p.DirectionTextMask=true;p.DirectionTextMaskBorder=1.3;p.DirectionTextMaskDrawingColor=true;
+            var fixedSettings=Settings.Read();Check(fixedSettings.DirectionTextWidth075==7.7 && fixedSettings.ExistingDirectionTextWidth045==6.8 && fixedSettings.DirectionTextMaskBorder==1.3 && fixedSettings.DirectionTextMaskRgb==0xFFFFFF, "ongeldige breedte/rand/kleur hersteld");
+            var p=Plugin.Preferences;p.DirectionTextHeight=.45;p.DirectionTextWidth045=4.8;p.DirectionTextWidth075=7.7;p.ExistingDirectionTextWidth045=6.8;p.ExistingDirectionTextWidth075=10.7;p.DirectionTextMask=true;p.DirectionTextMaskBorder=1.3;p.DirectionTextMaskDrawingColor=true;
             using var panel=new SettingsPanel {Size=new Size(380,1050)}; panel.CreateControl();
             Control Find(string name) { IEnumerable<Control> All(Control c) {foreach(Control child in c.Controls){yield return child;foreach(var item in All(child))yield return item;}} return All(panel).Single(c=>c.Name==name); }
             var height=(ComboBox)Find("DirectionTextHeight");var width=(NumericUpDown)Find("DirectionTextWidth");var existing=(NumericUpDown)Find("ExistingDirectionTextWidth");

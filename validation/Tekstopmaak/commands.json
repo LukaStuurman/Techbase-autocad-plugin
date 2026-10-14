@@ -14,5 +14,5 @@
     "off: saved normal/existing widths and height",
     "off: saved mask toggle, border and drawing/RGB color"
   ],
-  "Autoload": true
+  "Autoload": false
 }

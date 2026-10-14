@@ -1,0 +1,37 @@
+{
+  "InheritLayer": false,
+  "UseChosenBlockLayer": true,
+  "ChosenBlockLayer": 10,
+  "Tolerance": 0.123,
+  "PalettePath": null,
+  "Repeat": true,
+  "SelectedDirectionNumber": 12,
+  "MofTextHeight": 0.75,
+  "DirectionTextHeight": 0.75,
+  "DirectionTextWidth045": 5.21,
+  "DirectionTextWidth075": 9.25,
+  "ExistingDirectionTextWidth045": 8.12,
+  "ExistingDirectionTextWidth075": 11.41,
+  "DirectionTextMask": true,
+  "DirectionTextMaskBorder": 1.8,
+  "DirectionTextMaskDrawingColor": false,
+  "DirectionTextMaskRgb": 1193046,
+  "ExistingCableBlack": true,
+  "KabelgeulDefaults": {
+    "K10": {
+      "Type": "K10",
+      "Text": "Eigen tekst",
+      "Shape": "Drie",
+      "TwoSides": true,
+      "Text2": "",
+      "Shape2": "Enkel",
+      "Mantel": "",
+      "NewTray": false
+    }
+  },
+  "KabelgeulTextFormat": 1,
+  "KabelgeulMantelSpec": "Eigen mantel",
+  "BlockRotationModes": {
+    "eigen-knop": "BeforePoint"
+  }
+}

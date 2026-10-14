@@ -1,0 +1,47 @@
+(load "C:/Users/LukaStuurmanHDBTechb/AppData/Roaming/Autodesk/ApplicationPlugins/Techbase.Blocks.bundle/Contents/Assets/Kabelgeul/Techbase.Kabelgeul.lsp")
+(setvar "OSMODE" 0)
+(setvar "ATTREQ" 0)
+(entmake (list (cons 0 "LINE") (cons 10 (list -100.0 0.0 0.0)) (cons 11 (list 100.0 0.0 0.0))))
+_ZOOM
+_E
+_REGEN
+_TBKABELGEUL
+0,0,0
+0,8,0
+_Direct
+(setq original (entlast) expected (tbkg:copy-data-from-insert original))
+(princ (strcat "\nORDER=" (vl-prin1-to-string (cadr expected))))
+_ZOOM
+_E
+_REGEN
+_TBGEULEDIT
+0,4,0
+_TBGEULEDIT
+0,4,0
+(princ (strcat "\nEDIT_ORDER=" (if (equal expected (tbkg:copy-data-from-insert original)) "PASS" "FAIL")))
+(entmake (list (cons 0 "LINE") (cons 10 (list 20.0 30.0 0.0)) (cons 11 (list 40.0 30.0 0.0))))
+_ZOOM
+_E
+_REGEN
+_TBGEULCOPY
+0,4,0
+30,30,0
+30.0,38.0,0
+_Direct
+(setq copied (entlast))
+(princ (strcat "\nCOPY_ORDER=" (if (equal expected (tbkg:copy-data-from-insert copied)) "PASS" "FAIL")))
+(entmake (list (cons 0 "LINE") (cons 10 (list 50.0 60.0 0.0)) (cons 11 (list 70.0 60.0 0.0))))
+_ZOOM
+_E
+_REGEN
+_TBGEULCOPY
+30.0,34.0,0
+60,60,0
+60.0,68.0,0
+_Direct
+(princ (strcat "\nREPEAT_ORDER=" (if (equal expected (tbkg:copy-data-from-insert (entlast))) "PASS" "FAIL")))
+_DXFOUT
+"C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/validation/Kabelgeul/Volgorde-up.dxf"
+16
+_QUIT
+_Y
