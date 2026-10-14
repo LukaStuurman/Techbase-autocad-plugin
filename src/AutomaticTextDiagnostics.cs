@@ -78,7 +78,7 @@ internal static class AutomaticTextDiagnostics
                 AutomaticDirectionText.Layout(texts, last, axis, Matrix3d.Identity);
                 Check(texts.Take(12).All(t => t.Contents == AutomaticDirectionText.DefaultText(ov)) &&
                     texts.Skip(12).All(t => t.Contents == AutomaticDirectionText.DefaultText(ov, true)), $"exacte {(ov ? "OV" : "LS")}-tekst en bestaand '(was ????-00)' op {height}");
-                Check(texts.All(t => Math.Abs(t.Width - 4.80) < 1e-8 && t.TextHeight == height && t.ColorIndex == 256), "hoogte, defined width en ByLayer");
+                Check(texts.Zip(hits).All(pair => Math.Abs(pair.First.Width - Plugin.Preferences.DirectionWidth(height, pair.Second.Number == 0)) < 1e-8 && pair.First.TextHeight == height && pair.First.ColorIndex == 256), "hoogte, afzonderlijke breedte bestaand/nieuw en ByLayer");
                 Check(texts.Zip(texts.Skip(1)).All(pair => pair.Second.Location.Y - pair.First.Location.Y >= pair.First.ActualHeight + .2 - 1e-8), "teksten stapelen met werkelijke hoogte zonder overlap");
                 textIds.AddRange(AutomaticDirectionText.Append(db, texts));
             }

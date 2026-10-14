@@ -1,4 +1,4 @@
-Redirect stdout (file: C:\Users\LUKAST~1\AppData\Local\Temp\accc489402).
+Redirect stdout (file: C:\Users\LUKAST~1\AppData\Local\Temp\accc833642).
 AcCoreConsole: StdOutConsoleMode: processed-output: disabled,auto
 AutoCAD Core Engine Console - Copyright 2025 Autodesk, Inc.  All rights reserved. (W.122.0.0)
 
@@ -21,7 +21,7 @@ Command:
 
 Command:
 Command: _NETLOAD
-Assembly file name: "C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.9.2/Techbase.Blocks.bundle/Contents/R25-1.9.2/Techbase.Blocks.dll"
+Assembly file name: "C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.10.0/Techbase.Blocks.bundle/Contents/R25-1.10.0/Techbase.Blocks.dll"
 
 Command: TBAUTOTEKSTVALIDATE
 Loading AEC Base...
@@ -205,7 +205,7 @@ Loading AECC ETransmit...
 
 ************************MessageBox****************************
 Exception in c:\program files\autodesk\civil 3d 2026 object enabler\aecccorebase.crx ARX Command
-Unhandled Exception c0000027 (c0000027h) at address da1f506dh
+Unhandled Exception c0000027 (c0000027h) at address d581506dh
 >>>Responding: OK.
 **************************************************************
 Loading AECC Plan Production...

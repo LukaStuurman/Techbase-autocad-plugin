@@ -60,8 +60,9 @@ internal static class AutomaticDirectionText
             {
                 var layer = (LayerTableRecord)tx.GetObject(hit.Layer, OpenMode.ForRead);
                 if (layer.IsLocked || layer.IsDependent || layer.IsOff || layer.IsFrozen) throw new InvalidOperationException("Richtingslaag '" + layer.Name + "' is vergrendeld, extern of verborgen.");
-                texts.Add(new MText { Contents = DefaultText(ov, hit.Number == 0), TextHeight = height, Width = 4.80, LayerId = hit.Layer,
-                    TextStyleId = style, ColorIndex = 256, LineWeight = LineWeight.ByLayer });
+                var text = new MText { Contents = DefaultText(ov, hit.Number == 0), TextHeight = height, LayerId = hit.Layer,
+                    TextStyleId = style, ColorIndex = 256, LineWeight = LineWeight.ByLayer };
+                texts.Add(text); DirectionTextAppearance.Apply(text, hit.Number == 0, height, Plugin.Preferences);
             }
             return texts.ToArray();
         }

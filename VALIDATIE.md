@@ -1,3 +1,13 @@
+## Instelbare LS/OV-breedte en achtergrondmasker - versie 1.10.0, 14 oktober 2026
+
+- Breedteprofielen: 0,45 standaard 4,80 / bestaand 7,80; 0,75 standaard 7,70 / bestaand 10,70. Beide velden zijn onafhankelijk instelbaar en blijven per hoogte bewaard. Masker standaard aan, randfactor 1,30 en tekeningachtergrond; uitzetten, andere randfactor en eigen RGB-kleur zijn beschikbaar.
+- **61 opmaak-/instellingencontroles slagen**: LS/OV op beide hoogtes, standaard/eigen/uit, brondefinities en burst, variantcache en bescherming oudere definities, handmatig 12,34 breed en masker 2,1 met eigen RGB behouden bij kopie/verplaatsen, instellingentabel/hoogtewissel/herladen en herstel van ongeldige waarden.
+- **12 daadwerkelijke commando-/DXF-controles slagen**, verdeeld over vier profielen. Per profiel 26 burstteksten en 4 automatisch gevonden teksten; opgeslagen hoogtes, gewone/bestaande Defined width, maskerflags, randfactor en eigen RGB onafhankelijk gelezen. Invoegeenheden zijn voor deze formaatcontrole bewust op 0 gezet; gewone plaatsing behoudt de bestaande eenheidsconversie.
+- Nieuwe richtingsteksten krijgen geen dynamische kolommen: de bronkolommen konden de opgegeven breedte bij plaatsing/ankering laten verspringen. Maskeruit wordt na de kleurinstelling toegepast, zodat AutoCAD het niet ongemerkt weer aanzet. Bestaande teksten worden niet opnieuw gestandaardiseerd bij kopie/verplaatsen. Stapelruimte volgt ook de werkelijke maskerrand.
+- De bestaande 410 algemene blockcontroles, 40 automatische tekstservice-/15 plaatsingscontroles en 36 richtingstekstservice-/8 commandocontroles slagen opnieuw. Beide API-builds gemaakt.
+
+Bewijs: `validation/Tekstopmaak/opmaak.json`, `commands.json`, `LS OV opmaak.dwg/.dxf`, vier commando-DXF's en de gerenderde Instellingen-tab. Native ComboBox/NumericUpDown-tekst wordt in Core Console DrawToBitmap niet weergegeven; de echte waarden en wijzigingsgebeurtenissen zijn getest. Tests in AutoCAD 2026 Core Console; volledige desktopinteractie en AutoCAD/Civil 3D 2025/2027 vragen nog een praktijktest. [Autodesk MText-kolommen](https://help.autodesk.com/cloudhelp/2026/ENU/OARX-ManagedRefGuide/files/OARX-ManagedRefGuide-Autodesk_AutoCAD_DatabaseServices_MText_ColumnType.html) en [DXF-maskerwaarden](https://help.autodesk.com/cloudhelp/2020/ENU/AutoCAD-DXF/files/GUID-5E5DB93B-F8D3-4433-ADF7-E92E250D2BAB.htm).
+
 ## Echt zwart en laag Bestaand - versie 1.9.2, 14 oktober 2026
 
 - De zwarte keuze voor bestaande kabellagen gebruikt nu **True Color RGB 0,0,0**. ACI 7 was achtergrondafhankelijk en werd op donker wit; die kleur wordt voor deze instelling niet meer gebruikt. Donkergroen blijft ACI 125.

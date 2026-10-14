@@ -1,4 +1,4 @@
-Redirect stdout (file: C:\Users\LUKAST~1\AppData\Local\Temp\accc981602).
+Redirect stdout (file: C:\Users\LUKAST~1\AppData\Local\Temp\accc796602).
 
 AcCoreConsole: StdOutConsoleMode: processed-output: disabled,auto
 
@@ -41,6 +41,12 @@ Command:
 
 
 Command:
+
+Command: _NETLOAD
+
+Assembly file name: "C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.10.0/Techbase.Blocks.bundle/Contents/R25-1.10.0/Techbase.Blocks.dll"
+
+
 
 Command: TBTEKSTVALIDATE
 
@@ -406,7 +412,7 @@ Loading AECC ETransmit...
 
 Exception in c:\program files\autodesk\civil 3d 2026 object enabler\aecccorebase.crx ARX Command
 
-Unhandled Exception c0000027 (c0000027h) at address 3717506dh
+Unhandled Exception c0000027 (c0000027h) at address d581506dh
 
 >>>Responding: OK.
 
@@ -512,13 +518,13 @@ BURST_TEXT_COUNT=26"\nBURST_TEXT_COUNT=26"
 
 Command: (setq text_a (entmakex (list (cons 0 "MTEXT") (cons 100 "AcDbEntity") (cons 8 "0") (cons 100 "AcDbMText") (cons 10 (list 100.0 20.0 0.0)) (cons 40 1.0) (cons 41 12.0) (cons 71 1) (cons 1 "Alpha"))))
 
-<Entity name: 1af0246a270>
+<Entity name: 1cac2565270>
 
 
 
 Command: (setq text_b (entmakex (list (cons 0 "MTEXT") (cons 100 "AcDbEntity") (cons 8 "0") (cons 100 "AcDbMText") (cons 10 (list 100.0 24.0 0.0)) (cons 40 1.0) (cons 41 12.0) (cons 71 1) (cons 1 "Beta"))))
 
-<Entity name: 1af0246a290>
+<Entity name: 1cac2565290>
 
 
 

@@ -12,7 +12,7 @@
     "CURRENT=0",
     "UNDO_COUNT=8",
     "saved crossing order and reversed crossing order",
-    "exact LS/OV defaults, height .45, width 4.80 and Light font",
+    "exact LS/OV defaults, height .45, widths 4.80/7.80, background mask 1.3/drawing color and Light font",
     "default stack is above all detected cables",
     "only loose MText; no Kabelgeul blocks",
     "actual shifted/rotated UCS point input and jig world placement"

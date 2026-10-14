@@ -12,12 +12,12 @@ internal static class SourceBlockImporter
 {
     private const string MetadataKey = "TECHBASE_BLOCK_SOURCE";
 
-    internal static ObjectId Import(Database target, string path, string blockName, double? textHeight = null)
+    internal static ObjectId Import(Database target, string path, string blockName, double? textHeight = null, Settings? settings = null)
     {
         var fingerprint = Fingerprint(path);
-        var directionWidth = textHeight.HasValue && blockName.StartsWith("RICHTINGEN TEKST", StringComparison.OrdinalIgnoreCase) ? 4.80 : (double?)null;
+        settings ??= Plugin.Preferences;
         var directionDefaults = blockName.StartsWith("RICHTINGEN TEKST", StringComparison.OrdinalIgnoreCase);
-        var variant = BlockTextHeight.Revision(textHeight) + (directionWidth.HasValue ? "_WIDTH480" : "") + (directionDefaults ? "_DEFAULT00_WAS" : "");
+        var variant = BlockTextHeight.Revision(textHeight) + (directionDefaults ? "_DEFAULT00_WAS" + DirectionTextAppearance.Revision(settings, textHeight ?? settings.DirectionTextHeight) : "");
         using var targetTx = target.TransactionManager.StartTransaction();
         var targetTable = (BlockTable)targetTx.GetObject(target.BlockTableId, OpenMode.ForRead);
         var (name, existing) = FindName(targetTable, targetTx, blockName, fingerprint, variant);
@@ -45,7 +45,8 @@ internal static class SourceBlockImporter
                     text.Contents = "{" + AutomaticDirectionText.DefaultText(blockName.EndsWith("OV", StringComparison.OrdinalIgnoreCase), ExistingCableColors.Matches(text.Layer)) + "}";
                 }
         }
-        if (textHeight.HasValue) BlockTextHeight.Apply(source, sourceTx, sourceId, textHeight.Value, directionWidth);
+        if (textHeight.HasValue) BlockTextHeight.Apply(source, sourceTx, sourceId, textHeight.Value);
+        if (directionDefaults) DirectionTextAppearance.ApplySource(source, sourceTx, sourceId, textHeight ?? settings.DirectionTextHeight, settings);
         var records = sourceTable.Cast<ObjectId>().Select(id => (BlockTableRecord)sourceTx.GetObject(id, OpenMode.ForRead))
             .Where(r => !r.IsLayout && !r.IsAnonymous && !r.IsDependent).ToArray();
         var names = new List<(BlockTableRecord Record, string Original, string Name)>();

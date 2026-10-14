@@ -1,0 +1,23 @@
+(setvar "OSMODE" 0)
+(setvar "INSUNITS" 0)
+_TBTEKSTLS
+0,0,0
+_TBTEKSTOV
+30,0,0
+(entmake (list (cons 0 "LINE") (cons 8 "Aansluiting LS K10") (cons 10 (list 0.0 20.0 0.0)) (cons 11 (list 20.0 20.0 0.0))))
+(entmake (list (cons 0 "LINE") (cons 8 "01 - Bestaande kabel") (cons 10 (list 0.0 22.0 0.0)) (cons 11 (list 20.0 22.0 0.0))))
+_TBAUTOTEKSTLS
+_TweePunten
+5,19,0
+5,23,0
+5,25,0
+_TBAUTOTEKSTOV
+_TweePunten
+5,19,0
+5,23,0
+10,25,0
+_DXFOUT
+"C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/validation/Tekstopmaak/Opmaak-075.dxf"
+16
+_QUIT
+_Y

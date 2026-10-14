@@ -21,6 +21,7 @@ internal static class Diagnostics
         TypographyDiagnostics.Run(catalog, output);
         BlockLayerDiagnostics.Run(catalog, output);
         TextHeightDiagnostics.Run(catalog, output);
+        DirectionAppearanceDiagnostics.Run(catalog, output);
         ExistingMofUpdateDiagnostics.Run(catalog, output);
         KabelgeulDiagnostics.Run(output);
         var checks = new List<string>();

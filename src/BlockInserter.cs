@@ -16,7 +16,7 @@ internal static class BlockInserter
 {
     internal static ObjectId Import(Database target, Catalog catalog, BlockTool tool, Settings? settings = null)
         => SourceBlockImporter.Import(target, catalog.ResolveSource(tool), tool.BlockName,
-            (settings ?? Plugin.Preferences).BlockTextHeight(tool.BlockName));
+            (settings ?? Plugin.Preferences).BlockTextHeight(tool.BlockName), settings ?? Plugin.Preferences);
 
     internal static ObjectId DefaultLayer(Database db, Transaction tx, string name)
     {

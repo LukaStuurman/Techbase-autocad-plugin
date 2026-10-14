@@ -45,7 +45,9 @@ internal static class DirectionText
             text.Attachment = flip ? AttachmentPoint.TopLeft : AttachmentPoint.BottomLeft;
             text.Direction = new Vector3d(Math.Cos(drawAngle), Math.Sin(drawAngle), 0).TransformBy(ucs);
             text.Location = new Point3d(basis.X - Math.Sin(angle) * distance, basis.Y + Math.Cos(angle) * distance, basis.Z).TransformBy(ucs);
-            distance += heights[i] + Gap;
+            var margin = text.BackgroundFill ? (text.BackgroundScaleFactor - 1) * text.TextHeight : 0;
+            var nextMargin = i + 1 < texts.Count && texts[i + 1].BackgroundFill ? (texts[i + 1].BackgroundScaleFactor - 1) * texts[i + 1].TextHeight : 0;
+            distance += heights[i] + Math.Max(Gap, Math.Max(margin, nextMargin));
         }
     }
     internal static ObjectId[] Apply(Database db, IReadOnlyList<ObjectId> ordered, bool copy, Point3d start, Point3d end, Matrix3d ucs)

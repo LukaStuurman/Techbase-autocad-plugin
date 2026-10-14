@@ -41,7 +41,7 @@ internal static class TextHeightDiagnostics
                 var isText = tool.BlockName.StartsWith("RICHTINGEN TEKST");
                 var inserted = BlockInserter.Append(db, tx, block, false, burst: isText);
                 if (isText)
-                    Check(inserted.Count == 13 && inserted.All(x => tx.GetObject(x, OpenMode.ForRead) is MText m && Math.Abs(m.TextHeight - height) < 1e-9 && Math.Abs(m.Width - 4.80) < 1e-9), tool.Name + ": 13 losse burstteksten op gekozen hoogte " + height);
+                    Check(inserted.Count == 13 && inserted.All(x => tx.GetObject(x, OpenMode.ForRead) is MText m && Math.Abs(m.TextHeight - height) < 1e-9 && Math.Abs(m.Width - settings.DirectionWidth(height, ExistingCableColors.Matches(m.Layer))) < 1e-9), tool.Name + ": 13 losse burstteksten op gekozen hoogte " + height);
                 else
                     Check(block.AttributeCollection.Cast<ObjectId>().All(x => Math.Abs(((AttributeReference)tx.GetObject(x, OpenMode.ForRead)).Height - height) < 1e-9), tool.Name + ": geplaatste attributen hoogte " + height);
                 tx.Commit();
