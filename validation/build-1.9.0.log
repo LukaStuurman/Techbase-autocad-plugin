@@ -1,0 +1,55 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\src\Generated\EnexisKabelCheckerForm.cs(89,37): warning CS8602: Dereference of a possibly null reference. [C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\src\Techbase.Blocks.csproj]
+C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\vendor\AutoCAD-Enexis-kabels-checker\src\Enexis.KabelChecker.AutoCAD\CurrentLoadPanelV2.cs(155,29): warning CS8602: Dereference of a possibly null reference. [C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\src\Techbase.Blocks.csproj]
+  Techbase.Blocks -> C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\src\bin\R25\Release\net8.0-windows\Techbase.Blocks.dll
+
+Build succeeded.
+
+C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\src\Generated\EnexisKabelCheckerForm.cs(89,37): warning CS8602: Dereference of a possibly null reference. [C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\src\Techbase.Blocks.csproj]
+C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\vendor\AutoCAD-Enexis-kabels-checker\src\Enexis.KabelChecker.AutoCAD\CurrentLoadPanelV2.cs(155,29): warning CS8602: Dereference of a possibly null reference. [C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\src\Techbase.Blocks.csproj]
+    2 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:01.23
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  Enexis.KabelChecker.ExcelWorker -> C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\vendor\AutoCAD-Enexis-kabels-checker\src\Enexis.KabelChecker.ExcelWorker\bin\Release\net8.0-windows\Enexis.KabelChecker.ExcelWorker.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:00.37
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\src\Generated\EnexisKabelCheckerForm.cs(89,37): warning CS8602: Dereference of a possibly null reference. [C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\src\Techbase.Blocks.csproj]
+C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\src\TypographyDiagnostics.cs(79,64): warning CS8602: Dereference of a possibly null reference. [C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\src\Techbase.Blocks.csproj]
+C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\src\TypographyDiagnostics.cs(80,21): warning CS8602: Dereference of a possibly null reference. [C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\src\Techbase.Blocks.csproj]
+C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\vendor\AutoCAD-Enexis-kabels-checker\src\Enexis.KabelChecker.AutoCAD\CurrentLoadPanelV2.cs(155,29): warning CS8602: Dereference of a possibly null reference. [C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\src\Techbase.Blocks.csproj]
+C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\src\KabelgeulDiagnostics.cs(91,25): warning CS8600: Converting null literal or possible null value to non-nullable type. [C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\src\Techbase.Blocks.csproj]
+C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\src\KabelgeulDiagnostics.cs(92,13): warning CS8602: Dereference of a possibly null reference. [C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\src\Techbase.Blocks.csproj]
+  Techbase.Blocks -> C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\src\bin\R26\Release\net10.0-windows\Techbase.Blocks.dll
+
+Build succeeded.
+
+C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\src\Generated\EnexisKabelCheckerForm.cs(89,37): warning CS8602: Dereference of a possibly null reference. [C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\src\Techbase.Blocks.csproj]
+C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\src\TypographyDiagnostics.cs(79,64): warning CS8602: Dereference of a possibly null reference. [C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\src\Techbase.Blocks.csproj]
+C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\src\TypographyDiagnostics.cs(80,21): warning CS8602: Dereference of a possibly null reference. [C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\src\Techbase.Blocks.csproj]
+C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\vendor\AutoCAD-Enexis-kabels-checker\src\Enexis.KabelChecker.AutoCAD\CurrentLoadPanelV2.cs(155,29): warning CS8602: Dereference of a possibly null reference. [C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\src\Techbase.Blocks.csproj]
+C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\src\KabelgeulDiagnostics.cs(91,25): warning CS8600: Converting null literal or possible null value to non-nullable type. [C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\src\Techbase.Blocks.csproj]
+C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\src\KabelgeulDiagnostics.cs(92,13): warning CS8602: Dereference of a possibly null reference. [C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\src\Techbase.Blocks.csproj]
+    6 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:01.42
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  Enexis.KabelChecker.ExcelWorker -> C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\vendor\AutoCAD-Enexis-kabels-checker\src\Enexis.KabelChecker.ExcelWorker\bin\Release\net10.0-windows\Enexis.KabelChecker.ExcelWorker.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:00.33
+Pakket: C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\dist\1.9.0

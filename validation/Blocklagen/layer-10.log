@@ -1,4 +1,4 @@
-Redirect stdout (file: C:\Users\LUKAST~1\AppData\Local\Temp\accc309882).
+Redirect stdout (file: C:\Users\LUKAST~1\AppData\Local\Temp\accc294442).
 AcCoreConsole: StdOutConsoleMode: processed-output: disabled,auto
 AutoCAD Core Engine Console - Copyright 2025 Autodesk, Inc.  All rights reserved. (W.122.0.0)
 
@@ -21,7 +21,7 @@ Command:
 
 Command:
 Command: _NETLOAD
-Assembly file name: "C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.5.2/Techbase.Blocks.bundle/Contents/R25-1.5.2/Techbase.Blocks.dll"
+Assembly file name: "C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.9.0/Techbase.Blocks.bundle/Contents/R25-1.9.0/Techbase.Blocks.dll"
 
 Command: (setvar "ATTREQ" 0)
 0
@@ -49,7 +49,6 @@ Enter an option [?/Make/Set/New/Rename/ON/OFF/Color/Ltype/LWeight/TRansparency/M
 New color [Truecolor/COlorbook] : 3
 
 Enter name list of layer(s) for color 3 (green) <0>: "Aansluiting LS K10"
-CoreHeartBeat
 Enter an option [?/Make/Set/New/Rename/ON/OFF/Color/Ltype/LWeight/TRansparency/MATerial/Plot/Freeze/Thaw/LOck/Unlock/stAte/Description/rEconcile/Xref]:
 
 Command: _TBPLAATS

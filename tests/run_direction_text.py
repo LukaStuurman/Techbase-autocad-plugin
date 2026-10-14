@@ -58,6 +58,8 @@ for i in range(0, len(rows) - 1, 2):
     record.append(pair)
 texts = [dict(r) for r in records if r[0] == (0, 'MTEXT')]
 assert len(texts) == 32 and not any(r[0][1] in ['INSERT', 'ATTRIB', 'ATTDEF'] for r in records)
+assert texts[0][1]=='{150AL / (was ????-00)}' and texts[13][1]=='{6CU / (was ????-00)}'
+assert all(t[1]=='{150AL / ????-00}' for t in texts[1:13]) and all(t[1]=='{6CU / ????-00}' for t in texts[14:26])
 alpha = [t for t in texts if t.get(1) == 'Alpha']; beta = [t for t in texts if t.get(1) == 'Beta']
 assert len(alpha) == len(beta) == 3
 assert any(float(t[10]) == 100 and float(t[20]) == 20 for t in alpha)

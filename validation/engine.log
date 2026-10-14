@@ -1,4 +1,4 @@
-Redirect stdout (file: C:\Users\LUKAST~1\AppData\Local\Temp\accc143962).
+Redirect stdout (file: C:\Users\LUKAST~1\AppData\Local\Temp\accc973122).
 
 AcCoreConsole: StdOutConsoleMode: processed-output: disabled,auto
 
@@ -22,6 +22,8 @@ CoreHeartBeat
 
 Regenerating model.
 
+CoreHeartBeat
+
 Drawing created using acadiso.dwt from AutoCAD profile: <<Unnamed Profile>>
 
 **** System Variable Changed ****
@@ -41,6 +43,12 @@ Command:
 
 
 Command:
+
+Command: _NETLOAD
+
+Assembly file name: "C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.9.0/Techbase.Blocks.bundle/Contents/R25-1.9.0/Techbase.Blocks.dll"
+
+
 
 Command: TBVALIDATE
 

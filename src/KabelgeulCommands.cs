@@ -91,6 +91,7 @@ public sealed partial class Plugin
         var types = (LinetypeTable)tx.GetObject(db.LinetypeTableId, OpenMode.ForRead);
         if (!types.Has(linetype)) { try { db.LoadLineTypeFile(linetype, db.Measurement == MeasurementValue.Metric ? "acadiso.lin" : "acad.lin"); } catch (Autodesk.AutoCAD.Runtime.Exception) { linetype = "Continuous"; } }
         table.UpgradeOpen(); var layer = new LayerTableRecord { Name = name, Color = name is "MS Nieuw" or "MS Bestaand" ? Autodesk.AutoCAD.Colors.Color.FromRgb(0, 0, 0) : Autodesk.AutoCAD.Colors.Color.FromColorIndex(Autodesk.AutoCAD.Colors.ColorMethod.ByAci, color), LinetypeObjectId = types[linetype] };
+        if (ExistingCableColors.Matches(name)) layer.Color = ExistingCableColors.Choice(Preferences.ExistingCableBlack);
         table.Add(layer); tx.AddNewlyCreatedDBObject(layer, true); tx.Commit(); return name;
     }
     [LispFunction("TBKG_NATIVE_CHECK_LAYER")]

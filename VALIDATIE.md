@@ -1,3 +1,14 @@
+## Automatische richtingsteksten en bestaande kabelkleur - versie 1.9.0, 14 oktober 2026
+
+- LS/OV automatisch langs een tijdelijke dwarslijn, een gekozen LINE of twee punten. Kabelvolgorde, twaalf richtingen, dubbele richting eenmaal, afzonderlijke bestaande kabels, gebogen curves/tangenten, omgekeerde detectie, nul-lengte, geen raakvlak, verborgen/vergrendelde lagen en gedraaid/verschoven UCS gecontroleerd.
+- **36 servicecontroles en 15 daadwerkelijke plaatsings-/DXF-controles slagen**. Tekst wordt als losse MText geplaatst zonder Kabelgeul-block. Zowel 0,45 als 0,75, Defined width 4,80, ByLayer en werkelijk gemeten tussenruimte gecontroleerd; 56 serviceteksten teruggelezen uit DWG. In de commando-DXF staan 15 teksten in de juiste volgorde; Enter plaatst boven de kabels en Esc laat geen teksten achter. Undo verwijdert de complete laatste stapel; een daadwerkelijk verschoven/gedraaid UCS is ook via het commando getest.
+- Exacte defaults: LS `150AL / ????-00`, OV `6CU / ????-00`; bestaande kabels `150AL / (was ????-00)` en `6CU / (was ????-00)`. Ook de 13-rijige LS/OV-bursttemplates zijn aangepast en onafhankelijk uit de opgeslagen DXF gelezen. Nieuwe templateversie beschermt oude plaatsingen.
+- Bestaande kabelkleur: donkergroen 125 of zwart/wit 7. Bewaarde voorkeur, nieuwe importlaag, behoud van bestaande importlagen, vergrendeld/rooien/xref uitgesloten en behoud van laagstatus/lijndikte gecontroleerd. **12 daadwerkelijke kleurcommando-/DXF-controles slagen**, inclusief echte aangehechte xref en ongewijzigde bronhash.
+- Richtingen en Instellingen gerenderd op 380 en 1040 pixels. De native ComboBox-tekst wordt door Core Console DrawToBitmap niet afgebeeld; keuzelijsten gebruiken de normale Windows-controls.
+- Bestaande 410 blockcontroles, 36 richtingstekstservice-/8 commandocontroles, 29 laagkeuzecontroles en 755 lettertypecontroles (483 opgeslagen teksten, 6 installercontroles) en 27 Kabelgeul-controles slagen. Beide API-builds gemaakt.
+
+Bewijs: `validation/AutomatischeTeksten/service.json`, `commands.json`, `color-commands.json`, opgeslagen DWG/DXF, scripts en tabrenders. Getest in AutoCAD 2026 Core Console. Volledige desktopinteractie en AutoCAD/Civil 3D 2025/2027 vragen nog een praktijktest. De detectie gebruikt eigen curves in de huidige tekenruimte; zij neemt geen kabeltype of code uit KLIC over.
+
 ## Kabelgeul-instellingen en volledige bewerking - versie 1.8.0, 14 oktober 2026
 
 - De tab is een vaste instellingenpagina per kabeltype. Standaardteksten, vormen, twee zijden, mantel, nieuwe bak en mantelspecificatie worden opgeslagen in de bestaande gebruikersinstellingen. Plaatsen behoudt het kabel-/afstandspuntvenster met detectie; kopieren en bewerken gebruiken de bestaande geuldata zonder defaults opnieuw toe te passen.

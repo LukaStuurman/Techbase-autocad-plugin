@@ -22,6 +22,7 @@ internal static class BlockLayers
             source.WblockCloneObjects(new ObjectIdCollection(new[] { sourceLayers[name] }), db.LayerTableId,
                 new IdMapping(), DuplicateRecordCloning.Ignore, false);
             sourceTx.Commit();
+            if (selection == 0) ((LayerTableRecord)tx.GetObject(layers[name], OpenMode.ForWrite)).Color = ExistingCableColors.Choice(Plugin.Preferences.ExistingCableBlack);
         }
         var layer = (LayerTableRecord)tx.GetObject(layers[name], OpenMode.ForRead);
         if (layer.IsLocked || layer.IsDependent || layer.IsOff || layer.IsFrozen)

@@ -36,6 +36,7 @@ for series in [(25, 0), (25, 1), (26, 0)]:
         assert 'TECHBASE' in commands and 'TBLOCKS' not in commands
         assert {'TBRICHTINGEN', 'TBTEKENRICHTING', 'TBMAAKRICHTING', 'TBRICHTINGVALIDATE'} <= commands
         assert {'TBTEKSTLS', 'TBTEKSTOV', 'TBTEKSTKOPIE', 'TBTEKSTVERPLAATS', 'TBTEKSTVALIDATE'} <= commands
+        assert {'TBAUTOTEKSTLS', 'TBAUTOTEKSTOV', 'TBBESTAANDEKLEUR'} <= commands
         requirement = component.find('RuntimeRequirements')
         minimum = tuple(map(int, requirement.attrib['SeriesMin'][1:].split('.')))
         maximum = tuple(map(int, requirement.attrib['SeriesMax'][1:].split('.')))

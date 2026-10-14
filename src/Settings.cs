@@ -20,6 +20,7 @@ public sealed class Settings
     public int SelectedDirectionNumber { get; set; } = 1;
     public double MofTextHeight { get; set; } = 0.45;
     public double DirectionTextHeight { get; set; } = 0.45;
+    public bool ExistingCableBlack { get; set; }
     public Dictionary<string, KabelgeulRow> KabelgeulDefaults { get; set; } = new(StringComparer.OrdinalIgnoreCase);
     public string KabelgeulMantelSpec { get; set; } = "";
     public double? BlockTextHeight(string name) => name.Contains("MOF", StringComparison.OrdinalIgnoreCase) ? MofTextHeight :

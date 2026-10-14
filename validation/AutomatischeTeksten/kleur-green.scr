@@ -1,0 +1,14 @@
+(entmake (list (cons 0 "LAYER") (cons 100 "AcDbSymbolTableRecord") (cons 100 "AcDbLayerTableRecord") (cons 2 "01 - Bestaande kabel") (cons 70 0) (cons 62 3) (cons 6 "Continuous")))
+(entmake (list (cons 0 "LAYER") (cons 100 "AcDbSymbolTableRecord") (cons 100 "AcDbLayerTableRecord") (cons 2 "Bestaande kabel OV") (cons 70 4) (cons 62 3) (cons 6 "Continuous")))
+(command "_-XREF" "_Attach" "C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/validation/AutomatischeTeksten/Automatische teksten - controle.dwg" "0,0,0" "1" "1" "0")
+(entmake (list (cons 0 "LAYER") (cons 100 "AcDbSymbolTableRecord") (cons 100 "AcDbLayerTableRecord") (cons 2 "Te rooien kabel") (cons 70 0) (cons 62 3) (cons 6 "Continuous")))
+_TBBESTAANDEKLEUR
+(princ (strcat "\nCOLOR=" (itoa (cdr (assoc 62 (tblsearch "LAYER" "01 - Bestaande kabel"))))))
+(princ (strcat "\nLOCKED=" (itoa (cdr (assoc 62 (tblsearch "LAYER" "Bestaande kabel OV"))))))
+(princ (strcat "\nXREF=" (itoa (cdr (assoc 62 (tblsearch "LAYER" "Automatische teksten - controle|01 - Bestaande kabel"))))))
+(princ (strcat "\nOTHER=" (itoa (cdr (assoc 62 (tblsearch "LAYER" "Te rooien kabel"))))))
+_DXFOUT
+"C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/validation/AutomatischeTeksten/Kleur-green.dxf"
+16
+_QUIT
+_Y

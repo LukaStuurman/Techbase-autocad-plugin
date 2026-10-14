@@ -3,5 +3,5 @@
   "ServiceChecks": 36,
   "CommandChecks": 8,
   "SavedMText": 32,
-  "Autoload": false
+  "Autoload": true
 }

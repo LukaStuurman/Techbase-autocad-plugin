@@ -1,5 +1,7 @@
+_NETLOAD
+"C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.9.0/Techbase.Blocks.bundle/Contents/R25-1.9.0/Techbase.Blocks.dll"
 (defun c:KGOMNI () (princ "ORIGINAL_UNCHANGED"))
-(if (not *tbkg:ready*) (load "C:/Users/LukaStuurmanHDBTechb/AppData/Roaming/Autodesk/ApplicationPlugins/Techbase.Blocks.bundle/Contents/Assets/Kabelgeul/Techbase.Kabelgeul.lsp"))
+(if (not *tbkg:ready*) (load "C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.9.0/Techbase.Blocks.bundle/Contents/Assets/Kabelgeul/Techbase.Kabelgeul.lsp"))
 (setvar "OSMODE" 0)
 (setvar "WIPEOUTFRAME" 2)
 (setvar "ATTREQ" 0)

@@ -1,4 +1,4 @@
-Redirect stdout (file: C:\Users\LUKAST~1\AppData\Local\Temp\accc851602).
+Redirect stdout (file: C:\Users\LUKAST~1\AppData\Local\Temp\accc929282).
 AcCoreConsole: StdOutConsoleMode: processed-output: disabled,auto
 AutoCAD Core Engine Console - Copyright 2025 Autodesk, Inc.  All rights reserved. (W.122.0.0)
 
@@ -10,7 +10,6 @@ Version Number: W.122.0.0 (UNICODE)
 LogFilePath has been set to the working folder.
 CoreHeartBeat
 Regenerating model.
-CoreHeartBeat
 Drawing created using acadiso.dwt from AutoCAD profile: <<Unnamed Profile>>
 **** System Variable Changed ****
 2 of the monitored system variables have changed from the preferred value. Use SYSVARMONITOR command to view changes.
@@ -21,10 +20,13 @@ Command:
 Command:
 
 Command:
+Command: _NETLOAD
+Assembly file name: "C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.9.0/Techbase.Blocks.bundle/Contents/R25-1.9.0/Techbase.Blocks.dll"
+
 Command: (defun c:KGOMNI () (princ "ORIGINAL_UNCHANGED"))
 C:KGOMNI
 
-Command: (if (not *tbkg:ready*) (load "C:/Users/LukaStuurmanHDBTechb/AppData/Roaming/Autodesk/ApplicationPlugins/Techbase.Blocks.bundle/Contents/Assets/Kabelgeul/Techbase.Kabelgeul.lsp"))
+Command: (if (not *tbkg:ready*) (load "C:/Users/LukaStuurmanHDBTechb/Documents/Automatic VO/Techbase-autocad-plugin/dist/1.9.0/Techbase.Blocks.bundle/Contents/Assets/Kabelgeul/Techbase.Kabelgeul.lsp"))
 
 Techbase Kabelgeul geladen.C:TBGEULCODE
 
@@ -52,6 +54,7 @@ Enter an option [?/Make/Set/New/Rename/ON/OFF/Color/Ltype/LWeight/TRansparency/M
 New color [Truecolor/COlorbook] : 3
 
 Enter name list of layer(s) for color 3 (green) <0>: "Aansluiting LS K01"
+CoreHeartBeat
 Enter an option [?/Make/Set/New/Rename/ON/OFF/Color/Ltype/LWeight/TRansparency/MATerial/Plot/Freeze/Thaw/LOck/Unlock/stAte/Description/rEconcile/Xref]:
 
 Command: (entmake (list (cons 0 "LINE") (cons 8 "Aansluiting LS K01") (cons 10 (list 0.0 0.0 0.0)) (cons 11 (list 80.0 0.0 0.0))))
@@ -83,7 +86,7 @@ Enter the number of operations to undo or [Auto/Control/BEgin/End/Mark/Back] <1>
 Command:
 
 Command: (setq firstgeul (entlast))
-<Entity name: 2464e532930>
+<Entity name: 1306b962930>
 
 Command: (princ (strcat "\nFRAME_DIRECT=" (itoa (getvar "WIPEOUTFRAME"))))
 
@@ -208,7 +211,6 @@ Current layer:  "0"
 Enter an option [?/Make/Set/New/Rename/ON/OFF/Color/Ltype/LWeight/TRansparency/MATerial/Plot/Freeze/Thaw/LOck/Unlock/stAte/Description/rEconcile/Xref]: _Lock
 
 Enter name list of layer(s) to lock or <select objects>: "E_LV_CROSS_SECTION"
-CoreHeartBeat
 Enter an option [?/Make/Set/New/Rename/ON/OFF/Color/Ltype/LWeight/TRansparency/MATerial/Plot/Freeze/Thaw/LOck/Unlock/stAte/Description/rEconcile/Xref]:
 
 Command: _TBKABELGEUL
@@ -222,7 +224,7 @@ Selecteer eerste polyline / begin lange lijn of bestaande KabelGeul: 65,0,0
 Afstandspunt richting halve vierkant: 65,8,0
 System.InvalidOperationException: Laag 'E_LV_CROSS_SECTION' is vergrendeld. Kies een andere laag of ontgrendel deze zelf.
    at Techbase.Blocks.LayerResolver.CheckLayer(Transaction tr, ObjectId id) in C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\src\LayerResolver.cs:line 63
-   at Techbase.Blocks.Plugin.CheckKabelgeulLayer(ResultBuffer args) in C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\src\KabelgeulCommands.cs:line 104
+   at Techbase.Blocks.Plugin.CheckKabelgeulLayer(ResultBuffer args) in C:\Users\LukaStuurmanHDBTechb\Documents\Automatic VO\Techbase-autocad-plugin\src\KabelgeulCommands.cs:line 105
    at Autodesk.AutoCAD.Runtime.CommandClass.InvokeWorker(MethodInfo mi, Object commandObject, Boolean bLispFunction)
    at Autodesk.AutoCAD.Runtime.CommandClass.InvokeWorkerWithExceptionFilter(MethodInfo mi, Object commandObject, Boolean bLispFunction)
    at Autodesk.AutoCAD.Runtime.CommandClass.Invoke(MethodInfo mi, Boolean bLispFunction)

@@ -16,7 +16,8 @@ internal static class SourceBlockImporter
     {
         var fingerprint = Fingerprint(path);
         var directionWidth = textHeight.HasValue && blockName.StartsWith("RICHTINGEN TEKST", StringComparison.OrdinalIgnoreCase) ? 4.80 : (double?)null;
-        var variant = BlockTextHeight.Revision(textHeight) + (directionWidth.HasValue ? "_WIDTH480" : "");
+        var directionDefaults = blockName.StartsWith("RICHTINGEN TEKST", StringComparison.OrdinalIgnoreCase);
+        var variant = BlockTextHeight.Revision(textHeight) + (directionWidth.HasValue ? "_WIDTH480" : "") + (directionDefaults ? "_DEFAULT00_WAS" : "");
         using var targetTx = target.TransactionManager.StartTransaction();
         var targetTable = (BlockTable)targetTx.GetObject(target.BlockTableId, OpenMode.ForRead);
         var (name, existing) = FindName(targetTable, targetTx, blockName, fingerprint, variant);
@@ -35,6 +36,15 @@ internal static class SourceBlockImporter
         var sourceTable = (BlockTable)sourceTx.GetObject(source.BlockTableId, OpenMode.ForRead);
         if (!sourceTable.Has(blockName)) throw new InvalidOperationException("Block '" + blockName + "' ontbreekt in " + path);
         var sourceId = sourceTable[blockName];
+        if (directionDefaults)
+        {
+            foreach (ObjectId id in (BlockTableRecord)sourceTx.GetObject(sourceId, OpenMode.ForRead))
+                if (sourceTx.GetObject(id, OpenMode.ForRead) is MText text)
+                {
+                    text.UpgradeOpen();
+                    text.Contents = "{" + AutomaticDirectionText.DefaultText(blockName.EndsWith("OV", StringComparison.OrdinalIgnoreCase), ExistingCableColors.Matches(text.Layer)) + "}";
+                }
+        }
         if (textHeight.HasValue) BlockTextHeight.Apply(source, sourceTx, sourceId, textHeight.Value, directionWidth);
         var records = sourceTable.Cast<ObjectId>().Select(id => (BlockTableRecord)sourceTx.GetObject(id, OpenMode.ForRead))
             .Where(r => !r.IsLayout && !r.IsAnonymous && !r.IsDependent).ToArray();
@@ -57,7 +67,9 @@ internal static class SourceBlockImporter
             SetMetadata(record, sourceTx, original, fingerprint, variant);
         }
         var map = new IdMapping();
+        var previousLayers = ((LayerTable)targetTx.GetObject(target.LayerTableId, OpenMode.ForRead)).Cast<ObjectId>().ToHashSet();
         source.WblockCloneObjects(new ObjectIdCollection(new[] { sourceId }), target.BlockTableId, map, DuplicateRecordCloning.Ignore, false);
+        ExistingCableColors.ApplyNew(target, targetTx, previousLayers);
         var imported = map[sourceId].Value;
         sourceTx.Commit(); targetTx.Commit();
         return imported;

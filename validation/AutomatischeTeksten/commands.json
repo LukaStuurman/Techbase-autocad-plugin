@@ -1,0 +1,22 @@
+{
+  "Status": "PASS",
+  "Checks": [
+    "Herkend in kabelvolgorde: Ri 1, Ri 10, Ri 12, Bestaand",
+    "Herkend in kabelvolgorde: Ri 12, Ri 10, Ri 1",
+    "3 LS-richtingsteksten geplaatst.",
+    "4 LS-richtingsteksten geplaatst.",
+    "4 OV-richtingsteksten geplaatst.",
+    "Geen richtingen 1 t/m 12 of bestaande kabels langs de detectielijn gevonden.",
+    "Automatische teksten geannuleerd; geen teksten geplaatst.",
+    "COUNT=15",
+    "CURRENT=0",
+    "UNDO_COUNT=8",
+    "saved crossing order and reversed crossing order",
+    "exact LS/OV defaults, height .45, width 4.80 and Light font",
+    "default stack is above all detected cables",
+    "only loose MText; no Kabelgeul blocks",
+    "actual shifted/rotated UCS point input and jig world placement"
+  ],
+  "ServiceChecks": 36,
+  "Autoload": true
+}

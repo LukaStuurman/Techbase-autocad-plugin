@@ -1,4 +1,4 @@
-# Techbase Blocks 1.8.0
+# Techbase Blocks 1.9.0
 
 Gebruik zes tabs in AutoCAD en Civil 3D voor Windows: Blocks, Lichtmasten, Enexis kabelchecker, Richtingen, Instellingen en Kabelgeul.
 
@@ -20,12 +20,13 @@ Bestaande tekststijlen, oude blockdefinities en bron-DWG's blijven intact. Nieuw
 
 ## Instellingen
 
-De nieuwe tab **Instellingen** bevat twee onafhankelijke keuzes:
+De nieuwe tab **Instellingen** bevat deze keuzes:
 
 - **Teksthoogte MOF-blocks**: voor NIEUWE MOF, MOF bestaand-nieuw en BESTAANDE MOF.
-- **Teksthoogte richtingsteksten (LS/OV)**: voor RICHTINGEN TEKST LS en RICHTINGEN TEKST OV, zowel in Blocks als via de burstknoppen in Richtingen.
+- **Teksthoogte richtingsteksten (LS/OV)**: voor de automatische tekststapel en RICHTINGEN TEKST LS/OV, zowel in Blocks als via de burstknoppen in Richtingen.
+- **Kleur bestaande kabellagen**: donkergroen (standaard, AutoCAD-kleur 125) of zwart (kleur 7: zwart op wit, wit op een donkere achtergrond). De kleur wordt meteen op de huidige tekening toegepast. Klik **Op huidige tekening toepassen** na het wisselen van tekening of als er nog een commando actief was. De keuze blijft bewaard en geldt ook voor nieuw geimporteerde bestaande kabellagen. Alleen eigen lagen met bestaand en kabel in hun naam veranderen; xreflagen en vergrendelde lagen worden beschermd. Een import wijzigt geen bestaande laagkleur.
 
-Beide staan standaard op **0,45**. De tweede keuze is **0,75**. De LS/OV-richtingsteksten hebben een vaste **Defined width van 4,80**, ook na burst. De keuze wordt direct opgeslagen en blijft na herstart behouden. Plaatsvoorbeeld en uiteindelijke plaatsing gebruiken dezelfde hoogte. Alleen de teksthoogte verandert; het symbool wordt niet geschaald. Iedere hoogte gebruikt een eigen blockdefinitie, zodat eerdere plaatsingen intact blijven. Reeds geplaatste blocks en losse teksten worden niet aangepast. Afzekerings-/rekblocks en andere blocks behouden hun eigen teksthoogtes.
+Beide teksthoogtes staan standaard op **0,45**. De tweede keuze is **0,75**. De LS/OV-richtingsteksten hebben een vaste **Defined width van 4,80**, ook na burst. De keuze wordt direct opgeslagen en blijft na herstart behouden. Plaatsvoorbeeld en uiteindelijke plaatsing gebruiken dezelfde hoogte. Alleen de teksthoogte verandert; het symbool wordt niet geschaald. Iedere hoogte gebruikt een eigen blockdefinitie, zodat eerdere plaatsingen intact blijven. Reeds geplaatste blocks en losse teksten worden niet aangepast. Afzekerings-/rekblocks en andere blocks behouden hun eigen teksthoogtes.
 
 ## Blocks plaatsen
 
@@ -72,7 +73,12 @@ Een vergrendelde, externe, uitgeschakelde of bevroren doellaag moet je eerst zel
 
 ### Richtingsteksten boven kabels
 
-- **LS-tekst plaatsen (burst)** en **OV-tekst plaatsen (burst)** plaatsen de meegeleverde `RICHTINGEN TEKST LS` / `RICHTINGEN TEKST OV` als losse, bewerkbare MTexten. Per template zijn dat 13 teksten met de originele inhoud, kleuren en lagen. De LS-paletteknop gebruikt in de bron-DWG de blocknaam `RICHTINGEN TEKST`. Eventuele attribuutwaarden worden bij burst als tekst bewaard.
+- **LS automatisch langs lijn** of **OV automatisch langs lijn**: kies een kabel en geef een afstandspunt dwars over de kabelbundel. De detectielijn wordt tijdelijk gebruikt en komt niet in de tekening. Met **Lijn** kun je een bestaande rechte LINE aanwijzen; **TweePunten** maakt een detectielijn tussen twee gekozen punten.
+- De plugin herkent de richtingslagen 1 t/m 12 en bestaande kabellagen in de hoofdtekening, in de volgorde waarin de lijn ze kruist. Elke richting krijgt eenmaal tekst; iedere gekruiste bestaande kabel krijgt een eigen tekst. Verborgen lagen en xrefs worden overgeslagen. Een vergrendelde gebruikte laag geeft een melding en breekt de plaatsing af.
+- Het cursorvoorbeeld toont de gevonden teksten onder elkaar, langs de lokale kabelrichting. Klik een plek voor de stapel of druk **Enter** om hem boven de buitenste gevonden kabel te plaatsen. De eerste tekst heeft 0,4 afstand; volgende teksten staan op werkelijke hoogte plus 0,2 afstand. Hoogte volgt Instellingen, Defined width is 4,80. Esc plaatst niets. Er wordt geen kabelgeul of maskergeometrie toegevoegd.
+- Standaard LS: **150AL / ????-00**. Standaard OV: **6CU / ????-00**. Voor bestaande kabels: **150AL / (was ????-00)** en **6CU / (was ????-00)**. Het zijn bewerkbare placeholders; kabeltype/codenummer worden niet uit de bron berekend. Ook de volledige LS/OV-templates gebruiken deze teksten; eerder geplaatste teksten blijven behouden.
+
+- **LS-tekst plaatsen (burst)** en **OV-tekst plaatsen (burst)** plaatsen de meegeleverde `RICHTINGEN TEKST LS` / `RICHTINGEN TEKST OV` als losse, bewerkbare MTexten. Per template zijn dat 13 teksten met de hierboven genoemde standaardinhoud, kleuren en lagen. De LS-paletteknop gebruikt in de bron-DWG de blocknaam `RICHTINGEN TEKST`. Eventuele attribuutwaarden worden bij burst als tekst bewaard.
 - **Tekst kopiëren** en **Tekst verplaatsen** gebruiken het gedrag van `RICHTINGEN` uit het Techbase Lisp-pakket. Klik MTexten in de gewenste volgorde. Nogmaals dezelfde tekst aanklikken verwijdert haar uit de selectie. Enter sluit de selectie.
 - Kies twee punten langs de kabel. Het cursorvoorbeeld toont de gestapelde tekst. Tekst draait leesbaar mee, met dezelfde ankering als de Lisp. De eerste tekst staat 0,4 tekeneenheden van de gekozen lijn; de volgende staan op werkelijke teksthoogte plus 0,2 afstand. Om de andere kant van de kabel te kiezen, kies je de twee punten in omgekeerde volgorde.
 - **Kopiëren** herhaalt de plaatsing tot Enter of Esc bij het startpunt. **Terug** verwijdert de laatste kopiestapel. Al geplaatste kopiestapels blijven staan bij stoppen. **Verplaatsen** bewerkt de oorspronkelijke teksten eenmaal; hun handles, inhoud, opmaak en lagen blijven behouden. Esc bij het eindpunt wijzigt niets voor die stap. Undo kan het hele commando terugnemen.
@@ -174,4 +180,4 @@ De concrete testresultaten en resterende praktijktests staan in `VALIDATIE.md` b
 
 ## Opnieuw bouwen
 
-Gebruik een .NET 10 SDK en voer `Build.ps1 -Dotnet <pad-naar-dotnet.exe>` uit. De build haalt Autodesk AutoCAD.NET API 25.0.1 en 26.0.0 via NuGet op en bouwt de Excel-worker voor beide runtimes. De Autodesk API-DLL's worden niet meegeleverd: die levert de hostapplicatie. De uitvoer staat in `dist/1.8.0` en in `Techbase Blocks 1.8.0.zip`. Versiegebonden DLL-mappen maken een update mogelijk zonder een reeds geladen oude DLL te overschrijven; herstart de CAD-toepassing om de nieuwe versie te laden.
+Gebruik een .NET 10 SDK en voer `Build.ps1 -Dotnet <pad-naar-dotnet.exe>` uit. De build haalt Autodesk AutoCAD.NET API 25.0.1 en 26.0.0 via NuGet op en bouwt de Excel-worker voor beide runtimes. De Autodesk API-DLL's worden niet meegeleverd: die levert de hostapplicatie. De uitvoer staat in `dist/1.9.0` en in `Techbase Blocks 1.9.0.zip`. Versiegebonden DLL-mappen maken een update mogelijk zonder een reeds geladen oude DLL te overschrijven; herstart de CAD-toepassing om de nieuwe versie te laden.

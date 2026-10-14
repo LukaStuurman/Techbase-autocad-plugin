@@ -1,0 +1,127 @@
+{
+  "Repository": "https://github.com/LukaStuurman/AutoCAD-Enexis-kabels-checker",
+  "Commit": "4009601e15fa4b1b6926380395132b0c1630ce21",
+  "Source": "Pinned main, 9 October 2026",
+  "Files": [
+    {
+      "Path": "src/Enexis.KabelChecker.AutoCAD/CurrentLoadPanel.cs",
+      "SHA256": "DB373D4B58F94F62AEA6DC669C674EA1E63C9EFA17555C13626DB99185891898"
+    },
+    {
+      "Path": "src/Enexis.KabelChecker.AutoCAD/CurrentLoadPanelV2.cs",
+      "SHA256": "7F6DD5D53056C799D55249F52A59CAC99795B1C84B32ADD0F0A4E86EA08C6B51"
+    },
+    {
+      "Path": "src/Enexis.KabelChecker.AutoCAD/DeleteAllDirectionsButtonInstaller.cs",
+      "SHA256": "F302DA998EB6D6930736CD43ADAF2BB19E07840005EABD08A6CFAE5A279A7458"
+    },
+    {
+      "Path": "src/Enexis.KabelChecker.AutoCAD/DesignCurrent.cs",
+      "SHA256": "66EED30DB32ADF08904161D2C46F5251F7C9351D56576FE08AD2022111BF81DF"
+    },
+    {
+      "Path": "src/Enexis.KabelChecker.AutoCAD/DirectionInfoBlockPlacer.cs",
+      "SHA256": "E0A7E4E2D3BABA22906B0C58330A9DA6800BB5770E338F8ED3991BF23523938F"
+    },
+    {
+      "Path": "src/Enexis.KabelChecker.AutoCAD/DirectionModels.cs",
+      "SHA256": "E2235D75281D94FC503A142758594F66159D12F9BE6499C9D4C7ABC12684B097"
+    },
+    {
+      "Path": "src/Enexis.KabelChecker.AutoCAD/DirectionPolylineSelection.cs",
+      "SHA256": "C74849CA8779933C4474764E1C761D7808901CCB341B46F19A4A06D0DC1EB477"
+    },
+    {
+      "Path": "src/Enexis.KabelChecker.AutoCAD/Enexis.KabelChecker.AutoCAD.csproj",
+      "SHA256": "6C548F37FE73B2DB5D1A341073B5DD159DFCEF13AB6A676A49E379A314131D7E"
+    },
+    {
+      "Path": "src/Enexis.KabelChecker.AutoCAD/ExcelDirectionExporter.cs",
+      "SHA256": "F1C391F1A919CF0479E76EDA01E955E5F2F500A96EE7F7AD51F6C04278841A25"
+    },
+    {
+      "Path": "src/Enexis.KabelChecker.AutoCAD/ExcelLoadCatalog.cs",
+      "SHA256": "AB9EFE87549FDB7FC7786CF5B0490DDAE0BC08DDBA0722A2A631C3E965FF0C71"
+    },
+    {
+      "Path": "src/Enexis.KabelChecker.AutoCAD/ExcelLoadResolver.cs",
+      "SHA256": "F216223F3D36E9EC8384A93E0F600248AD6EED7F0101BB072007E61CB069D5ED"
+    },
+    {
+      "Path": "src/Enexis.KabelChecker.AutoCAD/KabelCheckerForm.cs",
+      "SHA256": "10F5634C4D2F43BDE4C579CDE4ADA518848A757592651B2AE425D7FA680CFA93"
+    },
+    {
+      "Path": "src/Enexis.KabelChecker.AutoCAD/KabelCheckerFormV2.cs",
+      "SHA256": "896BF572E7C24B3D9B6B0B901B587B3FB2B0D61AABB91C618CC87DB76E95B7FC"
+    },
+    {
+      "Path": "src/Enexis.KabelChecker.AutoCAD/KaderLoadPicker.cs",
+      "SHA256": "C28BAE368F15D4238511ED50CCB0CFDDDEAE1FEAE2FEE9DA1972B6069658F846"
+    },
+    {
+      "Path": "src/Enexis.KabelChecker.AutoCAD/KaderVersion.cs",
+      "SHA256": "5D3CB6A6A2E9AAB624BDAEB19B76C31BB414B6554FFF93AC987AD96D40F9F802"
+    },
+    {
+      "Path": "src/Enexis.KabelChecker.AutoCAD/Plugin.cs",
+      "SHA256": "088D8C18F10F8CDEB31BF2390F59A9F7FF2E06F729B9D750FFCD0FC91CEBBFD2"
+    },
+    {
+      "Path": "src/Enexis.KabelChecker.AutoCAD/StationPersistence.cs",
+      "SHA256": "7A442907F380105AE1DAF078F7CCF5296286B4F092B178E524CF6410D3C63025"
+    },
+    {
+      "Path": "src/Enexis.KabelChecker.AutoCAD/TextCurrentBrushJig.cs",
+      "SHA256": "2232CD9E2FD4982ED169C79AB3A01BCDF7A99901E772BE967494C7A92AF16870"
+    },
+    {
+      "Path": "src/Enexis.KabelChecker.AutoCAD/TextCurrentBrushSelection.cs",
+      "SHA256": "8844C588E82EAEDAD21C1BB6BC2887DAA6690F99894E2A8F4CFB085B77AAE338"
+    },
+    {
+      "Path": "src/Enexis.KabelChecker.AutoCAD/TextCurrentObjectSelection.cs",
+      "SHA256": "EF2392D28B787A190F19F8254D59E1F8E2ADC33EBFA8B0F69D6CE51A80CFC7E9"
+    },
+    {
+      "Path": "src/Enexis.KabelChecker.AutoCAD/Resources/Eea-0205.K 1.0 - Copy.xlsx",
+      "SHA256": "B6F9F5FEE2F1DFDB89642DAB94C989BA7EF414EF3501561CCB45FA1C6725578A"
+    },
+    {
+      "Path": "src/Enexis.KabelChecker.AutoCAD/Resources/Eea-0205.K 2.0.xlsx",
+      "SHA256": "79D95FEE46051E350EC9EFFF3754938820FDDF43517ABC4B42777DEB7B8A393B"
+    },
+    {
+      "Path": "src/Enexis.KabelChecker.AutoCAD/Resources/Eea-0205.K 3.0.xlsx",
+      "SHA256": "8AEB877A607CA68C96CA6198C246B967ED8D7DE459F7ECC84C8025B4BC80449D"
+    },
+    {
+      "Path": "src/Enexis.KabelChecker.AutoCAD/Resources/Eea-0205.K 3.2.xlsx",
+      "SHA256": "C6E367C67160DBB768756AAA2F9F459D31A45E7AC6CA61867038CAA872FD7A47"
+    },
+    {
+      "Path": "src/Enexis.KabelChecker.Core/CurrentTextParser.cs",
+      "SHA256": "4A7609B9C9FCAC5EA3C3102D1A8D490E7F4FFC56E34DC027C7D69BC74D8500CD"
+    },
+    {
+      "Path": "src/Enexis.KabelChecker.Core/Enexis.KabelChecker.Core.csproj",
+      "SHA256": "29062A1C5C0CAC600E4AC3F770B8929E11E678615F34318A6CE7CBFFA16EE477"
+    },
+    {
+      "Path": "src/Enexis.KabelChecker.Core/KabelChecker.cs",
+      "SHA256": "55315DF7133750EF95A93115E6EFDE595C84D40DADEFF2706ACE3DD6FFC04648"
+    },
+    {
+      "Path": "src/Enexis.KabelChecker.Core/VirtualCutLengthCalculator.cs",
+      "SHA256": "E05CDCF1EFAB67E434172DB78465C255E4AD282901EF155804F2AADE7BACAA77"
+    },
+    {
+      "Path": "src/Enexis.KabelChecker.ExcelWorker/Enexis.KabelChecker.ExcelWorker.csproj",
+      "SHA256": "2B2EDE60691601AF1B4CB69745BFCFB208DF75413B8B2B495BEB5C385DBA0BCF"
+    },
+    {
+      "Path": "src/Enexis.KabelChecker.ExcelWorker/ExcelWorker.cs",
+      "SHA256": "B2C7ACAFEBD9A283548EA44B0B5A1911874DA3A5521AE1AE370BC5E894B0AF57"
+    }
+  ]
+}

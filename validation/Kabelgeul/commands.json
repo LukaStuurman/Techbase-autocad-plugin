@@ -1,6 +1,6 @@
 {
   "Status": "PASS",
-  "Autoload": true,
+  "Autoload": false,
   "Checks": [
     "FRAME_DIRECT=2",
     "FRAME_COPY=2",

@@ -1,0 +1,18 @@
+{
+  "Status": "PASS",
+  "Checks": [
+    "green: COLOR=125",
+    "green: LOCKED=3",
+    "green: XREF=125",
+    "green: OTHER=3",
+    "green: 1 vergrendelde lagen overgeslagen.",
+    "green: independently read saved DXF layer colors",
+    "black: COLOR=7",
+    "black: LOCKED=3",
+    "black: XREF=125",
+    "black: OTHER=3",
+    "black: 1 vergrendelde lagen overgeslagen.",
+    "black: independently read saved DXF layer colors"
+  ],
+  "Autoload": true
+}
