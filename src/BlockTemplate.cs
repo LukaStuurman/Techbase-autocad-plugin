@@ -77,6 +77,35 @@ internal static class BlockTemplate
                 warnings.Add(tool.Name + ": " + ex.Message);
             }
         }
+        // Ook trafoblokken die gebruikers in Stationslocaties/ZRO hebben
+        // geregistreerd krijgen een gelijknamige AANKOOP-variant in deze
+        // kopie van de template. De oorspronkelijke blokdefinitie blijft bestaan.
+        foreach (var choice in Stationslocaties.StationBlockLibrary.Read().Blocks)
+        {
+            try
+            {
+                ObjectId original;
+                using (var tx = db.TransactionManager.StartTransaction())
+                {
+                    original = Stationslocaties.StationBlockLibrary.Import(db, tx, choice);
+                    tx.Commit();
+                }
+                var name = choice.Name + StationPurchaseVariants.Suffix;
+                bool exists;
+                using (var tx = db.TransactionManager.StartTransaction())
+                {
+                    var blocks = (BlockTable)tx.GetObject(db.BlockTableId, OpenMode.ForRead);
+                    exists = blocks.Has(name);
+                    tx.Commit();
+                }
+                StationPurchaseVariants.Ensure(db, original, name);
+                if (!exists) added++;
+            }
+            catch (System.Exception ex)
+            {
+                warnings.Add(choice.Name + ": " + ex.Message);
+            }
+        }
         if (added != 0)
             db.SaveAs(path, DwgVersion.Current);
         return (path, warnings.ToArray(), added);
