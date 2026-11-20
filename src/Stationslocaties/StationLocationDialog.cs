@@ -70,8 +70,15 @@ internal sealed class StationLocationController
                                 fields = fields with { DrawingNumber = StationLocationSheets.DefaultDrawingNumber(sheet) };
                             LayoutManager.Current.CurrentLayout = "Model";
                             var editor = doc.Editor;
-                            var block = StationBlockLibrary.Read().Default;
-                            if (!StationLocationSheets.PickLocation(doc, block, out var point, out var rotation)) break;
+                            // Stationslocaties en ZRO delen nu exact dezelfde
+                            // trafobibliotheek (incl. de groene AANKOOP-varianten).
+                            // Pacto 25 AANKOOP is standaard geselecteerd; de
+                            // normale en eigen blokken blijven beschikbaar.
+                            var source = Techbase.Blocks.StationBlockSelectionDialog.Choose(doc);
+                            if (source == null) break;
+                            var block = source.Registered;
+                            if (!StationLocationSheets.PickLocation(doc, block,
+                                out var point, out var rotation, source)) break;
                             if (input.LookupAddress && string.IsNullOrWhiteSpace(fields.Address))
                             {
                                 editor.WriteMessage("\nDichtstbijzijnd adres ophalen bij PDOK…");
@@ -79,7 +86,8 @@ internal sealed class StationLocationController
                                 if (result.Address != null) fields = fields with { Address = result.Address };
                                 editor.WriteMessage("\n" + result.Message);
                             }
-                            StationLocationSheets.Create(doc, sheet, fields, new Point3d(point.X, point.Y, 0), rotation, block);
+                            StationLocationSheets.Create(doc, sheet, fields,
+                                new Point3d(point.X, point.Y, 0), rotation, block, source);
                             selected = sheet;
                             editor.Regen();
                             editor.WriteMessage($"\nA3-layout ‘{sheet.Name}’ aangemaakt.");
