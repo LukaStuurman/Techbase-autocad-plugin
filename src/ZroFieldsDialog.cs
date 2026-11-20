@@ -15,6 +15,7 @@ internal sealed class ZroFieldsDialog : Form
         MaximumSize = new Size(660, 0)
     };
     internal ZroFields? Result { get; private set; }
+    internal IReadOnlyList<ZroParcelLabel> Labels { get; private set; } = Array.Empty<ZroParcelLabel>();
 
     internal ZroFieldsDialog(ZroFields values, Point3d center, string type, double area)
     {
@@ -146,6 +147,7 @@ internal sealed class ZroFieldsDialog : Form
             {
                 var result = await ZroPdok.FillAsync(stationPoint, Read());
                 ApplyValues(result.Fields);
+                Labels = result.Labels;
                 feedback.Text = result.Warning == null
                     ? $"PDOK: adres en perceel ingevuld; controleer de waarden voor het opslaan."
                     : "PDOK gedeeltelijk beschikbaar: " + result.Warning +
