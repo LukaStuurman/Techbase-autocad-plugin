@@ -1,5 +1,7 @@
 # Techbase AutoCAD Plugin
 
+> **Versie-informatie:** de GitHub-bron en de laatst gebouwde GitHub-release zijn nog gebaseerd op 1.13.0. De door de gebruiker aangeleverde 1.19.2-installatie bevat extra functies en uitsluitend gecompileerde DLL's, geen C#-bron. Installeer 1.13.0 niet over een werkende lokale 1.19.2-installatie: nieuwere functies ontbreken dan. De nieuwe native Stationslocaties-tab is als bronwijziging uitgewerkt, maar is nog niet samengevoegd met de ontbrekende 1.19.2-bronnen. Zie [broncontrole 1.19.2](docs/techbase-1.19.2-binary-audit.md).
+
 Plugin voor AutoCAD en Civil 3D op Windows met zeven tabs:
 
 - **Blocks**: de 58 blockknoppen uit de Techbase toolpalette, een cursorvoorbeeld met meedraaiende attribuutteksten, een bewaarde draai-instelling per block, zoeken, groepen en een schakelaar voor laagovername van het object waarop je plaatst.
