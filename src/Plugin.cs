@@ -16,6 +16,7 @@ public sealed partial class Plugin : IExtensionApplication
 {
     internal static Settings Preferences { get; private set; } = Settings.Read();
     internal static Catalog? Blocks { get; private set; }
+    private Stationslocaties.StationTableUpdates? stationTableUpdates;
     private static PaletteSet? palette;
     private static BlocksPanel? panel;
     private static LightmastPanel? lightmastPanel;
@@ -31,9 +32,11 @@ public sealed partial class Plugin : IExtensionApplication
     public void Initialize()
     {
         try { Typography.EnsureInstalled(); Reload(); }
+        try { stationTableUpdates = new Stationslocaties.StationTableUpdates(); stationTableUpdates.Initialize(); }
+        catch (System.Exception ex) { AcApp.DocumentManager.MdiActiveDocument?.Editor.WriteMessage("\nStationlocaties: " + ex.Message); }
         catch (System.Exception ex) { AcApp.DocumentManager.MdiActiveDocument?.Editor.WriteMessage("\nTechbase Blocks: " + ex.Message); }
     }
-    public void Terminate() { stationLocationsPanel?.Dispose(); kabelgeulPanel?.Dispose(); settingsPanel?.Dispose(); directionPanel?.Dispose(); kabelCheckerPanel?.Dispose(); lightmastPanel?.Dispose(); panel?.Dispose(); palette?.Dispose(); }
+    public void Terminate() { stationTableUpdates?.Terminate(); stationLocationsPanel?.Dispose(); kabelgeulPanel?.Dispose(); settingsPanel?.Dispose(); directionPanel?.Dispose(); kabelCheckerPanel?.Dispose(); lightmastPanel?.Dispose(); panel?.Dispose(); palette?.Dispose(); }
     internal static void Reload(string? path = null)
     {
         var candidate = new Catalog(path ?? Preferences.PalettePath ?? DefaultPalette);

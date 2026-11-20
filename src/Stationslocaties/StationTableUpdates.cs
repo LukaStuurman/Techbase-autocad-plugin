@@ -3,8 +3,6 @@ using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.Runtime;
 using AcApp = Autodesk.AutoCAD.ApplicationServices.Core.Application;
 
-[assembly: ExtensionApplication(typeof(Stationslocaties.StationTableUpdates))]
-
 namespace Stationslocaties;
 
 public sealed class StationTableUpdates : IExtensionApplication
