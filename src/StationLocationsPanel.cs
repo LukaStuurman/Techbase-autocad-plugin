@@ -47,6 +47,7 @@ internal sealed class StationLocationsPanel : UserControl
         BorderStyle = BorderStyle.FixedSingle
     };
     private readonly Button refresh = new() { Text = "Vernieuwen", AutoSize = true };
+    private readonly Button info = new() { Text = "Info", AutoSize = true };
     private readonly Dictionary<StationAction, Button> actionButtons = new();
     private readonly ToolTip tips = new();
     private readonly List<StationSheet> cached = new();
@@ -95,13 +96,15 @@ internal sealed class StationLocationsPanel : UserControl
 
         var bar = new TableLayoutPanel
         {
-            Dock = DockStyle.Fill, ColumnCount = 2,
+            Dock = DockStyle.Fill, ColumnCount = 3,
             AutoSize = true, Margin = new Padding(0, 0, 0, 9)
         };
         bar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
         bar.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
+        bar.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
         bar.Controls.Add(search, 0, 0);
         bar.Controls.Add(refresh, 1, 0);
+        bar.Controls.Add(info, 2, 0);
         root.Controls.Add(bar, 0, 2);
 
         sheets.Columns.Add("Blad", 120);
@@ -209,6 +212,11 @@ internal sealed class StationLocationsPanel : UserControl
 
         search.TextChanged += (_, _) => Filter();
         refresh.Click += (_, _) => RefreshSheets();
+        info.Click += (_, _) =>
+        {
+            using var help = new Stationslocaties.StationHelpDialog();
+            help.ShowDialog(this);
+        };
         VisibleChanged += (_, _) => { if (Visible) RefreshSheets(); };
         UiTypography.Apply(this);
         RefreshSheets();
@@ -272,6 +280,8 @@ internal sealed class StationLocationsPanel : UserControl
             {
                 summary.Text = "Geen actieve tekening";
                 status.Text = "Open een DWG om stationslocaties te beheren.";
+                sheets.Items.Clear();
+                UpdateActions();
                 return;
             }
             cached.AddRange(Stationslocaties.StationLocationSheets.List(document.Database));
