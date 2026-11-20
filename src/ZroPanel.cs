@@ -165,7 +165,7 @@ internal sealed class ZroPanel : UserControl
         };
         var flow = new FlowLayoutPanel
         {
-            Dock = DockStyle.Fill, FlowDirection = FlowDirection.LeftToRight,
+            Dock = DockStyle.Fill, FlowDirection = System.Windows.Forms.FlowDirection.LeftToRight,
             WrapContents = true, AutoScroll = true, Margin = Padding.Empty
         };
         flow.SizeChanged += (_, _) => FitButtons(flow);
