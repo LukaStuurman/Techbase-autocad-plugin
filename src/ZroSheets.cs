@@ -242,7 +242,7 @@ internal static class ZroSheets
                     attribute.TextString = "";
             }
         }
-        UpdateDepartmentOverlay(tx, layout, info.Department);
+        UpdateDepartmentOverlay(db, tx, layout, info.Department);
     }
 
     private static void UpdateCorners(Transaction tx, Layout layout, Point3d[] corners)
@@ -261,7 +261,7 @@ internal static class ZroSheets
         }
     }
 
-    private static void UpdateDepartmentOverlay(Transaction tx, Layout layout, string department)
+    private static void UpdateDepartmentOverlay(Database db, Transaction tx, Layout layout, string department)
     {
         // In de originele Bakel-DXF is "Afdeling : Grondzaken" een statische
         // TEXT in het kadermodel, geen attribuut. Het is dus géén wijzigbaar
@@ -288,7 +288,6 @@ internal static class ZroSheets
         };
         // Zorg dat de overlaylaag bestaat, zodat iedere gebruiker één waarde
         // per blad kan gebruiken zonder het gedeelde blok te wijzigen.
-        var db = tx.Database;
         EnsureLayer(db, tx, layerName);
         record.AppendEntity(label);
         tx.AddNewlyCreatedDBObject(label, true);
