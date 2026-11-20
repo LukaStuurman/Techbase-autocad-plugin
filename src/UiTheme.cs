@@ -195,8 +195,19 @@ internal sealed class ThemedButton : Button
         var bounds = new RectangleF(.5f, .5f, Math.Max(1, Width - 1.5f), Math.Max(1, Height - 1.5f));
         var primary = BackColor == UiTheme.Orange;
         var fill = !Enabled ? UiTheme.Canvas : pressed ? FlatAppearance.MouseDownBackColor : hovered ? FlatAppearance.MouseOverBackColor : BackColor;
-        using var brush = new SolidBrush(fill); e.Graphics.FillRectangle(brush, bounds);
-        using var pen = new Pen(primary ? UiTheme.Orange : FlatAppearance.BorderColor); e.Graphics.DrawRectangle(pen, bounds.X, bounds.Y, bounds.Width, bounds.Height);
+        // Subtiele afgeronde hoeken; één consistente vorm voor navigatie én acties.
+        var radius = Math.Min(9f * DeviceDpi / 96f, Math.Min(bounds.Width, bounds.Height) / 2f);
+        var diameter = radius * 2;
+        using var outline = new GraphicsPath();
+        outline.AddArc(bounds.X, bounds.Y, diameter, diameter, 180, 90);
+        outline.AddArc(bounds.Right - diameter, bounds.Y, diameter, diameter, 270, 90);
+        outline.AddArc(bounds.Right - diameter, bounds.Bottom - diameter, diameter, diameter, 0, 90);
+        outline.AddArc(bounds.X, bounds.Bottom - diameter, diameter, diameter, 90, 90);
+        outline.CloseFigure();
+        using var brush = new SolidBrush(fill);
+        e.Graphics.FillPath(brush, outline);
+        using var pen = new Pen(primary ? UiTheme.Orange : FlatAppearance.BorderColor);
+        e.Graphics.DrawPath(pen, outline);
         var textBounds = Rectangle.Inflate(ClientRectangle, -8, -3);
         if (Glyph >= 0)
         {
