@@ -94,8 +94,9 @@ internal sealed class StationBlockSelectionDialog : Form
         foreach (var block in catalog.Blocks)
         {
             options.Add(new(block.Name, Registered: block));
-            options.Add(new(block.Name + StationPurchaseVariants.Suffix,
-                Registered: block, Acquisition: true));
+            if (!StationPurchaseVariants.IsPurchaseName(block.Name))
+                options.Add(new(block.Name + StationPurchaseVariants.Suffix,
+                    Registered: block, Acquisition: true));
         }
         // De oorspronkelijke standaard Stationslocaties-trafo blijft beschikbaar.
         options.Add(new("Standaard Stationslocaties-trafo (groene arcering)"));
