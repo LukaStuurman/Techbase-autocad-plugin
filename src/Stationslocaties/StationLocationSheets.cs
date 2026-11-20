@@ -225,13 +225,19 @@ internal static class StationLocationSheets
             Field("PROJECTNR.OPDR."), Field("GET"), Field("TDD"), Field("OVERIGE2"), Field("OVERIGE1"), Field("TEKENINGNUMMER"), path);
     }
 
-    internal static bool PickLocation(Document doc, StationBlockChoice? choice, out Point3d point, out double rotation)
+    internal static bool PickLocation(Document doc, StationBlockChoice? choice,
+        out Point3d point, out double rotation, Techbase.Blocks.StationBlockSelection? source = null)
     {
         var db = doc.Database;
+        // Catalog-imports hebben een eigen transactiescope. Voer ze vóór het
+        // aanmaken van de jig-transactie uit, anders conflicteert de bloktabel.
+        var selectedDefinition = source?.ResolveDefinition(db) ?? ObjectId.Null;
+        var selectedScale = source?.ScaleFor(db, selectedDefinition);
         using var tr = db.TransactionManager.StartTransaction();
-        using var preview = new BlockReference(Point3d.Origin, ResolveBlock(db, tr, choice));
+        using var preview = new BlockReference(Point3d.Origin,
+            source == null ? ResolveBlock(db, tr, choice) : selectedDefinition);
         preview.SetDatabaseDefaults(db);
-        preview.ScaleFactors = choice?.Scale ?? new Scale3d(1);
+        preview.ScaleFactors = selectedScale ?? choice?.Scale ?? new Scale3d(1);
         var accepted = new StationPlacementJig(preview).Pick(doc.Editor);
         if (accepted) tr.Commit();
         point = preview.Position;
@@ -239,9 +245,12 @@ internal static class StationLocationSheets
         return accepted;
     }
 
-    internal static void Create(Document doc, StationSheet sheet, StationFields fields, Point3d point, double rotation, StationBlockChoice? choice)
+    internal static void Create(Document doc, StationSheet sheet, StationFields fields, Point3d point, double rotation,
+        StationBlockChoice? choice, Techbase.Blocks.StationBlockSelection? source = null)
     {
         var db = doc.Database;
+        var selectedDefinition = source?.ResolveDefinition(db) ?? ObjectId.Null;
+        var selectedScale = source?.ScaleFor(db, selectedDefinition);
         if (db.Insunits is not (UnitsValue.Meters or UnitsValue.Undefined))
             throw new InvalidOperationException("Deze kaart gebruikt modelcoördinaten in meters. Controleer INSUNITS.");
         var layouts = LayoutManager.Current;
@@ -261,9 +270,10 @@ internal static class StationLocationSheets
             var viewport = NativeStationGeometry.AppendSheet(db, tr, layout, false);
             step = "trafoblok plaatsen";
             var layerId = Layer(db, tr, sheet.Layer, true);
-            var blockId = ResolveBlock(db, tr, choice);
+            var blockId = source == null ? ResolveBlock(db, tr, choice) : selectedDefinition;
             var model = (BlockTableRecord)tr.GetObject(SymbolUtilityServices.GetBlockModelSpaceId(db), OpenMode.ForWrite);
-            var reference = new BlockReference(point, blockId) { LayerId = layerId, Rotation = rotation, ScaleFactors = choice?.Scale ?? new Scale3d(1) };
+            var reference = new BlockReference(point, blockId) { LayerId = layerId, Rotation = rotation,
+                ScaleFactors = selectedScale ?? choice?.Scale ?? new Scale3d(1) };
             model.AppendEntity(reference);
             tr.AddNewlyCreatedDBObject(reference, true);
             AddBlockAttributes(tr, reference);
