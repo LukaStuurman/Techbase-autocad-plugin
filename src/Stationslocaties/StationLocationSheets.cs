@@ -449,6 +449,7 @@ internal static class StationLocationSheets
                 {
                     Center(tr, viewport, station.Position);
                     refreshMarkers = true;
+                    updated = true;
                 }
             }
             else
@@ -456,8 +457,7 @@ internal static class StationLocationSheets
                 refreshMarkers = true;
             }
             // Zowel verplaatsen als roteren: de berekening gebruikt BlockTransform.
-            UpdateCornerTable(db, tr, layout, station, sheet.ShowCorners);
-            updated = true;
+            updated |= UpdateCornerTable(db, tr, layout, station, sheet.ShowCorners);
         }
         if (refreshMarkers) RefreshMarkers(db, tr);
         tr.Commit();
@@ -526,7 +526,7 @@ internal static class StationLocationSheets
         tr.Commit();
     }
 
-    private static void UpdateCornerTable(Database db, Transaction tr, Layout layout, BlockReference station, bool show)
+    private static bool UpdateCornerTable(Database db, Transaction tr, Layout layout, BlockReference station, bool show)
     {
         var standardBlock = BlockName(tr, station) == Symbol;
         if (!standardBlock) StationBlockLibrary.EnsureCornerArrows(tr, station);
@@ -534,7 +534,7 @@ internal static class StationLocationSheets
             ? NativeStationGeometry.StationCorners(station)
             : StationBlockLibrary.Corners(tr, station);
         var layers = (LayerTable)tr.GetObject(db.LayerTableId, OpenMode.ForRead);
-        if (coordinates.Length != 4 && !layers.Has(CornerTableLayer)) return;
+        if (coordinates.Length != 4 && !layers.Has(CornerTableLayer)) return false;
         var layer = Layer(db, tr, CornerTableLayer);
         const double bottom = 3.124045803; // Bottom edge of the cable legend in the detail sheet template.
         const double offset = bottom - 5;
@@ -559,14 +559,14 @@ internal static class StationLocationSheets
             .Select(id => (Entity)tr.GetObject(id, OpenMode.ForRead)).Where(entity => entity.LayerId == layer).ToArray();
         var texts = previous.OfType<DBText>().ToArray();
         if (coordinates.Length == 4 && previous.Length == cells.Count + 2 && texts.Length == cells.Count && cells.All(cell =>
-            texts.Any(text => text.TextString == cell.Text && text.Position == new Point3d(cell.X, cell.Y, 0)))) return;
+            texts.Any(text => text.TextString == cell.Text && text.Position == new Point3d(cell.X, cell.Y, 0)))) return false;
 
         foreach (var entity in previous)
         {
             if (!entity.IsWriteEnabled) entity.UpgradeOpen();
             entity.Erase();
         }
-        if (coordinates.Length != 4) return;
+        if (coordinates.Length != 4) return previous.Length != 0;
         if (!space.IsWriteEnabled) space.UpgradeOpen();
         void Add(Entity entity)
         {
@@ -584,6 +584,7 @@ internal static class StationLocationSheets
         Add(new Line(new Point3d(left, 23.5 + offset, 0), new Point3d(legendLeft, 23.5 + offset, 0)));
         foreach (var cell in cells)
             Add(new DBText { TextString = cell.Text, Height = cell.Height, Position = new Point3d(cell.X, cell.Y, 0) });
+        return true;
     }
 
     private static ObjectId NoteLayerId(LayerTable layers, StationSheet sheet) =>
