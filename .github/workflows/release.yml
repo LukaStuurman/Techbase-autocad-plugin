@@ -80,5 +80,5 @@ jobs:
         run: |
           $version = "${{ steps.version.outputs.version }}"
           $tag = "${{ steps.version.outputs.tag }}"
-          & gh release create $tag "Techbase.Blocks.$version.zip" "SHA256SUMS.txt" --target "${{ github.sha }}" --title "Techbase $version" --notes-file "RELEASE-v1.13.0.md" --verify-tag=false
+          & gh release create $tag "Techbase.Blocks.$version.zip" "SHA256SUMS.txt" --target "${{ github.sha }}" --title "Techbase $version" --notes-file "RELEASE-v1.13.0.md"
           if ($LASTEXITCODE -ne 0) { throw "Publiceren van GitHub-release mislukt." }
