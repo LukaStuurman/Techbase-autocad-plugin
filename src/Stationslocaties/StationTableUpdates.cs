@@ -19,8 +19,7 @@ public sealed class StationTableUpdates : IExtensionApplication
     private static readonly HashSet<string> TransformCommands = new(StringComparer.OrdinalIgnoreCase)
     {
         "MOVE", "3DMOVE", "STRETCH", "ROTATE", "3DROTATE", "ROTATE3D",
-        "SCALE", "MIRROR", "ALIGN", "UNDO", "U", "REDO",
-        "REGEN", "REGENALL"
+        "SCALE", "MIRROR", "ALIGN", "UNDO", "U", "REDO"
     };
 
     public void Initialize()
