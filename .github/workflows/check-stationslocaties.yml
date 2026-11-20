@@ -5,6 +5,7 @@ on:
     paths:
       - "src/**"
       - "PackageContents.xml"
+      - "tests/StationToolbarVisual/**"
       - ".github/workflows/check-stationslocaties.yml"
 
 permissions:
@@ -30,3 +31,7 @@ jobs:
       - name: Build AutoCAD DLL
         shell: pwsh
         run: dotnet build src/Techbase.Blocks.csproj -c Release -p:ApiSeries=${{ matrix.api }} --nologo
+      - name: Render toolbar and verify readable labels and rounded corners
+        if: matrix.api == 'R25'
+        shell: pwsh
+        run: dotnet run --project tests/StationToolbarVisual/StationToolbarVisual.csproj -c Release
