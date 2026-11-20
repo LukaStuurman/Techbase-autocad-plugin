@@ -37,21 +37,45 @@ internal sealed class BlocksPanel : UserControl
         var openTemplate = new ThemedButton { Name = "OpenBlockTemplate", Text = "Template openen", AutoSize = true };
         openTemplate.Click += (_, _) => AcApp.DocumentManager.MdiActiveDocument?.SendStringToExecute("_TBTEMPLATE ", true, false, false);
         heading.Controls.Add(openTemplate); layout.Controls.Add(heading, 0, 0);
-        var layerOptions = new FlowLayoutPanel { AutoSize = true, Dock = DockStyle.Fill, FlowDirection = FlowDirection.TopDown, WrapContents = false };
-        layerOptions.Controls.Add(inherit);
-        var layerChoice = new FlowLayoutPanel { AutoSize = true, Dock = DockStyle.Fill, WrapContents = true };
+        // Eén vast kolomraster voor alle drie schakelaars. De oude geneste
+        // FlowLayoutPanels lieten vooral "Gekozen laag gebruiken" inspringen
+        // of verspringen wanneer de werkplaats smaller werd.
+        var placementOptions = new TableLayoutPanel
+        {
+            AutoSize = true, AutoSizeMode = AutoSizeMode.GrowAndShrink,
+            Dock = DockStyle.Top, ColumnCount = 1, RowCount = 5,
+            Padding = new Padding(3, 5, 3, 3), Margin = Padding.Empty
+        };
+        placementOptions.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
+        for (var row = 0; row < 5; row++)
+            placementOptions.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+        inherit.Dock = DockStyle.Top;
+        chosenLayer.Dock = DockStyle.Top;
+        repeat.Dock = DockStyle.Top;
+        // De drie schakelaars hebben dezelfde container, X-positie en marge.
+        foreach (var toggle in new[] { inherit, chosenLayer, repeat })
+            toggle.Margin = new Padding(0, 3, 0, 3);
+        placementOptions.Controls.Add(inherit, 0, 0);
+        placementOptions.Controls.Add(chosenLayer, 0, 1);
+
         for (var i = 1; i <= 12; i++) blockLayer.Items.Add("Richting " + i);
         blockLayer.Items.Add("Bestaande kabel");
-        layerChoice.Controls.Add(chosenLayer); layerChoice.Controls.Add(blockLayer);
-        layerOptions.Controls.Add(layerChoice);
-        var placementOptions = new FlowLayoutPanel { AutoSize = true, Dock = DockStyle.Top, FlowDirection = FlowDirection.TopDown, WrapContents = false };
-        placementOptions.Controls.Add(layerOptions);
-        placementOptions.Controls.Add(repeat);
-        var settings = new FlowLayoutPanel { AutoSize = true, Dock = DockStyle.Fill };
+        // De combobox hoort bij de tweede schakelaar en staat eronder,
+        // ingesprongen op de tekstpositie, zonder de schakelaar te verplaatsen.
+        blockLayer.Dock = DockStyle.Top;
+        blockLayer.Margin = new Padding(45, 0, 2, 8);
+        placementOptions.Controls.Add(blockLayer, 0, 2);
+        placementOptions.Controls.Add(repeat, 0, 3);
+
+        var settings = new FlowLayoutPanel
+        {
+            AutoSize = true, Dock = DockStyle.Fill,
+            WrapContents = true, Margin = new Padding(0, 7, 0, 0)
+        };
         settings.Controls.Add(new Label { Text = "Zoekafstand:", AutoSize = true, Padding = new Padding(0, 5, 0, 0) });
         settings.Controls.Add(tolerance);
         settings.Controls.Add(new Label { Text = "tekeneenheden", AutoSize = true, Padding = new Padding(0, 5, 0, 0) });
-        placementOptions.Controls.Add(settings);
+        placementOptions.Controls.Add(settings, 0, 4);
         layout.Controls.Add(UiTheme.Fold("Plaatsopties", placementOptions), 0, 3);
         var sources = new FlowLayoutPanel { AutoSize = true, Dock = DockStyle.Fill };
         var source = new ThemedButton { Text = "Bron...", AutoSize = true };
