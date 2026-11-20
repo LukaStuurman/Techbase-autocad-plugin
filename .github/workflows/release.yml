@@ -8,6 +8,7 @@ on:
       - "src/Techbase.Blocks.csproj"
       - "RELEASE-v1.13.0.md"
       - ".github/workflows/release.yml"
+      - ".gitattributes"
   workflow_dispatch:
 
 permissions:
