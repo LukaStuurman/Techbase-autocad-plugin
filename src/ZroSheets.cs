@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using System.Text.Json;
 using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.Geometry;
@@ -124,6 +125,42 @@ internal static class ZroSheets
         tx.Commit();
         doc.Editor.Regen();
         return true;
+    }
+
+    internal static ZroFields ReadFields(Database db, string layoutName)
+    {
+        using var tx = db.TransactionManager.StartTransaction();
+        var layout = GetLayout(db, tx, layoutName);
+        if (!layout.ExtensionDictionary.IsNull &&
+            tx.GetObject(layout.ExtensionDictionary, OpenMode.ForRead) is DBDictionary data &&
+            data.Contains(DataKey))
+        {
+            var record = (Xrecord)tx.GetObject(data.GetAt(DataKey), OpenMode.ForRead);
+            using var stored = record.Data;
+            var json = string.Concat(stored?.AsArray().Select(x => x.Value?.ToString() ?? "") ?? []);
+            if (json.Length > 0)
+            {
+                var restored = JsonSerializer.Deserialize<ZroFields>(json);
+                if (restored != null) return restored;
+            }
+        }
+        return Defaults.Copy();
+    }
+
+    internal static void Edit(Document doc, string layoutName, ZroFields fields)
+    {
+        var db = doc.Database;
+        using var tx = db.TransactionManager.StartTransaction();
+        var layout = GetLayout(db, tx, layoutName, OpenMode.ForWrite);
+        var stationId = AttachedStation(db, layout);
+        if (stationId.IsNull) throw new InvalidOperationException("Dit ZRO-blad heeft geen gekoppeld trafoblok.");
+        var footprint = ZroGeometry.Inspect(db, stationId);
+        UpdateAttributes(db, tx, layout, fields, footprint);
+        CenterViewports(tx, layout, footprint.Center);
+        WriteMetadata(db, tx, layout, stationId, fields);
+        tx.Commit();
+        Defaults = fields.Copy();
+        doc.Editor.Regen();
     }
 
     internal static void RefreshAll(Document doc)
@@ -346,6 +383,29 @@ internal static class ZroSheets
             new TypedValue(1000, info.TrafoName),
             new TypedValue(1000, info.ProjectCode));
         layout.XData = record;
+
+        // Bewaar ALLE handmatig ingevoerde waarden per blad, niet alleen
+        // de koppeling met de trafo. Lange strings worden in Xrecord-delen
+        // opgesplitst om de DXF-tekstlimiet van 255 tekens te respecteren.
+        var json = JsonSerializer.Serialize(info);
+        var parts = Enumerable.Range(0, (json.Length + 239) / 240)
+            .Select(i => new TypedValue((int)DxfCode.Text,
+                json.Substring(i * 240, Math.Min(240, json.Length - i * 240))))
+            .ToArray();
+        if (layout.ExtensionDictionary.IsNull) layout.CreateExtensionDictionary();
+        var dictionary = (DBDictionary)tx.GetObject(layout.ExtensionDictionary, OpenMode.ForWrite);
+        using var values = new ResultBuffer(parts);
+        if (dictionary.Contains(DataKey))
+        {
+            var existing = (Xrecord)tx.GetObject(dictionary.GetAt(DataKey), OpenMode.ForWrite);
+            existing.Data = values;
+        }
+        else
+        {
+            var data = new Xrecord { Data = values };
+            dictionary.SetAt(DataKey, data);
+            tx.AddNewlyCreatedDBObject(data, true);
+        }
     }
 
     private static ObjectId AttachedStation(Database db, Layout layout)
