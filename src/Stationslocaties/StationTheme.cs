@@ -10,7 +10,7 @@ internal static class StationTheme
     internal static readonly Color Ink = Color.FromArgb(42, 49, 58);
     internal static readonly Color Muted = Color.FromArgb(98, 108, 120);
     internal static readonly Color Border = Color.FromArgb(211, 219, 228);
-    internal static readonly Color Accent = Color.FromArgb(39, 98, 154);
+    internal static readonly Color Accent = Color.FromArgb(190, 82, 17);
     internal static readonly Color Tint = Color.White;
 
     internal static void StyleButtons(Control parent, Button primary, Button? destructive = null)
@@ -28,8 +28,8 @@ internal static class StationTheme
             button.BackColor = prominent ? Accent : Color.White;
             button.ForeColor = prominent ? Color.White : button == destructive ? Color.Firebrick : Ink;
             button.FlatAppearance.BorderColor = prominent ? Accent : Border;
-            button.FlatAppearance.MouseOverBackColor = prominent ? Color.FromArgb(30, 82, 130) : Color.FromArgb(235, 241, 248);
-            button.FlatAppearance.MouseDownBackColor = prominent ? Color.FromArgb(25, 69, 111) : Color.FromArgb(221, 232, 244);
+            button.FlatAppearance.MouseOverBackColor = prominent ? Color.FromArgb(161, 65, 10) : Color.FromArgb(255, 244, 234);
+            button.FlatAppearance.MouseDownBackColor = prominent ? Color.FromArgb(140, 53, 6) : Color.FromArgb(255, 229, 208);
             button.Padding = new Padding(8, 0, 8, 0);
         }
         if (parent is Form) Techbase.Blocks.UiTypography.Apply(parent);

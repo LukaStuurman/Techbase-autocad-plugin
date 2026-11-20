@@ -22,7 +22,7 @@ internal sealed class StationLocationController
             AcApp.DocumentManager.MdiActiveDocument?.Editor.WriteMessage("\nKaartreferentie: " + ex.Message);
         }
     }
-    public void ShowStationLocations()
+    public void ShowStationLocations(StationLocationAction? directAction = null, string? requestedSheetName = null)
     {
         var doc = AcApp.DocumentManager.MdiActiveDocument;
         if (doc == null) return;
@@ -35,11 +35,22 @@ internal sealed class StationLocationController
             {
                 var sheets = StationLocationSheets.List(doc.Database);
                 var hasOverview = StationLocationSheets.HasOverview(doc.Database);
-                var withPhoto = StationLocationSheets.SheetsWithPhoto(doc.Database, sheets);
-                using var dialog = new StationLocationDialog(sheets, selected, hasOverview, withPhoto);
-                if (AcApp.ShowModalDialog(dialog) != DialogResult.OK) return;
-                selected = dialog.Selected;
-                switch (dialog.Action)
+                StationLocationAction currentAction;
+                if (directAction is { } action)
+                {
+                    selected = requestedSheetName == null ? null : sheets.FirstOrDefault(sheet =>
+                        string.Equals(sheet.Name, requestedSheetName, StringComparison.OrdinalIgnoreCase));
+                    currentAction = action;
+                }
+                else
+                {
+                    var withPhoto = StationLocationSheets.SheetsWithPhoto(doc.Database, sheets);
+                    using var dialog = new StationLocationDialog(sheets, selected, hasOverview, withPhoto);
+                    if (AcApp.ShowModalDialog(dialog) != DialogResult.OK) return;
+                    selected = dialog.Selected;
+                    currentAction = dialog.Action;
+                }
+                switch (currentAction)
                 {
                     case StationLocationAction.Add:
                         var project = StationLocationSheets.ProjectFields(doc.Database, selected);
@@ -255,11 +266,13 @@ internal sealed class StationLocationController
                         doc.Editor.Regen();
                         return;
                 }
+                if (directAction.HasValue) return;
             }
             catch (System.Exception ex)
             {
                 doc.Editor.WriteMessage("\nStationlocaties: " + ex.Message);
                 MessageBox.Show(ex.Message, "Techbase Stationlocaties", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                if (directAction.HasValue) return;
             }
         }
     }
