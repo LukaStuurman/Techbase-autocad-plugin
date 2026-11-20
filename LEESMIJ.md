@@ -1,5 +1,7 @@
 # Techbase Blocks 1.20.3
 
+**Blocks → Plaatsopties:** de schakelaars voor laag overnemen, gekozen laag en herhaald plaatsen staan in één kolom. De dropdown voor de gekozen laag staat eronder en springt niet samen met de schakelaar naar een andere positie.
+
 **Nieuwe bediening:** in een smalle Techbase-palette kies je het gewenste onderdeel via de keuzelijst **Onderdeel**. In een breed venster verschijnt een navigatiebalk. Onder **Stationslocaties** vind je de knop **Nieuwe locatie**, de zoekfunctie en de bladlijst. Klik een blad aan om **Open blad**, **Blad bewerken** en **Kaartopmerking** te gebruiken. Voor overige instellingen kies je **Project**; voor totaalbladen en PDF kies je **Uitvoer**. Met rechtermuisknop op een blad krijg je de bijbehorende acties.
 
 Gebruik zeven tabs in AutoCAD en Civil 3D voor Windows: Blocks, Lichtmasten, Enexis kabelchecker, Richtingen, Instellingen, Kabelgeul en Stationslocaties.
