@@ -1,6 +1,7 @@
 # Techbase 1.20.3 — beter leesbare Stationslocaties en automatische kaartvolging
 
 ## Interface
+- In **Blocks → Plaatsopties** staan de drie schakelaars nu exact onder elkaar; de laagkeuze staat duidelijk onder de bijbehorende schakelaar zonder de uitlijning te beïnvloeden.
 - **Nieuwe locatie** heeft nu een compact formaat, grotere vetgedrukte witte tekst en een donkeroranje achtergrond met beter contrast.
 - **Vernieuwen** en **Uitleg** zijn echte leesbare knoppen in plaats van lege witte vlakken.
 - Een lege locatielijst toont de volgende stap; acties waarvoor een geselecteerde locatie nodig is worden tijdelijk verborgen.
