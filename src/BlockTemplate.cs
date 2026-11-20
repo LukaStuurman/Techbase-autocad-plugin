@@ -82,6 +82,7 @@ internal static class BlockTemplate
         // kopie van de template. De oorspronkelijke blokdefinitie blijft bestaan.
         foreach (var choice in Stationslocaties.StationBlockLibrary.Read().Blocks)
         {
+            if (StationPurchaseVariants.IsPurchaseName(choice.Name)) continue;
             try
             {
                 ObjectId original;
