@@ -1,5 +1,7 @@
 # Techbase AutoCAD Plugin
 
+> **Nieuw in 1.21.1 — AANKOOP-trafoblokken:** bij alle stationsblokken uit de Blocks-tab verschijnen herkenbare varianten met **AANKOOP** achter hun bestaande naam. Ze behouden de oorspronkelijke blockgeometrie en krijgen dezelfde groene ANSI31-arcering (kleur 102, schaal 0,1) en vrije ruimte als de standaard Stationslocaties-trafo. De groene lijnen staan zowel **op de trafo** als in het omliggende aankoopgebied. Dezelfde keuze is beschikbaar bij Stationslocaties en ZRO-bladen, met **Pacto 25 AANKOOP** standaard geselecteerd. Eigen trafoblokken kunnen eveneens worden geregistreerd en gebruikt. Met **Template openen** krijg je een bewerkbare templatekopie met de nieuwe blokdefinities; de oorspronkelijke template blijft behouden. De ZRO-tab heeft nu dezelfde indeling als Stationslocaties en biedt Topografie/Perceel-XREF's zonder KLIC. Zie [AANKOOP-blokken](docs/AANKOOP-trafoblokken.md).
+
 > **Nieuw in 1.21.0 — ZRO-bladen:** naast Stationslocaties is een achtste werkruimte toegevoegd waarmee je per gekozen trafoblok automatisch een ZRO-blad maakt in dezelfde opmaak als de aangeleverde Bakel-DXF (normale voorbeelden TRAFO-10 en TRAFO-4). Schalen boven **1:100** en onder **1:1000**; bloktype, footprint/oppervlakte en C1–C4 worden automatisch bepaald. Adres en kadastrale kenmerken worden via PDOK voorgesteld en blijven bewerkbaar; eigenaar, tekeningnummer, tekenaar, afdeling en e-mail zijn eigen invoervelden. Blauwe sectie-/perceelnummerlabels worden overgenomen of uit PDOK samengesteld. Je kunt bladen later opnieuw openen, bijwerken en de gegevens aanpassen. Zie [ZRO-handleiding](docs/ZRO-Bakel-voorbeeld.md).
 
 > **Nieuw in TechBase 1.21.0:** de kop van **Stationslocaties** is volledig opnieuw opgebouwd. De twee onleesbare witte vlakken zijn vervangen door de zichtbare tekstacties **Lijst vernieuwen** en **Uitleg en tips** onder het zoekveld. De knop **Nieuwe locatie** heeft een vaste hoogte, een eigen ruimte rondom en echt afgeronde hoeken; zijn tekst wordt weer door de normale Windows-knopweergave getekend. De nieuwe kop is als geheel automatisch getest op 380, 780 en 1190 px breed.
@@ -7,7 +9,7 @@
 > **Sinds 1.20.1: volledige Stationslocaties-integratie.** De codebasis is overgenomen uit de aangeleverde 1.20.0-bron en gecombineerd met het uitgebreide Stationslocaties-beheer. In de nieuwe werkplaats heeft Stationslocaties een eigen zevende navigatieknop die het volledige beheer rechtstreeks in dezelfde interface toont. Voor oudere stationsbladen uit de ingebouwde 1.20-functie blijft `TBSTATIONLEGACY` beschikbaar.
 
 
-Plugin voor AutoCAD en Civil 3D op Windows met zeven werkruimtes:
+Plugin voor AutoCAD en Civil 3D op Windows met acht werkruimtes:
 
 - **Blocks**: de 58 blockknoppen uit de Techbase toolpalette, een cursorvoorbeeld met meedraaiende attribuutteksten, een bewaarde draai-instelling per block, zoeken, groepen en een schakelaar voor laagovername van het object waarop je plaatst.
 - **Lichtmasten**: kies een xref, lichtmastlagen en eventueel blocktypen. Werk met een bestaande gesloten polyline, alles in de gekozen xref of een zelf getekende polygoon.
@@ -33,7 +35,7 @@ De stationslocatiekaart is onderdeel van dezelfde Techbase-DLL en heeft geen los
 
 ## Installeren
 
-Download **Techbase.Blocks.1.21.0.zip** uit de [release v1.21.0](https://github.com/LukaStuurman/Techbase-autocad-plugin/releases/tag/v1.21.0), pak hem uit en dubbelklik **Installeren.cmd**. De installer controleert en installeert ook **Arial Nova Light** via het officiele Microsoft Store-pakket als het lettertype ontbreekt. Geen aparte fontinstallatie nodig. Start AutoCAD of Civil 3D opnieuw en voer **TECHBASE** uit.
+Download **Techbase.Blocks.1.21.1.zip** uit de [release v1.21.1](https://github.com/LukaStuurman/Techbase-autocad-plugin/releases/tag/v1.21.1), pak hem uit en dubbelklik **Installeren.cmd**. De installer controleert en installeert ook **Arial Nova Light** via het officiele Microsoft Store-pakket als het lettertype ontbreekt. Geen aparte fontinstallatie nodig. Start AutoCAD of Civil 3D opnieuw en voer **TECHBASE** uit.
 
 Nieuwe plaatsingen gebruiken eigen bronblocks, ook als de tekening al een oudere blockdefinitie met dezelfde naam bevat. Bestaande plaatsingen blijven intact.
 
@@ -57,7 +59,7 @@ Gebruik Windows en een .NET 10 SDK:
 
 De benodigde XTP, afbeeldingen en bron-DWG staan in `Assets/Palette`. De kader-Excels en Enexis-bronnen staan onder `vendor/AutoCAD-Enexis-kabels-checker`. De clone heeft daardoor geen lokale Techbase-map of submodule nodig. NuGet haalt de Autodesk API-referenties en Excel-dependencies op. AutoCAD zelf blijft nodig voor de CAD-engine-tests.
 
-De build maakt `dist/1.21.0/Techbase.Blocks.bundle` en `Techbase Blocks 1.21.0.zip`. Een andere bronpalette kan met `-PaletteRoot <map>` worden opgegeven.
+De build maakt `dist/1.21.1/Techbase.Blocks.bundle` en `Techbase Blocks 1.21.1.zip`. Een andere bronpalette kan met `-PaletteRoot <map>` worden opgegeven.
 
 De meegeleverde Kabelgeul-bron staat in `Assets/Kabelgeul`; herkomst en hashes staan in `bronversie.json`. De bewerkte module wordt reproduceerbaar gemaakt met `python tests/prepare_kabelgeul.py` uit de vastgelegde `Reference/Techbase lisp pakket.lsp`. De build controleert de hashes en heeft geen Python nodig.
 

@@ -1,4 +1,4 @@
-# Techbase Blocks 1.21.0
+# Techbase Blocks 1.21.1
 
 **Verbeterd in 1.21.0:** de kop van Stationslocaties heeft nu drie duidelijke acties: **Nieuwe locatie** rechtsboven, **Lijst vernieuwen** en **Uitleg en tips** als leesbare links direct onder de zoekbalk. De laatste twee zijn geen witte knoppen meer. De oranje knop is in een aparte, ruime houder geplaatst en heeft een afgeronde boven- én onderkant. Bij een gedockte smalle werkplaats past de kop zich automatisch aan.
 
@@ -212,7 +212,7 @@ De concrete testresultaten en resterende praktijktests staan in `VALIDATIE.md` b
 
 ## Opnieuw bouwen
 
-Gebruik een .NET 10 SDK en voer `Build.ps1 -Dotnet <pad-naar-dotnet.exe>` uit. De build haalt Autodesk AutoCAD.NET API 25.0.1 en 26.0.0 via NuGet op en bouwt de Excel-worker voor beide runtimes. De Autodesk API-DLL's worden niet meegeleverd: die levert de hostapplicatie. De uitvoer staat in `dist/1.21.0` en in `Techbase Blocks 1.21.0.zip`. Versiegebonden DLL-mappen maken een update mogelijk zonder een reeds geladen oude DLL te overschrijven; herstart de CAD-toepassing om de nieuwe versie te laden.
+Gebruik een .NET 10 SDK en voer `Build.ps1 -Dotnet <pad-naar-dotnet.exe>` uit. De build haalt Autodesk AutoCAD.NET API 25.0.1 en 26.0.0 via NuGet op en bouwt de Excel-worker voor beide runtimes. De Autodesk API-DLL's worden niet meegeleverd: die levert de hostapplicatie. De uitvoer staat in `dist/1.21.1` en in `Techbase Blocks 1.21.1.zip`. Versiegebonden DLL-mappen maken een update mogelijk zonder een reeds geladen oude DLL te overschrijven; herstart de CAD-toepassing om de nieuwe versie te laden.
 
 
 ## Stationslocaties in de Techbase-plugin
@@ -246,3 +246,18 @@ Het invulvenster haalt automatisch het adres (BAG) en de kadastrale gemeente, se
 Blauwe sectie/perceelnummerlabels voor de bovenste kaart komen uit bestaande kadastrale labelblokken van de tekening of, indien afwezig, de actuele PDOK-perceeldata. Maak of koppel topo-/perceel-DWG-XREF's via de knop **Kaartreferenties (PDOK/KLIC)**, net als in Stationslocaties. Meer details: `docs/ZRO-Bakel-voorbeeld.md`.
 
 De kopieer-/importfunctie en de kadastrale gegevens in de voorbeeldtekening moeten in een echte AutoCAD-tekening worden gecontroleerd vóór formele oplevering.
+
+
+## Trafoblokken met AANKOOP-arcering (nieuw in 1.21.1)
+
+In **Blocks** staan naast de originele stationblokken nieuwe varianten met dezelfde naam en achtervoegsel **AANKOOP**, waaronder **PACTO 25 exc. afm. AANKOOP**. Deze varianten behouden de oorspronkelijke stationgeometrie en hebben groene diagonale ANSI31-lijnen op de trafo en op het omringende aankoopgebied. De arcering is afgestemd op de standaard Stationslocaties-trafo: kleur 102, hoek −90°, schaal 0,1 en marges links 2,14 m, rechts 0,40 m, boven 0,40 m en onder 1,91 m (bij een tekening in meters).
+
+Bij **Stationslocaties → Nieuwe locatie** en **ZRO-bladen → Nieuw ZRO-blad** verschijnt nu dezelfde blokkeuze, met Pacto 25 AANKOOP als voorgeselecteerde keuze. Andere blokken uit de Blocks-bibliotheek en zelf geregistreerde trafoblokken zijn eveneens beschikbaar. Met **Extra trafoblok toevoegen** kun je een nieuw blok uit modelruimte opslaan in de gedeelde bibliotheek en het daarna met of zonder AANKOOP-hatch gebruiken.
+
+Met **Blocks → Template openen** wordt een bewerkbare kopie geopend in `%LOCALAPPDATA%/Techbase/Templates/Techbase template LS en OV AANKOOP.dwg`. In deze DWG worden de AANKOOP-varianten als echte blokdefinities toegevoegd en opgeslagen. De originele gebundelde template blijft ongewijzigd.
+
+### ZRO-achtergrond en indeling
+
+De ZRO-tab gebruikt nu dezelfde kopregel, zoekfunctie, lege-lijstmelding en actiegroepen als Stationslocaties. De oude vermelding **ZRO-blad** boven een lege lijst is verborgen; die was de kolomkop, geen aangemaakt blad. Via **Project & kaarten → Topografie en percelen** kun je twee PDOK-DWG-XREF's tegelijk maken of één afzonderlijke laag ophalen. **KLIC wordt in ZRO niet gebruikt.** Stationslocaties behoudt de eigen KLIC-mogelijkheden.
+
+**Controle:** de .NET-builds en een broncontrole op de groene hatchparameters worden automatisch uitgevoerd. De werkelijke uitstraling, het invoegen en de template-opslag moeten nog in AutoCAD met een project-DWG worden nagekeken.
