@@ -445,7 +445,7 @@ internal static class StationLocationSheets
             var layout = GetLayout(db, tr, sheet.Name);
             if (FindMapViewport(tr, layout) is { } viewport)
             {
-                if (viewport.ViewTarget.DistanceTo(station.Position) > 0.000001)
+                if (!ViewportCenteredOn(tr, viewport, station.Position))
                 {
                     Center(tr, viewport, station.Position);
                     refreshMarkers = true;
@@ -909,6 +909,29 @@ internal static class StationLocationSheets
         return id;
     }
 
+    private static Point2d IntendedViewCenter(Transaction tr, Viewport viewport, int denominator = 250)
+    {
+        if (viewport.NonRectClipOn && IsLive(viewport.NonRectClipEntityId) &&
+            tr.GetObject(viewport.NonRectClipEntityId, OpenMode.ForRead) is Polyline { NumberOfVertices: >= 3 } clip)
+        {
+            var centroid = ClipCentroid(clip);
+            return new Point2d((viewport.CenterPoint.X - centroid.X) * denominator / 1000.0,
+                (viewport.CenterPoint.Y - centroid.Y) * denominator / 1000.0);
+        }
+        return Point2d.Origin;
+    }
+
+    private static bool ViewportCenteredOn(Transaction tr, Viewport viewport, Point3d point)
+    {
+        const double tolerance = 0.000001;
+        var expectedHeight = viewport.Height * 250 / 1000.0;
+        return viewport.Locked &&
+            viewport.ViewTarget.DistanceTo(point) < tolerance &&
+            (viewport.ViewCenter - IntendedViewCenter(tr, viewport)).Length < tolerance &&
+            Math.Abs(viewport.ViewHeight - expectedHeight) < tolerance &&
+            Math.Abs(viewport.TwistAngle) < tolerance;
+    }
+
     private static void Center(Transaction tr, Viewport viewport, Point3d point, int denominator = 250)
     {
         if (!viewport.IsWriteEnabled) viewport.UpgradeOpen();
@@ -916,16 +939,8 @@ internal static class StationLocationSheets
         viewport.ViewDirection = Vector3d.ZAxis;
         viewport.TwistAngle = 0;
         viewport.ViewTarget = point;
-        var viewCenter = Point2d.Origin;
-        if (viewport.NonRectClipOn && IsLive(viewport.NonRectClipEntityId) &&
-            tr.GetObject(viewport.NonRectClipEntityId, OpenMode.ForRead) is Polyline { NumberOfVertices: >= 3 } clip)
-        {
-            var centroid = ClipCentroid(clip);
-            viewCenter = new Point2d((viewport.CenterPoint.X - centroid.X) * denominator / 1000.0,
-                (viewport.CenterPoint.Y - centroid.Y) * denominator / 1000.0);
-        }
         viewport.ViewHeight = viewport.Height * denominator / 1000.0;
-        viewport.ViewCenter = viewCenter;
+        viewport.ViewCenter = IntendedViewCenter(tr, viewport, denominator);
         viewport.Locked = true;
     }
 
