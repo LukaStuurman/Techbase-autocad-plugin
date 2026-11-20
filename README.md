@@ -1,8 +1,9 @@
 # Techbase AutoCAD Plugin
 
-> **Nieuw: Techbase 1.20.1 / volledige Stationslocaties-integratie.** De codebasis is overgenomen uit de aangeleverde 1.20.0-bron en gecombineerd met het uitgebreide Stationslocaties-beheer. In de nieuwe werkplaats heeft Stationslocaties een eigen zevende navigatieknop die het volledige beheer rechtstreeks in dezelfde interface toont. Voor oudere stationsbladen uit de ingebouwde 1.20-functie blijft `TBSTATIONLEGACY` beschikbaar.
+> **Nieuw in 1.20.2:** een compactere, gebruiksvriendelijke bediening. Op smalle vensters kies je één van de zeven onderdelen via een duidelijke keuzelijst, op grotere vensters via een knoppenbalk. Stationslocaties toont één hoofdactie **Nieuwe locatie**, een doorzoekbare bladlijst, contextacties en aparte groepen **Locaties / Project / Uitvoer**. Ook zijn knoppen subtiel afgerond en is de navigatievolgorde logischer. Alle bestaande AutoCAD-opdrachten blijven beschikbaar.
 
-> **Versie-informatie:** de GitHub-bron en de laatst gebouwde GitHub-release zijn nog gebaseerd op 1.20.1. De door de gebruiker aangeleverde 1.19.2-installatie bevat extra functies en uitsluitend gecompileerde DLL's, geen C#-bron. Installeer 1.20.1 niet over een werkende lokale 1.19.2-installatie: nieuwere functies ontbreken dan. De nieuwe native Stationslocaties-tab is als bronwijziging uitgewerkt, maar is nog niet samengevoegd met de ontbrekende 1.19.2-bronnen. Zie [broncontrole 1.19.2](docs/techbase-1.19.2-binary-audit.md).
+> **Sinds 1.20.1: volledige Stationslocaties-integratie.** De codebasis is overgenomen uit de aangeleverde 1.20.0-bron en gecombineerd met het uitgebreide Stationslocaties-beheer. In de nieuwe werkplaats heeft Stationslocaties een eigen zevende navigatieknop die het volledige beheer rechtstreeks in dezelfde interface toont. Voor oudere stationsbladen uit de ingebouwde 1.20-functie blijft `TBSTATIONLEGACY` beschikbaar.
+
 
 Plugin voor AutoCAD en Civil 3D op Windows met zeven werkruimtes:
 
@@ -30,7 +31,7 @@ De stationslocatiekaart is onderdeel van dezelfde Techbase-DLL en heeft geen los
 
 ## Installeren
 
-Download **Techbase.Blocks.1.20.1.zip** uit de [release v1.20.1](https://github.com/LukaStuurman/Techbase-autocad-plugin/releases/tag/v1.20.1), pak hem uit en dubbelklik **Installeren.cmd**. De installer controleert en installeert ook **Arial Nova Light** via het officiele Microsoft Store-pakket als het lettertype ontbreekt. Geen aparte fontinstallatie nodig. Start AutoCAD of Civil 3D opnieuw en voer **TECHBASE** uit.
+Download **Techbase.Blocks.1.20.2.zip** uit de [release v1.20.2](https://github.com/LukaStuurman/Techbase-autocad-plugin/releases/tag/v1.20.2), pak hem uit en dubbelklik **Installeren.cmd**. De installer controleert en installeert ook **Arial Nova Light** via het officiele Microsoft Store-pakket als het lettertype ontbreekt. Geen aparte fontinstallatie nodig. Start AutoCAD of Civil 3D opnieuw en voer **TECHBASE** uit.
 
 Nieuwe plaatsingen gebruiken eigen bronblocks, ook als de tekening al een oudere blockdefinitie met dezelfde naam bevat. Bestaande plaatsingen blijven intact.
 
@@ -54,7 +55,7 @@ Gebruik Windows en een .NET 10 SDK:
 
 De benodigde XTP, afbeeldingen en bron-DWG staan in `Assets/Palette`. De kader-Excels en Enexis-bronnen staan onder `vendor/AutoCAD-Enexis-kabels-checker`. De clone heeft daardoor geen lokale Techbase-map of submodule nodig. NuGet haalt de Autodesk API-referenties en Excel-dependencies op. AutoCAD zelf blijft nodig voor de CAD-engine-tests.
 
-De build maakt `dist/1.20.1/Techbase.Blocks.bundle` en `Techbase Blocks 1.20.1.zip`. Een andere bronpalette kan met `-PaletteRoot <map>` worden opgegeven.
+De build maakt `dist/1.20.2/Techbase.Blocks.bundle` en `Techbase Blocks 1.20.2.zip`. Een andere bronpalette kan met `-PaletteRoot <map>` worden opgegeven.
 
 De meegeleverde Kabelgeul-bron staat in `Assets/Kabelgeul`; herkomst en hashes staan in `bronversie.json`. De bewerkte module wordt reproduceerbaar gemaakt met `python tests/prepare_kabelgeul.py` uit de vastgelegde `Reference/Techbase lisp pakket.lsp`. De build controleert de hashes en heeft geen Python nodig.
 
