@@ -6,6 +6,8 @@ on:
     paths:
       - "PackageContents.xml"
       - "src/Techbase.Blocks.csproj"
+      - "src/Plugin.cs"
+      - "src/Stationslocaties/**"
       - "RELEASE-v1.13.0.md"
       - ".github/workflows/release.yml"
       - ".gitattributes"
