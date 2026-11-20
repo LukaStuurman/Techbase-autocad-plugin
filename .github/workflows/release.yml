@@ -1,0 +1,84 @@
+name: Build and publish Techbase release
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "PackageContents.xml"
+      - "src/Techbase.Blocks.csproj"
+      - "RELEASE-v1.13.0.md"
+      - ".github/workflows/release.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: techbase-autocad-release
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+
+      - name: Install .NET 8 and 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+            10.0.x
+
+      - name: Determine version
+        id: version
+        run: |
+          [xml]$manifest = Get-Content -LiteralPath PackageContents.xml -Raw
+          $version = [string]$manifest.ApplicationPackage.AppVersion
+          $tag = "v$version"
+          $projectVersion = [regex]::Match((Get-Content src/Techbase.Blocks.csproj -Raw), '<Version>([^<]+)</Version>').Groups[1].Value
+          if ($projectVersion -ne $version) { throw "Versie in csproj ($projectVersion) wijkt af van manifest ($version)." }
+          $existing = & git ls-remote --tags origin "refs/tags/$tag"
+          if ($LASTEXITCODE -ne 0) { throw "Kon release-tags niet ophalen." }
+          $release = [string]::IsNullOrWhiteSpace(($existing | Out-String).Trim())
+          "version=$version" >> $env:GITHUB_OUTPUT
+          "tag=$tag" >> $env:GITHUB_OUTPUT
+          "publish=$($release.ToString().ToLowerInvariant())" >> $env:GITHUB_OUTPUT
+          Write-Host "Versie $version; release nodig: $release"
+
+      - name: Build both AutoCAD series and create ZIP
+        if: steps.version.outputs.publish == 'true'
+        run: |
+          & .\Build.ps1
+          if ($LASTEXITCODE -ne 0) { throw "Build mislukt." }
+          $version = "${{ steps.version.outputs.version }}"
+          $built = "Techbase Blocks $version.zip"
+          $asset = "Techbase.Blocks.$version.zip"
+          if (!(Test-Path -LiteralPath $built)) { throw "Geen installatie-zip gevonden: $built" }
+          Copy-Item -LiteralPath $built -Destination $asset -Force
+          Add-Type -AssemblyName System.IO.Compression.FileSystem
+          $archive = [IO.Compression.ZipFile]::OpenRead((Join-Path $PWD $asset))
+          try {
+            $entries = @($archive.Entries | ForEach-Object FullName)
+            foreach ($path in @("Techbase.Blocks.bundle/Contents/R25-$version/Techbase.Blocks.dll", "Techbase.Blocks.bundle/Contents/R26-$version/Techbase.Blocks.dll", "Techbase.Blocks.bundle/PackageContents.xml", "Installeren.cmd")) {
+              if (!$entries.Contains($path)) { throw "Verplicht pakketbestand ontbreekt: $path" }
+            }
+          }
+          finally { $archive.Dispose() }
+          $sum = (Get-FileHash -LiteralPath $asset -Algorithm SHA256).Hash.ToLowerInvariant()
+          "$sum  $asset" | Set-Content -LiteralPath SHA256SUMS.txt -Encoding ascii
+          Write-Host "Pakket gereed: $asset"
+
+      - name: Publish verified release
+        if: steps.version.outputs.publish == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $version = "${{ steps.version.outputs.version }}"
+          $tag = "${{ steps.version.outputs.tag }}"
+          & gh release create $tag "Techbase.Blocks.$version.zip" "SHA256SUMS.txt" --target "${{ github.sha }}" --title "Techbase $version" --notes-file "RELEASE-v1.13.0.md" --verify-tag=false
+          if ($LASTEXITCODE -ne 0) { throw "Publiceren van GitHub-release mislukt." }
