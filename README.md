@@ -1,6 +1,6 @@
 # Techbase AutoCAD Plugin
 
-> **Nieuw in TechBase 1.20.4:** de knoppen **Nieuwe locatie**, **Vernieuwen** en **Uitleg** hebben nu een zelfstandige tekst- en randenweergave: de labels zijn zichtbaar en alle hoeken van de oranje knop zijn afgerond. Het Stationslocaties-detailblad volgt wijzigingen aan de werkelijke positie, draaiing en schaal van de trafo automatisch, óók na gripbewerkingen die geen standaard MOVE- of ROTATE-melding geven. Kaartvenster en C1–C4 worden opnieuw gecontroleerd; een handmatige bladverversing is niet nodig. De uitgelijnde schakelaars uit versie 1.20.3 blijven behouden.
+> **Nieuw in TechBase 1.20.5:** de kop van **Stationslocaties** is volledig opnieuw opgebouwd. De twee onleesbare witte vlakken zijn vervangen door de zichtbare tekstacties **Lijst vernieuwen** en **Uitleg en tips** onder het zoekveld. De knop **Nieuwe locatie** heeft een vaste hoogte, een eigen ruimte rondom en echt afgeronde hoeken; zijn tekst wordt weer door de normale Windows-knopweergave getekend. De nieuwe kop is als geheel automatisch getest op 380, 780 en 1190 px breed.
 
 > **Sinds 1.20.1: volledige Stationslocaties-integratie.** De codebasis is overgenomen uit de aangeleverde 1.20.0-bron en gecombineerd met het uitgebreide Stationslocaties-beheer. In de nieuwe werkplaats heeft Stationslocaties een eigen zevende navigatieknop die het volledige beheer rechtstreeks in dezelfde interface toont. Voor oudere stationsbladen uit de ingebouwde 1.20-functie blijft `TBSTATIONLEGACY` beschikbaar.
 
@@ -31,7 +31,7 @@ De stationslocatiekaart is onderdeel van dezelfde Techbase-DLL en heeft geen los
 
 ## Installeren
 
-Download **Techbase.Blocks.1.20.4.zip** uit de [release v1.20.4](https://github.com/LukaStuurman/Techbase-autocad-plugin/releases/tag/v1.20.4), pak hem uit en dubbelklik **Installeren.cmd**. De installer controleert en installeert ook **Arial Nova Light** via het officiele Microsoft Store-pakket als het lettertype ontbreekt. Geen aparte fontinstallatie nodig. Start AutoCAD of Civil 3D opnieuw en voer **TECHBASE** uit.
+Download **Techbase.Blocks.1.20.5.zip** uit de [release v1.20.5](https://github.com/LukaStuurman/Techbase-autocad-plugin/releases/tag/v1.20.5), pak hem uit en dubbelklik **Installeren.cmd**. De installer controleert en installeert ook **Arial Nova Light** via het officiele Microsoft Store-pakket als het lettertype ontbreekt. Geen aparte fontinstallatie nodig. Start AutoCAD of Civil 3D opnieuw en voer **TECHBASE** uit.
 
 Nieuwe plaatsingen gebruiken eigen bronblocks, ook als de tekening al een oudere blockdefinitie met dezelfde naam bevat. Bestaande plaatsingen blijven intact.
 
@@ -55,7 +55,7 @@ Gebruik Windows en een .NET 10 SDK:
 
 De benodigde XTP, afbeeldingen en bron-DWG staan in `Assets/Palette`. De kader-Excels en Enexis-bronnen staan onder `vendor/AutoCAD-Enexis-kabels-checker`. De clone heeft daardoor geen lokale Techbase-map of submodule nodig. NuGet haalt de Autodesk API-referenties en Excel-dependencies op. AutoCAD zelf blijft nodig voor de CAD-engine-tests.
 
-De build maakt `dist/1.20.4/Techbase.Blocks.bundle` en `Techbase Blocks 1.20.4.zip`. Een andere bronpalette kan met `-PaletteRoot <map>` worden opgegeven.
+De build maakt `dist/1.20.5/Techbase.Blocks.bundle` en `Techbase Blocks 1.20.5.zip`. Een andere bronpalette kan met `-PaletteRoot <map>` worden opgegeven.
 
 De meegeleverde Kabelgeul-bron staat in `Assets/Kabelgeul`; herkomst en hashes staan in `bronversie.json`. De bewerkte module wordt reproduceerbaar gemaakt met `python tests/prepare_kabelgeul.py` uit de vastgelegde `Reference/Techbase lisp pakket.lsp`. De build controleert de hashes en heeft geen Python nodig.
 

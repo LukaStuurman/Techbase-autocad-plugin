@@ -1,6 +1,6 @@
-# Techbase Blocks 1.20.4
+# Techbase Blocks 1.20.5
 
-**Verbeterd in 1.20.4:** de drie Stationslocaties-knoppen zijn volledig getekend met leesbare labels en afgeronde hoeken. Bij het verplaatsen of draaien van een trafoblok controleert de plugin ook de daadwerkelijke bloktransformatie zodra AutoCAD geen commando meer uitvoert. Het detailblad wordt dan automatisch op de actuele positie gecentreerd en de C1–C4-tabel opnieuw berekend. Door de lichte controle van alleen bekende stationblokken hoeft een specifieke MOVE-/gripmelding niet te worden afgewacht.
+**Verbeterd in 1.20.5:** de kop van Stationslocaties heeft nu drie duidelijke acties: **Nieuwe locatie** rechtsboven, **Lijst vernieuwen** en **Uitleg en tips** als leesbare links direct onder de zoekbalk. De laatste twee zijn geen witte knoppen meer. De oranje knop is in een aparte, ruime houder geplaatst en heeft een afgeronde boven- én onderkant. Bij een gedockte smalle werkplaats past de kop zich automatisch aan.
 
 **Blocks → Plaatsopties:** de schakelaars voor laag overnemen, gekozen laag en herhaald plaatsen staan in één kolom. De dropdown voor de gekozen laag staat eronder en springt niet samen met de schakelaar naar een andere positie.
 
@@ -212,7 +212,7 @@ De concrete testresultaten en resterende praktijktests staan in `VALIDATIE.md` b
 
 ## Opnieuw bouwen
 
-Gebruik een .NET 10 SDK en voer `Build.ps1 -Dotnet <pad-naar-dotnet.exe>` uit. De build haalt Autodesk AutoCAD.NET API 25.0.1 en 26.0.0 via NuGet op en bouwt de Excel-worker voor beide runtimes. De Autodesk API-DLL's worden niet meegeleverd: die levert de hostapplicatie. De uitvoer staat in `dist/1.20.4` en in `Techbase Blocks 1.20.4.zip`. Versiegebonden DLL-mappen maken een update mogelijk zonder een reeds geladen oude DLL te overschrijven; herstart de CAD-toepassing om de nieuwe versie te laden.
+Gebruik een .NET 10 SDK en voer `Build.ps1 -Dotnet <pad-naar-dotnet.exe>` uit. De build haalt Autodesk AutoCAD.NET API 25.0.1 en 26.0.0 via NuGet op en bouwt de Excel-worker voor beide runtimes. De Autodesk API-DLL's worden niet meegeleverd: die levert de hostapplicatie. De uitvoer staat in `dist/1.20.5` en in `Techbase Blocks 1.20.5.zip`. Versiegebonden DLL-mappen maken een update mogelijk zonder een reeds geladen oude DLL te overschrijven; herstart de CAD-toepassing om de nieuwe versie te laden.
 
 
 ## Stationslocaties in de Techbase-plugin
