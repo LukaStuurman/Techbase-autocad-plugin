@@ -43,28 +43,21 @@ internal sealed class StationLocationsPanel : UserControl
         MultiSelect = false, HideSelection = false, HeaderStyle = ColumnHeaderStyle.Nonclickable,
         BorderStyle = BorderStyle.None, AccessibleName = "Locatiebladen"
     };
-    private readonly ThemedButton newLocation = new()
+    private readonly StationToolbarButton newLocation = new()
     {
-        Name = "StationNewLocation",
-        Text = "+  Nieuwe locatie", Glyph = -1,
-        Size = new Size(170, 39), AutoSize = false,
-        Anchor = AnchorStyles.Right,
-        AccessibleName = "Nieuwe stationslocatie plaatsen",
-        TextAlign = ContentAlignment.MiddleCenter
+        Name = "StationNewLocation", Text = "Nieuwe locatie",
+        PrimaryAction = true, Dock = DockStyle.Fill,
+        AccessibleName = "Nieuwe stationslocatie plaatsen"
     };
-    // Native WinForms-buttons gebruiken standaard tekstweergave:
-    // Bijwerken en Uitleg blijven leesbaar bij verschillende DPI-instellingen.
-    private readonly Button refresh = new()
+    private readonly StationToolbarButton refresh = new()
     {
-        Name = "StationRefresh",
-        Text = "Vernieuwen", Dock = DockStyle.Fill,
-        AccessibleName = "Locatielijst bijwerken", TextAlign = ContentAlignment.MiddleCenter
+        Name = "StationRefresh", Text = "Vernieuwen", Dock = DockStyle.Fill,
+        AccessibleName = "Locatielijst bijwerken"
     };
-    private readonly Button help = new()
+    private readonly StationToolbarButton help = new()
     {
-        Name = "StationHelp",
-        Text = "Uitleg", Dock = DockStyle.Fill,
-        AccessibleName = "Informatie over stationslocaties", TextAlign = ContentAlignment.MiddleCenter
+        Name = "StationHelp", Text = "Uitleg", Dock = DockStyle.Fill,
+        AccessibleName = "Informatie over stationslocaties"
     };
     private readonly Label emptyLocations = new()
     {
@@ -128,8 +121,18 @@ internal sealed class StationLocationsPanel : UserControl
         }, 0, 0);
         textHeader.Controls.Add(subtitle, 0, 1);
         header.Controls.Add(textHeader, 0, 0);
-        newLocation.Margin = new Padding(5, 0, 0, 0);
-        header.Controls.Add(newLocation, 1, 0);
+        // Een eigen houder met vrije ruimte rondom voorkomt dat de onderrand
+        // van de primaire knop door de 62px-koprij wordt afgesneden.
+        var primaryHost = new Panel
+        {
+            Dock = DockStyle.Fill, Margin = Padding.Empty,
+            Padding = new Padding(6, 7, 0, 9),
+            BackColor = UiTheme.Canvas
+        };
+        newLocation.Dock = DockStyle.Fill;
+        newLocation.Margin = Padding.Empty;
+        primaryHost.Controls.Add(newLocation);
+        header.Controls.Add(primaryHost, 1, 0);
         layout.Controls.Add(header, 0, 0);
 
         summary.Padding = new Padding(0, 3, 0, 3);
@@ -257,26 +260,15 @@ internal sealed class StationLocationsPanel : UserControl
         UiTypography.Apply(this);
         UiTheme.Apply(this);
         if (!SystemInformation.HighContrast)
-        {
-            // Donkeroranje met witte tekst: beter contrast dan het oude oranje vlak.
-            newLocation.BackColor = Color.FromArgb(184, 69, 10);
-            newLocation.ForeColor = Color.White;
-            newLocation.FlatAppearance.BorderColor = newLocation.BackColor;
-            newLocation.FlatAppearance.MouseOverBackColor = Color.FromArgb(158, 57, 8);
-            newLocation.FlatAppearance.MouseDownBackColor = Color.FromArgb(133, 46, 6);
             actionButtons[StationAction.Delete].ForeColor = UiTheme.Danger;
-        }
         newLocation.Font = new Font(Typography.Family, 10f, FontStyle.Bold);
-        foreach (var button in new[] { refresh, help })
-        {
-            button.FlatStyle = FlatStyle.Flat;
-            button.BackColor = Color.White;
-            button.ForeColor = UiTheme.Ink;
-            button.FlatAppearance.BorderColor = UiTheme.Line;
-            button.FlatAppearance.MouseOverBackColor = UiTheme.SoftOrange;
-            button.Padding = new Padding(5, 0, 5, 0);
-            button.Font = new Font(Typography.Family, 9.5f);
-        }
+        refresh.Font = new Font(Typography.Family, 9.5f);
+        help.Font = new Font(Typography.Family, 9.5f);
+        // De tekst en de vier afgeronde hoeken worden nu expliciet door
+        // StationToolbarButton getekend, ook na een AutoCAD-theme-update.
+        primaryHost.Padding = new Padding(6, 7, 0, 9);
+        newLocation.Margin = Padding.Empty;
+        newLocation.Dock = DockStyle.Fill;
         emptyLocations.BackColor = Color.White;
         emptyLocations.ForeColor = UiTheme.Muted;
         foreach (var page in actionPages) page.BackColor = Color.White;
@@ -289,7 +281,6 @@ internal sealed class StationLocationsPanel : UserControl
         selectionInfo.ForeColor = UiTheme.Muted;
         status.ForeColor = UiTheme.Muted;
         foreach (var explanation in explanations) explanation.ForeColor = UiTheme.Muted;
-        newLocation.Margin = new Padding(5, 0, 0, 0);
         refresh.Margin = new Padding(0, 0, 5, 0);
         help.Margin = Padding.Empty;
         foreach (var flow in actionFlows) FitButtons(flow);
