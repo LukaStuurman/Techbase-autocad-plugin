@@ -20,6 +20,7 @@ public sealed class StationTableUpdates : IExtensionApplication
     private readonly Dictionary<Database, Dictionary<ObjectId, StationPose>> knownPoses = new();
     private readonly Dictionary<Database, DateTime> lastPoll = new();
     private readonly Dictionary<Database, DateTime> lastDiscovery = new();
+    private readonly Dictionary<Database, DateTime> retryAfter = new();
     private readonly HashSet<Database> rescanAll = new();
     private readonly HashSet<Database> discoverStations = new();
     private static readonly TimeSpan PollInterval = TimeSpan.FromMilliseconds(350);
@@ -92,6 +93,7 @@ public sealed class StationTableUpdates : IExtensionApplication
         knownPoses.Remove(database);
         lastPoll.Remove(database);
         lastDiscovery.Remove(database);
+        retryAfter.Remove(database);
         rescanAll.Remove(database);
         discoverStations.Remove(database);
     }
@@ -159,6 +161,7 @@ public sealed class StationTableUpdates : IExtensionApplication
 
         var database = document.Database;
         var now = DateTime.UtcNow;
+        if (retryAfter.TryGetValue(database, out var retry) && now < retry) return;
         var due = !lastPoll.TryGetValue(database, out var polled) || now - polled >= PollInterval;
         var force = rescanAll.Contains(database);
         var discovery = discoverStations.Contains(database) || !knownPoses.ContainsKey(database) ||
@@ -195,9 +198,11 @@ public sealed class StationTableUpdates : IExtensionApplication
                 if (scanEntireModel) lastDiscovery[database] = now;
             }
             if (updated) document.Editor.Regen();
+            retryAfter.Remove(database);
         }
         catch (Autodesk.AutoCAD.Runtime.Exception ex) when (ex.ErrorStatus == ErrorStatus.LockViolation)
         {
+            retryAfter[database] = DateTime.UtcNow.AddMilliseconds(250);
             changes.UnionWith(queuedIds);
             if (requestedFull) rescanAll.Add(database);
             if (requestedDiscovery) discoverStations.Add(database);
@@ -206,6 +211,7 @@ public sealed class StationTableUpdates : IExtensionApplication
         {
             // Geen veranderingen kwijtraken bij tijdelijke AutoCAD-status
             // (bijv. als een viewport nog in gebruik is).
+            retryAfter[database] = DateTime.UtcNow.AddSeconds(3);
             changes.UnionWith(queuedIds);
             if (requestedFull) rescanAll.Add(database);
             if (requestedDiscovery) discoverStations.Add(database);
