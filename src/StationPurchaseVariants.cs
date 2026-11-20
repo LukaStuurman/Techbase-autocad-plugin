@@ -154,8 +154,13 @@ internal static class StationPurchaseVariants
         var candidates = new List<Bounds>();
         foreach (ObjectId id in definition)
         {
-            if (tx.GetObject(id, OpenMode.ForRead) is not Polyline poly ||
-                !poly.Closed || poly.NumberOfVertices != 4) continue;
+            if (tx.GetObject(id, OpenMode.ForRead) is not Polyline poly) continue;
+            // Sommige CAD-blokken hebben 5 punten waarvan het laatste
+            // precies op het eerste ligt, zonder de Closed-vlag.
+            var closed = poly.Closed && poly.NumberOfVertices == 4 ||
+                poly.NumberOfVertices == 5 &&
+                poly.GetPoint2dAt(0).GetDistanceTo(poly.GetPoint2dAt(4)) < 0.00001;
+            if (!closed) continue;
             var p = Enumerable.Range(0, 4).Select(poly.GetPoint2dAt).ToArray();
             var edges = Enumerable.Range(0, 4).Select(i => p[(i + 1) % 4] - p[i]).ToArray();
             if (edges.Any(e => e.Length < 0.0001)) continue;
