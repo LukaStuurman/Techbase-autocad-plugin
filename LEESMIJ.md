@@ -1,6 +1,6 @@
-# Techbase Blocks 1.12.1
+# Techbase Blocks 1.13.0
 
-Gebruik zes tabs in AutoCAD en Civil 3D voor Windows: Blocks, Lichtmasten, Enexis kabelchecker, Richtingen, Instellingen en Kabelgeul.
+Gebruik zeven tabs in AutoCAD en Civil 3D voor Windows: Blocks, Lichtmasten, Enexis kabelchecker, Richtingen, Instellingen, Kabelgeul en Stationslocaties.
 
 ## Installeren
 
@@ -12,7 +12,7 @@ De plugin staat daarna onder `%APPDATA%\Autodesk\ApplicationPlugins`. Bestaande 
 
 ## Lettertype
 
-Alle teksten in de zes plugintabs en alle blockteksten, attributen, losse richtingsteksten en richting-info die de plugin plaatst gebruiken **Arial Nova Light**. Bij kopieren of verplaatsen van richtingsteksten krijgt het resultaat ook dit lettertype. Hoogtes, kleuren en overige tekstopmaak blijven behouden; expliciete fontoverrides in MText worden verwijderd.
+Alle teksten in de zeven plugintabs en alle blockteksten, attributen, losse richtingsteksten en richting-info die de plugin plaatst gebruiken **Arial Nova Light**. Bij kopieren of verplaatsen van richtingsteksten krijgt het resultaat ook dit lettertype. Hoogtes, kleuren en overige tekstopmaak blijven behouden; expliciete fontoverrides in MText worden verwijderd.
 
 **Installeren.cmd regelt het lettertype automatisch.** De installer gebruikt een bestaande Windows-installatie of het officiele Arial Nova-pakket uit de Microsoft Store. Ontbreekt het pakket, dan downloadt en installeert Windows het via App Installer (winget). Daarvoor zijn internet en toegestane Store-toegang nodig. De Light-variant wordt voor de huidige gebruiker geregistreerd, zonder beheerdersrechten. Een ontbrekende of geblokkeerde Store-installatie wordt gemeld voordat de plugin wordt vervangen. Het lettertype hoeft dus niet apart te worden geinstalleerd.
 
@@ -206,7 +206,7 @@ De concrete testresultaten en resterende praktijktests staan in `VALIDATIE.md` b
 
 ## Opnieuw bouwen
 
-Gebruik een .NET 10 SDK en voer `Build.ps1 -Dotnet <pad-naar-dotnet.exe>` uit. De build haalt Autodesk AutoCAD.NET API 25.0.1 en 26.0.0 via NuGet op en bouwt de Excel-worker voor beide runtimes. De Autodesk API-DLL's worden niet meegeleverd: die levert de hostapplicatie. De uitvoer staat in `dist/1.12.1` en in `Techbase Blocks 1.12.1.zip`. Versiegebonden DLL-mappen maken een update mogelijk zonder een reeds geladen oude DLL te overschrijven; herstart de CAD-toepassing om de nieuwe versie te laden.
+Gebruik een .NET 10 SDK en voer `Build.ps1 -Dotnet <pad-naar-dotnet.exe>` uit. De build haalt Autodesk AutoCAD.NET API 25.0.1 en 26.0.0 via NuGet op en bouwt de Excel-worker voor beide runtimes. De Autodesk API-DLL's worden niet meegeleverd: die levert de hostapplicatie. De uitvoer staat in `dist/1.13.0` en in `Techbase Blocks 1.13.0.zip`. Versiegebonden DLL-mappen maken een update mogelijk zonder een reeds geladen oude DLL te overschrijven; herstart de CAD-toepassing om de nieuwe versie te laden.
 
 
 ## Stationslocaties in de Techbase-plugin
