@@ -363,9 +363,10 @@ internal static class ZroSheets
         Point3d station, IReadOnlyList<ZroParcelLabel> automatic)
     {
         var labels = automatic.ToList();
-        // Offline fallback: SKG-PERCEELNUMMER uit de DXF die al in Modelspace
-        // staat. De gebruiker hoeft PDOK dan niet te laden voor blauwe labels.
+        // Het Bakel-voorbeeld bevat al blauwe SKG-PERCEELNUMMER-blokken met
+        // sectie, nummer en teksthoogte 0,9 m. Teken die niet dubbel.
         var model = (BlockTableRecord)tx.GetObject(SymbolUtilityServices.GetBlockModelSpaceId(db), OpenMode.ForWrite);
+        var existingBlueLabels = false;
         foreach (ObjectId id in model)
         {
             if (tx.GetObject(id, OpenMode.ForRead) is not BlockReference block ||
@@ -378,12 +379,10 @@ internal static class ZroSheets
             if (data.TryGetValue("SECTIE", out var section) &&
                 data.TryGetValue("PERCEELNUMMER", out var number))
             {
-                var text = section + " " + number;
-                if (!labels.Any(v => v.Text == text))
-                    labels.Add(new(text, new Point2d(block.Position.X, block.Position.Y)));
+                existingBlueLabels = true;
             }
         }
-        if (labels.Count == 0) return;
+        if (existingBlueLabels || labels.Count == 0) return;
         var name = "TB_ZRO_PERCEEL_" + layout.LayoutName.Replace(' ', '_');
         var layer = EnsureLayer(db, tx, name, 5);
         foreach (var item in labels)
