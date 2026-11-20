@@ -8,7 +8,7 @@ Plugin voor AutoCAD en Civil 3D op Windows met zeven tabs:
 - **Kabelgeul**: instellingen per kabeltype met volledige bewerkbare standaardteksten, inclusief Ri-nummer, vormen en mantelbuizen. Kopieren en bewerken behouden de bestaande teksten. Plaatsen opent de gevonden kabels; voeg rijen voor of na de selectie in. Bewerk een bestaande geul volledig, inclusief iconen en bakken, op dezelfde plek.
 - **Richtingen**: kies 1 t/m 12, teken een richtingpolyline of zet bestaande 2D-polylines/LINE-lijnen om. Opmaak: global width 0,1, DASHED en lijntypeschaal 0,0035. Herken kabels met een detectielijn en plaats hun LS/OV-teksten onder elkaar. Plaats ook een volledige bursttemplate en kopieer of verplaats een gekozen tekststapel leesbaar langs de kabel.
 
-- **Stationslocaties**: trafolocaties, voorkeurs- en alternatieve locaties, 1:250 A3-detailbladen, totaalkaart, PDOK/KLIC-kaartreferenties, foto's en PDF-export. Via de tab **Stationslocaties** open je het geïntegreerde beheer; commando **TBSTATIONBEHEER** opent het beheer direct. **STATIONLOCATIES** blijft als alias beschikbaar.
+- **Stationslocaties**: trafolocaties, voorkeurs- en alternatieve locaties, 1:250 A3-detailbladen, totaalkaart, PDOK/KLIC-kaartreferenties, foto's en PDF-export. De tab **Stationslocaties** bevat alle beheerfuncties direct in de Techbase-palette: locaties plaatsen, bladen openen en wijzigen, kaartopmerkingen, kaartreferenties, projectgegevens, totaalkaart en PDF-export. Geen aparte knop of hoofdvenster meer nodig. **STATIONLOCATIES**, **TBSTATIONBEHEER** en **TBSTATIONLOCATIES** openen dezelfde tab.
 
 Blocks heeft ook een aan/uit-schakelaar voor een vaste laagkeuze: Richting 1 t/m 12 of Bestaande kabel. Deze keuze heeft voorrang op automatische laagovername en wordt bewaard.
 

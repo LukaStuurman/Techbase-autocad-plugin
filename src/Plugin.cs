@@ -27,6 +27,7 @@ public sealed partial class Plugin : IExtensionApplication
     private static StationLocationsPanel? stationLocationsPanel;
     internal static LightmastRequest? PendingLightmast { get; set; }
     internal static DirectionInfoRequest? PendingDirectionInfo { get; set; }
+    internal static StationActionRequest? PendingStationAction { get; set; }
     internal static string ContentsRoot => Directory.GetParent(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!)!.FullName;
     internal static string DefaultPalette => Path.Combine(ContentsRoot, "Assets", "Techbase toolpallete.xtp");
     public void Initialize()
@@ -102,14 +103,28 @@ public sealed partial class Plugin : IExtensionApplication
         stationLocationsPanel?.RefreshSheets();
     }
 
-    // Unieke geïntegreerde opdracht: functioneert ook als een oude losse plugin aanwezig is.
+    // Stationslocaties is een volwaardige tab, geen knop die een hoofdvenster opent.
     [CommandMethod("TBSTATIONBEHEER", CommandFlags.Modal)]
-    public void StationManager() => StationLocations();
+    public void StationManager() => StationsTab();
 
     [CommandMethod("STATIONLOCATIES", CommandFlags.Modal)]
-    public void StationLocations()
+    public void StationLocations() => StationsTab();
+
+    // De gekozen palette-actie wordt pas in AutoCAD-documentcontext uitgevoerd.
+    [CommandMethod("TBSTATIONACTIE", CommandFlags.Modal)]
+    public void ExecuteStationAction()
     {
-        try { new Stationslocaties.StationLocationController().ShowStationLocations(); }
+        var pending = PendingStationAction;
+        PendingStationAction = null;
+        if (pending == null) return;
+        var document = AcApp.DocumentManager.MdiActiveDocument;
+        if (document == null || document != pending.Document)
+        {
+            document?.Editor.WriteMessage("\nStationlocaties: de actieve tekening is gewijzigd. Kies de actie opnieuw.");
+            stationLocationsPanel?.RefreshSheets();
+            return;
+        }
+        try { new Stationslocaties.StationLocationController().ShowStationLocations(pending.Action, pending.SheetName); }
         catch (System.Exception ex) { Error(ex); }
         finally { stationLocationsPanel?.RefreshSheets(); }
     }

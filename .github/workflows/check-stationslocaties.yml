@@ -1,0 +1,32 @@
+name: Check integrated Stationslocaties tab
+
+on:
+  pull_request:
+    paths:
+      - "src/**"
+      - "PackageContents.xml"
+      - ".github/workflows/check-stationslocaties.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  compile:
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        api: [R25, R26]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+            10.0.x
+      - name: Generate Enexis adapters
+        shell: pwsh
+        run: .\PrepareEnexis.ps1
+      - name: Build AutoCAD DLL
+        shell: pwsh
+        run: dotnet build src/Techbase.Blocks.csproj -c Release -p:ApiSeries=${{ matrix.api }} --nologo
