@@ -422,21 +422,30 @@ internal static class StationLocationSheets
     internal static bool IsStationLayer(string layer) =>
         layer.StartsWith("TB_STATION_", StringComparison.OrdinalIgnoreCase);
 
-    internal static void UpdateMovedStationTables(Database db, IReadOnlyCollection<ObjectId> changed)
+    /// <summary>
+    /// Synchroniseer kaartvenster en C1-C4-tabel met de actuele bloktransformatie.
+    /// Bij grip/MOVE/ROTATE kan ObjectModified uitblijven; scanAll is een vangnet
+    /// nadat een wijzigingscommando is afgelopen.
+    /// </summary>
+    internal static bool UpdateMovedStationTables(Database db, IReadOnlyCollection<ObjectId> changed, bool scanAll = false)
     {
+        if (!scanAll && changed.Count == 0) return false;
         using var tr = db.TransactionManager.StartTransaction();
-        var stations = changed.Where(IsLive).Select(id => tr.GetObject(id, OpenMode.ForRead))
-            .OfType<BlockReference>().Where(station => IsStationBlock(tr, station))
+        IEnumerable<BlockReference> candidates = scanAll
+            ? ModelBlocks(db, tr)
+            : changed.Where(IsLive).Select(id => tr.GetObject(id, OpenMode.ForRead)).OfType<BlockReference>();
+        var stations = candidates.Where(station => IsStationBlock(tr, station))
             .ToLookup(station => station.Layer, StringComparer.OrdinalIgnoreCase);
-        if (stations.Count == 0) return;
+        if (stations.Count == 0) return false;
         var refreshMarkers = false;
+        var updated = false;
         foreach (var sheet in ReadSheets(db, tr))
         {
             if (stations[sheet.Layer].FirstOrDefault() is not { } station) continue;
             var layout = GetLayout(db, tr, sheet.Name);
             if (FindMapViewport(tr, layout) is { } viewport)
             {
-                if (viewport.ViewTarget != station.Position)
+                if (viewport.ViewTarget.DistanceTo(station.Position) > 0.000001)
                 {
                     Center(tr, viewport, station.Position);
                     refreshMarkers = true;
@@ -446,10 +455,13 @@ internal static class StationLocationSheets
             {
                 refreshMarkers = true;
             }
+            // Zowel verplaatsen als roteren: de berekening gebruikt BlockTransform.
             UpdateCornerTable(db, tr, layout, station, sheet.ShowCorners);
+            updated = true;
         }
         if (refreshMarkers) RefreshMarkers(db, tr);
         tr.Commit();
+        return updated;
     }
 
     private static ObjectId ResolveBlock(Database db, Transaction tr, StationBlockChoice? choice) =>
