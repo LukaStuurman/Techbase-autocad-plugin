@@ -64,7 +64,9 @@ public sealed class Catalog
         }
         if (result.Count == 0) throw new InvalidDataException("Geen blocktools gevonden in de XTP.");
         if (result.Select(t => t.Id).Distinct().Count() != result.Count) throw new InvalidDataException("Dubbele tool-ID in de XTP.");
-        Tools = result;
+        // Voor alle trafoblokken uit de toolpalette verschijnen dezelfde
+        // blokken óók met de suffix AANKOOP. De originele entries blijven staan.
+        Tools = StationPurchaseVariants.AddToCatalog(result);
     }
     private static double Number(XElement parent, string name, double fallback)
     {

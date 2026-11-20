@@ -27,6 +27,19 @@ internal static class StationReferences
         Queue(host, new([OutputFor(MapKind.KLIC), OutputFor(MapKind.Topo), OutputFor(MapKind.Percelen)], default, klicFolder));
     }
 
+    /// <summary>
+    /// ZRO gebruikt uitsluitend PDOK-topografie en percelen, zonder KLIC.
+    /// Beide XREF's worden in één asynchrone batch aangemaakt en gekoppeld.
+    /// </summary>
+    internal static void QueueTopoAndPercelen(Document host, string folder, ParcelArea area)
+    {
+        var name = Path.GetFileNameWithoutExtension(host.Name);
+        Queue(host, new([
+            new Output(Path.Combine(folder, "Topo " + name + ".dwg"), MapKind.Topo),
+            new Output(Path.Combine(folder, "Percelen " + name + ".dwg"), MapKind.Percelen)
+        ], area, null));
+    }
+
     private static void Queue(Document host, Request request)
     {
         if (queued.ContainsKey(host) || downloading.ContainsKey(host))
@@ -44,7 +57,9 @@ internal static class StationReferences
                 throw new IOException($"Xref-DWG '{Path.GetFileName(output.Path)}' bestaat al. Kies een andere uitvoermap of bestandsnaam.");
         CheckAttachmentNames(host, request.Outputs.Select(output => output.Path));
 
-        host.Editor.WriteMessage(request.Outputs.Length > 1
+        host.Editor.WriteMessage(request.KlicFolder == null && request.Outputs.Length > 1
+            ? "\nPDOK Topo en Percelen worden voor hetzelfde gebied opgehaald en als XREF gekoppeld.\n"
+            : request.Outputs.Length > 1
             ? "\nKLIC wordt ingelezen. Daarna haalt de plug-in Topo en Percelen op voor hetzelfde bereik.\n"
             : request.KlicFolder != null
             ? "\nKLIC-levering wordt op de achtergrond ingelezen.\n"

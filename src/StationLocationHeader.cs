@@ -65,6 +65,18 @@ internal sealed class StationLocationHeader : UserControl
 
     private bool compact;
 
+    /// <summary>Dezelfde kop voor Stationslocaties én ZRO, zonder losse UI-implementaties.</summary>
+    internal void Configure(string pageTitle, string explanation, string primaryAction, string searchHint)
+    {
+        title.Text = pageTitle;
+        subtitle.Text = explanation;
+        NewLocation.Text = primaryAction;
+        NewLocation.AccessibleName = primaryAction;
+        Search.PlaceholderText = searchHint;
+        Search.AccessibleName = searchHint;
+        ApplyAppearance();
+    }
+
     internal int PreferredHeaderHeight => compact ? 216 : 180;
 
     internal StationLocationHeader()

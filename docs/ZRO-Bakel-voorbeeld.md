@@ -3,9 +3,9 @@
 ## Bron en werkwijze
 Deze functionaliteit is ontworpen op basis van de door de gebruiker aangeleverde DXF `Bakel ZRO AANKOOP DEELGEBIED 1.dxf`. **TRAFO-10** en **TRAFO-4** zijn de standaardvoorbeelden; TRAFO-3 is afwijkend en wordt niet als standaardsjabloon gebruikt.
 
-De ZRO-werkruimte is een apart achtste onderdeel van TechBase. Met **Nieuw ZRO-blad** wijs je een trafoblok in modelruimte aan. De plugin bepaalt het bloktype, zoekt de grootste gesloten rechthoek binnen het blok, berekent de oppervlakte en de RD-hoekpunten en laat de projectgegevens controleren. Daarna wordt een blad met naam `ZRO-<trafonaam>` aangemaakt.
+De ZRO-werkruimte is een apart achtste onderdeel van TechBase. Met **Nieuw ZRO-blad** kies je een trafoblok uit dezelfde bibliotheek als bij Stationslocaties (standaard **Pacto 25 AANKOOP**) en plaats je dat interactief in modelruimte, óf selecteer je een reeds geplaatst blok. De plugin bepaalt het bloktype, zoekt de grootste gesloten rechthoek binnen het blok, berekent de oppervlakte en de RD-hoekpunten en laat de projectgegevens controleren. Daarna wordt een blad met naam `ZRO-<trafonaam>` aangemaakt.
 
-Wanneer de huidige DWG al een layout `TRAFO-10` bevat, kopieert de plugin dat blad. In een nieuwe DWG kies je bij het eerste gebruik het Bakel-voorbeeldbestand (DWG of DXF) als bron; de locatie wordt voor volgende AutoCAD-sessies bewaard in `%APPDATA%/Techbase/zro-template-path.txt`. De bron wordt niet in het nieuwe model ingeladen als kaartachtergrond: alleen de **papier-entities en kaderblokken** worden gekopieerd. Topografie/percelen kunnen via het bestaande PDOK/KLIC-**kaartreferenties**-scherm als aparte DWG-XREF worden opgebouwd.
+Wanneer de huidige DWG al een layout `TRAFO-10` bevat, kopieert de plugin dat blad. In een nieuwe DWG kies je bij het eerste gebruik het Bakel-voorbeeldbestand (DWG of DXF) als bron; de locatie wordt voor volgende AutoCAD-sessies bewaard in `%APPDATA%/Techbase/zro-template-path.txt`. De bron wordt niet in het nieuwe model ingeladen als kaartachtergrond: alleen de **papier-entities en kaderblokken** worden gekopieerd. Topografie/percelen kunnen via het aparte PDOK-**kaartreferenties**-scherm (zonder KLIC) als aparte DWG-XREF worden opgebouwd.
 
 ## Bladopbouw, gevalideerd in de DXF
 De standaardbladen zijn A4 staand met de blokken `Kader-A4s-MSR`, `Enexis-OH-MSR` en `Enexis-Noordpijl`. Zij bevatten twee kaartvensters:
@@ -53,3 +53,9 @@ De PDOK-adresopzoeking en perceelopzoeking gebruikt RD New, `https://api.pdok.nl
 - Controleer bij nieuw project het inladen van de oorspronkelijke DXF als externe sjabloon.
 
 **Belangrijk:** de bron-DXF geeft een voorbeeldopmaak. De nieuwe ZRO-functie is geen juridische eigendomscontrole of vervanging van officiële kadastrale eigendomsinformatie.
+
+## Aanvulling 1.21.1 — blokbibliotheek en ZRO-werkplaats
+
+ZRO en Stationslocaties gebruiken dezelfde trafoblokkeuze, waaronder alle stationsblokvarianten uit de Blocks-toolpalette met de suffix **AANKOOP**. Het origineel zonder arcering blijft behouden. Nieuwe groene uitvoeringen gebruiken ANSI31, ACI 102, patroonhoek −90° en schaal 0,1. Het aankoopgebied volgt de marges van de standaard Stationslocaties-trafo. Via **Extra trafoblok toevoegen** kan een eigen blok in de gedeelde bibliotheek worden opgeslagen.
+
+De ZRO-tab toont alleen echte aangemaakte ZRO-layouts (geen kolomkop in een lege lijst), heeft dezelfde drie actiegroepen als Stationslocaties en biedt onder **Project & kaarten** uitsluitend **Topo en Percelen**. In het ZRO-scherm wordt geen KLIC-levering opgevraagd. Topografie en kadastrale percelen worden als losse DWG-XREF's gekoppeld.
