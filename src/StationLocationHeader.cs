@@ -182,12 +182,12 @@ internal sealed class StationLocationHeader : UserControl
         compact = enabled;
         heading.SuspendLayout();
         heading.RowStyles[0].Height = compact ? 60 : 74;
-        heading.RowStyles[1].Height = compact ? 36 : 0;
+        heading.RowStyles[1].Height = compact ? 50 : 0;
         heading.ColumnStyles[1].Width = compact ? 0 : 190;
         heading.SetColumnSpan(heading.GetControlFromPosition(0, 0)!, compact ? 2 : 1);
         heading.SetCellPosition(primaryHost, new TableLayoutPanelCellPosition(compact ? 0 : 1, compact ? 1 : 0));
         heading.SetColumnSpan(primaryHost, compact ? 2 : 1);
-        content.RowStyles[0].Height = compact ? 96 : 74;
+        content.RowStyles[0].Height = compact ? 110 : 74;
         heading.ResumeLayout(true);
         PositionPrimaryButton();
     }
