@@ -927,7 +927,7 @@ internal static class StationLocationSheets
         var expectedHeight = viewport.Height * 250 / 1000.0;
         return viewport.Locked &&
             viewport.ViewTarget.DistanceTo(point) < tolerance &&
-            viewport.ViewCenter.DistanceTo(IntendedViewCenter(tr, viewport)) < tolerance &&
+            (viewport.ViewCenter - IntendedViewCenter(tr, viewport)).Length < tolerance &&
             Math.Abs(viewport.ViewHeight - expectedHeight) < tolerance &&
             Math.Abs(viewport.TwistAngle) < tolerance;
     }
