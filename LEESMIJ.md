@@ -1,4 +1,6 @@
-# Techbase Blocks 1.20.2
+# Techbase Blocks 1.20.3
+
+**Blocks → Plaatsopties:** de schakelaars voor laag overnemen, gekozen laag en herhaald plaatsen staan in één kolom. De dropdown voor de gekozen laag staat eronder en springt niet samen met de schakelaar naar een andere positie.
 
 **Nieuwe bediening:** in een smalle Techbase-palette kies je het gewenste onderdeel via de keuzelijst **Onderdeel**. In een breed venster verschijnt een navigatiebalk. Onder **Stationslocaties** vind je de knop **Nieuwe locatie**, de zoekfunctie en de bladlijst. Klik een blad aan om **Open blad**, **Blad bewerken** en **Kaartopmerking** te gebruiken. Voor overige instellingen kies je **Project**; voor totaalbladen en PDF kies je **Uitvoer**. Met rechtermuisknop op een blad krijg je de bijbehorende acties.
 
@@ -208,7 +210,7 @@ De concrete testresultaten en resterende praktijktests staan in `VALIDATIE.md` b
 
 ## Opnieuw bouwen
 
-Gebruik een .NET 10 SDK en voer `Build.ps1 -Dotnet <pad-naar-dotnet.exe>` uit. De build haalt Autodesk AutoCAD.NET API 25.0.1 en 26.0.0 via NuGet op en bouwt de Excel-worker voor beide runtimes. De Autodesk API-DLL's worden niet meegeleverd: die levert de hostapplicatie. De uitvoer staat in `dist/1.20.2` en in `Techbase Blocks 1.20.2.zip`. Versiegebonden DLL-mappen maken een update mogelijk zonder een reeds geladen oude DLL te overschrijven; herstart de CAD-toepassing om de nieuwe versie te laden.
+Gebruik een .NET 10 SDK en voer `Build.ps1 -Dotnet <pad-naar-dotnet.exe>` uit. De build haalt Autodesk AutoCAD.NET API 25.0.1 en 26.0.0 via NuGet op en bouwt de Excel-worker voor beide runtimes. De Autodesk API-DLL's worden niet meegeleverd: die levert de hostapplicatie. De uitvoer staat in `dist/1.20.3` en in `Techbase Blocks 1.20.3.zip`. Versiegebonden DLL-mappen maken een update mogelijk zonder een reeds geladen oude DLL te overschrijven; herstart de CAD-toepassing om de nieuwe versie te laden.
 
 
 ## Stationslocaties in de Techbase-plugin
@@ -223,3 +225,9 @@ Beschikbare commando’s: `TBSTATIONLOCATIES` (tab openen), `TBSTATIONBEHEER` (b
 ## Stationslocaties geïntegreerd
 
 Gebruik de navigatieknop Stationslocaties in de Techbase Werkplaats. Daar kun je meteen VL/AL-locaties, detailbladen, totaalblad, foto’s, kaartreferenties en PDF beheren. Er wordt geen afzonderlijk hoofdvenster geopend. Voor bestaande locaties uit de oude Techbase 1.20-interne stationsfunctie blijft het commando TBSTATIONLEGACY beschikbaar.
+
+### Een geplaatste trafo verplaatsen of draaien
+
+Selecteer in AutoCAD het **trafoblok** in modelruimte en verplaats of draai het met de grips, MOVE of ROTATE. Zodra het commando klaar is, controleert TechBase de nieuwe invoegpositie en de bloktransformatie. Het 1:250-kaartvenster van het bijbehorende detailblad wordt opnieuw op de trafo gecentreerd en de hoekpunten **C1–C4** in de onderhoek worden opnieuw berekend en weergegeven. De rode markering volgt mee. Deze gegevens worden dus niet slechts bij het eerste plaatsen bepaald.
+
+Controleer bij de eerste toepassing met een project-DWG de nieuwe kaartuitsnede en de RD-coördinaten in het detailblad. Werk in meters en zorg dat het trafoblok op de eigen stationlaag blijft staan.

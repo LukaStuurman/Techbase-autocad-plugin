@@ -45,17 +45,33 @@ internal sealed class StationLocationsPanel : UserControl
     };
     private readonly ThemedButton newLocation = new()
     {
-        Text = "Nieuwe locatie", Glyph = 9,
-        Dock = DockStyle.Fill, AccessibleName = "Nieuwe stationslocatie plaatsen",
-        TextAlign = ContentAlignment.MiddleLeft
+        Name = "StationNewLocation",
+        Text = "+  Nieuwe locatie", Glyph = -1,
+        Size = new Size(170, 39), AutoSize = false,
+        Anchor = AnchorStyles.Right,
+        AccessibleName = "Nieuwe stationslocatie plaatsen",
+        TextAlign = ContentAlignment.MiddleCenter
     };
-    private readonly ThemedButton refresh = new()
+    // Native WinForms-buttons gebruiken standaard tekstweergave:
+    // Bijwerken en Uitleg blijven leesbaar bij verschillende DPI-instellingen.
+    private readonly Button refresh = new()
     {
-        Text = "Bijwerken", Dock = DockStyle.Fill, AccessibleName = "Locatielijst bijwerken"
+        Name = "StationRefresh",
+        Text = "Vernieuwen", Dock = DockStyle.Fill,
+        AccessibleName = "Locatielijst bijwerken", TextAlign = ContentAlignment.MiddleCenter
     };
-    private readonly ThemedButton help = new()
+    private readonly Button help = new()
     {
-        Text = "Info", Dock = DockStyle.Fill, AccessibleName = "Informatie over stationslocaties"
+        Name = "StationHelp",
+        Text = "Uitleg", Dock = DockStyle.Fill,
+        AccessibleName = "Informatie over stationslocaties", TextAlign = ContentAlignment.MiddleCenter
+    };
+    private readonly Label emptyLocations = new()
+    {
+        Dock = DockStyle.Fill,
+        TextAlign = ContentAlignment.MiddleCenter,
+        AutoSize = false,
+        Padding = new Padding(20)
     };
 
     private readonly ThemedButton[] sectionTabs = new ThemedButton[3];
@@ -97,7 +113,7 @@ internal sealed class StationLocationsPanel : UserControl
             Dock = DockStyle.Fill, ColumnCount = 2, RowCount = 1, Margin = Padding.Empty
         };
         header.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
-        header.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 159));
+        header.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 178));
         var textHeader = new TableLayoutPanel
         {
             Dock = DockStyle.Fill, ColumnCount = 1, RowCount = 2, Margin = Padding.Empty
@@ -112,7 +128,7 @@ internal sealed class StationLocationsPanel : UserControl
         }, 0, 0);
         textHeader.Controls.Add(subtitle, 0, 1);
         header.Controls.Add(textHeader, 0, 0);
-        newLocation.Margin = new Padding(6, 7, 0, 9);
+        newLocation.Margin = new Padding(5, 0, 0, 0);
         header.Controls.Add(newLocation, 1, 0);
         layout.Controls.Add(header, 0, 0);
 
@@ -125,8 +141,8 @@ internal sealed class StationLocationsPanel : UserControl
             Margin = new Padding(0, 0, 0, 5)
         };
         toolbar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
-        toolbar.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 98));
-        toolbar.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 54));
+        toolbar.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 119));
+        toolbar.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 75));
         var searchBox = new Panel
         {
             Dock = DockStyle.Fill, Padding = new Padding(10, 6, 8, 6),
@@ -168,6 +184,8 @@ internal sealed class StationLocationsPanel : UserControl
             if (Selected != null) Execute(StationAction.Open);
         };
         listCard.Controls.Add(sheets);
+        listCard.Controls.Add(emptyLocations);
+        emptyLocations.BringToFront();
         layout.Controls.Add(listCard, 0, 3);
 
         selectionInfo.Padding = new Padding(0, 7, 0, 2);
@@ -240,9 +258,27 @@ internal sealed class StationLocationsPanel : UserControl
         UiTheme.Apply(this);
         if (!SystemInformation.HighContrast)
         {
-            UiTheme.Primary(newLocation);
+            // Donkeroranje met witte tekst: beter contrast dan het oude oranje vlak.
+            newLocation.BackColor = Color.FromArgb(184, 69, 10);
+            newLocation.ForeColor = Color.White;
+            newLocation.FlatAppearance.BorderColor = newLocation.BackColor;
+            newLocation.FlatAppearance.MouseOverBackColor = Color.FromArgb(158, 57, 8);
+            newLocation.FlatAppearance.MouseDownBackColor = Color.FromArgb(133, 46, 6);
             actionButtons[StationAction.Delete].ForeColor = UiTheme.Danger;
         }
+        newLocation.Font = new Font(Typography.Family, 10f, FontStyle.Bold);
+        foreach (var button in new[] { refresh, help })
+        {
+            button.FlatStyle = FlatStyle.Flat;
+            button.BackColor = Color.White;
+            button.ForeColor = UiTheme.Ink;
+            button.FlatAppearance.BorderColor = UiTheme.Line;
+            button.FlatAppearance.MouseOverBackColor = UiTheme.SoftOrange;
+            button.Padding = new Padding(5, 0, 5, 0);
+            button.Font = new Font(Typography.Family, 9.5f);
+        }
+        emptyLocations.BackColor = Color.White;
+        emptyLocations.ForeColor = UiTheme.Muted;
         foreach (var page in actionPages) page.BackColor = Color.White;
         foreach (var flow in actionFlows) flow.BackColor = Color.White;
         searchBox.BackColor = UiTheme.Input;
@@ -253,7 +289,7 @@ internal sealed class StationLocationsPanel : UserControl
         selectionInfo.ForeColor = UiTheme.Muted;
         status.ForeColor = UiTheme.Muted;
         foreach (var explanation in explanations) explanation.ForeColor = UiTheme.Muted;
-        newLocation.Margin = new Padding(6, 7, 0, 9);
+        newLocation.Margin = new Padding(5, 0, 0, 0);
         refresh.Margin = new Padding(0, 0, 5, 0);
         help.Margin = Padding.Empty;
         foreach (var flow in actionFlows) FitButtons(flow);
@@ -374,6 +410,12 @@ internal sealed class StationLocationsPanel : UserControl
             sheets.EndUpdate();
             loading = false;
         }
+        // Een lege lijst krijgt uitleg in plaats van een volledig wit vlak.
+        emptyLocations.Text = cached.Count == 0
+            ? "Nog geen stationslocaties in deze tekening.\nKies ‘Nieuwe locatie’ om een voorkeurslocatie te plaatsen."
+            : "Geen locaties gevonden.\nWis de zoekterm om alle bladen te zien.";
+        emptyLocations.Visible = sheets.Items.Count == 0;
+        if (emptyLocations.Visible) emptyLocations.BringToFront();
         UpdateActions();
     }
 
@@ -435,6 +477,13 @@ internal sealed class StationLocationsPanel : UserControl
             selectionInfo.Text = chosen.Trafo + "  ·  " + type + "  ·  foto " +
                 (photos.Contains(chosen.Name) ? "aanwezig" : "ontbreekt");
         }
+        // Zolang niets geselecteerd is, verberg in plaats van vier onleesbare
+        // grijze acties te tonen. De knop Nieuwe locatie blijft altijd zichtbaar.
+        actionFlows[0].Visible = chosen != null && hasDocument;
+        explanations[0].Text = chosen == null
+            ? (cached.Count == 0 ? "Begin met de knop ‘Nieuwe locatie’ bovenaan." :
+               "Selecteer eerst een locatie in de lijst om dit blad te bewerken.")
+            : "Acties voor " + chosen.Name + ": open het blad, wijzig de gegevens of plaats een kaartopmerking.";
         newLocation.Enabled = hasDocument;
         refresh.Enabled = hasDocument;
         foreach (var button in actionButtons.Values) button.Enabled = hasDocument;

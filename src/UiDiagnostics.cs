@@ -38,7 +38,7 @@ internal static class UiDiagnostics
         }
         shell.Navigate(6);
         var stationPanel = All(shell).OfType<StationLocationsPanel>().Single();
-        Check(All(stationPanel).OfType<ThemedButton>().Any(b => b.Text == "Nieuwe locatie"),
+        Check(All(stationPanel).OfType<ThemedButton>().Any(b => b.Text.Contains("Nieuwe locatie", StringComparison.OrdinalIgnoreCase)),
             "Stationslocaties heeft één duidelijk herkenbare primaire actie");
         Check(All(stationPanel).OfType<ThemedButton>().Any(b => b.Text == "Project")
             && All(stationPanel).OfType<ThemedButton>().Any(b => b.Text == "Uitvoer"),
@@ -56,6 +56,21 @@ internal static class UiDiagnostics
         search.Text = "";
         var options = All(shell).OfType<Button>().Single(b => b.AccessibleName == "Plaatsopties");
         options.PerformClick(); Check(All(shell).OfType<CheckBox>().Single(c => c.Name == "UseChosenBlockLayer").Visible, "plaatsopties uitklappen");
+        // Alle drie schakelaars in Blocks delen één layoutkolom. Controleer dit
+        // bij zowel brede als smalle werkplaatsen om inspringen te voorkomen.
+        foreach (var width in new[] { 380, 1040 })
+        {
+            host.ClientSize = new Size(width, 940);
+            shell.PerformLayout(); Application.DoEvents();
+            var toggles = All(blocksPage).OfType<ThemedToggle>()
+                .Where(c => c.Text is "Laag van object overnemen"
+                    or "Gekozen laag gebruiken" or "Herhaald plaatsen (Esc stopt)")
+                .OrderBy(c => c.Top).ToArray();
+            Check(toggles.Length == 3 &&
+                toggles.All(c => c.Parent == toggles[0].Parent && c.Left == toggles[0].Left) &&
+                toggles[0].Top < toggles[1].Top && toggles[1].Top < toggles[2].Top,
+                "drie Blocks-schakelaars staan recht onder elkaar op " + width);
+        }
         options.PerformClick(); Check(!All(shell).OfType<CheckBox>().Single(c => c.Name == "UseChosenBlockLayer").Visible, "plaatsopties inklappen");
         shell.Navigate(1);
         var advanced = All(shell).OfType<CheckBox>().Single(c => c.Text == "Geavanceerde modus");
