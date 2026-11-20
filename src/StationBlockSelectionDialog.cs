@@ -1,5 +1,6 @@
 using System;
 using System.Drawing;
+using Font = System.Drawing.Font;
 using System.Linq;
 using System.Windows.Forms;
 using Autodesk.AutoCAD.ApplicationServices;
@@ -153,7 +154,7 @@ internal sealed class StationBlockSelectionDialog : Form
         while (true)
         {
             using var chooser = new StationBlockSelectionDialog(allowExisting);
-            var response = AcApp.ShowModalDialog(chooser);
+            var response = Autodesk.AutoCAD.ApplicationServices.Application.ShowModalDialog(chooser);
             if (response == DialogResult.OK) return chooser.Selected;
             if (!chooser.AddCustom) return null;
             var corners = MessageBox.Show(
