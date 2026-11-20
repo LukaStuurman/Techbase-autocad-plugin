@@ -75,7 +75,10 @@ internal sealed class WorkspacePanel : UserControl
         compactNavigation.Controls.Add(pagePicker, 1, 0);
         navigationHost.Controls.Add(navigationLayout);
         navigationHost.Controls.Add(compactNavigation);
-        var footer = new Label { Text = "TECHBASE   /   Van visie tot revisie", AutoSize = false, Dock = DockStyle.Fill, TextAlign = ContentAlignment.MiddleLeft,
+        // Laat de werkelijk geladen DLL-versie zien, zodat direct duidelijk is
+        // of AutoCAD na de installatie nog een oudere plugin gebruikt.
+        var loadedVersion = typeof(Plugin).Assembly.GetName().Version?.ToString(3) ?? "?";
+        var footer = new Label { Text = "TECHBASE v" + loadedVersion + "   /   Van visie tot revisie", AutoSize = false, Dock = DockStyle.Fill, TextAlign = ContentAlignment.MiddleLeft,
             Padding = new Padding(14, 0, 0, 0), Margin = Padding.Empty, Font = new Font(Typography.Family, 8) };
         layout.Controls.Add(brand, 0, 0); layout.Controls.Add(navigationHost, 0, 1); layout.Controls.Add(content, 0, 2); layout.Controls.Add(footer, 0, 3);
         // Alleen bij voldoende breedte worden losse tabknoppen getoond.
