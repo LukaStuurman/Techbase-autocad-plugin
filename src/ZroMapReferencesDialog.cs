@@ -49,7 +49,7 @@ internal sealed class ZroMapReferencesDialog : Form
 
         var stack = new FlowLayoutPanel
         {
-            Dock = DockStyle.Fill, FlowDirection = FlowDirection.TopDown,
+            Dock = DockStyle.Fill, FlowDirection = System.Windows.Forms.FlowDirection.TopDown,
             WrapContents = false, AutoScroll = false, Padding = Padding.Empty
         };
         stack.Controls.Add(new Label
@@ -77,7 +77,7 @@ internal sealed class ZroMapReferencesDialog : Form
         var actions = new FlowLayoutPanel
         {
             Dock = DockStyle.Bottom, Height = 45,
-            FlowDirection = FlowDirection.RightToLeft,
+            FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft,
             Padding = new Padding(0, 4, 0, 0)
         };
         var okay = new Button { Text = "Doorgaan", Width = 128, Height = 33, DialogResult = DialogResult.OK };
