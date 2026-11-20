@@ -8,7 +8,7 @@ using AcApp = Autodesk.AutoCAD.ApplicationServices.Core.Application;
 
 namespace Techbase.Blocks;
 
-internal enum ZroAction { Create, Open, Refresh, RefreshAll, References }
+internal enum ZroAction { Create, Open, Edit, Refresh, RefreshAll, References }
 internal sealed record ZroRequest(Document Document, ZroAction Action, string? Sheet);
 
 internal sealed class ZroPanel : UserControl
@@ -40,6 +40,10 @@ internal sealed class ZroPanel : UserControl
     private readonly ThemedButton open = new()
     {
         Text = "Open blad", Dock = DockStyle.Fill
+    };
+    private readonly ThemedButton edit = new()
+    {
+        Text = "Bladgegevens wijzigen", Dock = DockStyle.Fill
     };
     private readonly ThemedButton refresh = new()
     {
@@ -78,7 +82,7 @@ internal sealed class ZroPanel : UserControl
         grid.RowStyles.Add(new RowStyle(SizeType.Absolute, 51));
         grid.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
         grid.RowStyles.Add(new RowStyle(SizeType.Absolute, 29));
-        grid.RowStyles.Add(new RowStyle(SizeType.Absolute, 170));
+        grid.RowStyles.Add(new RowStyle(SizeType.Absolute, 212));
         grid.RowStyles.Add(new RowStyle(SizeType.Absolute, 28));
         grid.Controls.Add(new Label
         {
@@ -106,24 +110,26 @@ internal sealed class ZroPanel : UserControl
 
         var buttons = new TableLayoutPanel
         {
-            Dock = DockStyle.Fill, ColumnCount = 2, RowCount = 3,
+            Dock = DockStyle.Fill, ColumnCount = 2, RowCount = 4,
             Padding = new Padding(0, 6, 0, 0), Margin = Padding.Empty
         };
         buttons.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
         buttons.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
-        for (int i = 0; i < 3; i++) buttons.RowStyles.Add(new RowStyle(SizeType.Absolute, 46));
+        for (int i = 0; i < 4; i++) buttons.RowStyles.Add(new RowStyle(SizeType.Absolute, 45));
         buttons.Controls.Add(open, 0, 0);
-        buttons.Controls.Add(refresh, 1, 0);
-        buttons.Controls.Add(all, 0, 1);
-        buttons.Controls.Add(references, 1, 1);
+        buttons.Controls.Add(edit, 1, 0);
+        buttons.Controls.Add(refresh, 0, 1);
+        buttons.Controls.Add(all, 1, 1);
+        buttons.Controls.Add(references, 0, 2);
+        buttons.SetColumnSpan(references, 2);
         var instruction = new Label
         {
             Text = "Een nieuwe DWG? Kies bij de eerste ZRO-aanmaak de voorbeeld-DXF met blad TRAFO-10.",
             Dock = DockStyle.Fill, AutoEllipsis = true, ForeColor = UiTheme.Muted
         };
-        buttons.Controls.Add(instruction, 0, 2);
+        buttons.Controls.Add(instruction, 0, 3);
         buttons.SetColumnSpan(instruction, 2);
-        foreach (var button in new[] { open, refresh, all, references })
+        foreach (var button in new[] { open, edit, refresh, all, references })
             button.Margin = new Padding(0, 3, 6, 3);
         grid.Controls.Add(buttons, 0, 5);
         grid.Controls.Add(status, 0, 6);
@@ -131,6 +137,7 @@ internal sealed class ZroPanel : UserControl
 
         create.Click += (_, _) => Execute(ZroAction.Create);
         open.Click += (_, _) => Execute(ZroAction.Open);
+        edit.Click += (_, _) => Execute(ZroAction.Edit);
         refresh.Click += (_, _) => Execute(ZroAction.Refresh);
         all.Click += (_, _) => Execute(ZroAction.RefreshAll);
         references.Click += (_, _) => Execute(ZroAction.References);
@@ -183,7 +190,7 @@ internal sealed class ZroPanel : UserControl
     {
         var hasDocument = AcApp.DocumentManager.MdiActiveDocument != null;
         create.Enabled = hasDocument; references.Enabled = hasDocument;
-        open.Enabled = refresh.Enabled = hasDocument && Selected != null;
+        open.Enabled = edit.Enabled = refresh.Enabled = hasDocument && Selected != null;
         all.Enabled = hasDocument && available.Count > 0;
     }
 
@@ -218,6 +225,9 @@ internal static class ZroController
                     doc.Editor.Regen();
                 }
                 break;
+            case ZroAction.Edit:
+                if (request.Sheet != null) Edit(doc, request.Sheet);
+                break;
             case ZroAction.Refresh:
                 if (request.Sheet != null) ZroSheets.Refresh(doc, request.Sheet);
                 break;
@@ -228,6 +238,18 @@ internal static class ZroController
                 new Stationslocaties.StationLocationController().ShowStationLocations(Stationslocaties.StationLocationAction.References);
                 break;
         }
+    }
+
+    private static void Edit(Document doc, string sheet)
+    {
+        var id = ZroSheets.StationFor(doc.Database, sheet);
+        if (id.IsNull) throw new InvalidOperationException("Deze ZRO-layout heeft geen gekoppeld station.");
+        var footprint = ZroGeometry.Inspect(doc.Database, id);
+        var current = ZroSheets.ReadFields(doc.Database, sheet);
+        using var dialog = new ZroFieldsDialog(current, footprint.Center, footprint.BlockType, footprint.Area);
+        if (Autodesk.AutoCAD.ApplicationServices.Application.ShowModalDialog(dialog) != DialogResult.OK ||
+            dialog.Result is not { } fields) return;
+        ZroSheets.Edit(doc, sheet, fields);
     }
 
     private static void Create(Document doc)
