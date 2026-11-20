@@ -22,7 +22,8 @@ internal sealed class ZroFieldsDialog : Form
     {
         stationPoint = center;
         draft = values.Copy();
-        draft.AreaSquareMeters = area.ToString("F2", CultureInfo.GetCultureInfo("nl-NL"));
+        if (string.IsNullOrWhiteSpace(draft.AreaSquareMeters))
+            draft.AreaSquareMeters = area.ToString("F2", CultureInfo.GetCultureInfo("nl-NL"));
         Text = "TechBase | ZRO-blad — gegevens controleren";
         StartPosition = FormStartPosition.CenterParent;
         AutoScaleMode = AutoScaleMode.Dpi;
