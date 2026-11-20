@@ -83,11 +83,16 @@ internal static class Program
             Check(button.Parent != null &&
                 button.Parent.ClientRectangle.Contains(button.Bounds),
                 "Nieuwe locatie wordt niet afgeknipt op " + width);
-            Check(button.Region != null &&
-                !button.Region.IsVisible(1, button.Height - 1) &&
-                !button.Region.IsVisible(button.Width - 1, button.Height - 1) &&
-                button.Region.IsVisible(button.Width / 2, button.Height - 2),
-                "Alle onderste hoeken zijn afgerond op " + width);
+            // Een afgeronde Region kan in de samengesteld gerenderde kop alsnog
+            // als een rechthoek verschijnen. Test daarom de werkelijke pixels.
+            using (var buttonBitmap = new Bitmap(button.Width, button.Height))
+            {
+                button.DrawToBitmap(buttonBitmap, new Rectangle(Point.Empty, buttonBitmap.Size));
+                var corner = buttonBitmap.GetPixel(1, button.Height - 2);
+                var middle = buttonBitmap.GetPixel(button.Width / 2, button.Height - 3);
+                Check(corner.GetBrightness() > .72f && middle.GetBrightness() < .50f,
+                    "Werkelijk gerenderde onderste knophoek is afgerond op " + width);
+            }
             Check(InkPixels(button, true) > 25,
                 "Witte tekst is daadwerkelijk getekend op Nieuwe locatie (" + width + ")");
 
@@ -117,6 +122,12 @@ internal static class Program
                 color => color.R > 250 && color.G > 250 && color.B > 250);
             Check(orangePixels > 300 && primaryText > 20,
                 "Samengestelde kop toont oranje actie en witte knoptekst op " + width);
+            var lowerLeft = snapshot.GetPixel(wholeButton.Left + 1, wholeButton.Bottom - 2);
+            var lowerRight = snapshot.GetPixel(wholeButton.Right - 2, wholeButton.Bottom - 2);
+            var lowerMiddle = snapshot.GetPixel(wholeButton.Left + wholeButton.Width / 2, wholeButton.Bottom - 3);
+            Check(lowerLeft.GetBrightness() > .72f && lowerRight.GetBrightness() > .72f &&
+                lowerMiddle.GetBrightness() < .50f,
+                "De complete zichtbare kop toont twee afgeronde onderste knophoeken op " + width);
 
             foreach (var link in new[] { header.RefreshLink, header.HelpLink })
             {
