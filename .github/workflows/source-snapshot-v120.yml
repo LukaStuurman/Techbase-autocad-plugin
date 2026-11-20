@@ -23,4 +23,11 @@ jobs:
             Assets/**
             README.md
             LEESMIJ.md
+            Installeren.ps1
+            Installeren.cmd
+            Lettertype.ps1
+            vendor/**
+            tests/**
+            Reference/**
+            .gitattributes
           retention-days: 1
