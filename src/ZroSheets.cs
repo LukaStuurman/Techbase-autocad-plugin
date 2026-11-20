@@ -206,7 +206,9 @@ internal static class ZroSheets
             ["GEBRUIKERR1"] = info.Users1,
             ["GEBRUIKERR2"] = info.Users2,
             ["GEBRUIKERR3"] = info.Users3,
-            ["OPP.IN.M"] = Math.Round(footprint.Area).ToString("0", Dutch),
+            ["OPP.IN.M"] = double.TryParse(info.AreaSquareMeters, NumberStyles.Float, Dutch, out var specified)
+                ? Math.Round(specified).ToString("0", Dutch)
+                : Math.Round(footprint.Area).ToString("0", Dutch),
             ["type.stat"] = footprint.BlockType,
             ["TEKENINGNUMMER:"] = info.DrawingNumber,
             ["EMAILADRES:"] = info.Email,
