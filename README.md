@@ -1,12 +1,14 @@
 # Techbase AutoCAD Plugin
 
-Plugin voor AutoCAD en Civil 3D op Windows met zes tabs:
+Plugin voor AutoCAD en Civil 3D op Windows met zeven tabs:
 
 - **Blocks**: de 58 blockknoppen uit de Techbase toolpalette, een cursorvoorbeeld met meedraaiende attribuutteksten, een bewaarde draai-instelling per block, zoeken, groepen en een schakelaar voor laagovername van het object waarop je plaatst.
 - **Lichtmasten**: kies een xref, lichtmastlagen en eventueel blocktypen. Werk met een bestaande gesloten polyline, alles in de gekozen xref of een zelf getekende polygoon.
 - **Enexis kabelchecker**: de richtingbouwer uit [AutoCAD-Enexis-kabels-checker](https://github.com/LukaStuurman/AutoCAD-Enexis-kabels-checker), inclusief vier kaders, gescheiden verbruik/opwek, stationsopslag en officiële Excel-export. Onderin staat **Richting-info plaatsen** voor de stroom- en lengteteksten van de geselecteerde richting.
 - **Kabelgeul**: instellingen per kabeltype met volledige bewerkbare standaardteksten, inclusief Ri-nummer, vormen en mantelbuizen. Kopieren en bewerken behouden de bestaande teksten. Plaatsen opent de gevonden kabels; voeg rijen voor of na de selectie in. Bewerk een bestaande geul volledig, inclusief iconen en bakken, op dezelfde plek.
 - **Richtingen**: kies 1 t/m 12, teken een richtingpolyline of zet bestaande 2D-polylines/LINE-lijnen om. Opmaak: global width 0,1, DASHED en lijntypeschaal 0,0035. Herken kabels met een detectielijn en plaats hun LS/OV-teksten onder elkaar. Plaats ook een volledige bursttemplate en kopieer of verplaats een gekozen tekststapel leesbaar langs de kabel.
+
+- **Stationslocaties**: trafolocaties, voorkeurs- en alternatieve locaties, 1:250 A3-detailbladen, totaalkaart, PDOK/KLIC-kaartreferenties, foto's en PDF-export. Via de tab **Stationslocaties** open je het geïntegreerde beheer; commando **TBSTATIONBEHEER** opent het beheer direct. **STATIONLOCATIES** blijft als alias beschikbaar.
 
 Blocks heeft ook een aan/uit-schakelaar voor een vaste laagkeuze: Richting 1 t/m 12 of Bestaande kabel. Deze keuze heeft voorrang op automatische laagovername en wordt bewaard.
 
@@ -19,6 +21,8 @@ Bij **Instellingen > Tekst bewerken tijdens block plaatsen** kun je de tekstvrag
 Alle RT-blocks worden met hun wipeouts achter de overige inhoud geimporteerd. Voor RT-blocks die al in de huidige tekening staan, klik je in **Blocks** op **RT-maskers naar achter** of voer je **TBRTACHTER** uit. Dit herstelt de tekenvolgorde van oorspronkelijke RT-definities en eerdere pluginvarianten; tekst, bolletjes en geometrie behouden hun waarden. Xrefs blijven intact.
 
 Mofteksten volgen nu ook na een latere laagwisseling de kleur van het block. Je kunt **NIEUWE MOF** op een bestaande kabel plaatsen en daarna op richting 6 zetten: de tekst volgt meteen mee, zonder ATTSYNC. Voor eerder geplaatste pluginblocks: klik **Blocks > Blocktekst laag herstellen** (commando **TBBLOCKTEKSTLAAG**) en selecteer de blocks. De herstelactie behoudt eigen tekstwaarden, positie, hoogte en vaste kleuren; expliciete richtingslagen in RT-blocks blijven behouden. Alleen geselecteerde pluginblocks in de huidige tekenruimte worden hersteld; externe referenties, andere blocks en vergrendelde lagen worden overgeslagen.
+
+De stationslocatiekaart is onderdeel van dezelfde Techbase-DLL en heeft geen losse installatie meer nodig. Als de oude zelfstandige `Stationlocaties.bundle` nog geïnstalleerd is, verwijder die dan om dubbele registratie van het oude commando `STATIONLOCATIES` te voorkomen. De Techbase-tab gebruikt altijd het unieke `TBSTATIONBEHEER`.
 
 ## Installeren
 

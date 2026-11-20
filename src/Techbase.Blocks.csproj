@@ -15,6 +15,11 @@
     <OutputPath>bin/$(ApiSeries)/$(Configuration)/</OutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Stationslocaties/Resources/Techbase.png" LogicalName="Techbase.png" />
+    <EmbeddedResource Include="Stationslocaties/Resources/Timmermans.png" LogicalName="Timmermans.png" />
+    <EmbeddedResource Include="Stationslocaties/Resources/StationGeometry.json.gz" LogicalName="StationGeometry.json.gz" />
+    <EmbeddedResource Include="Stationslocaties/Resources/KlicRules.json" LogicalName="KlicRules.json" />
+    <EmbeddedResource Include="Stationslocaties/Resources/KlicStyles.dxf.gz" LogicalName="KlicStyles.dxf.gz" />
     <PackageReference Include="AutoCAD.NET" Version="$(ApiVersion)" ExcludeAssets="runtime" PrivateAssets="all" />
     <Compile Include="../vendor/AutoCAD-Enexis-kabels-checker/src/Enexis.KabelChecker.Core/*.cs" Link="Enexis/Core/%(Filename)%(Extension)" />
     <Compile Include="../vendor/AutoCAD-Enexis-kabels-checker/src/Enexis.KabelChecker.AutoCAD/*.cs"
