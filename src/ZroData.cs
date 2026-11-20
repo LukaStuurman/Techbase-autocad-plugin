@@ -15,6 +15,7 @@ internal sealed class ZroFields
     internal string TrafoName { get; set; } = "";
     internal string StationNumber { get; set; } = "";
     internal string DrawingNumber { get; set; } = "";
+    internal string AreaSquareMeters { get; set; } = "";
     internal string CadastralMunicipality { get; set; } = "";
     internal string Section { get; set; } = "";
     internal string ParcelNumber { get; set; } = "";
