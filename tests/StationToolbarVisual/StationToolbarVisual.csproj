@@ -9,5 +9,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="../../src/StationToolbarButton.cs" Link="StationToolbarButton.cs" />
+    <Compile Include="../../src/StationLocationHeader.cs" Link="StationLocationHeader.cs" />
   </ItemGroup>
 </Project>

@@ -38,33 +38,20 @@ internal static class UiDiagnostics
         }
         shell.Navigate(6);
         var stationPanel = All(shell).OfType<StationLocationsPanel>().Single();
-        var stationToolbar = All(stationPanel).OfType<StationToolbarButton>().ToArray();
-        Check(stationToolbar.Length == 3 &&
-            stationToolbar.Any(b => b.Text == "Nieuwe locatie" && b.PrimaryAction) &&
-            stationToolbar.Any(b => b.Text == "Vernieuwen") &&
-            stationToolbar.Any(b => b.Text == "Uitleg"),
-            "Stationslocaties toont alle drie de duidelijke knoppen");
-        foreach (var action in stationToolbar)
-        {
-            Check(action.Width >= 55 && action.Height >= 30,
-                "Stationslocaties-knop past binnen eigen vak: " + action.Text);
-            using var painted = new Bitmap(action.Width, action.Height);
-            action.DrawToBitmap(painted, new Rectangle(Point.Empty, painted.Size));
-            var textPixels = 0;
-            for (var y = painted.Height / 4; y < painted.Height * 3 / 4; y++)
-                for (var x = Math.Min(16, painted.Width - 1); x < painted.Width - 10; x++)
-                {
-                    var pixel = painted.GetPixel(x, y);
-                    if (action.PrimaryAction ? pixel.R > 210 && pixel.G > 210 && pixel.B > 210 :
-                        pixel.R < 120 && pixel.G < 120 && pixel.B < 120)
-                        textPixels++;
-                }
-            Check(textPixels > 3, "Stationslocaties-knop heeft leesbare tekst: " + action.Text);
-            if (action.PrimaryAction)
-                Check(painted.GetPixel(1, painted.Height - 2).GetBrightness() > .65 &&
-                      painted.GetPixel(painted.Width / 2, painted.Height - 4).GetBrightness() < .5,
-                    "Nieuwe locatie heeft ook ronde onderste hoeken");
-        }
+        var stationHeader = All(stationPanel).OfType<StationLocationHeader>().Single();
+        var stationButton = stationHeader.NewLocation;
+        Check(stationButton.Text == "Nieuwe locatie" && stationButton.PrimaryAction,
+            "Stationslocaties toont een primaire nieuwe-locatieactie");
+        Check(stationHeader.RefreshLink.Text == "Lijst vernieuwen"
+            && stationHeader.HelpLink.Text == "Uitleg en tips",
+            "stationsacties hebben begrijpelijke, zichtbare teksten");
+        Check(stationButton.Width >= 140 && stationButton.Height >= 38 &&
+            stationButton.Parent!.ClientRectangle.Contains(stationButton.Bounds),
+            "Nieuwe locatie staat volledig binnen zijn koprij");
+        Check(stationButton.Region != null &&
+            !stationButton.Region.IsVisible(1, stationButton.Height - 2) &&
+            stationButton.Region.IsVisible(stationButton.Width / 2, stationButton.Height - 3),
+            "Nieuwe locatie heeft ronde onderste hoeken");
         Check(All(stationPanel).OfType<ThemedButton>().Any(b => b.Text == "Project")
             && All(stationPanel).OfType<ThemedButton>().Any(b => b.Text == "Uitvoer"),
             "Stationslocaties scheidt project- en uitvoerfuncties");
