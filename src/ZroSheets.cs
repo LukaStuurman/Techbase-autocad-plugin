@@ -93,7 +93,7 @@ internal static class ZroSheets
         {
             using var tx = db.TransactionManager.StartTransaction();
             var layout = GetLayout(db, tx, name, OpenMode.ForWrite);
-            UpdateAttributes(tx, layout, fields, footprint);
+            UpdateAttributes(db, tx, layout, fields, footprint);
             CenterViewports(tx, layout, footprint.Center);
             WriteMetadata(db, tx, layout, stationId, fields);
             AddParcelLabels(db, tx, layout, footprint.Center, autoLabels);
@@ -193,7 +193,7 @@ internal static class ZroSheets
         return ((BlockTableRecord)tx.GetObject(id, OpenMode.ForRead)).Name;
     }
 
-    private static void UpdateAttributes(Transaction tx, Layout layout, ZroFields info, ZroFootprint footprint)
+    private static void UpdateAttributes(Database db, Transaction tx, Layout layout, ZroFields info, ZroFootprint footprint)
     {
         var attributes = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
         {
