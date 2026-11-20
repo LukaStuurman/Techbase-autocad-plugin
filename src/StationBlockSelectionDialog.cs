@@ -133,7 +133,7 @@ internal sealed class StationBlockSelectionDialog : Form
         var actions = new FlowLayoutPanel
         {
             Dock = DockStyle.Fill, AutoSize = true,
-            FlowDirection = FlowDirection.RightToLeft
+            FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft
         };
         var ok = new Button { Text = "Verder", Width = 92, Height = 34, DialogResult = DialogResult.OK };
         var cancel = new Button { Text = "Annuleren", Width = 100, Height = 34, DialogResult = DialogResult.Cancel };
