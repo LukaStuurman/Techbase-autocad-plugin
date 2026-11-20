@@ -1,2 +1,6 @@
 # Spaces at the end of DXF text values and names are part of the CAD data.
 *.dxf whitespace=-blank-at-eol
+
+# Build.ps1 verifies byte-exact SHA256 hashes: these two reviewed LSP files require distinct line endings.
+Reference/*.lsp text eol=lf
+Assets/Kabelgeul/*.lsp text eol=crlf
