@@ -24,40 +24,19 @@ internal sealed class StationLocationsPanel : UserControl
     private HashSet<string> photos = new(StringComparer.OrdinalIgnoreCase);
     private readonly Dictionary<StationAction, ThemedButton> actionButtons = new();
 
-    private readonly Label summary = new() { Dock = DockStyle.Fill, AutoEllipsis = true };
+    private readonly StationLocationHeader locationHeader = new();
+    private Label summary => locationHeader.Summary;
+    private TextBox search => locationHeader.Search;
+    private StationToolbarButton newLocation => locationHeader.NewLocation;
+    private LinkLabel refresh => locationHeader.RefreshLink;
+    private LinkLabel help => locationHeader.HelpLink;
     private readonly Label selectionInfo = new() { Dock = DockStyle.Fill, AutoEllipsis = true };
     private readonly Label status = new() { Dock = DockStyle.Fill, AutoEllipsis = true };
-    private readonly Label subtitle = new()
-    {
-        Dock = DockStyle.Fill, Text = "Trafokaarten, voorkeurslocaties en alternatieven",
-        AutoEllipsis = true
-    };
-    private readonly TextBox search = new()
-    {
-        Dock = DockStyle.Fill, PlaceholderText = "Zoek trafonummer of blad…",
-        AccessibleName = "Zoek stationslocatie"
-    };
     private readonly ListView sheets = new()
     {
         Dock = DockStyle.Fill, View = View.Details, FullRowSelect = true,
         MultiSelect = false, HideSelection = false, HeaderStyle = ColumnHeaderStyle.Nonclickable,
         BorderStyle = BorderStyle.None, AccessibleName = "Locatiebladen"
-    };
-    private readonly StationToolbarButton newLocation = new()
-    {
-        Name = "StationNewLocation", Text = "Nieuwe locatie",
-        PrimaryAction = true, Dock = DockStyle.Fill,
-        AccessibleName = "Nieuwe stationslocatie plaatsen"
-    };
-    private readonly StationToolbarButton refresh = new()
-    {
-        Name = "StationRefresh", Text = "Vernieuwen", Dock = DockStyle.Fill,
-        AccessibleName = "Locatielijst bijwerken"
-    };
-    private readonly StationToolbarButton help = new()
-    {
-        Name = "StationHelp", Text = "Uitleg", Dock = DockStyle.Fill,
-        AccessibleName = "Informatie over stationslocaties"
     };
     private readonly Label emptyLocations = new()
     {
@@ -85,79 +64,27 @@ internal sealed class StationLocationsPanel : UserControl
 
         var layout = new TableLayoutPanel
         {
-            Dock = DockStyle.Fill, ColumnCount = 1, RowCount = 8,
+            Dock = DockStyle.Fill, ColumnCount = 1, RowCount = 6,
             Padding = new Padding(12, 9, 12, 10), Margin = Padding.Empty
         };
         layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
         foreach (var style in new[]
         {
-            new RowStyle(SizeType.Absolute, 62), // titel + primaire actie
-            new RowStyle(SizeType.Absolute, 28), // samenvatting
-            new RowStyle(SizeType.Absolute, 46), // zoeken
+            new RowStyle(SizeType.Absolute, 180), // complete, testbare kop inclusief acties
             new RowStyle(SizeType.Percent, 56),  // locatiebladen
             new RowStyle(SizeType.Absolute, 32), // geselecteerde locatie
-            new RowStyle(SizeType.Absolute, 44), // navigatie in acties
-            new RowStyle(SizeType.Percent, 44),  // contextafhankelijke acties
+            new RowStyle(SizeType.Absolute, 44), // acties: locaties / project / uitvoer
+            new RowStyle(SizeType.Percent, 44),  // contextuele acties
             new RowStyle(SizeType.Absolute, 28)  // status
         }) layout.RowStyles.Add(style);
-
-        var header = new TableLayoutPanel
+        locationHeader.UseCompactLayout(ClientSize.Width < 620);
+        layout.RowStyles[0].Height = locationHeader.PreferredHeaderHeight;
+        SizeChanged += (_, _) =>
         {
-            Dock = DockStyle.Fill, ColumnCount = 2, RowCount = 1, Margin = Padding.Empty
+            locationHeader.UseCompactLayout(ClientSize.Width < 620);
+            layout.RowStyles[0].Height = locationHeader.PreferredHeaderHeight;
         };
-        header.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
-        header.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 178));
-        var textHeader = new TableLayoutPanel
-        {
-            Dock = DockStyle.Fill, ColumnCount = 1, RowCount = 2, Margin = Padding.Empty
-        };
-        textHeader.RowStyles.Add(new RowStyle(SizeType.Absolute, 34));
-        textHeader.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
-        textHeader.Controls.Add(new Label
-        {
-            Text = "Stationslocaties", Dock = DockStyle.Fill,
-            Font = new Font(Typography.Family, 17),
-            AutoEllipsis = true, TextAlign = ContentAlignment.MiddleLeft
-        }, 0, 0);
-        textHeader.Controls.Add(subtitle, 0, 1);
-        header.Controls.Add(textHeader, 0, 0);
-        // Een eigen houder met vrije ruimte rondom voorkomt dat de onderrand
-        // van de primaire knop door de 62px-koprij wordt afgesneden.
-        var primaryHost = new Panel
-        {
-            Dock = DockStyle.Fill, Margin = Padding.Empty,
-            Padding = new Padding(6, 7, 0, 9),
-            BackColor = UiTheme.Canvas
-        };
-        newLocation.Dock = DockStyle.Fill;
-        newLocation.Margin = Padding.Empty;
-        primaryHost.Controls.Add(newLocation);
-        header.Controls.Add(primaryHost, 1, 0);
-        layout.Controls.Add(header, 0, 0);
-
-        summary.Padding = new Padding(0, 3, 0, 3);
-        layout.Controls.Add(summary, 0, 1);
-
-        var toolbar = new TableLayoutPanel
-        {
-            Dock = DockStyle.Fill, ColumnCount = 3, RowCount = 1,
-            Margin = new Padding(0, 0, 0, 5)
-        };
-        toolbar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
-        toolbar.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 119));
-        toolbar.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 75));
-        var searchBox = new Panel
-        {
-            Dock = DockStyle.Fill, Padding = new Padding(10, 6, 8, 6),
-            Margin = new Padding(0, 0, 5, 0)
-        };
-        searchBox.Controls.Add(search);
-        toolbar.Controls.Add(searchBox, 0, 0);
-        refresh.Margin = new Padding(0, 0, 5, 0);
-        help.Margin = Padding.Empty;
-        toolbar.Controls.Add(refresh, 1, 0);
-        toolbar.Controls.Add(help, 2, 0);
-        layout.Controls.Add(toolbar, 0, 2);
+        layout.Controls.Add(locationHeader, 0, 0);
 
         var listCard = new Panel
         {
@@ -189,10 +116,10 @@ internal sealed class StationLocationsPanel : UserControl
         listCard.Controls.Add(sheets);
         listCard.Controls.Add(emptyLocations);
         emptyLocations.BringToFront();
-        layout.Controls.Add(listCard, 0, 3);
+        layout.Controls.Add(listCard, 0, 1);
 
         selectionInfo.Padding = new Padding(0, 7, 0, 2);
-        layout.Controls.Add(selectionInfo, 0, 4);
+        layout.Controls.Add(selectionInfo, 0, 2);
 
         var tabs = new TableLayoutPanel
         {
@@ -216,7 +143,7 @@ internal sealed class StationLocationsPanel : UserControl
             sectionTabs[i] = button;
             tabs.Controls.Add(button, i, 0);
         }
-        layout.Controls.Add(tabs, 0, 5);
+        layout.Controls.Add(tabs, 0, 3);
 
         var actionsHost = new Panel
         {
@@ -241,15 +168,15 @@ internal sealed class StationLocationsPanel : UserControl
 
         AddAction(2, StationAction.Overview, "Totaal maken", 7);
         AddAction(2, StationAction.Plot, "Bladen plotten", 18);
-        layout.Controls.Add(actionsHost, 0, 6);
+        layout.Controls.Add(actionsHost, 0, 4);
 
         status.Padding = new Padding(0, 6, 0, 0);
-        layout.Controls.Add(status, 0, 7);
+        layout.Controls.Add(status, 0, 5);
         Controls.Add(layout);
 
         newLocation.Click += (_, _) => Execute(StationAction.Add);
-        refresh.Click += (_, _) => RefreshSheets();
-        help.Click += (_, _) =>
+        refresh.LinkClicked += (_, _) => RefreshSheets();
+        help.LinkClicked += (_, _) =>
         {
             using var dialog = new Stationslocaties.StationHelpDialog();
             dialog.ShowDialog(this);
@@ -259,30 +186,19 @@ internal sealed class StationLocationsPanel : UserControl
 
         UiTypography.Apply(this);
         UiTheme.Apply(this);
+        // Herstel na de algemene styling de expliciete knoppen en tekstlinks.
+        locationHeader.ApplyAppearance();
         if (!SystemInformation.HighContrast)
             actionButtons[StationAction.Delete].ForeColor = UiTheme.Danger;
-        newLocation.Font = new Font(Typography.Family, 10f, FontStyle.Bold);
-        refresh.Font = new Font(Typography.Family, 9.5f);
-        help.Font = new Font(Typography.Family, 9.5f);
-        // De tekst en de vier afgeronde hoeken worden nu expliciet door
-        // StationToolbarButton getekend, ook na een AutoCAD-theme-update.
-        primaryHost.Padding = new Padding(6, 7, 0, 9);
-        newLocation.Margin = Padding.Empty;
-        newLocation.Dock = DockStyle.Fill;
         emptyLocations.BackColor = Color.White;
         emptyLocations.ForeColor = UiTheme.Muted;
         foreach (var page in actionPages) page.BackColor = Color.White;
         foreach (var flow in actionFlows) flow.BackColor = Color.White;
-        searchBox.BackColor = UiTheme.Input;
-        search.BackColor = UiTheme.Input;
         listCard.BackColor = UiTheme.Line;
         summary.ForeColor = UiTheme.Muted;
-        subtitle.ForeColor = UiTheme.Muted;
         selectionInfo.ForeColor = UiTheme.Muted;
         status.ForeColor = UiTheme.Muted;
         foreach (var explanation in explanations) explanation.ForeColor = UiTheme.Muted;
-        refresh.Margin = new Padding(0, 0, 5, 0);
-        help.Margin = Padding.Empty;
         foreach (var flow in actionFlows) FitButtons(flow);
         SelectSection(0);
         RefreshSheets();
