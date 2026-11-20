@@ -3,6 +3,7 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using Autodesk.AutoCAD.ApplicationServices;
+using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.EditorInput;
 using Stationslocaties;
 using AcApp = Autodesk.AutoCAD.ApplicationServices.Core.Application;
@@ -93,7 +94,7 @@ internal sealed class ZroMapReferencesDialog : Form
     internal static void Run(Document doc)
     {
         using var dialog = new ZroMapReferencesDialog();
-        if (AcApp.ShowModalDialog(dialog) != DialogResult.OK) return;
+        if (Autodesk.AutoCAD.ApplicationServices.Application.ShowModalDialog(dialog) != DialogResult.OK) return;
         var selected = dialog.SelectedKind;
         if (dialog.AttachExisting)
         {
