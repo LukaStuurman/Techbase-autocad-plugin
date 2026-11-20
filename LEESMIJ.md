@@ -1,4 +1,6 @@
-# Techbase Blocks 1.20.1
+# Techbase Blocks 1.20.2
+
+**Nieuwe bediening:** in een smalle Techbase-palette kies je het gewenste onderdeel via de keuzelijst **Onderdeel**. In een breed venster verschijnt een navigatiebalk. Onder **Stationslocaties** vind je de knop **Nieuwe locatie**, de zoekfunctie en de bladlijst. Klik een blad aan om **Open blad**, **Blad bewerken** en **Kaartopmerking** te gebruiken. Voor overige instellingen kies je **Project**; voor totaalbladen en PDF kies je **Uitvoer**. Met rechtermuisknop op een blad krijg je de bijbehorende acties.
 
 Gebruik zeven tabs in AutoCAD en Civil 3D voor Windows: Blocks, Lichtmasten, Enexis kabelchecker, Richtingen, Instellingen, Kabelgeul en Stationslocaties.
 
@@ -206,7 +208,7 @@ De concrete testresultaten en resterende praktijktests staan in `VALIDATIE.md` b
 
 ## Opnieuw bouwen
 
-Gebruik een .NET 10 SDK en voer `Build.ps1 -Dotnet <pad-naar-dotnet.exe>` uit. De build haalt Autodesk AutoCAD.NET API 25.0.1 en 26.0.0 via NuGet op en bouwt de Excel-worker voor beide runtimes. De Autodesk API-DLL's worden niet meegeleverd: die levert de hostapplicatie. De uitvoer staat in `dist/1.20.1` en in `Techbase Blocks 1.20.1.zip`. Versiegebonden DLL-mappen maken een update mogelijk zonder een reeds geladen oude DLL te overschrijven; herstart de CAD-toepassing om de nieuwe versie te laden.
+Gebruik een .NET 10 SDK en voer `Build.ps1 -Dotnet <pad-naar-dotnet.exe>` uit. De build haalt Autodesk AutoCAD.NET API 25.0.1 en 26.0.0 via NuGet op en bouwt de Excel-worker voor beide runtimes. De Autodesk API-DLL's worden niet meegeleverd: die levert de hostapplicatie. De uitvoer staat in `dist/1.20.2` en in `Techbase Blocks 1.20.2.zip`. Versiegebonden DLL-mappen maken een update mogelijk zonder een reeds geladen oude DLL te overschrijven; herstart de CAD-toepassing om de nieuwe versie te laden.
 
 
 ## Stationslocaties in de Techbase-plugin

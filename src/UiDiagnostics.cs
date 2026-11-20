@@ -16,15 +16,15 @@ internal static class UiDiagnostics
         var checks = new List<string>();
         void Check(bool ok, string text) { if (!ok) throw new InvalidOperationException("UI: " + text); checks.Add(text); }
         IEnumerable<Control> All(Control c) { yield return c; foreach (Control child in c.Controls) foreach (var item in All(child)) yield return item; }
-        using var shell = new WorkspacePanel(new BlocksPanel(), new LightmastPanel(), new KabelCheckerPanel(), new DirectionPanel(), new SettingsPanel(), new KabelgeulPanel());
+        using var shell = new WorkspacePanel(new BlocksPanel(), new LightmastPanel(), new KabelCheckerPanel(), new DirectionPanel(), new SettingsPanel(), new KabelgeulPanel(), new StationLocationsPanel());
         using var host = new Form { ShowInTaskbar = false, FormBorderStyle = FormBorderStyle.None, Opacity = 0, ClientSize = new Size(380, 940) };
         host.Controls.Add(shell); host.Show(); Application.DoEvents();
         shell.CreateControl();
-        var names = new[] { "Blocks", "Beheerkaart", "Kabelchecker", "Richtingen", "Instellingen", "Kabelgeul" };
+        var names = new[] { "Blocks", "Lichtmasten", "Kabelchecker", "Richtingen", "Instellingen", "Kabelgeul", "Stationslocaties" };
         foreach (var width in new[] { 380, 1040 })
         {
             host.ClientSize = new Size(width, 940); shell.PerformLayout(); Application.DoEvents();
-            for (var index = 0; index < 6; index++)
+            for (var index = 0; index < 7; index++)
             {
                 shell.Navigate(index); shell.PerformLayout();
                 foreach (var control in All(shell).Where(c => c.Visible)) { _ = control.Handle; control.PerformLayout(); }
@@ -36,9 +36,17 @@ internal static class UiDiagnostics
                 bitmap.Save(Path.Combine(folder, names[index] + "-" + width + ".png"));
             }
         }
+        shell.Navigate(6);
+        var stationPanel = All(shell).OfType<StationLocationsPanel>().Single();
+        Check(All(stationPanel).OfType<ThemedButton>().Any(b => b.Text == "Nieuwe locatie"),
+            "Stationslocaties heeft één duidelijk herkenbare primaire actie");
+        Check(All(stationPanel).OfType<ThemedButton>().Any(b => b.Text == "Project")
+            && All(stationPanel).OfType<ThemedButton>().Any(b => b.Text == "Uitvoer"),
+            "Stationslocaties scheidt project- en uitvoerfuncties");
         shell.Navigate(0);
         var search = All(shell).OfType<TextBox>().Single(c => c.PlaceholderText == "Zoek een block...");
-        var library = All(shell).OfType<ListView>().Single();
+        var blocksPage = All(shell).OfType<BlocksPanel>().Single();
+        var library = All(blocksPage).OfType<ListView>().Single();
         var originalCount = library.Items.Count;
         search.Text = "NIEUWE MOF";
         Check(library.Items.Count > 0 && library.Items.Count < originalCount && library.Items.Cast<ListViewItem>().All(i => i.Text.Contains("NIEUWE MOF", StringComparison.OrdinalIgnoreCase)), "zoeken filtert de echte blockbibliotheek");
@@ -54,10 +62,10 @@ internal static class UiDiagnostics
         advanced.Checked = true;
         Check(All(shell).OfType<CheckedListBox>().All(c => c.Visible), "geavanceerde modus toont lagen en blockfilter");
         host.ClientSize = new Size(380, 940); Application.DoEvents();
-        var navButtons = All(shell).OfType<Button>().Where(b => b.AccessibleDescription is "Huidig onderdeel" || b.AccessibleDescription?.StartsWith("Open ") == true).ToArray();
-        Check(navButtons.Length == 6 && navButtons.All(b => b.Parent != null && b.Bottom <= b.Parent.ClientSize.Height), "navigatie blijft volledig zichtbaar na versmallen");
+        var picker = All(shell).OfType<ComboBox>().Single(x => x.AccessibleName == "Kies Techbase-onderdeel");
+        Check(picker.Visible && picker.Items.Count == 7, "compacte navigatie toont alle zeven onderdelen bij versmallen");
         using (var image = new Bitmap(shell.Width, shell.Height))
-        { shell.DrawToBitmap(image, new Rectangle(Point.Empty, image.Size)); image.Save(Path.Combine(folder, "Beheerkaart-advanced-380.png")); }
+        { shell.DrawToBitmap(image, new Rectangle(Point.Empty, image.Size)); image.Save(Path.Combine(folder, "Lichtmasten-advanced-380.png")); }
         advanced.Checked = false; shell.Navigate(0); host.ClientSize = new Size(1040, 940); Application.DoEvents();
         using (var bitmap = new Bitmap(shell.Width, shell.Height))
         { shell.DrawToBitmap(bitmap, new Rectangle(Point.Empty, bitmap.Size)); bitmap.Save(Path.Combine(folder, "Blocks-1040.png")); }

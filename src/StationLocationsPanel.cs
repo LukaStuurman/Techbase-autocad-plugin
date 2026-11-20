@@ -9,217 +9,326 @@ using StationAction = Stationslocaties.StationLocationAction;
 
 namespace Techbase.Blocks;
 
-/// <summary>
-/// Volledig geïntegreerd stationslocatiebeheer binnen de Techbase-palette.
-/// De tab zelf is de werkruimte; alleen invoerformulieren openen als aparte dialoog.
-/// </summary>
+// De palette blijft modeless. AutoCAD-tekenacties worden in documentcontext uitgevoerd.
 internal sealed record StationActionRequest(Document Document, StationAction Action, string? SheetName);
 
+/// <summary>
+/// Compacte werkruimte: één primaire actie, doorzoekbare bladlijst en contextuele bediening.
+/// Projectbeheer en uitvoer zijn apart bereikbaar zonder een tweede hoofdvenster.
+/// </summary>
 internal sealed class StationLocationsPanel : UserControl
 {
-    private static readonly Color Surface = UiTheme.Canvas;
-    private static readonly Color Orange = UiTheme.Orange;
-    private static readonly Color OrangeHover = Color.FromArgb(255, 157, 64);
-    private static readonly Color Ink = UiTheme.Ink;
-    private static readonly Color Muted = UiTheme.Muted;
-    private static readonly Color Border = UiTheme.Line;
+    private readonly ToolTip tips = new();
+    private readonly ContextMenuStrip sheetMenu = new();
+    private readonly List<Stationslocaties.StationSheet> cached = new();
+    private HashSet<string> photos = new(StringComparer.OrdinalIgnoreCase);
+    private readonly Dictionary<StationAction, ThemedButton> actionButtons = new();
 
-    private readonly Label summary = new()
+    private readonly Label summary = new() { Dock = DockStyle.Fill, AutoEllipsis = true };
+    private readonly Label selectionInfo = new() { Dock = DockStyle.Fill, AutoEllipsis = true };
+    private readonly Label status = new() { Dock = DockStyle.Fill, AutoEllipsis = true };
+    private readonly Label subtitle = new()
     {
-        Dock = DockStyle.Fill, AutoEllipsis = true, ForeColor = Muted,
-        Padding = new Padding(0, 3, 0, 4)
-    };
-    private readonly Label status = new()
-    {
-        Dock = DockStyle.Fill, AutoEllipsis = true, ForeColor = Muted,
-        Padding = new Padding(0, 6, 0, 0)
+        Dock = DockStyle.Fill, Text = "Trafokaarten, voorkeurslocaties en alternatieven",
+        AutoEllipsis = true
     };
     private readonly TextBox search = new()
     {
-        Dock = DockStyle.Fill,
-        PlaceholderText = "Zoek op trafo, locatie of blad..."
+        Dock = DockStyle.Fill, PlaceholderText = "Zoek trafonummer of blad…",
+        AccessibleName = "Zoek stationslocatie"
     };
     private readonly ListView sheets = new()
     {
-        View = View.Details, Dock = DockStyle.Fill, FullRowSelect = true,
-        MultiSelect = false, HideSelection = false,
-        BorderStyle = BorderStyle.FixedSingle
+        Dock = DockStyle.Fill, View = View.Details, FullRowSelect = true,
+        MultiSelect = false, HideSelection = false, HeaderStyle = ColumnHeaderStyle.Nonclickable,
+        BorderStyle = BorderStyle.None, AccessibleName = "Locatiebladen"
     };
-    private readonly Button refresh = new() { Text = "Vernieuwen", AutoSize = true };
-    private readonly Button info = new() { Text = "Info", AutoSize = true };
-    private readonly Dictionary<StationAction, Button> actionButtons = new();
-    private readonly ToolTip tips = new();
-    private readonly List<Stationslocaties.StationSheet> cached = new();
-    private HashSet<string> photos = new(StringComparer.OrdinalIgnoreCase);
-    private bool overview;
+    private readonly ThemedButton newLocation = new()
+    {
+        Text = "Nieuwe locatie", Glyph = 9,
+        Dock = DockStyle.Fill, AccessibleName = "Nieuwe stationslocatie plaatsen",
+        TextAlign = ContentAlignment.MiddleLeft
+    };
+    private readonly ThemedButton refresh = new()
+    {
+        Text = "Bijwerken", Dock = DockStyle.Fill, AccessibleName = "Locatielijst bijwerken"
+    };
+    private readonly ThemedButton help = new()
+    {
+        Text = "Info", Dock = DockStyle.Fill, AccessibleName = "Informatie over stationslocaties"
+    };
+
+    private readonly ThemedButton[] sectionTabs = new ThemedButton[3];
+    private readonly Panel[] actionPages = new Panel[3];
+    private readonly FlowLayoutPanel[] actionFlows = new FlowLayoutPanel[3];
+    private readonly Label[] explanations = new Label[3];
+
+    private int currentSection = -1;
+    private bool hasOverview;
     private bool loading;
 
     internal StationLocationsPanel()
     {
         Dock = DockStyle.Fill;
         AutoScaleMode = AutoScaleMode.Dpi;
-        BackColor = Surface;
-        ForeColor = Ink;
-        Font = new Font("Segoe UI", 9);
+        BackColor = UiTheme.Canvas;
+        Font = new Font(Typography.Family, 9);
 
-        var root = new TableLayoutPanel
+        var layout = new TableLayoutPanel
         {
             Dock = DockStyle.Fill, ColumnCount = 1, RowCount = 8,
-            Padding = new Padding(12, 10, 12, 10)
+            Padding = new Padding(12, 9, 12, 10), Margin = Padding.Empty
         };
-        root.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
-        root.RowStyles.Add(new RowStyle(SizeType.AutoSize));  // titel
-        root.RowStyles.Add(new RowStyle(SizeType.AutoSize));  // beschrijving
-        root.RowStyles.Add(new RowStyle(SizeType.AutoSize));  // zoeken
-        root.RowStyles.Add(new RowStyle(SizeType.Percent, 44)); // locaties
-        root.RowStyles.Add(new RowStyle(SizeType.AutoSize));  // samenvatting
-        root.RowStyles.Add(new RowStyle(SizeType.AutoSize));  // actietitel
-        root.RowStyles.Add(new RowStyle(SizeType.Percent, 56)); // acties
-        root.RowStyles.Add(new RowStyle(SizeType.AutoSize));  // status
-
-        root.Controls.Add(new Label
+        layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
+        foreach (var style in new[]
         {
-            Text = "TECHBASE  /  STATIONSLOCATIES",
-            Font = new Font(Font, FontStyle.Bold),
-            AutoSize = true,
-            Padding = new Padding(0, 4, 0, 8),
-            ForeColor = Ink
+            new RowStyle(SizeType.Absolute, 62), // titel + primaire actie
+            new RowStyle(SizeType.Absolute, 28), // samenvatting
+            new RowStyle(SizeType.Absolute, 46), // zoeken
+            new RowStyle(SizeType.Percent, 56),  // locatiebladen
+            new RowStyle(SizeType.Absolute, 32), // geselecteerde locatie
+            new RowStyle(SizeType.Absolute, 44), // navigatie in acties
+            new RowStyle(SizeType.Percent, 44),  // contextafhankelijke acties
+            new RowStyle(SizeType.Absolute, 28)  // status
+        }) layout.RowStyles.Add(style);
+
+        var header = new TableLayoutPanel
+        {
+            Dock = DockStyle.Fill, ColumnCount = 2, RowCount = 1, Margin = Padding.Empty
+        };
+        header.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
+        header.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 159));
+        var textHeader = new TableLayoutPanel
+        {
+            Dock = DockStyle.Fill, ColumnCount = 1, RowCount = 2, Margin = Padding.Empty
+        };
+        textHeader.RowStyles.Add(new RowStyle(SizeType.Absolute, 34));
+        textHeader.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
+        textHeader.Controls.Add(new Label
+        {
+            Text = "Stationslocaties", Dock = DockStyle.Fill,
+            Font = new Font(Typography.Family, 17),
+            AutoEllipsis = true, TextAlign = ContentAlignment.MiddleLeft
         }, 0, 0);
-        root.Controls.Add(new Label
-        {
-            Text = "Voorkeurs- en alternatieve locaties · A3-detailbladen · Totaal",
-            AutoSize = true, ForeColor = Muted,
-            MaximumSize = new Size(430, 0),
-            Padding = new Padding(0, 0, 0, 10)
-        }, 0, 1);
+        textHeader.Controls.Add(subtitle, 0, 1);
+        header.Controls.Add(textHeader, 0, 0);
+        newLocation.Margin = new Padding(6, 7, 0, 9);
+        header.Controls.Add(newLocation, 1, 0);
+        layout.Controls.Add(header, 0, 0);
 
-        var bar = new TableLayoutPanel
+        summary.Padding = new Padding(0, 3, 0, 3);
+        layout.Controls.Add(summary, 0, 1);
+
+        var toolbar = new TableLayoutPanel
         {
-            Dock = DockStyle.Fill, ColumnCount = 3,
-            AutoSize = true, Margin = new Padding(0, 0, 0, 9)
+            Dock = DockStyle.Fill, ColumnCount = 3, RowCount = 1,
+            Margin = new Padding(0, 0, 0, 5)
         };
-        bar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
-        bar.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
-        bar.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
-        bar.Controls.Add(search, 0, 0);
-        bar.Controls.Add(refresh, 1, 0);
-        bar.Controls.Add(info, 2, 0);
-        root.Controls.Add(bar, 0, 2);
+        toolbar.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
+        toolbar.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 98));
+        toolbar.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 54));
+        var searchBox = new Panel
+        {
+            Dock = DockStyle.Fill, Padding = new Padding(10, 6, 8, 6),
+            Margin = new Padding(0, 0, 5, 0)
+        };
+        searchBox.Controls.Add(search);
+        toolbar.Controls.Add(searchBox, 0, 0);
+        refresh.Margin = new Padding(0, 0, 5, 0);
+        help.Margin = Padding.Empty;
+        toolbar.Controls.Add(refresh, 1, 0);
+        toolbar.Controls.Add(help, 2, 0);
+        layout.Controls.Add(toolbar, 0, 2);
 
-        sheets.Columns.Add("Blad", 120);
-        sheets.Columns.Add("VL / AL", 65);
-        sheets.Columns.Add("Foto", 55);
-        sheets.HeaderStyle = ColumnHeaderStyle.Nonclickable;
-        sheets.BackColor = Color.White;
+        var listCard = new Panel
+        {
+            Dock = DockStyle.Fill, Padding = new Padding(1),
+            Margin = new Padding(0, 0, 0, 3)
+        };
+        sheets.Columns.Add("Blad", 190);
+        sheets.Columns.Add("VL/AL", 66);
+        sheets.Columns.Add("Foto", 52);
         sheets.Resize += (_, _) => SizeColumns();
-        sheets.SelectedIndexChanged += (_, _) => UpdateActions();
+        sheets.MouseDown += (_, e) =>
+        {
+            if (e.Button != MouseButtons.Right) return;
+            var row = sheets.GetItemAt(e.X, e.Y);
+            if (row != null) { sheets.SelectedItems.Clear(); row.Selected = true; }
+        };
+        sheetMenu.Items.Add("Open blad", null, (_, _) => Execute(StationAction.Open));
+        sheetMenu.Items.Add("Blad bewerken", null, (_, _) => Execute(StationAction.Edit));
+        sheetMenu.Items.Add("Kaartopmerking plaatsen", null, (_, _) => Execute(StationAction.Note));
+        sheetMenu.Items.Add(new ToolStripSeparator());
+        sheetMenu.Items.Add("Locatie verwijderen", null, (_, _) => Execute(StationAction.Delete));
+        sheetMenu.Opening += (_, e) => { if (Selected == null) e.Cancel = true; };
+        sheets.ContextMenuStrip = sheetMenu;
+        sheets.SelectedIndexChanged += (_, _) => { if (!loading) UpdateActions(); };
         sheets.DoubleClick += (_, _) =>
         {
             if (Selected != null) Execute(StationAction.Open);
         };
-        root.Controls.Add(sheets, 0, 3);
-        root.Controls.Add(summary, 0, 4);
-        root.Controls.Add(new Label
-        {
-            Text = "ACTIES & PROJECT",
-            AutoSize = true, Font = new Font(Font, FontStyle.Bold),
-            ForeColor = Ink, Padding = new Padding(0, 11, 0, 7)
-        }, 0, 5);
+        listCard.Controls.Add(sheets);
+        layout.Controls.Add(listCard, 0, 3);
 
-        var operations = new FlowLayoutPanel
+        selectionInfo.Padding = new Padding(0, 7, 0, 2);
+        layout.Controls.Add(selectionInfo, 0, 4);
+
+        var tabs = new TableLayoutPanel
         {
-            Dock = DockStyle.Fill, FlowDirection = FlowDirection.TopDown,
-            WrapContents = false, AutoScroll = true,
-            Padding = new Padding(0, 2, 2, 6)
+            Dock = DockStyle.Fill, ColumnCount = 3, RowCount = 1, Margin = Padding.Empty
         };
-        var groups = new List<FlowLayoutPanel>();
-        void AddGroup(string heading, string explanation, params (StationAction Action, string Text)[] options)
+        for (var i = 0; i < 3; i++)
+            tabs.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100f / 3));
+        var tabLabels = new[] { "Locaties", "Project", "Uitvoer" };
+        var tabGlyphs = new[] { 6, 4, 10 };
+        for (var i = 0; i < tabLabels.Length; i++)
         {
-            var caption = new Label
+            var index = i;
+            var button = new ThemedButton
             {
-                AutoSize = true, Text = heading.ToUpperInvariant(),
-                ForeColor = Orange, Font = new Font(Font, FontStyle.Bold),
-                Margin = new Padding(0, groups.Count == 0 ? 0 : 12, 0, 4)
+                Text = tabLabels[i], Glyph = tabGlyphs[i],
+                Dock = DockStyle.Fill, Margin = new Padding(0, 0, i == 2 ? 0 : 5, 5),
+                TextAlign = ContentAlignment.MiddleLeft,
+                AccessibleName = tabLabels[i] + " acties"
             };
-            operations.Controls.Add(caption);
-            var hint = new Label
-            {
-                Text = explanation, AutoSize = true,
-                MaximumSize = new Size(430, 0), ForeColor = Muted,
-                Margin = new Padding(0, 0, 0, 5)
-            };
-            operations.Controls.Add(hint);
-            var buttons = new FlowLayoutPanel
-            {
-                AutoSize = true, MinimumSize = new Size(0, 36),
-                WrapContents = true, Margin = Padding.Empty,
-                Padding = Padding.Empty
-            };
-            foreach (var option in options)
-            {
-                var primary = option.Action == StationAction.Add;
-                var destructive = option.Action == StationAction.Delete;
-                var button = new Button
-                {
-                    Name = "Station" + option.Action,
-                    Text = option.Text,
-                    MinimumSize = new Size(148, 34),
-                    AutoSize = true,
-                    AutoSizeMode = AutoSizeMode.GrowAndShrink,
-                    FlatStyle = FlatStyle.Flat,
-                    UseVisualStyleBackColor = false,
-                    BackColor = primary ? Orange : Color.White,
-                    ForeColor = primary ? Color.White : destructive ? Color.Firebrick : Ink,
-                    Padding = new Padding(9, 2, 9, 2),
-                    Margin = new Padding(0, 0, 6, 6),
-                    TextAlign = ContentAlignment.MiddleCenter
-                };
-                button.FlatAppearance.BorderColor = primary ? Orange : Border;
-                button.FlatAppearance.MouseOverBackColor = primary ? OrangeHover : Surface;
-                button.Click += (_, _) => Execute(option.Action);
-                tips.SetToolTip(button, option.Text);
-                buttons.Controls.Add(button);
-                actionButtons.Add(option.Action, button);
-            }
-            groups.Add(buttons);
-            operations.Controls.Add(buttons);
+            button.Click += (_, _) => SelectSection(index);
+            sectionTabs[i] = button;
+            tabs.Controls.Add(button, i, 0);
         }
-        AddGroup("Locaties", "Plaats en bewerk locaties direct vanuit deze tab.",
-            (StationAction.Add, "Locatie plaatsen"),
-            (StationAction.Open, "Open blad"),
-            (StationAction.Edit, "Blad bewerken"),
-            (StationAction.Note, "Kaartopmerking"),
-            (StationAction.Delete, "Verwijderen"));
-        AddGroup("Project & kaarten", "Gegevens, referenties, blokken en locatieoverzichten.",
-            (StationAction.Project, "Projectgegevens"),
-            (StationAction.EditAll, "Alle bladen bewerken"),
-            (StationAction.References, "Kaartreferenties"),
-            (StationAction.Blocks, "Trafoblokken"),
-            (StationAction.Client, "Opdrachtgevers"),
-            (StationAction.Signature, "Paraaflogo"));
-        AddGroup("Uitvoer", "Maak en plot de A3-bladen en de totaalkaart.",
-            (StationAction.Overview, "Totaal maken"),
-            (StationAction.Plot, "Bladen plotten"));
-        operations.Resize += (_, _) =>
-        {
-            var targetWidth = Math.Max(205, operations.ClientSize.Width - 28);
-            foreach (var buttons in groups) buttons.Width = targetWidth;
-        };
-        root.Controls.Add(operations, 0, 6);
-        root.Controls.Add(status, 0, 7);
-        Controls.Add(root);
+        layout.Controls.Add(tabs, 0, 5);
 
-        search.TextChanged += (_, _) => Filter();
-        refresh.Click += (_, _) => RefreshSheets();
-        info.Click += (_, _) =>
+        var actionsHost = new Panel
         {
-            using var help = new Stationslocaties.StationHelpDialog();
-            help.ShowDialog(this);
+            Dock = DockStyle.Fill, Margin = new Padding(0, 0, 0, 3)
         };
+        actionPages[0] = MakeActionPage("Werk met de geselecteerde locatie. Voor nieuwe locaties gebruik je de oranje knop bovenaan.", 0);
+        actionPages[1] = MakeActionPage("Projectgegevens, kaartbronnen en instellingen voor alle locaties.", 1);
+        actionPages[2] = MakeActionPage("Maak het totaaloverzicht en exporteer de gewenste A3-bladen.", 2);
+        foreach (var page in actionPages) actionsHost.Controls.Add(page);
+
+        AddAction(0, StationAction.Open, "Open blad", 10);
+        AddAction(0, StationAction.Edit, "Blad bewerken", 12);
+        AddAction(0, StationAction.Note, "Kaartopmerking", 22);
+        AddAction(0, StationAction.Delete, "Locatie verwijderen", 8, danger: true);
+
+        AddAction(1, StationAction.Project, "Projectgegevens", 4);
+        AddAction(1, StationAction.EditAll, "Alle bladen bewerken", 10);
+        AddAction(1, StationAction.References, "Kaartreferenties", 3);
+        AddAction(1, StationAction.Blocks, "Trafoblokken", 0);
+        AddAction(1, StationAction.Client, "Opdrachtgevers", 2);
+        AddAction(1, StationAction.Signature, "Paraaflogo", 12);
+
+        AddAction(2, StationAction.Overview, "Totaal maken", 7);
+        AddAction(2, StationAction.Plot, "Bladen plotten", 18);
+        layout.Controls.Add(actionsHost, 0, 6);
+
+        status.Padding = new Padding(0, 6, 0, 0);
+        layout.Controls.Add(status, 0, 7);
+        Controls.Add(layout);
+
+        newLocation.Click += (_, _) => Execute(StationAction.Add);
+        refresh.Click += (_, _) => RefreshSheets();
+        help.Click += (_, _) =>
+        {
+            using var dialog = new Stationslocaties.StationHelpDialog();
+            dialog.ShowDialog(this);
+        };
+        search.TextChanged += (_, _) => Filter();
         VisibleChanged += (_, _) => { if (Visible) RefreshSheets(); };
+
         UiTypography.Apply(this);
         UiTheme.Apply(this);
+        if (!SystemInformation.HighContrast)
+        {
+            UiTheme.Primary(newLocation);
+            actionButtons[StationAction.Delete].ForeColor = UiTheme.Danger;
+        }
+        foreach (var page in actionPages) page.BackColor = Color.White;
+        foreach (var flow in actionFlows) flow.BackColor = Color.White;
+        searchBox.BackColor = UiTheme.Input;
+        search.BackColor = UiTheme.Input;
+        listCard.BackColor = UiTheme.Line;
+        summary.ForeColor = UiTheme.Muted;
+        subtitle.ForeColor = UiTheme.Muted;
+        selectionInfo.ForeColor = UiTheme.Muted;
+        status.ForeColor = UiTheme.Muted;
+        foreach (var explanation in explanations) explanation.ForeColor = UiTheme.Muted;
+        newLocation.Margin = new Padding(6, 7, 0, 9);
+        refresh.Margin = new Padding(0, 0, 5, 0);
+        help.Margin = Padding.Empty;
+        foreach (var flow in actionFlows) FitButtons(flow);
+        SelectSection(0);
         RefreshSheets();
+    }
+
+    private Panel MakeActionPage(string explanation, int index)
+    {
+        var page = new Panel { Dock = DockStyle.Fill, Padding = new Padding(8), BackColor = Color.White };
+        var label = new Label
+        {
+            Text = explanation, Dock = DockStyle.Top, Height = 47,
+            AutoEllipsis = true, TextAlign = ContentAlignment.MiddleLeft
+        };
+        var flow = new FlowLayoutPanel
+        {
+            Dock = DockStyle.Fill, FlowDirection = FlowDirection.LeftToRight,
+            WrapContents = true, AutoScroll = true, Padding = Padding.Empty,
+            Margin = Padding.Empty, BackColor = Color.White
+        };
+        flow.SizeChanged += (_, _) => FitButtons(flow);
+        page.Controls.Add(flow);
+        page.Controls.Add(label);
+        explanations[index] = label;
+        actionFlows[index] = flow;
+        return page;
+    }
+
+    private void AddAction(int section, StationAction action, string label, int glyph, bool danger = false)
+    {
+        var button = new ThemedButton
+        {
+            Name = "Station" + action, Text = label, Glyph = glyph,
+            Height = 42, MinimumSize = new Size(115, 40),
+            TextAlign = ContentAlignment.MiddleLeft,
+            AutoSize = false, AccessibleName = label
+        };
+        if (danger) button.ForeColor = UiTheme.Danger;
+        button.Margin = new Padding(0, 0, 7, 7);
+        button.Click += (_, _) => Execute(action);
+        actionButtons.Add(action, button);
+        actionFlows[section].Controls.Add(button);
+        tips.SetToolTip(button, label);
+    }
+
+    private static void FitButtons(FlowLayoutPanel flow)
+    {
+        if (flow.IsDisposed || flow.ClientSize.Width < 90) return;
+        var width = Math.Max(115, flow.ClientSize.Width - flow.Padding.Horizontal -
+            SystemInformation.VerticalScrollBarWidth - 14);
+        var columns = width >= 370 ? 2 : 1;
+        var target = columns == 2 ? Math.Max(140, (width - 8) / 2) : width;
+        foreach (var button in flow.Controls.OfType<ThemedButton>())
+            if (button.Width != target) button.Width = target;
+    }
+
+    private void SelectSection(int index)
+    {
+        if (index < 0 || index >= actionPages.Length) return;
+        currentSection = index;
+        for (var i = 0; i < actionPages.Length; i++)
+        {
+            actionPages[i].Visible = i == index;
+            var tab = sectionTabs[i];
+            if (!SystemInformation.HighContrast)
+            {
+                tab.BackColor = i == index ? UiTheme.SoftOrange : Color.White;
+                tab.FlatAppearance.BorderColor = i == index ? UiTheme.Orange : UiTheme.Line;
+            }
+            tab.AccessibleDescription = i == index ? "Geselecteerde groep" : "Toon " + tab.Text;
+            tab.Invalidate();
+        }
+        actionPages[index].BringToFront();
+        FitButtons(actionFlows[index]);
     }
 
     private Stationslocaties.StationSheet? Selected => sheets.SelectedItems.Count == 1
@@ -229,39 +338,41 @@ internal sealed class StationLocationsPanel : UserControl
     private void SizeColumns()
     {
         if (sheets.Columns.Count != 3) return;
-        sheets.Columns[0].Width = Math.Max(95, sheets.ClientSize.Width - 140);
-        sheets.Columns[1].Width = 75;
-        sheets.Columns[2].Width = 60;
+        sheets.Columns[0].Width = Math.Max(96, sheets.ClientSize.Width - 144);
+        sheets.Columns[1].Width = 70;
+        sheets.Columns[2].Width = 54;
     }
 
     private void Filter()
     {
         if (loading) return;
-        var selectedName = Selected?.Name;
+        var previous = Selected?.Name;
         var find = search.Text.Trim();
-        sheets.BeginUpdate();
         loading = true;
+        sheets.BeginUpdate();
         try
         {
             sheets.Items.Clear();
-            foreach (var item in cached.Where(x => find.Length == 0
-                || x.Name.Contains(find, StringComparison.OrdinalIgnoreCase)
-                || x.Trafo.Contains(find, StringComparison.OrdinalIgnoreCase)))
+            foreach (var item in cached.Where(x => find.Length == 0 ||
+                x.Name.Contains(find, StringComparison.OrdinalIgnoreCase) ||
+                x.Trafo.Contains(find, StringComparison.OrdinalIgnoreCase)))
             {
-                var kind = item.Alternative == 0 ? "VL"
-                    : item.Alternative == 1 ? "AL" : "AL " + item.Alternative;
-                var photo = photos.Contains(item.Name) ? "Ja" : "Nee";
-                var row = new ListViewItem(new[] { item.Name, kind, photo }) { Tag = item };
-                if (sheets.Items.Count % 2 == 1) row.BackColor = Surface;
+                var type = item.Alternative == 0 ? "VL" :
+                    item.Alternative == 1 ? "AL" : "AL " + item.Alternative;
+                var row = new ListViewItem(new[] {
+                    item.Name, type, photos.Contains(item.Name) ? "Ja" : "Nee"
+                }) { Tag = item };
+                if (sheets.Items.Count % 2 == 1)
+                    row.BackColor = UiTheme.Canvas;
                 sheets.Items.Add(row);
-                if (string.Equals(selectedName, item.Name, StringComparison.OrdinalIgnoreCase))
+                if (string.Equals(previous, item.Name, StringComparison.OrdinalIgnoreCase))
                     row.Selected = true;
             }
         }
         finally
         {
-            loading = false;
             sheets.EndUpdate();
+            loading = false;
         }
         UpdateActions();
     }
@@ -275,29 +386,31 @@ internal sealed class StationLocationsPanel : UserControl
         {
             cached.Clear();
             photos.Clear();
-            overview = false;
-            if (document == null)
+            hasOverview = false;
+            if (document != null)
+            {
+                cached.AddRange(Stationslocaties.StationLocationSheets.List(document.Database));
+                photos = Stationslocaties.StationLocationSheets.SheetsWithPhoto(document.Database, cached);
+                hasOverview = Stationslocaties.StationLocationSheets.HasOverview(document.Database);
+                var vl = cached.Count(x => x.Alternative == 0);
+                var al = cached.Count - vl;
+                summary.Text = vl + " VL  ·  " + al + " AL  ·  " + photos.Count +
+                    " met foto  ·  Totaal " + (hasOverview ? "aanwezig" : "ontbreekt");
+                status.Text = cached.Count == 0
+                    ? "Begin met Nieuwe locatie om een VL te plaatsen."
+                    : "Dubbelklik op een blad om het te openen.";
+            }
+            else
             {
                 summary.Text = "Geen actieve tekening";
-                status.Text = "Open een DWG om stationslocaties te beheren.";
-                sheets.Items.Clear();
-                UpdateActions();
-                return;
+                status.Text = "Open een DWG om locaties te beheren.";
             }
-            cached.AddRange(Stationslocaties.StationLocationSheets.List(document.Database));
-            photos = Stationslocaties.StationLocationSheets.SheetsWithPhoto(document.Database, cached);
-            overview = Stationslocaties.StationLocationSheets.HasOverview(document.Database);
-            summary.Text = cached.Count + " locatiebladen  ·  " + photos.Count + " met foto"
-                + "  ·  Totaal: " + (overview ? "aanwezig" : "nog niet gemaakt");
-            status.Text = cached.Count == 0
-                ? "Plaats eerst een voorkeurslocatie (VL)."
-                : "Selecteer een blad en kies een actie. Dubbelklik om te openen.";
-            if (actionButtons.TryGetValue(StationAction.Overview, out var total))
-                total.Text = overview ? "Totaal vernieuwen" : "Totaal maken";
+            actionButtons[StationAction.Overview].Text =
+                hasOverview ? "Totaal vernieuwen" : "Totaal maken";
         }
         catch (Exception ex)
         {
-            summary.Text = "Overzicht niet beschikbaar.";
+            summary.Text = "Overzicht kon niet worden geladen";
             status.Text = ex.Message;
         }
         finally { loading = false; }
@@ -306,22 +419,44 @@ internal sealed class StationLocationsPanel : UserControl
 
     private void UpdateActions()
     {
+        if (loading) return;
         var hasDocument = AcApp.DocumentManager.MdiActiveDocument != null;
-        var hasSelection = Selected != null;
-        foreach (var button in actionButtons.Values) button.Enabled = hasDocument;
-        foreach (var action in new[] { StationAction.Open, StationAction.Edit, StationAction.Note, StationAction.Delete })
-            actionButtons[action].Enabled = hasDocument && hasSelection;
-        foreach (var action in new[] { StationAction.EditAll, StationAction.Project })
-            actionButtons[action].Enabled = hasDocument && cached.Count > 0;
-        actionButtons[StationAction.Overview].Enabled = hasDocument && (cached.Count > 0 || overview);
-        actionButtons[StationAction.Plot].Enabled = hasDocument && (cached.Count > 0 || overview);
+        var chosen = Selected;
+        if (chosen == null)
+        {
+            selectionInfo.Text = cached.Count == 0
+                ? "Nog geen locaties in deze tekening."
+                : "Selecteer een locatie om de bladacties te gebruiken.";
+        }
+        else
+        {
+            var type = chosen.Alternative == 0 ? "voorkeurslocatie" :
+                "alternatieve locatie" + (chosen.Alternative > 1 ? " " + chosen.Alternative : "");
+            selectionInfo.Text = chosen.Trafo + "  ·  " + type + "  ·  foto " +
+                (photos.Contains(chosen.Name) ? "aanwezig" : "ontbreekt");
+        }
+        newLocation.Enabled = hasDocument;
         refresh.Enabled = hasDocument;
+        foreach (var button in actionButtons.Values) button.Enabled = hasDocument;
+        foreach (var action in new[] {
+            StationAction.Open, StationAction.Edit, StationAction.Note, StationAction.Delete
+        }) actionButtons[action].Enabled = hasDocument && chosen != null;
+        foreach (var action in new[] { StationAction.Project, StationAction.EditAll })
+            actionButtons[action].Enabled = hasDocument && cached.Count > 0;
+        foreach (var action in new[] { StationAction.Overview, StationAction.Plot })
+            actionButtons[action].Enabled = hasDocument && (cached.Count > 0 || hasOverview);
     }
 
     private void Execute(StationAction action)
     {
         var document = AcApp.DocumentManager.MdiActiveDocument;
         if (document == null) { status.Text = "Open eerst een tekening."; return; }
+        if ((action is StationAction.Open or StationAction.Edit or StationAction.Note or StationAction.Delete)
+            && Selected == null)
+        {
+            status.Text = "Selecteer eerst een locatie.";
+            return;
+        }
         if (Convert.ToInt32(AcApp.GetSystemVariable("CMDACTIVE")) != 0)
         {
             status.Text = "Rond eerst het actieve AutoCAD-commando af (of druk Esc).";
@@ -329,17 +464,17 @@ internal sealed class StationLocationsPanel : UserControl
         }
         if (Plugin.PendingStationAction != null)
         {
-            status.Text = "Er staat al een stationslocatieactie klaar.";
+            status.Text = "Er is al een stationsactie gestart.";
             return;
         }
         Plugin.PendingStationAction = new StationActionRequest(document, action, Selected?.Name);
-        status.Text = "Actie gestart: " + actionButtons[action].Text;
+        status.Text = "Gestart: " + (action == StationAction.Add ? newLocation.Text : actionButtons[action].Text);
         document.SendStringToExecute("_TBSTATIONACTIE ", true, false, false);
     }
 
     protected override void Dispose(bool disposing)
     {
-        if (disposing) tips.Dispose();
+        if (disposing) { tips.Dispose(); sheetMenu.Dispose(); }
         base.Dispose(disposing);
     }
 }

@@ -10,7 +10,7 @@ on:
       - "Assets/Kabelgeul/**"
       - "Assets/UI/**"
       - "src/Stationslocaties/**"
-      - "RELEASE-v1.20.1.md"
+      - "RELEASE-v*.md"
       - ".github/workflows/release.yml"
       - ".gitattributes"
   workflow_dispatch:
