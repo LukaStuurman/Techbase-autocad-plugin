@@ -175,7 +175,7 @@ internal static class StationPurchaseVariants
         foreach (ObjectId id in definition)
         {
             if (tx.GetObject(id, OpenMode.ForRead) is not Entity entity ||
-                entity is not (Polyline or Solid or Region)) continue;
+                entity is not (Polyline or Solid or Autodesk.AutoCAD.DatabaseServices.Region)) continue;
             try { extents.Add(entity.GeometricExtents); }
             catch (Autodesk.AutoCAD.Runtime.Exception) { }
         }
