@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Drawing;
 using System.Windows.Forms;
 using Autodesk.AutoCAD.Geometry;
@@ -21,6 +22,7 @@ internal sealed class ZroFieldsDialog : Form
     {
         stationPoint = center;
         draft = values.Copy();
+        draft.AreaSquareMeters = area.ToString("F2", CultureInfo.GetCultureInfo("nl-NL"));
         Text = "TechBase | ZRO-blad — gegevens controleren";
         StartPosition = FormStartPosition.CenterParent;
         AutoScaleMode = AutoScaleMode.Dpi;
@@ -83,6 +85,7 @@ internal sealed class ZroFieldsDialog : Form
         Field(project, "Trafo-naam", "TrafoName", draft.TrafoName);
         Field(project, "Stationsnummer (MSR.NR.)", "StationNumber", draft.StationNumber);
         Field(project, "Tekeningnummer", "DrawingNumber", draft.DrawingNumber);
+        Field(project, "Oppervlakte grootste rechthoek (m²)", "AreaSquareMeters", draft.AreaSquareMeters);
         Field(project, "Tekenaar (voorletter.achternaam)", "Draftsman", draft.Draftsman);
         Field(project, "Afdeling", "Department", draft.Department);
         Field(project, "E-mailadres", "Email", draft.Email);
@@ -172,6 +175,7 @@ internal sealed class ZroFieldsDialog : Form
             DialogResult = DialogResult.OK;
             Close();
         };
+        Shown += (_, _) => autofill.PerformClick();
         UiTypography.Apply(this);
     }
 
@@ -213,6 +217,7 @@ internal sealed class ZroFieldsDialog : Form
         TrafoName = Get("TrafoName"),
         StationNumber = Get("StationNumber"),
         DrawingNumber = Get("DrawingNumber"),
+        AreaSquareMeters = Get("AreaSquareMeters"),
         Draftsman = Get("Draftsman"),
         Department = Get("Department"),
         Email = Get("Email"),
