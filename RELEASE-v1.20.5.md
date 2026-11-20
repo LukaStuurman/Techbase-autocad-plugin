@@ -5,6 +5,7 @@
 - De oranje actie **Nieuwe locatie** gebruikt nu een gewone Windows-knoptekst met een afgeronde knopregio. De knop heeft een vaste hoogte en vrije ruimte rondom, zodat de onderrand en beide onderste hoeken niet worden afgeknipt.
 - Alle drie de acties zitten in een zelfstandig `StationLocationHeader`-component. Op smalle schermen kan de primaire knop onder de titel komen te staan en blijven de tekstacties onder het zoekveld zichtbaar.
 - Het zoekveld blijft over de beschikbare breedte, in plaats van ruimte te moeten delen met twee witte knoppen.
+- Onderaan de werkplaats staat nu de daadwerkelijk geladen pluginversie, zodat je direct kunt zien of AutoCAD na herstart **1.20.5** gebruikt.
 
 ## Behouden uit 1.20.4
 De synchronisatie van stationsposities, rotaties, A3-kaartuitsneden en C1–C4 blijft intact, evenals alle kabel-, LS/OV-, PDOK/KLIC- en overige tekenfuncties.
