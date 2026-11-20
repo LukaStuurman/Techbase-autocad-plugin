@@ -96,26 +96,26 @@ internal static class StationPurchaseVariants
             new Point2d(footprint.MinX - Left * units, footprint.MaxY + Top * units)
         };
 
-        // Het groene vlak ligt onder het originele block: de details,
-        // contouren en teksten van de trafo blijven daardoor zichtbaar.
-        var hatch = new Hatch { ColorIndex = Green, Associative = false };
-        space.AppendEntity(hatch);
-        tx.AddNewlyCreatedDBObject(hatch, true);
-        hatch.SetHatchPattern(HatchPatternType.PreDefined, "ANSI31");
-        hatch.PatternAngle = -Math.PI / 2;
-        hatch.PatternScale = 0.1 * units;
-        var closed = new Point2dCollection([.. bounds, bounds[0]]);
-        hatch.AppendLoop(HatchLoopTypes.External, closed, new DoubleCollection(new double[closed.Count]));
-        hatch.SetHatchPattern(HatchPatternType.PreDefined, "ANSI31");
-        hatch.EvaluateHatch(true);
+        var transformer = new[]
+        {
+            new Point2d(footprint.MinX, footprint.MinY),
+            new Point2d(footprint.MaxX, footprint.MinY),
+            new Point2d(footprint.MaxX, footprint.MaxY),
+            new Point2d(footprint.MinX, footprint.MaxY)
+        };
 
+        // Het aankoopgebied (vrijeruimterand) wordt eerst gearceerd.
+        // De trafo zelf is een uitsparing: na de normale blockgeometrie
+        // voegen we een tweede groene hatch toe zodat ook een station met
+        // witte solids/wipeouts diagonale groene lijnen over de trafo toont.
+        AddGreenHatch(space, tx, bounds, transformer, units);
         var edge = new Polyline(4) { Closed = true, ColorIndex = Green };
         foreach (var point in bounds) edge.AddVertexAt(edge.NumberOfVertices, point, 0, 0, 0);
         space.AppendEntity(edge);
         tx.AddNewlyCreatedDBObject(edge, true);
 
-        // Geen overname van dimensions in de acquisition-geometry zelf:
-        // de oorspronkelijke blokentiteiten worden ongewijzigd gekopieerd.
+        // Het originele blok blijft volledig intact en de gebruiker kan
+        // beide uitvoeringen afzonderlijk in dezelfde tekening gebruiken.
         foreach (ObjectId id in source)
         {
             if (id.IsNull || !id.IsValid || id.IsErased) continue;
@@ -124,6 +124,8 @@ internal static class StationPurchaseVariants
             space.AppendEntity(entity);
             tx.AddNewlyCreatedDBObject(entity, true);
         }
+        // Zorg dat de groene lijnen over de trafo zichtbaar blijven.
+        AddGreenHatch(space, tx, transformer, null, units);
 
         space.CreateExtensionDictionary();
         var dict = (DBDictionary)tx.GetObject(space.ExtensionDictionary, OpenMode.ForWrite);
@@ -135,6 +137,26 @@ internal static class StationPurchaseVariants
         tx.AddNewlyCreatedDBObject(marker, true);
         tx.Commit();
         return targetId;
+    }
+
+    private static void AddGreenHatch(BlockTableRecord owner, Transaction tx,
+        Point2d[] outline, Point2d[]? exclude, double unitScale)
+    {
+        var hatch = new Hatch { ColorIndex = Green, Associative = false };
+        owner.AppendEntity(hatch);
+        tx.AddNewlyCreatedDBObject(hatch, true);
+        hatch.SetHatchPattern(HatchPatternType.PreDefined, "ANSI31");
+        var border = new Point2dCollection([.. outline, outline[0]]);
+        hatch.AppendLoop(HatchLoopTypes.External, border, new DoubleCollection(new double[border.Count]));
+        if (exclude != null)
+        {
+            var hole = new Point2dCollection([.. exclude, exclude[0]]);
+            hatch.AppendLoop(HatchLoopTypes.Default, hole, new DoubleCollection(new double[hole.Count]));
+        }
+        hatch.PatternAngle = -Math.PI / 2;
+        hatch.PatternScale = 0.1 * unitScale;
+        hatch.SetHatchPattern(HatchPatternType.PreDefined, "ANSI31");
+        hatch.EvaluateHatch(true);
     }
 
     private static bool HasMarker(Transaction tx, BlockTableRecord block)
