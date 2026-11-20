@@ -20,6 +20,7 @@ internal sealed record StationActionRequest(Document Document, StationAction Act
 internal sealed class StationLocationsPanel : UserControl
 {
     private readonly ToolTip tips = new();
+    private readonly ContextMenuStrip sheetMenu = new();
     private readonly List<StationSheet> cached = new();
     private HashSet<string> photos = new(StringComparer.OrdinalIgnoreCase);
     private readonly Dictionary<StationAction, ThemedButton> actionButtons = new();
@@ -149,6 +150,19 @@ internal sealed class StationLocationsPanel : UserControl
         sheets.Columns.Add("VL/AL", 66);
         sheets.Columns.Add("Foto", 52);
         sheets.Resize += (_, _) => SizeColumns();
+        sheets.MouseDown += (_, e) =>
+        {
+            if (e.Button != MouseButtons.Right) return;
+            var row = sheets.GetItemAt(e.X, e.Y);
+            if (row != null) { sheets.SelectedItems.Clear(); row.Selected = true; }
+        };
+        sheetMenu.Items.Add("Open blad", null, (_, _) => Execute(StationAction.Open));
+        sheetMenu.Items.Add("Blad bewerken", null, (_, _) => Execute(StationAction.Edit));
+        sheetMenu.Items.Add("Kaartopmerking plaatsen", null, (_, _) => Execute(StationAction.Note));
+        sheetMenu.Items.Add(new ToolStripSeparator());
+        sheetMenu.Items.Add("Locatie verwijderen", null, (_, _) => Execute(StationAction.Delete));
+        sheetMenu.Opening += (_, e) => { if (Selected == null) e.Cancel = true; };
+        sheets.ContextMenuStrip = sheetMenu;
         sheets.SelectedIndexChanged += (_, _) => { if (!loading) UpdateActions(); };
         sheets.DoubleClick += (_, _) =>
         {
@@ -225,7 +239,11 @@ internal sealed class StationLocationsPanel : UserControl
 
         UiTypography.Apply(this);
         UiTheme.Apply(this);
-        if (!SystemInformation.HighContrast) UiTheme.Primary(newLocation);
+        if (!SystemInformation.HighContrast)
+        {
+            UiTheme.Primary(newLocation);
+            actionButtons[StationAction.Delete].ForeColor = UiTheme.Danger;
+        }
         foreach (var page in actionPages) page.BackColor = Color.White;
         foreach (var flow in actionFlows) flow.BackColor = Color.White;
         searchBox.BackColor = UiTheme.Input;
@@ -434,7 +452,7 @@ internal sealed class StationLocationsPanel : UserControl
     {
         var document = AcApp.DocumentManager.MdiActiveDocument;
         if (document == null) { status.Text = "Open eerst een tekening."; return; }
-        if (action is StationAction.Open or StationAction.Edit or StationAction.Note or StationAction.Delete
+        if ((action is StationAction.Open or StationAction.Edit or StationAction.Note or StationAction.Delete)
             && Selected == null)
         {
             status.Text = "Selecteer eerst een locatie.";
@@ -457,7 +475,7 @@ internal sealed class StationLocationsPanel : UserControl
 
     protected override void Dispose(bool disposing)
     {
-        if (disposing) tips.Dispose();
+        if (disposing) { tips.Dispose(); sheetMenu.Dispose(); }
         base.Dispose(disposing);
     }
 }
