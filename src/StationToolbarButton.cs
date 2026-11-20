@@ -1,3 +1,5 @@
+using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
@@ -5,103 +7,72 @@ using System.Windows.Forms;
 namespace Techbase.Blocks;
 
 /// <summary>
-/// Kleine, zelfstandig getekende actieknop voor Stationslocaties.
-/// De tekst is onafhankelijk van FlatStyle/WinForms theme painting en
-/// alle vier de hoeken worden binnen de eigen client-rectangle getekend.
+/// Normale WinForms-knop met een afgeronde zichtbare regio.
+/// Geen eigen tekstschildering: de native knoprenderer verzorgt het label,
+/// waardoor AutoCAD/WinForms-thema's de tekst niet meer weg kunnen schilderen.
 /// </summary>
 internal sealed class StationToolbarButton : Button
 {
-    [System.ComponentModel.DefaultValue(false)]
+    [DefaultValue(false)]
     internal bool PrimaryAction { get; set; }
-    private bool hovering;
-    private bool pressing;
 
     internal StationToolbarButton()
     {
+        AutoSize = false;
         UseMnemonic = false;
         UseVisualStyleBackColor = false;
         FlatStyle = FlatStyle.Flat;
         Cursor = Cursors.Hand;
-        AutoSize = false;
-        SetStyle(ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint |
-            ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
+        TextAlign = ContentAlignment.MiddleCenter;
+        Margin = Padding.Empty;
+        ApplyAppearance();
     }
 
-    protected override void OnMouseEnter(EventArgs e)
+    internal void ApplyAppearance()
     {
-        hovering = true;
-        base.OnMouseEnter(e);
-        Invalidate();
-    }
-
-    protected override void OnMouseLeave(EventArgs e)
-    {
-        hovering = false;
-        pressing = false;
-        base.OnMouseLeave(e);
-        Invalidate();
-    }
-
-    protected override void OnMouseDown(MouseEventArgs e)
-    {
-        pressing = true;
-        base.OnMouseDown(e);
-        Invalidate();
-    }
-
-    protected override void OnMouseUp(MouseEventArgs e)
-    {
-        pressing = false;
-        base.OnMouseUp(e);
-        Invalidate();
-    }
-
-    protected override void OnEnabledChanged(EventArgs e)
-    {
-        base.OnEnabledChanged(e);
-        Invalidate();
-    }
-
-    protected override void OnPaint(PaintEventArgs e)
-    {
-        if (SystemInformation.HighContrast) { base.OnPaint(e); return; }
-
-        e.Graphics.Clear(Parent?.BackColor ?? UiTheme.Canvas);
-        e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-        var frame = new RectangleF(1f, 1f, Math.Max(1, Width - 2.5f), Math.Max(1, Height - 2.5f));
-        var diameter = Math.Min(Math.Min(frame.Width, frame.Height), 17f * DeviceDpi / 96f);
-        using var round = new GraphicsPath();
-        round.AddArc(frame.Left, frame.Top, diameter, diameter, 180, 90);
-        round.AddArc(frame.Right - diameter, frame.Top, diameter, diameter, 270, 90);
-        round.AddArc(frame.Right - diameter, frame.Bottom - diameter, diameter, diameter, 0, 90);
-        round.AddArc(frame.Left, frame.Bottom - diameter, diameter, diameter, 90, 90);
-        round.CloseFigure();
-
-        var fill = !Enabled ? UiTheme.Canvas
-            : PrimaryAction
-                ? pressing ? Color.FromArgb(128, 49, 8) :
-                  hovering ? Color.FromArgb(153, 58, 9) : Color.FromArgb(180, 66, 10)
-                : pressing ? Color.FromArgb(255, 219, 187) :
-                  hovering ? UiTheme.SoftOrange : Color.White;
-        var border = PrimaryAction && Enabled ? fill : UiTheme.Line;
-        using (var background = new SolidBrush(fill)) e.Graphics.FillPath(background, round);
-        using (var borderPen = new Pen(border)) e.Graphics.DrawPath(borderPen, round);
-
-        var ink = !Enabled ? SystemColors.GrayText : PrimaryAction ? Color.White : UiTheme.Ink;
-        var labelBounds = Rectangle.FromLTRB(PrimaryAction ? 28 : 8, 3, Math.Max(29, Width - 8), Math.Max(4, Height - 3));
-        if (PrimaryAction && Enabled)
+        if (SystemInformation.HighContrast)
         {
-            using var pen = new Pen(Color.White, 1.6f);
-            var iconX = 17f * DeviceDpi / 96f;
-            var iconY = Height / 2f;
-            e.Graphics.DrawLine(pen, iconX - 5, iconY, iconX + 5, iconY);
-            e.Graphics.DrawLine(pen, iconX, iconY - 5, iconX, iconY + 5);
+            FlatStyle = FlatStyle.Standard;
+            ForeColor = SystemColors.ControlText;
+            BackColor = SystemColors.Control;
+            Region = null;
+            return;
         }
-        TextRenderer.DrawText(e.Graphics, Text, Font, labelBounds, ink,
-            TextFormatFlags.NoPrefix | TextFormatFlags.SingleLine | TextFormatFlags.EndEllipsis |
-            TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
-        if (Focused && ShowFocusCues)
-            ControlPaint.DrawFocusRectangle(e.Graphics,
-                Rectangle.Inflate(ClientRectangle, -5, -5), ink, fill);
+
+        UseVisualStyleBackColor = false;
+        FlatStyle = FlatStyle.Flat;
+        FlatAppearance.BorderSize = PrimaryAction ? 0 : 1;
+        BackColor = PrimaryAction ? Color.FromArgb(180, 66, 10) : Color.White;
+        ForeColor = PrimaryAction ? Color.White : UiTheme.Ink;
+        FlatAppearance.BorderColor = PrimaryAction ? BackColor : UiTheme.Line;
+        FlatAppearance.MouseOverBackColor = PrimaryAction
+            ? Color.FromArgb(155, 58, 10) : UiTheme.SoftOrange;
+        FlatAppearance.MouseDownBackColor = PrimaryAction
+            ? Color.FromArgb(132, 49, 8) : Color.FromArgb(255, 218, 181);
+        ApplyRoundCorners();
+        Invalidate();
+    }
+
+    protected override void OnSizeChanged(EventArgs e)
+    {
+        base.OnSizeChanged(e);
+        if (!SystemInformation.HighContrast) ApplyRoundCorners();
+    }
+
+    private void ApplyRoundCorners()
+    {
+        if (Width < 8 || Height < 8) return;
+        var radius = Math.Min(10f * DeviceDpi / 96f, Math.Min(Width, Height) / 2f);
+        var diameter = radius * 2f;
+        var frame = new RectangleF(0, 0, Width, Height);
+        using var rounded = new GraphicsPath();
+        rounded.AddArc(frame.Left, frame.Top, diameter, diameter, 180, 90);
+        rounded.AddArc(frame.Right - diameter, frame.Top, diameter, diameter, 270, 90);
+        rounded.AddArc(frame.Right - diameter, frame.Bottom - diameter, diameter, diameter, 0, 90);
+        rounded.AddArc(frame.Left, frame.Bottom - diameter, diameter, diameter, 90, 90);
+        rounded.CloseFigure();
+        var old = Region;
+        Region = new Region(rounded);
+        old?.Dispose();
     }
 }
