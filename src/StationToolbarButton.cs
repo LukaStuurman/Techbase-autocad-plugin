@@ -11,6 +11,7 @@ namespace Techbase.Blocks;
 /// </summary>
 internal sealed class StationToolbarButton : Button
 {
+    [System.ComponentModel.DefaultValue(false)]
     internal bool PrimaryAction { get; set; }
     private bool hovering;
     private bool pressing;
