@@ -1,4 +1,4 @@
-using Autodesk.AutoCAD.ApplicationServices.Core;
+using AcApp = Autodesk.AutoCAD.ApplicationServices.Core.Application;
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.Runtime;
 using Techbase.Blocks.Zro;
@@ -21,7 +21,7 @@ public sealed partial class Plugin
     [CommandMethod("TBZROKIES", CommandFlags.Modal)]
     public void ZroChooseStation()
     {
-        var doc = Application.DocumentManager.MdiActiveDocument;
+        var doc = AcApp.DocumentManager.MdiActiveDocument;
         if (doc == null) return;
         try { zroPanel?.ChooseStation(doc); }
         catch (System.Exception ex) { Error(ex); }
@@ -33,7 +33,7 @@ public sealed partial class Plugin
         var request = PendingZroCreate;
         PendingZroCreate = null;
         if (request == null) return;
-        var doc = Application.DocumentManager.MdiActiveDocument;
+        var doc = AcApp.DocumentManager.MdiActiveDocument;
         if (doc == null || doc != request.Document)
         {
             zroPanel?.ReportResult("ZRO: de actieve tekening is gewijzigd. Kies de trafo opnieuw.");
@@ -57,7 +57,7 @@ public sealed partial class Plugin
         var request = PendingZroOpen;
         PendingZroOpen = null;
         if (request == null) return;
-        var doc = Application.DocumentManager.MdiActiveDocument;
+        var doc = AcApp.DocumentManager.MdiActiveDocument;
         if (doc == null || doc != request.Document) return;
         try
         {
