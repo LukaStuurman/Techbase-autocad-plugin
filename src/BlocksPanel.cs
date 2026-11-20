@@ -9,16 +9,16 @@ namespace Techbase.Blocks;
 
 internal sealed class BlocksPanel : UserControl
 {
-    private readonly CheckBox inherit = new() { Text = "Laag van object overnemen", AutoSize = true };
-    private readonly CheckBox chosenLayer = new() { Name = "UseChosenBlockLayer", Text = "Gekozen laag gebruiken", AutoSize = true, Margin = new Padding(0, 6, 8, 3) };
+    private readonly ThemedToggle inherit = new() { Text = "Laag van object overnemen", AutoSize = true };
+    private readonly ThemedToggle chosenLayer = new() { Name = "UseChosenBlockLayer", Text = "Gekozen laag gebruiken", AutoSize = true, Margin = new Padding(0, 6, 8, 3) };
     private readonly ComboBox blockLayer = new() { Name = "ChosenBlockLayer", DropDownStyle = ComboBoxStyle.DropDownList, Width = 150 };
-    private readonly CheckBox repeat = new() { Text = "Herhaald plaatsen (Esc stopt)", AutoSize = true };
+    private readonly ThemedToggle repeat = new() { Text = "Herhaald plaatsen (Esc stopt)", AutoSize = true };
     private readonly TextBox search = new() { Dock = DockStyle.Fill, PlaceholderText = "Zoek een block..." };
     private readonly ComboBox groups = new() { DropDownStyle = ComboBoxStyle.DropDownList, Dock = DockStyle.Fill };
     private readonly NumericUpDown tolerance = new() { DecimalPlaces = 3, Minimum = 0.001m, Maximum = 1000m, Increment = 0.01m, Width = 90 };
     private readonly ListView list = new() { Dock = DockStyle.Fill, View = View.Details, FullRowSelect = true, MultiSelect = false, HideSelection = false };
     private readonly Label status = new() { Dock = DockStyle.Fill, AutoSize = true, Padding = new Padding(6) };
-    private readonly Button place = new() { Text = "Plaatsen", Dock = DockStyle.Fill, Height = 34 };
+    private readonly ThemedButton place = new() { Text = "Plaatsen", Dock = DockStyle.Fill, Height = 34 };
     private readonly Label selectedBlock = new() { Text = "Selecteer een block voor de draai-instelling", AutoSize = true, Dock = DockStyle.Fill };
     private readonly ComboBox rotation = new() { DropDownStyle = ComboBoxStyle.DropDownList, Dock = DockStyle.Fill, Enabled = false };
     private static readonly BlockRotationMode[] rotationModes = { BlockRotationMode.BeforePoint, BlockRotationMode.AfterPoint, BlockRotationMode.None };
@@ -29,9 +29,14 @@ internal sealed class BlocksPanel : UserControl
         Dock = DockStyle.Fill;
         Font = new Font("Segoe UI", 9);
         BackColor = Color.FromArgb(245, 247, 249);
-        var layout = new TableLayoutPanel { Dock = DockStyle.Fill, ColumnCount = 1, RowCount = 9, Padding = new Padding(8) };
-        for (var i = 0; i < 9; i++) layout.RowStyles.Add(i == 7 ? new RowStyle(SizeType.Percent, 100) : new RowStyle(SizeType.AutoSize));
-        layout.Controls.Add(new Label { Text = "TECHBASE  /  BLOCKS", Font = new Font(Font, FontStyle.Bold), AutoSize = true, Padding = new Padding(0, 4, 0, 8) }, 0, 0);
+        var layout = new TableLayoutPanel { Dock = DockStyle.Fill, ColumnCount = 1, RowCount = 7, Padding = new Padding(12) };
+        layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
+        for (var i = 0; i < 7; i++) layout.RowStyles.Add(i == 5 ? new RowStyle(SizeType.Percent, 100) : new RowStyle(SizeType.AutoSize));
+        var heading = new FlowLayoutPanel { AutoSize = true, Dock = DockStyle.Fill, Margin = Padding.Empty };
+        heading.Controls.Add(UiTheme.Title("Blockbibliotheek"));
+        var openTemplate = new ThemedButton { Name = "OpenBlockTemplate", Text = "Template openen", AutoSize = true };
+        openTemplate.Click += (_, _) => AcApp.DocumentManager.MdiActiveDocument?.SendStringToExecute("_TBTEMPLATE ", true, false, false);
+        heading.Controls.Add(openTemplate); layout.Controls.Add(heading, 0, 0);
         var layerOptions = new FlowLayoutPanel { AutoSize = true, Dock = DockStyle.Fill, FlowDirection = FlowDirection.TopDown, WrapContents = false };
         layerOptions.Controls.Add(inherit);
         var layerChoice = new FlowLayoutPanel { AutoSize = true, Dock = DockStyle.Fill, WrapContents = true };
@@ -39,37 +44,68 @@ internal sealed class BlocksPanel : UserControl
         blockLayer.Items.Add("Bestaande kabel");
         layerChoice.Controls.Add(chosenLayer); layerChoice.Controls.Add(blockLayer);
         layerOptions.Controls.Add(layerChoice);
-        layout.Controls.Add(layerOptions, 0, 1);
-        layout.Controls.Add(repeat, 0, 2);
+        var placementOptions = new FlowLayoutPanel { AutoSize = true, Dock = DockStyle.Top, FlowDirection = FlowDirection.TopDown, WrapContents = false };
+        placementOptions.Controls.Add(layerOptions);
+        placementOptions.Controls.Add(repeat);
         var settings = new FlowLayoutPanel { AutoSize = true, Dock = DockStyle.Fill };
         settings.Controls.Add(new Label { Text = "Zoekafstand:", AutoSize = true, Padding = new Padding(0, 5, 0, 0) });
         settings.Controls.Add(tolerance);
         settings.Controls.Add(new Label { Text = "tekeneenheden", AutoSize = true, Padding = new Padding(0, 5, 0, 0) });
-        layout.Controls.Add(settings, 0, 3);
+        placementOptions.Controls.Add(settings);
+        layout.Controls.Add(UiTheme.Fold("Plaatsopties", placementOptions), 0, 3);
         var sources = new FlowLayoutPanel { AutoSize = true, Dock = DockStyle.Fill };
-        var source = new Button { Text = "Bron...", AutoSize = true };
+        var source = new ThemedButton { Text = "Bron...", AutoSize = true };
         source.Click += (_, _) => SelectSource();
-        var reload = new Button { Text = "Vernieuwen", AutoSize = true };
+        var reload = new ThemedButton { Text = "Vernieuwen", AutoSize = true };
         reload.Click += (_, _) => { try { Plugin.Reload(); } catch (Exception ex) { ShowError(ex); } };
         sources.Controls.Add(source); sources.Controls.Add(reload);
-        var rtBack = new Button { Text = "RT-maskers naar achter", AutoSize = true };
+        var rtBack = new ThemedButton { Text = "RT-maskers naar achter", AutoSize = true };
         rtBack.Click += (_, _) => AcApp.DocumentManager.MdiActiveDocument?.SendStringToExecute("_TBRTACHTER ", true, false, false);
         sources.Controls.Add(rtBack);
-        var textLayer = new Button { Text = "Blocktekst laag herstellen", AutoSize = true };
+        var textLayer = new ThemedButton { Text = "Blocktekst laag herstellen", AutoSize = true };
         textLayer.Click += (_, _) => AcApp.DocumentManager.MdiActiveDocument?.SendStringToExecute("_TBBLOCKTEKSTLAAG ", true, false, false);
         sources.Controls.Add(textLayer);
-        layout.Controls.Add(sources, 0, 4);
+        var rackDirections = new ThemedButton { Text = "LS-rek richtingen", AutoSize = true };
+        rackDirections.Click += (_, _) => AcApp.DocumentManager.MdiActiveDocument?.SendStringToExecute("_TBLSREK ", true, false, false);
+        sources.Controls.Add(rackDirections);
+        var ovDirections = new ThemedButton { Text = "OV-rek richtingen", AutoSize = true };
+        ovDirections.Click += (_, _) => AcApp.DocumentManager.MdiActiveDocument?.SendStringToExecute("_TBOVREK ", true, false, false);
+        sources.Controls.Add(ovDirections);
+        var stationLocations = new ThemedButton { Text = "Stationlocaties", AutoSize = true };
+        stationLocations.Click += (_, _) => AcApp.DocumentManager.MdiActiveDocument?.SendStringToExecute("_TBSTATIONLOCATIES ", true, false, false);
+        sources.Controls.Add(stationLocations);
+        layout.Controls.Add(UiTheme.Fold("Bibliotheek & onderhoud", sources), 0, 4);
         search.Margin = new Padding(0, 4, 0, 5);
         groups.Margin = new Padding(0, 0, 0, 6);
-        layout.Controls.Add(search, 0, 5); layout.Controls.Add(groups, 0, 6);
-        list.Columns.Add("Block", 280); list.Columns.Add("Groep", 150);
-        list.Resize += (_, _) => list.Columns[0].Width = Math.Max(170, list.ClientSize.Width - 150);
-        layout.Controls.Add(list, 0, 7);
+        layout.Controls.Add(search, 0, 1); layout.Controls.Add(groups, 0, 2);
+        list.Columns.Add("Block", 280); list.HeaderStyle = ColumnHeaderStyle.None; list.OwnerDraw = true;
+        list.Resize += (_, _) => list.Columns[0].Width = Math.Max(100, list.ClientSize.Width - 2);
+        list.DrawColumnHeader += (_, args) => args.DrawDefault = true;
+        list.DrawSubItem += (_, args) =>
+        {
+            var item = args.Item;
+            if (item == null || args.ColumnIndex != 0) return;
+            var selected = item.Selected;
+            using var background = new SolidBrush(selected ? UiTheme.SoftOrange : Color.White);
+            args.Graphics.FillRectangle(background, args.Bounds);
+            if (selected) { using var accent = new SolidBrush(UiTheme.Orange); args.Graphics.FillRectangle(accent, args.Bounds.Left, args.Bounds.Top, 3, args.Bounds.Height); }
+            if (images != null && images.Images.ContainsKey(item.ImageKey))
+                args.Graphics.DrawImage(images.Images[item.ImageKey]!, new Rectangle(args.Bounds.Left + 8, args.Bounds.Top + 4, 32, 32));
+            var text = new Rectangle(args.Bounds.Left + 50, args.Bounds.Top + 4, Math.Max(1, args.Bounds.Width - 58), 18);
+            TextRenderer.DrawText(args.Graphics, item.Text, list.Font, text, UiTheme.Ink, TextFormatFlags.EndEllipsis | TextFormatFlags.NoPrefix);
+            if (item.SubItems.Count > 1)
+            {
+                text.Y += 17;
+                TextRenderer.DrawText(args.Graphics, item.SubItems[1].Text, list.Font, text, UiTheme.Muted, TextFormatFlags.EndEllipsis | TextFormatFlags.NoPrefix);
+            }
+            if (selected && list.Focused) ControlPaint.DrawFocusRectangle(args.Graphics, Rectangle.Inflate(args.Bounds, -4, -2));
+        };
+        layout.Controls.Add(list, 0, 5);
         var footer = new TableLayoutPanel { AutoSize = true, Dock = DockStyle.Fill, ColumnCount = 1 };
         rotation.Items.AddRange(new object[] { "Eerst draaien, dan invoegpunt", "Draaien na het invoegpunt", "Niet automatisch draaien" });
         footer.Controls.Add(selectedBlock); footer.Controls.Add(rotation);
         footer.Controls.Add(place); footer.Controls.Add(status);
-        layout.Controls.Add(footer, 0, 8); Controls.Add(layout);
+        layout.Controls.Add(footer, 0, 6); Controls.Add(layout);
         inherit.CheckedChanged += (_, _) => { if (!refreshing) { Plugin.Preferences.InheritLayer = inherit.Checked; Plugin.UpdateSettings(); } };
         chosenLayer.CheckedChanged += (_, _) => { if (!refreshing) { Plugin.Preferences.UseChosenBlockLayer = chosenLayer.Checked; Plugin.UpdateSettings(); RefreshSettings(); } };
         blockLayer.SelectedIndexChanged += (_, _) =>

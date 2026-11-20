@@ -9,43 +9,38 @@ internal sealed class SettingsPanel : UserControl
     private readonly ComboBox existingColor = new() { Name = "ExistingCableColor", DropDownStyle = ComboBoxStyle.DropDownList, Width = 220 };
     private readonly NumericUpDown width = Number("DirectionTextWidth", .01m, 10000m);
     private readonly NumericUpDown existingWidth = Number("ExistingDirectionTextWidth", .01m, 10000m);
-    private readonly CheckBox mask = new() { Name = "DirectionTextMask", Text = "Achtergrondmasker gebruiken", AutoSize = true };
+    private readonly ThemedToggle mask = new() { Name = "DirectionTextMask", Text = "Achtergrondmasker gebruiken", AutoSize = true };
     private readonly NumericUpDown border = Number("DirectionTextMaskBorder", 1m, 5m);
-    private readonly CheckBox drawingColor = new() { Name = "DirectionTextMaskDrawingColor", Text = "Tekeningachtergrondkleur gebruiken", AutoSize = true };
-    private readonly Button maskColor = new() { Name = "DirectionTextMaskColor", Text = "Eigen maskerkleur kiezen", AutoSize = true };
+    private readonly ThemedToggle drawingColor = new() { Name = "DirectionTextMaskDrawingColor", Text = "Tekeningachtergrondkleur gebruiken", AutoSize = true };
+    private readonly ThemedButton maskColor = new() { Name = "DirectionTextMaskColor", Text = "Eigen maskerkleur kiezen", AutoSize = true };
     private readonly Label maskRgb = new() { AutoSize = true };
     private readonly Label colorStatus = new() { AutoSize = true, MaximumSize = new Size(290, 0) };
-    private readonly CheckBox promptBlockText = new() { Name = "PromptBlockText", Text = "Tekst bewerken tijdens block plaatsen", AutoSize = true };
+    private readonly ThemedToggle promptBlockText = new() { Name = "PromptBlockText", Text = "Tekst bewerken tijdens block plaatsen", AutoSize = true };
     private bool refreshing;
     private static NumericUpDown Number(string name, decimal min, decimal max) => new() { Name = name, Minimum = min, Maximum = max, DecimalPlaces = 2, Increment = .10m, Width = 220 };
     internal SettingsPanel()
     {
         Dock = DockStyle.Fill; AutoScroll = true; Font = new Font(Typography.Family, 9); BackColor = Color.FromArgb(245, 247, 249);
         var layout = new FlowLayoutPanel { Dock = DockStyle.Top, AutoSize = true, FlowDirection = FlowDirection.TopDown, WrapContents = false, Padding = new Padding(12) };
-        layout.Controls.Add(new Label { Text = "INSTELLINGEN", AutoSize = true, Padding = new Padding(0, 0, 0, 12) });
-        var reset = new Button { Name = "ResetPluginSettings", Text = "Reset plugininstellingen", AutoSize = true };
+        layout.Controls.Add(UiTheme.Title("Instellingen"));
+        var reset = new ThemedButton { Name = "ResetPluginSettings", Text = "Reset plugininstellingen", AutoSize = true };
         reset.Click += (_, _) => { try { colorStatus.Text = Plugin.ResetSettings(); RefreshSettings(); } catch (Exception ex) { colorStatus.Text = "Reset mislukt: " + ex.Message; } };
-        layout.Controls.Add(reset);
-        layout.Controls.Add(new Label { Text = "Herstelt alle plugininstellingen en Kabelgeul-standaardteksten. Je vorige instellingen worden eerst als kopie bewaard.", AutoSize = true, MaximumSize = new Size(290, 0) });
-        layout.Controls.Add(promptBlockText);
-        layout.Controls.Add(new Label { Text = "Standaard uit: plaatst de bestaande blocktekst zonder vragen. Aan: vraagt om de bewerkbare attribuutteksten tijdens plaatsen.", AutoSize = true, MaximumSize = new Size(290, 0) });
-        layout.Controls.Add(new Label { Text = "Teksthoogte MOF-blocks", AutoSize = true });
-        layout.Controls.Add(mof);
-        layout.Controls.Add(new Label { Text = "Teksthoogte richtingsteksten (LS/OV)", AutoSize = true, Padding = new Padding(0, 14, 0, 0) });
-        layout.Controls.Add(directions);
-        layout.Controls.Add(new Label { Text = "Breedte LS/OV bij gekozen teksthoogte", AutoSize = true, Padding = new Padding(0, 8, 0, 0) }); layout.Controls.Add(width);
-        layout.Controls.Add(new Label { Text = "Breedte bestaande kabeltekst (was ...)", AutoSize = true, Padding = new Padding(0, 8, 0, 0) }); layout.Controls.Add(existingWidth);
-        layout.Controls.Add(new Label { Text = "Breedtes blijven per hoogte bewaard.\n0,45: standaard 4,80 / bestaand 6,80.\n0,75: standaard 7,70 / bestaand 10,70.", AutoSize = true, MaximumSize = new Size(290, 0) });
-        layout.Controls.Add(mask);
-        layout.Controls.Add(new Label { Text = "Randfactor masker (border offset)", AutoSize = true }); layout.Controls.Add(border);
-        layout.Controls.Add(drawingColor); layout.Controls.Add(maskColor); layout.Controls.Add(maskRgb);
-        layout.Controls.Add(new Label { Text = "Kleur bestaande kabellagen en Bestaand", AutoSize = true, Padding = new Padding(0, 14, 0, 0) });
-        existingColor.Items.AddRange(new object[] { "Donkergroen (standaard)", "Zwart" }); layout.Controls.Add(existingColor);
-        var apply = new Button { Text = "Op huidige tekening toepassen", AutoSize = true }; apply.Click += (_, _) => QueueColor(); layout.Controls.Add(apply);
-        layout.Controls.Add(new Label { Text = "Zwart is RGB 0,0,0. Keuze blijft bewaard voor bestaande kabellagen en de laag Bestaand. Bij een andere tekening: klik Toepassen. Vergrendelde lagen worden gemeld.", AutoSize = true, MaximumSize = new Size(290, 0) });
-        layout.Controls.Add(colorStatus);
-        layout.Controls.Add(new Label { Text = "Keuzes worden automatisch bewaard. Breedte en masker gelden voor nieuwe LS/OV-blocks, burstteksten en automatische tekststapels. Losse teksten kun je ook handmatig aanpassen in AutoCAD. Kopiëren/verplaatsen behoudt je eigen breedte en masker.",
-            AutoSize = true, MaximumSize = new Size(290, 0), Padding = new Padding(0, 14, 0, 0) });
+        layout.Controls.Add(UiTheme.Hint("Je keuzes worden automatisch bewaard."));
+        layout.Controls.Add(UiTheme.Section("Blocks", promptBlockText,
+            UiTheme.Hint("Aan: bewerk de attribuuttekst tijdens het plaatsen."), UiTheme.Field("Teksthoogte MOF-blocks"), mof));
+        layout.Controls.Add(UiTheme.Section("Richtingsteksten", UiTheme.Field("Teksthoogte LS / OV"), directions,
+            UiTheme.Field("Breedte gewone kabeltekst"), width, UiTheme.Field("Breedte bestaande kabeltekst"), existingWidth,
+            UiTheme.Hint("Breedtes worden per teksthoogte bewaard. Kopiëren en verplaatsen behouden je eigen opmaak.")));
+        layout.Controls.Add(UiTheme.Section("Achtergrondmasker", mask, UiTheme.Field("Randfactor"), border, drawingColor, maskColor, maskRgb));
+        existingColor.Items.AddRange(new object[] { "Donkergroen (standaard)", "Zwart" });
+        var apply = new ThemedButton { Text = "Op huidige tekening toepassen", AutoSize = true }; apply.Click += (_, _) => QueueColor();
+        layout.Controls.Add(UiTheme.Section("Bestaande kabels", existingColor, apply,
+            UiTheme.Hint("Geldt voor bestaande kabellagen en Bestaand. Zwart gebruikt RGB 0,0,0. Vergrendelde lagen worden gemeld."), colorStatus));
+        layout.Controls.Add(UiTheme.Section("Werkruimte herstellen", reset, UiTheme.Hint("Herstelt alle plugininstellingen en Kabelgeul-standaardteksten. Je vorige instellingen worden eerst als kopie bewaard.")));
+        layout.SizeChanged += (_, _) =>
+        {
+            foreach (var section in layout.Controls.OfType<UiSection>()) section.Width = Math.Max(250, layout.ClientSize.Width - layout.Padding.Horizontal);
+        };
         Controls.Add(layout);
         foreach (var choice in new[] { mof, directions }) choice.Items.AddRange(new object[] { "0,45 (standaard)", "0,75" });
         mof.SelectedIndexChanged += (_, _) => Save(true);

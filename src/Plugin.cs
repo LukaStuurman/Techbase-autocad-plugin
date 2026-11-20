@@ -17,14 +17,15 @@ public sealed partial class Plugin : IExtensionApplication
     internal static Settings Preferences { get; private set; } = Settings.Read();
     internal static Catalog? Blocks { get; private set; }
     private Stationslocaties.StationTableUpdates? stationTableUpdates;
+    private static StationLocationsPanel? stationLocationsPanel;
     private static PaletteSet? palette;
+    private static WorkspacePanel? workspace;
     private static BlocksPanel? panel;
     private static LightmastPanel? lightmastPanel;
     private static KabelCheckerPanel? kabelCheckerPanel;
     private static DirectionPanel? directionPanel;
     private static SettingsPanel? settingsPanel;
     private static KabelgeulPanel? kabelgeulPanel;
-    private static StationLocationsPanel? stationLocationsPanel;
     internal static LightmastRequest? PendingLightmast { get; set; }
     internal static DirectionInfoRequest? PendingDirectionInfo { get; set; }
     internal static StationActionRequest? PendingStationAction { get; set; }
@@ -37,7 +38,7 @@ public sealed partial class Plugin : IExtensionApplication
         try { stationTableUpdates = new Stationslocaties.StationTableUpdates(); stationTableUpdates.Initialize(); }
         catch (System.Exception ex) { AcApp.DocumentManager.MdiActiveDocument?.Editor.WriteMessage("\nStationlocaties: " + ex.Message); }
     }
-    public void Terminate() { stationTableUpdates?.Terminate(); stationLocationsPanel?.Dispose(); kabelgeulPanel?.Dispose(); settingsPanel?.Dispose(); directionPanel?.Dispose(); kabelCheckerPanel?.Dispose(); lightmastPanel?.Dispose(); panel?.Dispose(); palette?.Dispose(); }
+    public void Terminate() { stationTableUpdates?.Terminate(); stationLocationsPanel?.Dispose(); workspace?.Dispose(); kabelgeulPanel?.Dispose(); settingsPanel?.Dispose(); directionPanel?.Dispose(); kabelCheckerPanel?.Dispose(); lightmastPanel?.Dispose(); panel?.Dispose(); palette?.Dispose(); }
     internal static void Reload(string? path = null)
     {
         var candidate = new Catalog(path ?? Preferences.PalettePath ?? DefaultPalette);
@@ -72,23 +73,18 @@ public sealed partial class Plugin : IExtensionApplication
                 palette = new PaletteSet("Techbase", new Guid("F0674EA1-D625-43F5-A0BA-016A165B0D66"))
                 {
                     Style = PaletteSetStyles.ShowAutoHideButton | PaletteSetStyles.ShowCloseButton | PaletteSetStyles.ShowPropertiesMenu,
-                    MinimumSize = new Size(330, 560), Size = new Size(380, 650),
+                    MinimumSize = new Size(360, 640), Size = new Size(420, 860),
                     KeepFocus = false, DockEnabled = DockSides.Left | DockSides.Right
                 };
                 panel = new BlocksPanel();
-                palette.Add("Blocks", panel);
                 lightmastPanel = new LightmastPanel();
-                palette.Add("Lichtmasten", lightmastPanel);
-                kabelCheckerPanel = new KabelCheckerPanel(ExpandChecker, () => palette.Activate(0));
-                palette.Add("Enexis kabelchecker", kabelCheckerPanel);
+                kabelCheckerPanel = new KabelCheckerPanel(ExpandChecker, () => workspace?.Navigate(0));
                 directionPanel = new DirectionPanel();
-                palette.Add("Richtingen", directionPanel);
                 settingsPanel = new SettingsPanel();
-                palette.Add("Instellingen", settingsPanel);
                 kabelgeulPanel = new KabelgeulPanel(ExpandChecker);
-                palette.Add("Kabelgeul", kabelgeulPanel);
                 stationLocationsPanel = new StationLocationsPanel();
-                palette.Add("Stationslocaties", stationLocationsPanel);
+                workspace = new WorkspacePanel(panel, lightmastPanel, kabelCheckerPanel, directionPanel, settingsPanel, kabelgeulPanel, stationLocationsPanel);
+                palette.Add("Werkplaats", workspace);
             }
             palette.Visible = true;
         }
@@ -98,19 +94,16 @@ public sealed partial class Plugin : IExtensionApplication
     public void StationsTab()
     {
         Show();
-        if (palette == null) return;
-        palette.Activate(6);
+        workspace?.Navigate(6);
         stationLocationsPanel?.RefreshSheets();
     }
-
-    // Stationslocaties is een volwaardige tab, geen knop die een hoofdvenster opent.
-    [CommandMethod("TBSTATIONBEHEER", CommandFlags.Modal)]
-    public void StationManager() => StationsTab();
 
     [CommandMethod("STATIONLOCATIES", CommandFlags.Modal)]
     public void StationLocations() => StationsTab();
 
-    // De gekozen palette-actie wordt pas in AutoCAD-documentcontext uitgevoerd.
+    [CommandMethod("TBSTATIONBEHEER", CommandFlags.Modal)]
+    public void StationManager() => StationsTab();
+
     [CommandMethod("TBSTATIONACTIE", CommandFlags.Modal)]
     public void ExecuteStationAction()
     {
@@ -179,7 +172,7 @@ public sealed partial class Plugin : IExtensionApplication
         catch (System.Exception ex) { Error(ex); }
     }
     [CommandMethod("TBRICHTINGEN", CommandFlags.Modal)]
-    public void ShowDirections() { Show(); if (palette != null) palette.Activate(3); }
+    public void ShowDirections() { Show(); workspace?.Navigate(3); }
     private static int? PromptDirection()
     {
         var doc = AcApp.DocumentManager.MdiActiveDocument;
@@ -264,15 +257,18 @@ public sealed partial class Plugin : IExtensionApplication
     {
         Show();
         if (palette == null) return;
-        palette.Activate(2);
+        workspace?.Navigate(2);
         ExpandChecker();
     }
     private static void ExpandChecker()
     {
         if (palette == null) return;
-        var screen = System.Windows.Forms.Screen.PrimaryScreen?.WorkingArea ?? new Rectangle(0, 0, 1280, 900);
+        var screen = System.Windows.Forms.Screen.FromPoint(palette.Location).WorkingArea;
         palette.Dock = DockSides.None;
-        palette.Size = new Size(Math.Min(1080, screen.Width - 60), Math.Min(940, screen.Height - 60));
+        palette.Size = new Size(Math.Min(900, screen.Width - 40), Math.Min(910, screen.Height - 40));
+        palette.Location = new Point(
+            Math.Clamp(palette.Location.X, screen.Left + 20, Math.Max(screen.Left + 20, screen.Right - palette.Size.Width - 20)),
+            Math.Clamp(palette.Location.Y, screen.Top + 20, Math.Max(screen.Top + 20, screen.Bottom - palette.Size.Height - 20)));
         palette.Visible = true;
     }
     [CommandMethod("TBRICHTINGINFO", CommandFlags.Modal)]
@@ -295,7 +291,7 @@ public sealed partial class Plugin : IExtensionApplication
     {
         var request = PendingLightmast;
         PendingLightmast = null;
-        if (request == null) { Show(); if (palette != null) palette.Activate(1); return; }
+        if (request == null) { Show(); workspace?.Navigate(1); return; }
         if (request.Document != AcApp.DocumentManager.MdiActiveDocument)
         { AcApp.DocumentManager.MdiActiveDocument?.Editor.WriteMessage("\nDe actieve tekening is veranderd. Kies de xref opnieuw."); return; }
         try { var message = LightmastCommands.Execute(request); lightmastPanel?.Report(message); }

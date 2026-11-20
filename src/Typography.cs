@@ -107,18 +107,18 @@ internal static class Typography
 
 internal static class UiTypography
 {
-    private static readonly Dictionary<(float, GraphicsUnit), Font> Fonts = new();
-    private static Font Light(Font original)
+    private static readonly Dictionary<(float, GraphicsUnit, bool), Font> Fonts = new();
+    private static Font Light(Font original, bool bold = false)
     {
-        var key = (original.Size, original.Unit);
-        if (!Fonts.TryGetValue(key, out var font)) Fonts[key] = font = new Font(Typography.Family, original.Size, FontStyle.Regular, original.Unit);
+        var key = (original.Size, original.Unit, bold);
+        if (!Fonts.TryGetValue(key, out var font)) Fonts[key] = font = new Font(Typography.Family, original.Size, bold ? FontStyle.Bold : FontStyle.Regular, original.Unit);
         return font;
     }
     internal static void Apply(Control control)
     {
         void SetFont()
         {
-            var font = Light(control.Font);
+            var font = Light(control.Font, control.Name == "CurrentLoadFitResult");
             if (!control.Font.Equals(font)) control.Font = font;
         }
         SetFont();
@@ -131,5 +131,6 @@ internal static class UiTypography
         }
         foreach (Control child in control.Controls) Apply(child);
         control.ControlAdded += (_, args) => { if (args.Control != null) Apply(args.Control); };
+        UiTheme.Apply(control);
     }
 }

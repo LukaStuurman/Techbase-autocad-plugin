@@ -33,7 +33,7 @@ internal static class DeleteAllDirectionsButtonInstaller
                     Color.SeaGreen);
             }
 
-            var deleteAll = new Button
+            var deleteAll = new Techbase.Blocks.ThemedButton
             {
                 Name = ButtonName,
                 Text = "Alle richtingen verwijderen",

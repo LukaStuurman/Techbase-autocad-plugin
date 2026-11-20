@@ -10,11 +10,12 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <AssemblyName>Techbase.Blocks</AssemblyName>
-    <Version>1.13.0</Version>
+    <Version>1.20.1</Version>
     <PlatformTarget>x64</PlatformTarget>
     <OutputPath>bin/$(ApiSeries)/$(Configuration)/</OutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <EmbeddedResource Include="../Assets/UI/techbase-logo-dark.png" LogicalName="Techbase.Logo" />
     <EmbeddedResource Include="Stationslocaties/Resources/Techbase.png" LogicalName="Techbase.png" />
     <EmbeddedResource Include="Stationslocaties/Resources/Timmermans.png" LogicalName="Timmermans.png" />
     <EmbeddedResource Include="Stationslocaties/Resources/StationGeometry.json.gz" LogicalName="StationGeometry.json.gz" />
@@ -23,7 +24,7 @@
     <PackageReference Include="AutoCAD.NET" Version="$(ApiVersion)" ExcludeAssets="runtime" PrivateAssets="all" />
     <Compile Include="../vendor/AutoCAD-Enexis-kabels-checker/src/Enexis.KabelChecker.Core/*.cs" Link="Enexis/Core/%(Filename)%(Extension)" />
     <Compile Include="../vendor/AutoCAD-Enexis-kabels-checker/src/Enexis.KabelChecker.AutoCAD/*.cs"
-      Exclude="../vendor/AutoCAD-Enexis-kabels-checker/src/Enexis.KabelChecker.AutoCAD/Plugin.cs;../vendor/AutoCAD-Enexis-kabels-checker/src/Enexis.KabelChecker.AutoCAD/KabelCheckerForm.cs;../vendor/AutoCAD-Enexis-kabels-checker/src/Enexis.KabelChecker.AutoCAD/KabelCheckerFormV2.cs;../vendor/AutoCAD-Enexis-kabels-checker/src/Enexis.KabelChecker.AutoCAD/CurrentLoadPanel.cs;../vendor/AutoCAD-Enexis-kabels-checker/src/Enexis.KabelChecker.AutoCAD/DeleteAllDirectionsButtonInstaller.cs;../vendor/AutoCAD-Enexis-kabels-checker/src/Enexis.KabelChecker.AutoCAD/DirectionInfoBlockPlacer.cs"
+      Exclude="../vendor/AutoCAD-Enexis-kabels-checker/src/Enexis.KabelChecker.AutoCAD/Plugin.cs;../vendor/AutoCAD-Enexis-kabels-checker/src/Enexis.KabelChecker.AutoCAD/KabelCheckerForm.cs;../vendor/AutoCAD-Enexis-kabels-checker/src/Enexis.KabelChecker.AutoCAD/KabelCheckerFormV2.cs;../vendor/AutoCAD-Enexis-kabels-checker/src/Enexis.KabelChecker.AutoCAD/CurrentLoadPanel.cs;../vendor/AutoCAD-Enexis-kabels-checker/src/Enexis.KabelChecker.AutoCAD/CurrentLoadPanelV2.cs;../vendor/AutoCAD-Enexis-kabels-checker/src/Enexis.KabelChecker.AutoCAD/DeleteAllDirectionsButtonInstaller.cs;../vendor/AutoCAD-Enexis-kabels-checker/src/Enexis.KabelChecker.AutoCAD/DirectionInfoBlockPlacer.cs"
       Link="Enexis/AutoCAD/%(Filename)%(Extension)" />
     <EmbeddedResource Include="../vendor/AutoCAD-Enexis-kabels-checker/src/Enexis.KabelChecker.AutoCAD/Resources/*.xlsx" />
   </ItemGroup>

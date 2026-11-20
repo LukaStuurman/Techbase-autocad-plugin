@@ -6,7 +6,6 @@ using System.Windows.Forms;
 using Autodesk.AutoCAD.ApplicationServices;
 using AcApp = Autodesk.AutoCAD.ApplicationServices.Core.Application;
 using StationAction = Stationslocaties.StationLocationAction;
-using StationSheet = Stationslocaties.StationSheet;
 
 namespace Techbase.Blocks;
 
@@ -18,12 +17,12 @@ internal sealed record StationActionRequest(Document Document, StationAction Act
 
 internal sealed class StationLocationsPanel : UserControl
 {
-    private static readonly Color Surface = Color.FromArgb(245, 247, 249);
-    private static readonly Color Orange = Color.FromArgb(190, 82, 17);
-    private static readonly Color OrangeHover = Color.FromArgb(161, 65, 10);
-    private static readonly Color Ink = Color.FromArgb(41, 47, 56);
-    private static readonly Color Muted = Color.FromArgb(100, 110, 121);
-    private static readonly Color Border = Color.FromArgb(215, 222, 230);
+    private static readonly Color Surface = UiTheme.Canvas;
+    private static readonly Color Orange = UiTheme.Orange;
+    private static readonly Color OrangeHover = Color.FromArgb(255, 157, 64);
+    private static readonly Color Ink = UiTheme.Ink;
+    private static readonly Color Muted = UiTheme.Muted;
+    private static readonly Color Border = UiTheme.Line;
 
     private readonly Label summary = new()
     {
@@ -50,7 +49,7 @@ internal sealed class StationLocationsPanel : UserControl
     private readonly Button info = new() { Text = "Info", AutoSize = true };
     private readonly Dictionary<StationAction, Button> actionButtons = new();
     private readonly ToolTip tips = new();
-    private readonly List<StationSheet> cached = new();
+    private readonly List<Stationslocaties.StationSheet> cached = new();
     private HashSet<string> photos = new(StringComparer.OrdinalIgnoreCase);
     private bool overview;
     private bool loading;
@@ -219,11 +218,12 @@ internal sealed class StationLocationsPanel : UserControl
         };
         VisibleChanged += (_, _) => { if (Visible) RefreshSheets(); };
         UiTypography.Apply(this);
+        UiTheme.Apply(this);
         RefreshSheets();
     }
 
-    private StationSheet? Selected => sheets.SelectedItems.Count == 1
-        ? sheets.SelectedItems[0].Tag as StationSheet
+    private Stationslocaties.StationSheet? Selected => sheets.SelectedItems.Count == 1
+        ? sheets.SelectedItems[0].Tag as Stationslocaties.StationSheet
         : null;
 
     private void SizeColumns()

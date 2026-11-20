@@ -19,10 +19,28 @@ internal sealed record MastCandidate(string Key, string Layer, string BlockName,
 internal sealed record MastSnapshot(IReadOnlyList<MastCandidate> Candidates, IReadOnlyList<string> Warnings);
 internal sealed record MastResult(int Selected, int Placed, int AlreadyPresent);
 internal sealed record LightmastRequest(Autodesk.AutoCAD.ApplicationServices.Document Document, ObjectId XrefId,
-    string[] Layers, string[] BlockNames, AreaMode Mode);
+    string[] Layers, string[] BlockNames, AreaMode Mode, bool Lightmasts = true, bool Cabinets = false);
 
 internal static class LightmastService
 {
+    internal const string LightLayer = "E_STREET_LIGHT_CONNECTION";
+    internal const string FlatLayer = "E_LV_MULTISTORY_CONNECTION";
+    internal const string DistributionLayer = "E_LV_DISTRIBUTION_BOX";
+    internal static bool MatchesLayer(string layer, string name) =>
+        layer[(layer.LastIndexOf('|') + 1)..].Equals(name, StringComparison.OrdinalIgnoreCase);
+    internal static string[] AutomaticLayers(IEnumerable<string> layers, bool lightmasts, bool cabinets) =>
+        layers.Where(l => (lightmasts && MatchesLayer(l, LightLayer)) ||
+            (cabinets && (MatchesLayer(l, FlatLayer) || MatchesLayer(l, DistributionLayer)))).ToArray();
+    internal static string[] XrefLayers(Database db, ObjectId xrefId)
+    {
+        using var tx = db.TransactionManager.StartTransaction();
+        var reference = (BlockReference)tx.GetObject(xrefId, OpenMode.ForRead);
+        var definition = (BlockTableRecord)tx.GetObject(reference.BlockTableRecord, OpenMode.ForRead);
+        var prefix = definition.Name + "|";
+        var table = (LayerTable)tx.GetObject(db.LayerTableId, OpenMode.ForRead);
+        return table.Cast<ObjectId>().Select(id => ((LayerTableRecord)tx.GetObject(id, OpenMode.ForRead)).Name)
+            .Where(n => n.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)).OrderBy(n => n, StringComparer.OrdinalIgnoreCase).ToArray();
+    }
     internal const string SymbolName = "Lichtmast_Def";
     internal const string TargetLayer = "Bestaand";
     private const string RegAppName = "TECHBASE_LIGHTMAST";
@@ -84,7 +102,7 @@ internal static class LightmastService
     {
         var layerSet = new HashSet<string>(layers, StringComparer.OrdinalIgnoreCase);
         var nameSet = new HashSet<string>(blockNames, StringComparer.OrdinalIgnoreCase);
-        if (layerSet.Count == 0) throw new InvalidOperationException("Vink minimaal één lichtmastlaag aan.");
+        if (layerSet.Count == 0) throw new InvalidOperationException("Vink minimaal één xref-laag aan.");
         var filtered = snapshot.Candidates.Where(c => layerSet.Contains(c.Layer) && (nameSet.Count == 0 || nameSet.Contains(c.BlockName)) && (boundary == null || boundary.Contains(c.Position))).ToArray();
         var keys = filtered.Select(c => c.Key).ToHashSet(StringComparer.Ordinal);
         // A composite mast block can contain several smaller inserts. Never mark both the selected mast and its parts.
@@ -120,6 +138,7 @@ internal static class LightmastService
             applications.UpgradeOpen();
             using var app = new RegAppTableRecord { Name = RegAppName }; applications.Add(app); tx.AddNewlyCreatedDBObject(app, true);
         }
+        var added = new ObjectIdCollection();
         foreach (var candidate in pending)
         {
             using var block = new BlockReference(candidate.Position, symbol);
@@ -127,11 +146,13 @@ internal static class LightmastService
             block.Color = Color.FromColorIndex(ColorMethod.ByLayer, 256);
             block.LinetypeId = db.ByLayerLinetype;
             space.AppendEntity(block); tx.AddNewlyCreatedDBObject(block, true);
+            added.Add(block.ObjectId);
             using var data = new ResultBuffer(new TypedValue((int)DxfCode.ExtendedDataRegAppName, RegAppName),
                 new TypedValue((int)DxfCode.ExtendedDataAsciiString, candidate.Key),
                 new TypedValue((int)DxfCode.ExtendedDataXCoordinate, candidate.Position));
             block.XData = data;
         }
+        ((DrawOrderTable)tx.GetObject(space.DrawOrderTableId, OpenMode.ForWrite)).MoveToTop(added);
         tx.Commit();
         return new MastResult(selected.Count, pending.Length, selected.Count - pending.Length);
     }

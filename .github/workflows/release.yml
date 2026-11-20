@@ -6,9 +6,11 @@ on:
     paths:
       - "PackageContents.xml"
       - "src/Techbase.Blocks.csproj"
-      - "src/Plugin.cs"
+      - "src/**"
+      - "Assets/Kabelgeul/**"
+      - "Assets/UI/**"
       - "src/Stationslocaties/**"
-      - "RELEASE-v1.13.0.md"
+      - "RELEASE-v1.20.1.md"
       - ".github/workflows/release.yml"
       - ".gitattributes"
   workflow_dispatch:
@@ -83,5 +85,5 @@ jobs:
         run: |
           $version = "${{ steps.version.outputs.version }}"
           $tag = "${{ steps.version.outputs.tag }}"
-          & gh release create $tag "Techbase.Blocks.$version.zip" "SHA256SUMS.txt" --target "${{ github.sha }}" --title "Techbase $version" --notes-file "RELEASE-v1.13.0.md"
+          & gh release create $tag "Techbase.Blocks.$version.zip" "SHA256SUMS.txt" --target "${{ github.sha }}" --title "Techbase $version" --notes-file "RELEASE-v$version.md"
           if ($LASTEXITCODE -ne 0) { throw "Publiceren van GitHub-release mislukt." }

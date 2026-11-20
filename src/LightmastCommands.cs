@@ -25,12 +25,18 @@ internal static class LightmastCommands
             AreaMode.Draw => DrawBoundary(doc.Editor),
             _ => null
         };
-        if (request.Mode != AreaMode.All && boundary == null) return "Geannuleerd; geen lichtmasten geplaatst.";
-        var selected = LightmastService.Select(snapshot, request.Layers, request.BlockNames, boundary);
+        if (request.Mode != AreaMode.All && boundary == null) return "Geannuleerd; geen toevoegingen geplaatst.";
+        var mastLayers = request.Layers.Where(l => !LightmastService.MatchesLayer(l, LightmastService.FlatLayer) && !LightmastService.MatchesLayer(l, LightmastService.DistributionLayer)).ToArray();
+        var selected = request.Lightmasts && mastLayers.Length > 0 ? LightmastService.Select(snapshot, mastLayers, request.BlockNames, boundary) : Array.Empty<MastCandidate>();
+        using var atomic = db.TransactionManager.StartTransaction();
         var result = LightmastService.Place(db, selected);
+        var copied = request.Cabinets ? CabinetService.Place(db, request, boundary) : 0;
+        atomic.Commit();
         var message = result.Placed + " lichtmasten geplaatst op laag Bestaand" +
             (result.AlreadyPresent > 0 ? " · " + result.AlreadyPresent + " al aanwezig" : "") + ".";
-        if (selected.Length == 0) message = "Geen lichtmastblocks gevonden binnen de gekozen lagen, blocktypen en het gebied.";
+        if (!request.Lightmasts) message = "";
+        if (request.Cabinets) message += (message.Length > 0 ? "\n" : "") + copied + " kastobjecten overgenomen; alleen de flatkastlaag wordt groen. Eerder overgenomen objecten worden overgeslagen.";
+        if (request.Lightmasts && selected.Length == 0) message += "\nGeen lichtmastblocks gevonden binnen de gekozen lagen, blocktypen en het gebied.";
         if (snapshot.Warnings.Count > 0) message += "\n" + string.Join("\n", snapshot.Warnings);
         doc.Editor.WriteMessage("\n" + message);
         return message;

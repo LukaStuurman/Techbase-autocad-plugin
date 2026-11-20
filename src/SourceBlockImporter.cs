@@ -120,6 +120,18 @@ internal static class SourceBlockImporter
             string.Equals(values[1], original, StringComparison.OrdinalIgnoreCase) && values[2] == fingerprint;
     }
 
+    internal static void CopyIdentity(BlockTableRecord source, BlockTableRecord target, Transaction tx)
+    {
+        if (source.ExtensionDictionary.IsNull) return;
+        var original = (DBDictionary)tx.GetObject(source.ExtensionDictionary, OpenMode.ForRead);
+        if (!original.Contains(MetadataKey)) return;
+        using var data = ((Xrecord)tx.GetObject(original.GetAt(MetadataKey), OpenMode.ForRead)).Data;
+        if (data == null) return;
+        if (target.ExtensionDictionary.IsNull) target.CreateExtensionDictionary();
+        var dictionary = (DBDictionary)tx.GetObject(target.ExtensionDictionary, OpenMode.ForWrite);
+        var copy = new Xrecord { Data = data }; dictionary.SetAt(MetadataKey, copy); tx.AddNewlyCreatedDBObject(copy, true);
+    }
+
     private static void SetMetadata(BlockTableRecord record, Transaction tx, string original, string fingerprint, string variant)
     {
         if (record.ExtensionDictionary.IsNull) record.CreateExtensionDictionary();

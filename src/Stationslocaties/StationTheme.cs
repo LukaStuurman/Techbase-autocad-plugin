@@ -6,11 +6,11 @@ namespace Stationslocaties;
 // Gedeelde vormgeving van het stationslocatiebeheer, afgestemd op de Techbase-palette.
 internal static class StationTheme
 {
-    internal static readonly Color Canvas = Color.FromArgb(245, 247, 249);
-    internal static readonly Color Ink = Color.FromArgb(42, 49, 58);
-    internal static readonly Color Muted = Color.FromArgb(98, 108, 120);
-    internal static readonly Color Border = Color.FromArgb(211, 219, 228);
-    internal static readonly Color Accent = Color.FromArgb(190, 82, 17);
+    internal static readonly Color Canvas = Techbase.Blocks.UiTheme.Canvas;
+    internal static readonly Color Ink = Techbase.Blocks.UiTheme.Ink;
+    internal static readonly Color Muted = Techbase.Blocks.UiTheme.Muted;
+    internal static readonly Color Border = Techbase.Blocks.UiTheme.Line;
+    internal static readonly Color Accent = Techbase.Blocks.UiTheme.Orange;
     internal static readonly Color Tint = Color.White;
 
     internal static void StyleButtons(Control parent, Button primary, Button? destructive = null)

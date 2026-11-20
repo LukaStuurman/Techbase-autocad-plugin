@@ -12,6 +12,7 @@ internal sealed class DirectionPanel : UserControl
     private int selected = Plugin.Preferences.SelectedDirectionNumber;
     private readonly List<RadioButton> buttons = new();
     private bool refreshing;
+    private readonly ToolTip actionTips = new() { ShowAlways = true };
     private readonly TextBox lsText = new() { Name = "DefaultLsText", Dock = DockStyle.Top };
     private readonly TextBox lsExistingText = new() { Name = "DefaultExistingLsText", Dock = DockStyle.Top };
     private readonly TextBox ovText = new() { Name = "DefaultOvText", Dock = DockStyle.Top };
@@ -20,14 +21,15 @@ internal sealed class DirectionPanel : UserControl
     {
         Dock = DockStyle.Fill; Font = new Font("Segoe UI", 9); BackColor = Color.FromArgb(245, 247, 249);
         var layout = new TableLayoutPanel { Dock = DockStyle.Fill, ColumnCount = 1, AutoScroll = true, Padding = new Padding(8) };
-        layout.Controls.Add(new Label { Text = "RICHTINGEN", AutoSize = true, Font = new Font(Font, FontStyle.Bold), Padding = new Padding(0, 4, 0, 8) });
+        layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
+        layout.Controls.Add(UiTheme.Title("Richtingen & teksten"));
         layout.Controls.Add(new Label { Text = "Kies een richting", AutoSize = true });
         var grid = new TableLayoutPanel { Dock = DockStyle.Top, AutoSize = true, ColumnCount = 3, RowCount = 4 };
         for (var c = 0; c < 3; c++) grid.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100f / 3));
         for (var n = 1; n <= 12; n++)
         {
             var number = n;
-            var button = new RadioButton { Text = "Richting " + n, AutoSize = true, Checked = n == selected, Margin = new Padding(3, 6, 3, 6) };
+            var button = new RadioButton { Text = "Richting " + n, Appearance = Appearance.Button, FlatStyle = FlatStyle.Flat, TextAlign = ContentAlignment.MiddleCenter, Dock = DockStyle.Fill, Height = 34, Checked = n == selected, Margin = new Padding(3) };
             button.CheckedChanged += (_, _) =>
             {
                 if (!button.Checked || refreshing) return;
@@ -38,10 +40,11 @@ internal sealed class DirectionPanel : UserControl
         }
         layout.Controls.Add(grid); layout.Controls.Add(layer);
         layout.Controls.Add(new Label { Text = "Global width: 0,1\nLijntype: DASHED\nLijntypeschaal: 0,0035\nKleur en lijndikte: volgens richtingslaag", AutoSize = true, Padding = new Padding(0, 4, 0, 12) });
-        var draw = new Button { Text = "Nieuwe richting tekenen", Height = 36, Dock = DockStyle.Top };
-        var convert = new Button { Text = "Selectie naar deze richting omzetten", Height = 36, Dock = DockStyle.Top };
+        var draw = new ThemedButton { Text = "Nieuwe richting tekenen", Height = 36, Dock = DockStyle.Top };
+        var convert = new ThemedButton { Text = "Selectie naar deze richting omzetten", Height = 36, Dock = DockStyle.Top };
         draw.Click += (_, _) => Queue("TBTEKENRICHTING"); convert.Click += (_, _) => Queue("TBMAAKRICHTING");
-        layout.Controls.Add(draw); layout.Controls.Add(convert);
+        var directionActions = new FlowLayoutPanel { Dock = DockStyle.Top, AutoSize = true };
+        directionActions.Controls.Add(draw); directionActions.Controls.Add(convert); layout.Controls.Add(directionActions);
         layout.Controls.Add(new Label { Text = "Tekenen: klik punten, Enter = klaar.\nTerug verwijdert het laatste punt; Sluiten sluit de lijn.\nOmzetten: kies polylines of losse LINE-lijnen.\nPolylines behouden hun punten en bochten.", AutoSize = true, MaximumSize = new Size(340, 0), Padding = new Padding(0, 10, 0, 0) });
         layout.Controls.Add(new Label { Text = "TEKSTEN BOVEN KABELS", AutoSize = true, Font = new Font(Font, FontStyle.Bold), Padding = new Padding(0, 12, 0, 6) });
         foreach (var field in new[] { ("Standaard LS", lsText), ("Standaard LS bestaande kabel", lsExistingText), ("Standaard OV", ovText), ("Standaard OV bestaande kabel", ovExistingText) })
@@ -50,12 +53,11 @@ internal sealed class DirectionPanel : UserControl
             field.Item2.TextChanged += (_, _) => SaveTexts();
         }
         layout.Controls.Add(new Label { Text = "Teksten worden automatisch bewaard en gelden voor nieuwe automatische tekststapels en LS/OV-burstteksten. Reset via Instellingen.", AutoSize = true, MaximumSize = new Size(340, 0), Padding = new Padding(0, 4, 0, 8) });
-        var textButtons = new TableLayoutPanel { Dock = DockStyle.Top, AutoSize = true, ColumnCount = 2, RowCount = 3 };
-        textButtons.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50)); textButtons.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
+        var textButtons = new FlowLayoutPanel { Dock = DockStyle.Top, AutoSize = true };
         foreach (var buttonInfo in new[] { ("LS automatisch langs lijn", "TBAUTOTEKSTLS"), ("OV automatisch langs lijn", "TBAUTOTEKSTOV"), ("LS-tekst plaatsen (burst)", "TBTEKSTLS"), ("OV-tekst plaatsen (burst)", "TBTEKSTOV"),
                      ("Tekst kopiëren", "TBTEKSTKOPIE"), ("Tekst verplaatsen", "TBTEKSTVERPLAATS") })
         {
-            var button = new Button { Text = buttonInfo.Item1, Dock = DockStyle.Fill, Height = 36 };
+            var button = new ThemedButton { Text = buttonInfo.Item1, Dock = DockStyle.Fill, Height = 36 };
             var command = buttonInfo.Item2; button.Click += (_, _) => Queue(command, false); textButtons.Controls.Add(button);
         }
         layout.Controls.Add(textButtons);
@@ -63,6 +65,11 @@ internal sealed class DirectionPanel : UserControl
         layout.Controls.Add(new Label { Text = "LS/OV plaatst de losse richtingsteksten.\nKies daarna MTexten in klikvolgorde en twee punten langs de kabel. Kopiëren: herhalen; Terug wist de laatste kopie.", AutoSize = true,
             MaximumSize = new Size(340, 0), Padding = new Padding(0, 6, 0, 0) });
         layout.Controls.Add(status); Controls.Add(layout); RefreshSettings(); UiTypography.Apply(this);
+        UiTheme.IconOnly(draw, 12, actionTips, 34); UiTheme.Primary(draw);
+        UiTheme.IconOnly(convert, 13, actionTips, 34);
+        var glyph = 14;
+        foreach (var button in textButtons.Controls.OfType<ThemedButton>()) UiTheme.IconOnly(button, glyph++, actionTips, 34);
+        Disposed += (_, _) => actionTips.Dispose();
     }
     private void RefreshLayer() => layer.Text = "Laag: " + DirectionLines.LayerName(selected);
     internal void RefreshSettings()
