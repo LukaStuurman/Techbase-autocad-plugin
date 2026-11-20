@@ -6,6 +6,8 @@ on:
       - "src/**"
       - "PackageContents.xml"
       - "tests/StationToolbarVisual/**"
+      - "tests/verify_purchase_geometry.py"
+      - "Assets/Palette/Techbase toolpallete.xtp"
       - ".github/workflows/check-stationslocaties.yml"
 
 permissions:
@@ -31,6 +33,11 @@ jobs:
       - name: Build AutoCAD DLL
         shell: pwsh
         run: dotnet build src/Techbase.Blocks.csproj -c Release -p:ApiSeries=${{ matrix.api }} --nologo
+      - name: Verify native AANKOOP green hatch and station palette
+        if: matrix.api == 'R25'
+        shell: pwsh
+        run: python tests/verify_purchase_geometry.py
+
       - name: Render toolbar and verify readable labels and rounded corners
         if: matrix.api == 'R25'
         shell: pwsh
