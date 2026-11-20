@@ -25,6 +25,9 @@ internal static class ZroSheets
     private const string DataKey = "TB_ZRO_FIELDS";
     private static readonly CultureInfo Dutch = CultureInfo.GetCultureInfo("nl-NL");
     private static string? templatePath;
+    private static readonly string TemplateSettingPath = Path.Combine(
+        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+        "Techbase", "zro-template-path.txt");
     internal static ZroFields Defaults { get; private set; } = new();
 
     internal static IReadOnlyList<string> List(Database db)
@@ -52,6 +55,8 @@ internal static class ZroSheets
     internal static string? SelectTemplateIfNeeded(Database db)
     {
         if (HasSourceLayout(db)) return null;
+        if (templatePath == null && File.Exists(TemplateSettingPath))
+            templatePath = File.ReadAllText(TemplateSettingPath).Trim();
         if (templatePath != null && File.Exists(templatePath)) return templatePath;
         using var chooser = new OpenFileDialog
         {
@@ -61,6 +66,13 @@ internal static class ZroSheets
         };
         if (chooser.ShowDialog() != DialogResult.OK) return null;
         templatePath = chooser.FileName;
+        try
+        {
+            Directory.CreateDirectory(Path.GetDirectoryName(TemplateSettingPath)!);
+            File.WriteAllText(TemplateSettingPath, templatePath);
+        }
+        catch (IOException) { /* het sjabloon kan deze sessie nog steeds worden gebruikt */ }
+        catch (UnauthorizedAccessException) { }
         return templatePath;
     }
 
