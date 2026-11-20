@@ -15,8 +15,17 @@ namespace Techbase.Blocks;
 internal static class BlockInserter
 {
     internal static ObjectId Import(Database target, Catalog catalog, BlockTool tool, Settings? settings = null)
-        => SourceBlockImporter.Import(target, catalog.ResolveSource(tool), tool.BlockName,
+    {
+        // De varianten bestaan als echte DWG-blokdefinitie met de suffix
+        // AANKOOP. Importeren maakt het origineel niet groen en explodeert
+        // het aankoopblok niet; de tekening behoudt de normale variant.
+        if (StationPurchaseVariants.IsPurchaseName(tool.BlockName) &&
+            StationPurchaseVariants.IsStationTool(tool))
+            return StationPurchaseVariants.Import(target, catalog, tool);
+
+        return SourceBlockImporter.Import(target, catalog.ResolveSource(tool), tool.BlockName,
             (settings ?? Plugin.Preferences).BlockTextHeight(tool.BlockName), settings ?? Plugin.Preferences);
+    }
 
     internal static ObjectId DefaultLayer(Database db, Transaction tx, string name)
     {
