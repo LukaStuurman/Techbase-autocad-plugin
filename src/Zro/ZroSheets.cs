@@ -1,4 +1,5 @@
 using System.Globalization;
+using System.IO;
 using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.Geometry;
@@ -121,7 +122,7 @@ internal static class ZroSheets
             {
                 // Laat geen gedeeltelijk gemaakt detailblad achter.
                 try { if (layoutManager.LayoutExists(name)) layoutManager.DeleteLayout(name); }
-                catch (Exception) { }
+                catch (System.Exception) { }
                 throw;
             }
         }
