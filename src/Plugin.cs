@@ -18,6 +18,7 @@ public sealed partial class Plugin : IExtensionApplication
     internal static Catalog? Blocks { get; private set; }
     private Stationslocaties.StationTableUpdates? stationTableUpdates;
     private static StationLocationsPanel? stationLocationsPanel;
+    private static ZroPanel? zroPanel;
     private static PaletteSet? palette;
     private static WorkspacePanel? workspace;
     private static BlocksPanel? panel;
@@ -38,7 +39,7 @@ public sealed partial class Plugin : IExtensionApplication
         try { stationTableUpdates = new Stationslocaties.StationTableUpdates(); stationTableUpdates.Initialize(); }
         catch (System.Exception ex) { AcApp.DocumentManager.MdiActiveDocument?.Editor.WriteMessage("\nStationlocaties: " + ex.Message); }
     }
-    public void Terminate() { stationTableUpdates?.Terminate(); stationLocationsPanel?.Dispose(); workspace?.Dispose(); kabelgeulPanel?.Dispose(); settingsPanel?.Dispose(); directionPanel?.Dispose(); kabelCheckerPanel?.Dispose(); lightmastPanel?.Dispose(); panel?.Dispose(); palette?.Dispose(); }
+    public void Terminate() { stationTableUpdates?.Terminate(); zroPanel?.Dispose(); stationLocationsPanel?.Dispose(); workspace?.Dispose(); kabelgeulPanel?.Dispose(); settingsPanel?.Dispose(); directionPanel?.Dispose(); kabelCheckerPanel?.Dispose(); lightmastPanel?.Dispose(); panel?.Dispose(); palette?.Dispose(); }
     internal static void Reload(string? path = null)
     {
         var candidate = new Catalog(path ?? Preferences.PalettePath ?? DefaultPalette);
@@ -83,7 +84,8 @@ public sealed partial class Plugin : IExtensionApplication
                 settingsPanel = new SettingsPanel();
                 kabelgeulPanel = new KabelgeulPanel(ExpandChecker);
                 stationLocationsPanel = new StationLocationsPanel();
-                workspace = new WorkspacePanel(panel, lightmastPanel, kabelCheckerPanel, directionPanel, settingsPanel, kabelgeulPanel, stationLocationsPanel);
+                zroPanel = new ZroPanel();
+                workspace = new WorkspacePanel(panel, lightmastPanel, kabelCheckerPanel, directionPanel, settingsPanel, kabelgeulPanel, stationLocationsPanel, zroPanel);
                 palette.Add("Werkplaats", workspace);
             }
             palette.Visible = true;

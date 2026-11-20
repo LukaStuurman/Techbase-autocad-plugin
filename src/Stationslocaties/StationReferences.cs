@@ -27,6 +27,17 @@ internal static class StationReferences
         Queue(host, new([OutputFor(MapKind.KLIC), OutputFor(MapKind.Topo), OutputFor(MapKind.Percelen)], default, klicFolder));
     }
 
+    /// <summary>
+    /// Hergebruik de bestaande PDOK-kaartgenerator voor ZRO: afzonderlijke
+    /// Topo- en Percelen-DWG's die als xref aan de tekening worden gekoppeld.
+    /// </summary>
+    internal static void QueueTopoPercelen(Document host, string folder, ParcelArea area)
+    {
+        var file = Path.GetFileNameWithoutExtension(host.Name);
+        Output OutputFor(MapKind kind) => new(Path.Combine(folder, $"ZRO {kind} {file}.dwg"), kind);
+        Queue(host, new([OutputFor(MapKind.Topo), OutputFor(MapKind.Percelen)], area, null));
+    }
+
     private static void Queue(Document host, Request request)
     {
         if (queued.ContainsKey(host) || downloading.ContainsKey(host))
