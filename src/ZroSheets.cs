@@ -127,6 +127,12 @@ internal static class ZroSheets
         return true;
     }
 
+    internal static ObjectId StationFor(Database db, string layoutName)
+    {
+        using var tx = db.TransactionManager.StartTransaction();
+        return AttachedStation(db, GetLayout(db, tx, layoutName));
+    }
+
     internal static ZroFields ReadFields(Database db, string layoutName)
     {
         using var tx = db.TransactionManager.StartTransaction();
