@@ -5,9 +5,23 @@ using AcApp = Autodesk.AutoCAD.ApplicationServices.Core.Application;
 
 namespace Stationslocaties;
 
+/// <summary>
+/// Na verplaatsen, gripbewerken of draaien van een trafoblok worden het
+/// detailkaartvenster en de hoekpunten (C1-C4) bijgewerkt. CAD-mutaties
+/// gebeuren uitsluitend in de actieve documentcontext tijdens Idle.
+/// </summary>
 public sealed class StationTableUpdates : IExtensionApplication
 {
     private readonly Dictionary<Database, HashSet<ObjectId>> pending = new();
+    private readonly Dictionary<Database, Document> trackedDocuments = new();
+    private readonly HashSet<Database> rescanAll = new();
+
+    private static readonly HashSet<string> TransformCommands = new(StringComparer.OrdinalIgnoreCase)
+    {
+        "MOVE", "3DMOVE", "STRETCH", "ROTATE", "3DROTATE", "ROTATE3D",
+        "SCALE", "MIRROR", "ALIGN", "UNDO", "U", "REDO",
+        "REGEN", "REGENALL"
+    };
 
     public void Initialize()
     {
@@ -24,8 +38,7 @@ public sealed class StationTableUpdates : IExtensionApplication
         var documents = AcApp.DocumentManager;
         documents.DocumentCreated -= DocumentCreated;
         documents.DocumentToBeDestroyed -= DocumentToBeDestroyed;
-        foreach (var database in pending.Keys) database.ObjectModified -= StationModified;
-        pending.Clear();
+        foreach (var document in trackedDocuments.Values.ToArray()) Untrack(document);
     }
 
     private void DocumentCreated(object sender, DocumentCollectionEventArgs args) => Track(args.Document);
@@ -33,44 +46,83 @@ public sealed class StationTableUpdates : IExtensionApplication
     private void Track(Document document)
     {
         var database = document.Database;
-        if (pending.TryAdd(database, new HashSet<ObjectId>())) database.ObjectModified += StationModified;
+        if (!pending.TryAdd(database, new HashSet<ObjectId>())) return;
+        trackedDocuments.Add(database, document);
+        database.ObjectModified += StationModified;
+        document.CommandEnded += StationCommandFinished;
+        document.CommandCancelled += StationCommandFinished;
+        document.CommandFailed += StationCommandFinished;
+    }
+
+    private void Untrack(Document document)
+    {
+        document.CommandEnded -= StationCommandFinished;
+        document.CommandCancelled -= StationCommandFinished;
+        document.CommandFailed -= StationCommandFinished;
+        var database = document.Database;
+        if (pending.Remove(database)) database.ObjectModified -= StationModified;
+        trackedDocuments.Remove(database);
+        rescanAll.Remove(database);
     }
 
     private void DocumentToBeDestroyed(object sender, DocumentCollectionEventArgs args)
     {
         StationReferences.Forget(args.Document);
-        var database = args.Document.Database;
-        if (pending.Remove(database)) database.ObjectModified -= StationModified;
+        Untrack(args.Document);
     }
 
     private void StationModified(object sender, ObjectEventArgs args)
     {
-        if (sender is Database database && pending.TryGetValue(database, out var changes) &&
-            args.DBObject is BlockReference { IsErased: false } block &&
-            StationLocationSheets.IsStationLayer(block.Layer))
-            changes.Add(block.ObjectId);
+        // Gebruik de database van het werkelijke gewijzigde object: event-sender
+        // verschilt bij sommige CAD-bewerkingen en versies.
+        if (args.DBObject is not BlockReference { IsErased: false } station) return;
+        var database = station.Database;
+        if (database != null && pending.TryGetValue(database, out var changed) &&
+            StationLocationSheets.IsStationLayer(station.Layer))
+            changed.Add(station.ObjectId);
+    }
+
+    private void StationCommandFinished(object sender, CommandEventArgs args)
+    {
+        var command = args.GlobalCommandName?.Trim().TrimStart('_', '.', '-') ?? "";
+        if (!TransformCommands.Contains(command) &&
+            !command.StartsWith("GRIP", StringComparison.OrdinalIgnoreCase)) return;
+
+        // Zelfs als ObjectModified tijdens slepen geen BlockReference meldt,
+        // wordt na het commando de actuele modelpositie opnieuw gecontroleerd.
+        var database = (sender as Document)?.Database ?? AcApp.DocumentManager.MdiActiveDocument?.Database;
+        if (database != null && pending.ContainsKey(database)) rescanAll.Add(database);
     }
 
     private void UpdateOnIdle(object? sender, EventArgs args)
     {
         var document = AcApp.DocumentManager.MdiActiveDocument;
         if (document == null || !string.IsNullOrEmpty(document.CommandInProgress) ||
-            !pending.TryGetValue(document.Database, out var changes) || changes.Count == 0) return;
+            !pending.TryGetValue(document.Database, out var changes)) return;
+
+        var database = document.Database;
+        var checkAll = rescanAll.Remove(database);
+        if (changes.Count == 0 && !checkAll) return;
 
         var stationIds = changes.ToArray();
         changes.Clear();
         try
         {
-            using var documentLock = document.LockDocument();
-            StationLocationSheets.UpdateMovedStationTables(document.Database, stationIds);
+            bool updated;
+            using (document.LockDocument())
+                updated = StationLocationSheets.UpdateMovedStationTables(database, stationIds, checkAll);
+            // Het opslaan van ViewTarget en C1-C4 is niet genoeg: de actieve
+            // AutoCAD-weergave moet eveneens opnieuw worden gegenereerd.
+            if (updated) document.Editor.Regen();
         }
         catch (Autodesk.AutoCAD.Runtime.Exception ex) when (ex.ErrorStatus == ErrorStatus.LockViolation)
         {
             changes.UnionWith(stationIds);
+            if (checkAll) rescanAll.Add(database);
         }
         catch (System.Exception ex)
         {
-            document.Editor.WriteMessage("\nHoekpuntcoördinaten bijwerken: " + ex.Message);
+            document.Editor.WriteMessage("\nStationslocaties (kaartuitsnede/C1-C4): " + ex.Message);
         }
     }
 }
