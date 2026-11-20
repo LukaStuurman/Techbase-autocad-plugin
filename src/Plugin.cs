@@ -32,9 +32,9 @@ public sealed partial class Plugin : IExtensionApplication
     public void Initialize()
     {
         try { Typography.EnsureInstalled(); Reload(); }
+        catch (System.Exception ex) { AcApp.DocumentManager.MdiActiveDocument?.Editor.WriteMessage("\nTechbase Blocks: " + ex.Message); }
         try { stationTableUpdates = new Stationslocaties.StationTableUpdates(); stationTableUpdates.Initialize(); }
         catch (System.Exception ex) { AcApp.DocumentManager.MdiActiveDocument?.Editor.WriteMessage("\nStationlocaties: " + ex.Message); }
-        catch (System.Exception ex) { AcApp.DocumentManager.MdiActiveDocument?.Editor.WriteMessage("\nTechbase Blocks: " + ex.Message); }
     }
     public void Terminate() { stationTableUpdates?.Terminate(); stationLocationsPanel?.Dispose(); kabelgeulPanel?.Dispose(); settingsPanel?.Dispose(); directionPanel?.Dispose(); kabelCheckerPanel?.Dispose(); lightmastPanel?.Dispose(); panel?.Dispose(); palette?.Dispose(); }
     internal static void Reload(string? path = null)
