@@ -191,7 +191,23 @@ internal sealed class BlocksPanel : UserControl
         foreach (var tool in Plugin.Blocks?.Tools ?? Array.Empty<BlockTool>())
         {
             if (tool.IconPath == null) continue;
-            try { using var original = Image.FromFile(tool.IconPath); images.Images.Add(tool.Id, new Bitmap(original)); }
+            try
+            {
+                using var original = Image.FromFile(tool.IconPath);
+                using var icon = new Bitmap(original);
+                if (StationPurchaseVariants.IsPurchaseName(tool.BlockName) &&
+                    StationPurchaseVariants.IsStationTool(tool))
+                {
+                    // De virtuele AANKOOP-variant deelt het originele
+                    // pictogram, maar is herkenbaar aan groene diagonalen.
+                    using var canvas = Graphics.FromImage(icon);
+                    using var hatch = new Pen(Color.FromArgb(27, 150, 61), 2f);
+                    var top = icon.Height / 3;
+                    for (var x = -icon.Height; x < icon.Width + icon.Height; x += 8)
+                        canvas.DrawLine(hatch, x, icon.Height - 2, x + icon.Height - top, top);
+                }
+                images.Images.Add(tool.Id, icon);
+            }
             catch (Exception ex) when (ex is IOException || ex is ArgumentException || ex is OutOfMemoryException) { }
         }
         list.SmallImageList = images; previous?.Dispose(); Filter();
