@@ -18,6 +18,7 @@ public sealed partial class Plugin : IExtensionApplication
     internal static Catalog? Blocks { get; private set; }
     private Stationslocaties.StationTableUpdates? stationTableUpdates;
     private static StationLocationsPanel? stationLocationsPanel;
+    private static ZroPanel? zroPanel;
     private static PaletteSet? palette;
     private static WorkspacePanel? workspace;
     private static BlocksPanel? panel;
@@ -29,6 +30,7 @@ public sealed partial class Plugin : IExtensionApplication
     internal static LightmastRequest? PendingLightmast { get; set; }
     internal static DirectionInfoRequest? PendingDirectionInfo { get; set; }
     internal static StationActionRequest? PendingStationAction { get; set; }
+    internal static ZroRequest? PendingZroAction { get; set; }
     internal static string ContentsRoot => Directory.GetParent(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!)!.FullName;
     internal static string DefaultPalette => Path.Combine(ContentsRoot, "Assets", "Techbase toolpallete.xtp");
     public void Initialize()
@@ -38,7 +40,7 @@ public sealed partial class Plugin : IExtensionApplication
         try { stationTableUpdates = new Stationslocaties.StationTableUpdates(); stationTableUpdates.Initialize(); }
         catch (System.Exception ex) { AcApp.DocumentManager.MdiActiveDocument?.Editor.WriteMessage("\nStationlocaties: " + ex.Message); }
     }
-    public void Terminate() { stationTableUpdates?.Terminate(); stationLocationsPanel?.Dispose(); workspace?.Dispose(); kabelgeulPanel?.Dispose(); settingsPanel?.Dispose(); directionPanel?.Dispose(); kabelCheckerPanel?.Dispose(); lightmastPanel?.Dispose(); panel?.Dispose(); palette?.Dispose(); }
+    public void Terminate() { stationTableUpdates?.Terminate(); zroPanel?.Dispose(); stationLocationsPanel?.Dispose(); workspace?.Dispose(); kabelgeulPanel?.Dispose(); settingsPanel?.Dispose(); directionPanel?.Dispose(); kabelCheckerPanel?.Dispose(); lightmastPanel?.Dispose(); panel?.Dispose(); palette?.Dispose(); }
     internal static void Reload(string? path = null)
     {
         var candidate = new Catalog(path ?? Preferences.PalettePath ?? DefaultPalette);
@@ -83,7 +85,8 @@ public sealed partial class Plugin : IExtensionApplication
                 settingsPanel = new SettingsPanel();
                 kabelgeulPanel = new KabelgeulPanel(ExpandChecker);
                 stationLocationsPanel = new StationLocationsPanel();
-                workspace = new WorkspacePanel(panel, lightmastPanel, kabelCheckerPanel, directionPanel, settingsPanel, kabelgeulPanel, stationLocationsPanel);
+                zroPanel = new ZroPanel();
+                workspace = new WorkspacePanel(panel, lightmastPanel, kabelCheckerPanel, directionPanel, settingsPanel, kabelgeulPanel, stationLocationsPanel, zroPanel);
                 palette.Add("Werkplaats", workspace);
             }
             palette.Visible = true;
@@ -120,6 +123,42 @@ public sealed partial class Plugin : IExtensionApplication
         try { new Stationslocaties.StationLocationController().ShowStationLocations(pending.Action, pending.SheetName); }
         catch (System.Exception ex) { Error(ex); }
         finally { stationLocationsPanel?.RefreshSheets(); }
+    }
+
+    [CommandMethod("TBZROBLADEN", CommandFlags.Modal)]
+    public void ZroTab()
+    {
+        Show();
+        workspace?.Navigate(7);
+        zroPanel?.Reload();
+    }
+
+    [CommandMethod("TBZROMAKEN", CommandFlags.Modal)]
+    public void ZroCreate()
+    {
+        var doc = AcApp.DocumentManager.MdiActiveDocument;
+        if (doc == null) return;
+        try { ZroController.Execute(doc, new ZroRequest(doc, ZroAction.Create, null)); }
+        catch (System.Exception ex) { Error(ex); }
+        finally { zroPanel?.Reload(); }
+    }
+
+    [CommandMethod("TBZROACTIE", CommandFlags.Modal)]
+    public void ZroActionCommand()
+    {
+        var pending = PendingZroAction;
+        PendingZroAction = null;
+        if (pending == null) return;
+        var doc = AcApp.DocumentManager.MdiActiveDocument;
+        if (doc == null || pending.Document != doc)
+        {
+            doc?.Editor.WriteMessage("\nZRO: actieve tekening gewijzigd, kies opnieuw.");
+            zroPanel?.Reload();
+            return;
+        }
+        try { ZroController.Execute(doc, pending); }
+        catch (System.Exception ex) { Error(ex); }
+        finally { zroPanel?.Reload(); }
     }
 
     [CommandMethod("TBSTATIONXREFSTART", CommandFlags.Session)]

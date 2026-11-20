@@ -1,6 +1,6 @@
-# Techbase Blocks 1.20.5
+# Techbase Blocks 1.21.0
 
-**Verbeterd in 1.20.5:** de kop van Stationslocaties heeft nu drie duidelijke acties: **Nieuwe locatie** rechtsboven, **Lijst vernieuwen** en **Uitleg en tips** als leesbare links direct onder de zoekbalk. De laatste twee zijn geen witte knoppen meer. De oranje knop is in een aparte, ruime houder geplaatst en heeft een afgeronde boven- én onderkant. Bij een gedockte smalle werkplaats past de kop zich automatisch aan.
+**Verbeterd in 1.21.0:** de kop van Stationslocaties heeft nu drie duidelijke acties: **Nieuwe locatie** rechtsboven, **Lijst vernieuwen** en **Uitleg en tips** als leesbare links direct onder de zoekbalk. De laatste twee zijn geen witte knoppen meer. De oranje knop is in een aparte, ruime houder geplaatst en heeft een afgeronde boven- én onderkant. Bij een gedockte smalle werkplaats past de kop zich automatisch aan.
 
 **Blocks → Plaatsopties:** de schakelaars voor laag overnemen, gekozen laag en herhaald plaatsen staan in één kolom. De dropdown voor de gekozen laag staat eronder en springt niet samen met de schakelaar naar een andere positie.
 
@@ -212,7 +212,7 @@ De concrete testresultaten en resterende praktijktests staan in `VALIDATIE.md` b
 
 ## Opnieuw bouwen
 
-Gebruik een .NET 10 SDK en voer `Build.ps1 -Dotnet <pad-naar-dotnet.exe>` uit. De build haalt Autodesk AutoCAD.NET API 25.0.1 en 26.0.0 via NuGet op en bouwt de Excel-worker voor beide runtimes. De Autodesk API-DLL's worden niet meegeleverd: die levert de hostapplicatie. De uitvoer staat in `dist/1.20.5` en in `Techbase Blocks 1.20.5.zip`. Versiegebonden DLL-mappen maken een update mogelijk zonder een reeds geladen oude DLL te overschrijven; herstart de CAD-toepassing om de nieuwe versie te laden.
+Gebruik een .NET 10 SDK en voer `Build.ps1 -Dotnet <pad-naar-dotnet.exe>` uit. De build haalt Autodesk AutoCAD.NET API 25.0.1 en 26.0.0 via NuGet op en bouwt de Excel-worker voor beide runtimes. De Autodesk API-DLL's worden niet meegeleverd: die levert de hostapplicatie. De uitvoer staat in `dist/1.21.0` en in `Techbase Blocks 1.21.0.zip`. Versiegebonden DLL-mappen maken een update mogelijk zonder een reeds geladen oude DLL te overschrijven; herstart de CAD-toepassing om de nieuwe versie te laden.
 
 
 ## Stationslocaties in de Techbase-plugin
@@ -233,3 +233,16 @@ Gebruik de navigatieknop Stationslocaties in de Techbase Werkplaats. Daar kun je
 Selecteer in AutoCAD het **trafoblok** in modelruimte en verplaats of draai het met de grips, MOVE of ROTATE. Zodra het commando klaar is, controleert TechBase de nieuwe invoegpositie en de bloktransformatie. Het 1:250-kaartvenster van het bijbehorende detailblad wordt opnieuw op de trafo gecentreerd en de hoekpunten **C1–C4** in de onderhoek worden opnieuw berekend en weergegeven. De rode markering volgt mee. Deze gegevens worden dus niet slechts bij het eerste plaatsen bepaald.
 
 Controleer bij de eerste toepassing met een project-DWG de nieuwe kaartuitsnede en de RD-coördinaten in het detailblad. Werk in meters en zorg dat het trafoblok op de eigen stationlaag blijft staan.
+
+
+## ZRO-bladen — automatisch per trafo
+
+De werkplaats heeft nu ook **ZRO-bladen**. Open een DWG met trafoblokken in RD New (meters), kies **Nieuw ZRO-blad** en wijs het juiste trafoblok in modelruimte aan. De plugin berekent de grootste gesloten rechthoek in dat blok, de oppervlakte (m²), het bloktype en de hoekpunten C1–C4.
+
+Wanneer de tekening al een standaardblad **TRAFO-10** bevat, maakt de plugin daar een kopie van. In een nieuwe DWG kies je bij het eerste gebruik de Bakel-voorbeeld-DXF of een DWG die het standaardblad TRAFO-10 bevat. Dat bestand wordt onthouden in `%APPDATA%/Techbase/zro-template-path.txt`. TRAFO-3 wordt **niet** als standaardsjabloon gebruikt. Het nieuwe blad krijgt twee kaartviewports: boven **1:100** en onder **1:1000**.
+
+Het invulvenster haalt automatisch het adres (BAG) en de kadastrale gemeente, sectie en perceelnummer (PDOK/BRK) op, voor zover online beschikbaar. Controleer deze waarden; ze kunnen worden gecorrigeerd. Het projectnummer komt vóór de trafonaam in de omschrijving. Tekeningnummer, stationsnummer, tekenaar, eigenaar, afdeling en e-mail worden door jezelf opgegeven. Via **Bladgegevens wijzigen** kun je ze later bijwerken.
+
+Blauwe sectie/perceelnummerlabels voor de bovenste kaart komen uit bestaande kadastrale labelblokken van de tekening of, indien afwezig, de actuele PDOK-perceeldata. Maak of koppel topo-/perceel-DWG-XREF's via de knop **Kaartreferenties (PDOK/KLIC)**, net als in Stationslocaties. Meer details: `docs/ZRO-Bakel-voorbeeld.md`.
+
+De kopieer-/importfunctie en de kadastrale gegevens in de voorbeeldtekening moeten in een echte AutoCAD-tekening worden gecontroleerd vóór formele oplevering.

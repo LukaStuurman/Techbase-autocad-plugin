@@ -6,7 +6,7 @@ namespace Techbase.Blocks;
 internal sealed class WorkspacePanel : UserControl
 {
     private readonly Control[] pages;
-    private readonly Button[] navigation = new Button[7];
+    private readonly Button[] navigation = new Button[8];
     private readonly Panel content = new() { Dock = DockStyle.Fill, Padding = new Padding(4, 0, 4, 0) };
     private readonly TableLayoutPanel navigationLayout;
     private readonly TableLayoutPanel compactNavigation;
@@ -16,13 +16,13 @@ internal sealed class WorkspacePanel : UserControl
         Dock = DockStyle.Fill, AccessibleName = "Kies Techbase-onderdeel"
     };
     private readonly Panel navigationHost = new() { Dock = DockStyle.Fill, Margin = Padding.Empty };
-    private readonly int[] order = { 0, 3, 5, 1, 2, 6, 4 };
+    private readonly int[] order = { 0, 3, 5, 1, 2, 6, 7, 4 };
     private bool updatingPicker;
     private int displayedColumns = -1;
     internal int SelectedIndex { get; private set; } = -1;
     internal WorkspacePanel(params Control[] pages)
     {
-        if (pages.Length != 7) throw new ArgumentException("Zeven werkbladen vereist.", nameof(pages));
+        if (pages.Length != 8) throw new ArgumentException("Acht werkbladen vereist.", nameof(pages));
         this.pages = pages;
         Dock = DockStyle.Fill; BackColor = UiTheme.Canvas;
         var layout = new TableLayoutPanel { Dock = DockStyle.Fill, RowCount = 4, ColumnCount = 1, Margin = Padding.Empty };
@@ -34,13 +34,13 @@ internal sealed class WorkspacePanel : UserControl
         var brand = new BrandHeader { Dock = DockStyle.Fill, Margin = Padding.Empty };
         navigationLayout = new TableLayoutPanel
         {
-            Dock = DockStyle.Fill, ColumnCount = 7, RowCount = 1,
+            Dock = DockStyle.Fill, ColumnCount = 8, RowCount = 1,
             Padding = new Padding(9, 4, 9, 4), Margin = Padding.Empty
         };
-        for (var i = 0; i < 7; i++)
-            navigationLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100f / 7));
+        for (var i = 0; i < 8; i++)
+            navigationLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100f / 8));
         navigationLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
-        var labels = new[] { "Blocks", "Lichtmasten", "Kabelchecker", "Richtingen", "Instellingen", "Kabelgeul", "Stationslocaties" };
+        var labels = new[] { "Blocks", "Lichtmasten", "Kabelchecker", "Richtingen", "Instellingen", "Kabelgeul", "Stationslocaties", "ZRO-bladen" };
         foreach (var index in order)
         {
             var button = new ThemedButton
@@ -107,7 +107,7 @@ internal sealed class WorkspacePanel : UserControl
             return;
         }
 
-        var columns = ClientSize.Width >= 1110 * scale ? 7 : 4;
+        var columns = ClientSize.Width >= 1340 * scale ? 8 : 4;
         var rows = (navigation.Length + columns - 1) / columns;
         compactNavigation.Visible = false;
         navigationLayout.Visible = true;
