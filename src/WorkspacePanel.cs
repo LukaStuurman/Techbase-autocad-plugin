@@ -16,7 +16,7 @@ internal sealed class WorkspacePanel : UserControl
         Dock = DockStyle.Fill, AccessibleName = "Kies Techbase-onderdeel"
     };
     private readonly Panel navigationHost = new() { Dock = DockStyle.Fill, Margin = Padding.Empty };
-    private readonly int[] order = { 0, 1, 6, 2, 3, 5, 4 };
+    private readonly int[] order = { 0, 3, 5, 1, 2, 6, 4 };
     private bool updatingPicker;
     private int displayedColumns = -1;
     internal int SelectedIndex { get; private set; } = -1;
@@ -40,7 +40,7 @@ internal sealed class WorkspacePanel : UserControl
         for (var i = 0; i < 7; i++)
             navigationLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100f / 7));
         navigationLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
-        var labels = new[] { "Blocks", "Beheerkaart", "Kabelchecker", "Richtingen", "Instellingen", "Kabelgeul", "Stationslocaties" };
+        var labels = new[] { "Blocks", "Lichtmasten", "Kabelchecker", "Richtingen", "Instellingen", "Kabelgeul", "Stationslocaties" };
         foreach (var index in order)
         {
             var button = new ThemedButton
@@ -66,11 +66,11 @@ internal sealed class WorkspacePanel : UserControl
             TextAlign = ContentAlignment.MiddleLeft,
             ForeColor = UiTheme.Muted, UseMnemonic = false
         }, 0, 0);
-        pagePicker.Items.AddRange(labels);
+        foreach (var index in order) pagePicker.Items.Add(labels[index]);
         pagePicker.SelectedIndexChanged += (_, _) =>
         {
             if (!updatingPicker && pagePicker.SelectedIndex >= 0)
-                Navigate(pagePicker.SelectedIndex);
+                Navigate(order[pagePicker.SelectedIndex]);
         };
         compactNavigation.Controls.Add(pagePicker, 1, 0);
         navigationHost.Controls.Add(navigationLayout);
@@ -143,7 +143,11 @@ internal sealed class WorkspacePanel : UserControl
         }
         pages[index].BringToFront(); SelectedIndex = index;
         updatingPicker = true;
-        try { if (pagePicker.SelectedIndex != index) pagePicker.SelectedIndex = index; }
+        try
+        {
+            var position = Array.IndexOf(order, index);
+            if (pagePicker.SelectedIndex != position) pagePicker.SelectedIndex = position;
+        }
         finally { updatingPicker = false; }
         content.ResumeLayout(true);
     }
