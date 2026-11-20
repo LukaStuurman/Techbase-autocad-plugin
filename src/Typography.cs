@@ -118,7 +118,9 @@ internal static class UiTypography
     {
         void SetFont()
         {
-            var font = Light(control.Font, control.Name == "CurrentLoadFitResult");
+            // Respecteer vetgedrukte labels en primaire knoppen.
+            // Voorheen maakte Apply() elke vetgedrukte knop weer Regular.
+            var font = Light(control.Font, control.Name == "CurrentLoadFitResult" || control.Font.Bold);
             if (!control.Font.Equals(font)) control.Font = font;
         }
         SetFont();
