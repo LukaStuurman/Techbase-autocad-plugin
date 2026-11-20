@@ -31,14 +31,19 @@ internal static class StationPurchaseVariants
 
     internal static BlockTool[] AddToCatalog(IEnumerable<BlockTool> original)
     {
-        var result = original.ToList();
-        foreach (var tool in original.Where(t => IsStationTool(t) && !IsPurchaseName(t.BlockName)))
+        var existing = original.ToArray();
+        var result = new List<BlockTool>();
+        foreach (var tool in existing)
         {
+            result.Add(tool);
+            if (!IsStationTool(tool) || IsPurchaseName(tool.BlockName)) continue;
             var hash = SHA256.HashData(Encoding.UTF8.GetBytes(tool.Id + "|STATION-AANKOOP"));
             var id = new Guid(hash.AsSpan(0, 16)).ToString("N");
-            if (result.Any(t => t.Id == id ||
+            if (existing.Any(t => t.Id == id ||
                 t.BlockName.Equals(tool.BlockName + Suffix, StringComparison.OrdinalIgnoreCase)))
                 continue;
+            // De AANKOOP-variant staat direct naast het originele blok
+            // in plaats van verborgen onderaan de hele Blocks-bibliotheek.
             result.Add(tool with
             {
                 Id = id,
