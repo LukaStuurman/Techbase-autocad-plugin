@@ -23,6 +23,7 @@ public sealed partial class Plugin : IExtensionApplication
     private static DirectionPanel? directionPanel;
     private static SettingsPanel? settingsPanel;
     private static KabelgeulPanel? kabelgeulPanel;
+    private static StationLocationsPanel? stationLocationsPanel;
     internal static LightmastRequest? PendingLightmast { get; set; }
     internal static DirectionInfoRequest? PendingDirectionInfo { get; set; }
     internal static string ContentsRoot => Directory.GetParent(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!)!.FullName;
@@ -32,7 +33,7 @@ public sealed partial class Plugin : IExtensionApplication
         try { Typography.EnsureInstalled(); Reload(); }
         catch (System.Exception ex) { AcApp.DocumentManager.MdiActiveDocument?.Editor.WriteMessage("\nTechbase Blocks: " + ex.Message); }
     }
-    public void Terminate() { kabelgeulPanel?.Dispose(); settingsPanel?.Dispose(); directionPanel?.Dispose(); kabelCheckerPanel?.Dispose(); lightmastPanel?.Dispose(); panel?.Dispose(); palette?.Dispose(); }
+    public void Terminate() { stationLocationsPanel?.Dispose(); kabelgeulPanel?.Dispose(); settingsPanel?.Dispose(); directionPanel?.Dispose(); kabelCheckerPanel?.Dispose(); lightmastPanel?.Dispose(); panel?.Dispose(); palette?.Dispose(); }
     internal static void Reload(string? path = null)
     {
         var candidate = new Catalog(path ?? Preferences.PalettePath ?? DefaultPalette);
@@ -82,11 +83,41 @@ public sealed partial class Plugin : IExtensionApplication
                 palette.Add("Instellingen", settingsPanel);
                 kabelgeulPanel = new KabelgeulPanel(ExpandChecker);
                 palette.Add("Kabelgeul", kabelgeulPanel);
+                stationLocationsPanel = new StationLocationsPanel();
+                palette.Add("Stationslocaties", stationLocationsPanel);
             }
             palette.Visible = true;
         }
         catch (System.Exception ex) { Error(ex); }
     }
+    [CommandMethod("TBSTATIONLOCATIES", CommandFlags.Modal)]
+    public void StationsTab()
+    {
+        Show();
+        if (palette == null) return;
+        palette.Activate(6);
+        stationLocationsPanel?.RefreshSheets();
+    }
+
+    // Unieke geïntegreerde opdracht: functioneert ook als een oude losse plugin aanwezig is.
+    [CommandMethod("TBSTATIONBEHEER", CommandFlags.Modal)]
+    public void StationManager() => StationLocations();
+
+    [CommandMethod("STATIONLOCATIES", CommandFlags.Modal)]
+    public void StationLocations()
+    {
+        try { new Stationslocaties.StationLocationController().ShowStationLocations(); }
+        catch (System.Exception ex) { Error(ex); }
+        finally { stationLocationsPanel?.RefreshSheets(); }
+    }
+
+    [CommandMethod("TBSTATIONXREFSTART", CommandFlags.Session)]
+    public void StationXrefStart()
+    {
+        try { new Stationslocaties.StationLocationController().StartStationReference(); }
+        catch (System.Exception ex) { Error(ex); }
+    }
+
     [CommandMethod("TBLAAG", CommandFlags.Modal)]
     public void Toggle()
     {
