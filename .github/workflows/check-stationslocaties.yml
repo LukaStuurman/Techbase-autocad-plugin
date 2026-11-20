@@ -35,3 +35,10 @@ jobs:
         if: matrix.api == 'R25'
         shell: pwsh
         run: dotnet run --project tests/StationToolbarVisual/StationToolbarVisual.csproj -c Release
+      - name: Save station header screenshots
+        if: matrix.api == 'R25' && always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: stations-header-380-780-1190
+          path: tests/StationToolbarVisual/out/header-*.png
+          if-no-files-found: warn
