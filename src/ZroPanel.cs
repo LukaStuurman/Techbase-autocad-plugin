@@ -225,7 +225,7 @@ internal static class ZroController
                 ZroSheets.RefreshAll(doc);
                 break;
             case ZroAction.References:
-                new Stationslocaties.StationLocationController().StartStationReference();
+                new Stationslocaties.StationLocationController().ShowStationLocations(Stationslocaties.StationLocationAction.References);
                 break;
         }
     }
