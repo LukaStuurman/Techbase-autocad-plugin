@@ -1,6 +1,6 @@
 # Techbase AutoCAD Plugin
 
-> **TechBase 1.20.3:** de Stationslocaties-tab heeft een goed leesbare knop **Nieuwe locatie**, zichtbare knoppen **Vernieuwen** en **Uitleg**, en een duidelijke lege-lijstmelding in plaats van grijze knoppen. Wanneer je een trafoblok met MOVE, ROTATE of de grips verplaatst, volgt de uitsnede van het A3-detailblad automatisch en worden de C1–C4-coördinaten opnieuw bepaald uit de actuele positie en draaiing. De overige TechBase-functies blijven behouden.
+> **TechBase 1.20.3:** de schakelaars bij **Blocks → Plaatsopties** staan nu consequent onder elkaar, ook wanneer de werkplaats versmald wordt.  de Stationslocaties-tab heeft een goed leesbare knop **Nieuwe locatie**, zichtbare knoppen **Vernieuwen** en **Uitleg**, en een duidelijke lege-lijstmelding in plaats van grijze knoppen. Wanneer je een trafoblok met MOVE, ROTATE of de grips verplaatst, volgt de uitsnede van het A3-detailblad automatisch en worden de C1–C4-coördinaten opnieuw bepaald uit de actuele positie en draaiing. De overige TechBase-functies blijven behouden.
 
 > **Sinds 1.20.1: volledige Stationslocaties-integratie.** De codebasis is overgenomen uit de aangeleverde 1.20.0-bron en gecombineerd met het uitgebreide Stationslocaties-beheer. In de nieuwe werkplaats heeft Stationslocaties een eigen zevende navigatieknop die het volledige beheer rechtstreeks in dezelfde interface toont. Voor oudere stationsbladen uit de ingebouwde 1.20-functie blijft `TBSTATIONLEGACY` beschikbaar.
 
