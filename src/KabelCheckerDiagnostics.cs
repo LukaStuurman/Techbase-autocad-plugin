@@ -34,7 +34,7 @@ internal static class KabelCheckerDiagnostics
             var request = (string)typeof(ExcelDirectionExporter).GetMethod("BuildWorkerRequest", BindingFlags.NonPublic | BindingFlags.Static)!.Invoke(null, new object[] { directions, version })!;
             var bytes = (byte[])typeof(ExcelDirectionExporter).GetMethod("ReadEmbeddedTemplate", BindingFlags.NonPublic | BindingFlags.Static)!.Invoke(null, new object[] { definition.ResourceFileName })!;
             Check(bytes.Length > 100000, "ingebouwd officieel template " + version);
-            var file = Path.Combine(folder, "Geintegreerde export " + version + ".xlsx");
+            var file = Path.Combine(folder, StationExportFileName.Create("Teststation " + version));
             IsolatedExcelWorker.Export(file, bytes, request);
             using var archive = ZipFile.OpenRead(file);
             var workbookEntry = archive.GetEntry("xl/workbook.xml") ?? throw new InvalidOperationException("Ongeldige XLSX.");
@@ -71,8 +71,21 @@ internal static class KabelCheckerDiagnostics
             Application.DoEvents();
             Control[] All(Control control) => new[] { control }.Concat(control.Controls.Cast<Control>().SelectMany(All)).ToArray();
             var controls = All(panel);
+            var stationName = controls.OfType<TextBox>().Single(t => t.AccessibleName == "Stationsnaam");
+            stationName.Text = "Station 1234";
+            Check(panel.Builder.SuggestedExportFileName == "Station 1234.xlsx", "Excel-export gebruikt de huidige stationsnaam als bestandsnaam");
+            stationName.Text = "Nieuw station";
+            Check(panel.Builder.SuggestedExportFileName == "Nieuw station.xlsx", "gewijzigde stationsnaam direct in exportbestandsnaam");
+            Check(StationExportFileName.Create(" A/B:C*? ") == "A_B_C__.xlsx", "ongeldige bestandstekens veilig vervangen");
+            Check(StationExportFileName.Create(" ... ") == "Station.xlsx" && StationExportFileName.Create(null) == "Station.xlsx", "lege stationsnaam heeft bruikbare bestandsnaam");
+            Check(StationExportFileName.Create("CON") == "Station_CON.xlsx" && StationExportFileName.Create("LPT1.test") == "Station_LPT1.test.xlsx", "gereserveerde Windows-bestandsnamen afgevangen");
+            Check(StationExportFileName.Create("Station.xlsx") == "Station.xlsx" && StationExportFileName.Create(new string('s', 180)).Length == 125, "Excel-extensie niet verdubbelen en lange stationsnaam begrenzen");
+            Check(controls.OfType<Button>().Where(b => b.Parent != null && panel.Builder.Contains(b)).All(b => b.MinimumSize.Height is 24 or 26 && b.Padding.Horizontal == 8), "compacte kabelcheckerknoppen met volledige actieteksten");
             foreach (var text in new[] { "Station opslaan", "Station laden", "Richting opslaan", "Bereken richting", "Hele polyline", "Deel tot knippunt", "Uit kader", "Excel exporteren", "Alle richtingen verwijderen", "Richting-info plaatsen" })
-                Check(controls.OfType<Button>().Any(button => button.Text == text), "bediening in tab: " + text);
+                Check(controls.OfType<Button>().Any(button => button.Text == text || button.AccessibleName == text), "bediening in tab: " + text);
+            Check(controls.OfType<ThemedButton>().Count(b => b.Text.Length == 0 && b.Width == 26 && b.Glyph >= 6 && !string.IsNullOrWhiteSpace(b.AccessibleName)) == 15,
+                "station-, richting-, kabel- en stroomacties gebruiken vijftien compacte icoonknoppen met actienaam");
+            Check(controls.OfType<Button>().Single(b => b.AccessibleName == "Alle richtingen verwijderen").BackColor == UiTheme.Danger, "alles verwijderen is volledig rood");
             Check(panel.Builder.TopLevel == false && panel.Builder.Parent != null, "echte richtingbouwer ingebed in tab");
             var grid = (DataGridView)typeof(KabelCheckerForm).GetField("_grid", BindingFlags.Instance | BindingFlags.NonPublic)!.GetValue(panel.Builder)!;
             Check(grid.Rows.Count == 1, "preset kabelsegment in ingebedde richtingbouwer");
@@ -80,7 +93,9 @@ internal static class KabelCheckerDiagnostics
             var option = ExcelLoadCatalog.For(KaderVersion.K2026_3_2)[0];
             currentPanel.LoadCurrentLoads(new[] { new CurrentLoadInput(option.CableDesignCurrentAmps, 2) },
                 new[] { new ExcelMappedLoad(option.Key, option.CableDesignCurrentAmps, 2) });
-            typeof(KabelCheckerForm).GetMethod("Calculate", BindingFlags.Instance | BindingFlags.NonPublic)!.Invoke(panel.Builder, null);
+            var calculate = controls.OfType<Button>().Single(b => b.Name == "CalculateDirectionButton");
+            Check(!panel.Builder.Contains(calculate), "berekenknop staat buiten het scrollbare invoervenster");
+            calculate.PerformClick();
             var fuse = (Label)typeof(KabelCheckerForm).GetField("_fuseResult", BindingFlags.Instance | BindingFlags.NonPublic)!.GetValue(panel.Builder)!;
             Check(fuse.Text.Contains("250 A gG"), "berekenknop gebruikt rekenengine vanuit de ingebedde vorm");
             var save = (bool)typeof(KabelCheckerForm).GetMethod("SaveDirectionCore", BindingFlags.Instance | BindingFlags.NonPublic)!.Invoke(panel.Builder, new object[] { false })!;

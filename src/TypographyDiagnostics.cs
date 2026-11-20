@@ -74,8 +74,9 @@ internal static class TypographyDiagnostics
                 IEnumerable<Control> Descendants(Control root)
                 { yield return root; foreach (Control child in root.Controls) foreach (var descendant in Descendants(child)) yield return descendant; }
                 var controls = Descendants(panel).ToArray();
-                Check(controls.All(c => c.Font.FontFamily.Name == Typography.Family && c.Font.Style == System.Drawing.FontStyle.Regular),
-                    panel.GetType().Name + ": alle " + controls.Length + " controles gebruiken de echte Light-familie");
+                Check(controls.All(c => c.Font.FontFamily.Name == Typography.Family && c.Font.Style ==
+                    (c.Name == "CurrentLoadFitResult" ? System.Drawing.FontStyle.Bold : System.Drawing.FontStyle.Regular)),
+                    panel.GetType().Name + ": alle " + controls.Length + " controles gebruiken de Light-familie, met vet resultaatlabel");
                 Check(controls.OfType<DataGridView>().All(g => g.DefaultCellStyle.Font.Name == Typography.Family &&
                     g.ColumnHeadersDefaultCellStyle.Font.Style == System.Drawing.FontStyle.Regular), "tabellen en kolomkoppen gebruiken Light");
                 using var button = new Button { Text = "Later toegevoegd", Font = new System.Drawing.Font("Arial", 11, System.Drawing.FontStyle.Bold) };

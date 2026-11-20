@@ -18,6 +18,18 @@ internal static class LightmastDiagnostics
         var folder = Path.Combine(Output, "Lichtmasten"); Directory.CreateDirectory(folder);
         var checks = new List<string>();
         void Check(bool condition, string label) { if (!condition) throw new InvalidOperationException("Lichtmasttest mislukt: " + label); checks.Add(label); }
+        bool TopObjects(Database database, string application, int count)
+        {
+            using var tx = database.TransactionManager.StartTransaction();
+            var space = (BlockTableRecord)tx.GetObject(database.CurrentSpaceId, OpenMode.ForRead);
+            var order = (DrawOrderTable)tx.GetObject(space.DrawOrderTableId, OpenMode.ForRead);
+            return order.GetFullDrawOrder(0).Cast<ObjectId>().Where(id => !id.IsErased).TakeLast(count).All(id =>
+            { using var data = ((Entity)tx.GetObject(id, OpenMode.ForRead)).GetXDataForApplication(application); return data != null; });
+        }
+        var automatic = new[] { "X|E_STREET_LIGHT_CONNECTION", "X|NESTED|E_LV_MULTISTORY_CONNECTION", "X|E_LV_DISTRIBUTION_BOX", "X|E_STREET_LIGHT_CONNECTION_EXTRA", "OTHER" };
+        Check(LightmastService.AutomaticLayers(automatic, true, false).SequenceEqual(automatic.Take(1)), "eenvoudig: alleen exacte lichtmastlaag, inclusief xref-prefix");
+        Check(LightmastService.AutomaticLayers(automatic, false, true).SequenceEqual(automatic.Skip(1).Take(2)), "eenvoudig: flatkasten en verdeelkasten, inclusief geneste xref-prefix");
+        Check(LightmastService.AutomaticLayers(automatic, true, true).Length == 3 && LightmastService.AutomaticLayers(automatic, false, false).Length == 0, "toevoegingen combineren of uitschakelen");
         var box = new AreaBoundary(new[] { new Point2d(0, 0), new Point2d(10, 0), new Point2d(10, 10), new Point2d(0, 10) });
         Check(box.Contains(new Point3d(5, 5, 100)), "gebied in bovenaanzicht inclusief hoogte");
         Check(box.Contains(new Point3d(0, 5, 0)) && box.Contains(Point3d.Origin), "grens en hoekpunt inbegrepen");
@@ -47,6 +59,11 @@ internal static class LightmastDiagnostics
             using var tx = source.TransactionManager.StartTransaction();
             var lightLayer = BlockInserter.DefaultLayer(source, tx, "OV_MAST");
             var otherLayer = BlockInserter.DefaultLayer(source, tx, "OTHER");
+            BlockInserter.DefaultLayer(source, tx, "EMPTY_LAYER");
+            var flatLayer = BlockInserter.DefaultLayer(source, tx, LightmastService.FlatLayer);
+            var cabinetLayer = BlockInserter.DefaultLayer(source, tx, LightmastService.DistributionLayer);
+            ((LayerTableRecord)tx.GetObject(flatLayer, OpenMode.ForWrite)).Color = Autodesk.AutoCAD.Colors.Color.FromColorIndex(Autodesk.AutoCAD.Colors.ColorMethod.ByAci, 1);
+            ((LayerTableRecord)tx.GetObject(cabinetLayer, OpenMode.ForWrite)).Color = Autodesk.AutoCAD.Colors.Color.FromColorIndex(Autodesk.AutoCAD.Colors.ColorMethod.ByAci, 2);
             var blocks = (BlockTable)tx.GetObject(source.BlockTableId, OpenMode.ForWrite);
             ObjectId Symbol(string name)
             {
@@ -69,6 +86,13 @@ internal static class LightmastDiagnostics
             Add(mast, new Point3d(-10, 20, 0), lightLayer);
             Add(other, new Point3d(10, 20, 0), otherLayer);
             Add(groupId, new Point3d(20, 30, 2), lightLayer, true);
+            Add(other, new Point3d(11, 22, 0), flatLayer);
+            using var cabinetLine = new Line(new Point3d(8, 18, 0), new Point3d(12, 18, 0));
+            cabinetLine.SetDatabaseDefaults(source); cabinetLine.LayerId = cabinetLayer;
+            model.AppendEntity(cabinetLine); tx.AddNewlyCreatedDBObject(cabinetLine, true);
+            using var cabinetCircle = new Circle(new Point3d(15, 18, 0), Vector3d.ZAxis, 1);
+            cabinetCircle.SetDatabaseDefaults(source); cabinetCircle.LayerId = cabinetLayer;
+            model.AppendEntity(cabinetCircle); tx.AddNewlyCreatedDBObject(cabinetCircle, true);
             tx.Commit(); source.SaveAs(sourceFile, DwgVersion.AC1032);
         }
         var originalHash = Convert.ToHexString(SHA256.HashData(File.ReadAllBytes(sourceFile)));
@@ -88,6 +112,7 @@ internal static class LightmastDiagnostics
         }
         Check(LightmastService.Xrefs(db).Count == 2, "meerdere invoegingen van dezelfde xref apart kiezen");
         var snapshot = LightmastService.Scan(db, xrefId);
+        Check(LightmastService.XrefLayers(db, xrefId).Any(l => l.EndsWith("|EMPTY_LAYER")), "geavanceerd bevat ook lagen zonder blocks");
         Check(snapshot.Warnings.Count == 0, "geladen xref volledig gelezen");
         var light = snapshot.Candidates.First(c => c.Layer.EndsWith("|OV_MAST")).Layer;
         var name = snapshot.Candidates.First(c => c.BlockName.EndsWith("|MAST")).BlockName;
@@ -107,6 +132,7 @@ internal static class LightmastDiagnostics
         var currentLayer = db.Clayer;
         var placed = LightmastService.Place(db, selected);
         Check(placed.Placed == 3 && db.Clayer == currentLayer, "Lisp-symbool plaatsen zonder huidige laag te veranderen");
+        Check(TopObjects(db, "TECHBASE_LIGHTMAST", 3), "lichtmasten expliciet bovenaan de tekenvolgorde");
         var repeated = LightmastService.Place(db, selected);
         Check(repeated.Placed == 0 && repeated.AlreadyPresent == 3, "herhaling op dezelfde bronpunten zonder dubbelen");
         var savedHandles = new List<string>();
@@ -137,6 +163,31 @@ internal static class LightmastDiagnostics
             }
         }
         Check(originalHash == Convert.ToHexString(SHA256.HashData(File.ReadAllBytes(sourceFile))), "xref-bronbestand ongewijzigd");
+        var cabinetLayers = LightmastService.AutomaticLayers(LightmastService.XrefLayers(db, xrefId), false, true);
+        var request = new LightmastRequest(null!, xrefId, cabinetLayers, Array.Empty<string>(), AreaMode.All, false, true);
+        var copiedCount = CabinetService.Place(db, request, null);
+        Check(copiedCount == 3, "kastlagen nemen blocks, lijnen en cirkels over met niet-uniforme xref-schaal");
+        Check(TopObjects(db, "TECHBASE_CABINETS", 3), "alle kastobjecten bovenaan, inclusief losse en geschaalde geometrie");
+        Check(CabinetService.Place(db, request, null) == 0, "kasten herhalen zonder dubbelen");
+        using (var tx = db.TransactionManager.StartTransaction())
+        {
+            var table = (LayerTable)tx.GetObject(db.LayerTableId, OpenMode.ForRead);
+            Check(((LayerTableRecord)tx.GetObject(table[LightmastService.FlatLayer], OpenMode.ForRead)).Color.ColorIndex == 3, "alleen overgenomen flatkastlaag groen");
+            Check(((LayerTableRecord)tx.GetObject(table[LightmastService.DistributionLayer], OpenMode.ForRead)).Color.ColorIndex == 2, "verdeelkastlaag behoudt bronkleur");
+            var model = (BlockTableRecord)tx.GetObject(db.CurrentSpaceId, OpenMode.ForRead);
+            var copied = model.Cast<ObjectId>().Select(id => tx.GetObject(id, OpenMode.ForRead)).OfType<Entity>().ToArray();
+            Check(copied.OfType<Line>().Any(l => l.Layer == LightmastService.DistributionLayer && l.StartPoint.DistanceTo(Expected(new Point3d(8, 18, 0))) < 1e-7), "losse kastgeometrie volgt xref-transformatie");
+            Check(copied.OfType<BlockReference>().Any(b => b.Layer == LightmastService.FlatLayer && b.Position.DistanceTo(Expected(new Point3d(11, 22, 0))) < 1e-7 && b.Name != LightmastService.SymbolName), "flatkast behoudt eigen symbool en wereldpositie");
+        }
+        Check(originalHash == Convert.ToHexString(SHA256.HashData(File.ReadAllBytes(sourceFile))), "kasten overnemen wijzigt bronbestand niet");
+        var cabinetRegion = new AreaBoundary(new[] { new Point2d(-95,14), new Point2d(-93,14), new Point2d(-93,16), new Point2d(-95,16) });
+        Check(CabinetService.Place(db, request with { XrefId = secondId }, cabinetRegion) == 1, "kasten gebiedselectie en tweede xref-invoeging");
+        db.SaveAs(Path.Combine(folder, "Beheerkaart - kasten.dwg"), DwgVersion.AC1032);
+        using (var reopened = new Database(false, true))
+        {
+            reopened.ReadDwgFile(Path.Combine(folder, "Beheerkaart - kasten.dwg"), FileOpenMode.OpenForReadAndAllShare, true, null); reopened.CloseInput(true);
+            Check(TopObjects(reopened, "TECHBASE_CABINETS", 4), "tekenvolgorde van toevoegingen blijft bewaard in DWG");
+        }
         File.WriteAllText(Path.Combine(folder, "validatie-lichtmasten.json"), JsonSerializer.Serialize(new { Status = "PASS", Host = Convert.ToString(AcApp.GetSystemVariable("ACADVER")), Checks = checks, Count = selected.Length, XrefSha256 = originalHash }, new JsonSerializerOptions { WriteIndented = true }));
         AcApp.DocumentManager.MdiActiveDocument?.Editor.WriteMessage("\nLIGHTMAST VALIDATION PASS: " + checks.Count + " checks.");
     }

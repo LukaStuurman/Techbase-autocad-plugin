@@ -21,7 +21,7 @@ internal sealed class KabelgeulEditor : UserControl
         var tools = new FlowLayoutPanel { AutoSize = true, Dock = DockStyle.Fill };
         foreach (var item in rules ? Array.Empty<(string, int)>() : new[] { ("Rij vóór", 0), ("Rij na", 1), ("Rij verwijderen", 2), ("Volgorde omdraaien", 3) })
         {
-            var button = new Button { Text = item.Item1, AutoSize = true }; var action = item.Item2;
+            var button = new ThemedButton { Text = item.Item1, AutoSize = true }; var action = item.Item2;
             button.Click += (_, _) =>
             {
                 if (action is 0 or 1) InsertRow(action == 1);
@@ -109,17 +109,17 @@ internal sealed class KabelgeulPanel : UserControl
         layout.ColumnStyles.Add(new(SizeType.Percent, 100));
         layout.RowStyles.Add(new(SizeType.AutoSize)); layout.RowStyles.Add(new(SizeType.Percent, 100)); layout.RowStyles.Add(new(SizeType.AutoSize)); layout.RowStyles.Add(new(SizeType.AutoSize));
         var heading = new FlowLayoutPanel { AutoSize = true, Dock = DockStyle.Fill };
-        heading.Controls.Add(new Label { Text = "KABELGEUL", AutoSize = true, Padding = new Padding(0, 6, 12, 0) });
-        var larger = new Button { Text = "Groter openen", AutoSize = true }; larger.Click += (_, _) => enlarge?.Invoke(); heading.Controls.Add(larger);
+        heading.Controls.Add(UiTheme.Title("Kabelgeul"));
+        var larger = new ThemedButton { Text = "Groter openen", AutoSize = true }; larger.Click += (_, _) => enlarge?.Invoke(); heading.Controls.Add(larger);
         heading.Controls.Add(new Label { Text = "Standaardinstellingen per kabeltype", AutoSize = true, Padding = new Padding(0, 6, 0, 0) });
         layout.Controls.Add(heading, 0, 0); layout.Controls.Add(Editor, 0, 1);
         var buttons = new FlowLayoutPanel { AutoSize = true, Dock = DockStyle.Fill };
-        foreach (var item in new[] { ("Kabelgeul plaatsen", "TBKABELGEUL"), ("Gegevens kopiëren", "TBGEULCOPY"), ("Kabelgeul bewerken", "TBGEULEDIT"), ("Codepositie wisselen", "TBGEULCODE") })
-        { var button = new Button { Text = item.Item1, AutoSize = true }; var command = item.Item2; button.Click += (_, _) => Queue(command); buttons.Controls.Add(button); }
+        foreach (var item in new[] { ("Kabelgeul plaatsen", "TBKABELGEUL"), ("Gegevens kopiëren", "TBGEULCOPY"), ("Kabelgeul bewerken", "TBGEULEDIT"), ("Afstand tot kabels", "TBGEULAFSTAND"), ("Codepositie wisselen", "TBGEULCODE") })
+        { var button = new ThemedButton { Text = item.Item1, AutoSize = true }; var command = item.Item2; button.Click += (_, _) => Queue(command); buttons.Controls.Add(button); }
         layout.Controls.Add(buttons, 0, 2);
         var footer = new FlowLayoutPanel { AutoSize = true, Dock = DockStyle.Fill, FlowDirection = FlowDirection.TopDown };
-        var notes = new Label { Text = "Deze tabel bepaalt de standaardteksten en opmaak bij nieuwe geulen. Wijzigingen worden automatisch bewaard.\nDe volledige tekst is zichtbaar en bewerkbaar, inclusief Ri-nummer. Wat je invult wordt precies zo geplaatst.\nPlaatsen opent het kabelvenster met de gevonden kabels. Daar kun je rijen vóór of na een geselecteerde rij invoegen.\nBewerken en kopiëren behouden bestaande teksten; standaarden worden niet opnieuw toegepast. Mantel: X of een groepscode.", AutoSize = true, MaximumSize = new Size(700, 0) };
-        footer.Controls.Add(notes);
+        var notes = new Label { Text = "Deze tabel bepaalt de standaardteksten en opmaak bij nieuwe geulen. Wijzigingen worden automatisch bewaard.\nDe volledige tekst is zichtbaar en bewerkbaar, inclusief Ri-nummer. Wat je invult wordt precies zo geplaatst.\nPlaatsen opent het kabelvenster met de gevonden kabels. Daar kun je rijen vóór of na een geselecteerde rij invoegen.\nBewerken en kopiëren behouden bestaande teksten; standaarden worden niet opnieuw toegepast. Mantel: X of een groepscode.\nDirecte geulen: Afstand tot kabels wijzigt de verwijslijn en behoudt het aansluitpunt.", AutoSize = true, MaximumSize = new Size(700, 0) };
+        footer.Controls.Add(UiTheme.Fold("Uitleg & werkwijze", notes));
         SizeChanged += (_, _) => { notes.MaximumSize = new Size(Math.Max(180, ClientSize.Width - 30), 0); status.MaximumSize = notes.MaximumSize; };
         footer.Controls.Add(status); layout.Controls.Add(footer, 0, 3); Controls.Add(layout); UiTypography.Apply(this);
         Editor.Grid.CellValueChanged += (_, _) => SaveRules(); Editor.Grid.CellEndEdit += (_, _) => SaveRules(); Editor.MantelSpecBox.TextChanged += (_, _) => SaveRules();
@@ -144,6 +144,12 @@ internal sealed class KabelgeulPanel : UserControl
         if (Convert.ToInt32(AcApp.GetSystemVariable("CMDACTIVE")) != 0) { Report("Rond eerst het actieve commando af of druk Esc."); return; }
         try
         {
+            if (command is "TBGEULAFSTAND" or "TBGEULVERPLAATS")
+            {
+                if (!SaveRules()) return;
+                doc.SendStringToExecute(command + " ", true, false, false);
+                return;
+            }
             var source = System.IO.Path.Combine(Plugin.ContentsRoot, "Assets", "Kabelgeul", "Techbase.Kabelgeul.lsp");
             if (!System.IO.File.Exists(source)) throw new InvalidOperationException("Kabelgeul-bron ontbreekt. Installeer de plugin opnieuw.");
             var path = source.Replace("\\", "/").Replace("\"", "\\\"");

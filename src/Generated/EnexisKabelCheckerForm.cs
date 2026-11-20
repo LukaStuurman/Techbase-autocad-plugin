@@ -130,13 +130,13 @@ internal sealed partial class KabelCheckerForm : Form
         };
         panel.Controls.Add(_savedStations);
 
-        var save = new Button { Text = "Station opslaan", AutoSize = true };
+        var save = new Techbase.Blocks.ThemedButton { Text = "Station opslaan", AutoSize = true };
         save.Click += (_, _) => SaveStation();
         panel.Controls.Add(save);
-        var load = new Button { Text = "Station laden", AutoSize = true };
+        var load = new Techbase.Blocks.ThemedButton { Text = "Station laden", AutoSize = true };
         load.Click += (_, _) => LoadStation();
         panel.Controls.Add(load);
-        var delete = new Button { Text = "Station verwijderen", AutoSize = true };
+        var delete = new Techbase.Blocks.ThemedButton { Text = "Station verwijderen", AutoSize = true };
         delete.Click += (_, _) => DeleteStation();
         panel.Controls.Add(delete);
         return panel;
@@ -164,16 +164,16 @@ internal sealed partial class KabelCheckerForm : Form
         _savedDirections.SelectedIndexChanged += (_, _) => LoadSelectedDirection();
         panel.Controls.Add(_savedDirections);
 
-        var fresh = new Button { Text = "Nieuwe richting", AutoSize = true };
+        var fresh = new Techbase.Blocks.ThemedButton { Text = "Nieuwe richting", AutoSize = true };
         fresh.Click += (_, _) => StartNewDirection();
         panel.Controls.Add(fresh);
-        var save = new Button { Text = "Richting opslaan", AutoSize = true };
+        var save = new Techbase.Blocks.ThemedButton { Text = "Richting opslaan", AutoSize = true };
         save.Click += (_, _) => SaveDirection();
         panel.Controls.Add(save);
-        var delete = new Button { Text = "Verwijderen", AutoSize = true };
+        var delete = new Techbase.Blocks.ThemedButton { Text = "Verwijderen", AutoSize = true };
         delete.Click += (_, _) => DeleteDirection();
         panel.Controls.Add(delete);
-        var export = new Button { Text = "Excel exporteren", AutoSize = true };
+        var export = new Techbase.Blocks.ThemedButton { Text = "Excel exporteren", AutoSize = true };
         export.Click += (_, _) => ExportExcel();
         panel.Controls.Add(export);
         return panel;
@@ -196,13 +196,13 @@ internal sealed partial class KabelCheckerForm : Form
         _cablePicker.Width = 190;
         panel.Controls.Add(_cablePicker);
 
-        var full = new Button { Text = "Hele polyline", AutoSize = true };
+        var full = new Techbase.Blocks.ThemedButton { Text = "Hele polyline", AutoSize = true };
         full.Click += (_, _) => PickPolyline(false);
         panel.Controls.Add(full);
-        var part = new Button { Text = "Deel tot knippunt", AutoSize = true };
+        var part = new Techbase.Blocks.ThemedButton { Text = "Deel tot knippunt", AutoSize = true };
         part.Click += (_, _) => PickPolyline(true);
         panel.Controls.Add(part);
-        var remove = new Button { Text = "Verwijder kabelrij", AutoSize = true };
+        var remove = new Techbase.Blocks.ThemedButton { Text = "Verwijder kabelrij", AutoSize = true };
         remove.Click += (_, _) => RemoveSelectedSegment();
         panel.Controls.Add(remove);
         return panel;
@@ -211,13 +211,13 @@ internal sealed partial class KabelCheckerForm : Form
     private Control BuildFooter()
     {
         var footer = new FlowLayoutPanel { Dock = DockStyle.Fill, FlowDirection = FlowDirection.RightToLeft, AutoSize = true };
-        var close = new Button { Text = "Sluiten", AutoSize = true };
+        var close = new Techbase.Blocks.ThemedButton { Text = "Sluiten", AutoSize = true };
         close.Click += (_, _) => Close();
         footer.Controls.Add(close);
-        var reset = new Button { Text = "Huidige richting leegmaken", AutoSize = true };
+        var reset = new Techbase.Blocks.ThemedButton { Text = "Huidige richting leegmaken", AutoSize = true };
         reset.Click += (_, _) => ClearEditor();
         footer.Controls.Add(reset);
-        var calculate = new Button { Text = "Bereken richting", AutoSize = true };
+        var calculate = new Techbase.Blocks.ThemedButton { Text = "Bereken richting", AutoSize = true };
         calculate.Click += (_, _) => Calculate();
         footer.Controls.Add(calculate);
         return footer;
@@ -623,7 +623,7 @@ internal sealed partial class KabelCheckerForm : Form
         using var dialog = new SaveFileDialog
         {
             Filter = "Excel werkmap (*.xlsx)|*.xlsx",
-            FileName = $"Enexis_ontwerpstroom_{DateTime.Now:yyyyMMdd_HHmm}.xlsx",
+            FileName = SuggestedExportFileName,
             AddExtension = true,
             DefaultExt = "xlsx"
         };

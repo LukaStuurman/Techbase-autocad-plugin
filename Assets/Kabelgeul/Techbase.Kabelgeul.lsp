@@ -658,7 +658,7 @@
 
 (defun tbkg:draw-floating-reference (p1 p2 code / ang text-props text-pt)
   (setq ang (angle p1 p2))
-  (setq text-props (tbkg:readable-text-props (- ang (/ pi 2.0))))
+  (setq text-props (tbkg:readable-text-props (+ ang (if (> bottom 0.0) (/ pi 2.0) (- (/ pi 2.0))))))
   (setq text-pt (tbkg:local->world p2 ang 0.45 0.0))
   (entmakex
     (list '(0 . "LWPOLYLINE")
@@ -2098,7 +2098,7 @@
 (defun tbkg:draw-rooien-logo (pt ang layer / r ext)
   (tbkg:draw-rooien-logo-radius pt ang layer 0.25))
 
-(defun tbkg:draw-trench-at-end (p1 p2 types labels doubles mantels splits combis existing-labels triples mantel-spec twosideds side2doubles side2triples side2combis / n spacing boxlen height top bottom stub ang text-props text-ang text-just mantel-text-props mantel-text-ang mantel-text-just mantel-text-pt pts x i gi pt text-pt double triple combi mantel twosided items item attr-index ss next blkname insert-before insert-ent oldattreq insert-result groups gtypes glabels gdoubles gtriples gmantels gcombis gexisting-labels gsplits gtwosideds group curr-types curr-labels curr-existing-labels curr-doubles curr-triples curr-mantels curr-combis curr-splits curr-twosideds offset group-start group-end group-boxlen group-n group-has-twosided attr-pts sorted-items floating-text-pt floating-text-ang floating-text-just swap-pt swap-ang swap-just primary-label existing-label secondary-label mask-index tray-polys lower-stub-a lower-stub-b lower-stub-mid tray-center mantel-inward-ang mantel-normal-a mantel-normal-b mantel-outward-ang mantel-base-pt entry-stub-start switch-u switch-diff switch-parallel switch-normal switch-inward mantel-axis mantel-q-pt mantel-low-pt mantel-q-vec mantel-low-vec mantel-parallel mantel-normal-offset has-twosided side-sep item-side-sep primary-pt secondary-pt side2double side2triple side2combi curr-side2doubles curr-side2triples curr-side2combis gside2doubles gside2triples gside2combis)
+(defun tbkg:draw-trench-at-end (p1 p2 types labels doubles mantels splits combis existing-labels triples mantel-spec twosideds side2doubles side2triples side2combis / icon-ang n spacing boxlen height top bottom stub ang text-props text-ang text-just mantel-text-props mantel-text-ang mantel-text-just mantel-text-pt pts x i gi pt text-pt double triple combi mantel twosided items item attr-index ss next blkname insert-before insert-ent oldattreq insert-result groups gtypes glabels gdoubles gtriples gmantels gcombis gexisting-labels gsplits gtwosideds group curr-types curr-labels curr-existing-labels curr-doubles curr-triples curr-mantels curr-combis curr-splits curr-twosideds offset group-start group-end group-boxlen group-n group-has-twosided attr-pts sorted-items floating-text-pt floating-text-ang floating-text-just swap-pt swap-ang swap-just primary-label existing-label secondary-label mask-index tray-polys lower-stub-a lower-stub-b lower-stub-mid tray-center mantel-inward-ang mantel-normal-a mantel-normal-b mantel-outward-ang mantel-base-pt entry-stub-start switch-u switch-diff switch-parallel switch-normal switch-inward mantel-axis mantel-q-pt mantel-low-pt mantel-q-vec mantel-low-vec mantel-parallel mantel-normal-offset has-twosided side-sep item-side-sep primary-pt secondary-pt side2double side2triple side2combi curr-side2doubles curr-side2triples curr-side2combis gside2doubles gside2triples gside2combis)
   (if (null doubles) (setq doubles (tbkg:blank-doubles (length types))))
   (if (null triples) (setq triples (tbkg:blank-triples (length types))))
   (if (null twosideds) (setq twosideds (tbkg:blank-twosideds (length types))))
@@ -2128,7 +2128,9 @@
   (setq bottom (- height))
   (setq stub 1.05)
   (setq ang (angle p1 p2))
-  (setq text-props (tbkg:readable-text-props (- ang (/ pi 2.0))))
+  (if (< (cadr (trans (list (- (sin ang)) (cos ang) 0.0) 0 2 T)) -1e-10) (setq bottom height))
+  (setq icon-ang (if (> bottom 0.0) (+ ang pi) ang))
+  (setq text-props (tbkg:readable-text-props (+ ang (if (> bottom 0.0) (/ pi 2.0) (- (/ pi 2.0))))))
   (setq text-ang (car text-props))
   (setq text-just (cadr text-props))
   ;; Mantelbuistekst gebruikt dezelfde leesrichting als de overige kabelteksten.
@@ -2230,7 +2232,7 @@
     (foreach typ gtypes
       (setq x (+ (/ group-boxlen 2.0) (- (* gi spacing) (/ (* (- group-n 1) spacing) 2.0))))
       (setq pt (tbkg:local->world group-start ang x (/ bottom 2.0)))
-      (setq text-pt (tbkg:local->world group-start ang x (- bottom 0.20)))
+      (setq text-pt (tbkg:local->world group-start ang x (+ bottom (if (> bottom 0.0) 0.20 -0.20))))
       (setq double (nth gi gdoubles))
       (setq triple (nth gi gtriples))
       (setq twosided (tbkg:double-p (nth gi gtwosideds)))
@@ -2251,7 +2253,7 @@
           ;; Bij Twee-zijdig kan iedere zijde Enkel, Dubbel, Drie of Combi tonen.
           ;; Alle mantelbuizen hebben dezelfde vaste straal; de vaste
           ;; hart-op-hartafstand houdt de twee mantelcirkels los van elkaar.
-          (setq item-side-sep side-sep)
+          (setq item-side-sep (if (> bottom 0.0) (- side-sep) side-sep))
           (setq primary-pt
             (tbkg:local->world group-start ang x (+ (/ bottom 2.0) (/ item-side-sep 2.0))))
           (setq secondary-pt
@@ -2351,7 +2353,7 @@
     (progn
       (setq floating-text-pt
         (tbkg:p+
-          (tbkg:local->world p2 ang (+ (- offset 0.90) (if (< (cadr p2) (cadr p1)) 0.35 0.45)) -0.45)
+          (tbkg:local->world p2 ang (+ (- offset 0.90) (if (< (cadr p2) (cadr p1)) 0.35 0.45)) (if (> bottom 0.0) 0.45 -0.45))
           text-ang
           (if (< (cadr p2) (cadr p1)) -0.80 0.80)))
       ;; Bij ingeschakelde CODESWITCH worden uitsluitend nieuwe zwevende
@@ -2402,7 +2404,7 @@
     (setq attr-pts
       (cond
         ((tbkg:half-rooien-p (car item))
-         (tbkg:half-rooien-text-points (nth 4 item) ang (nth 5 item) text-ang))
+         (tbkg:half-rooien-text-points (nth 4 item) icon-ang (nth 5 item) text-ang))
         ((tbkg:double-p (nth 10 item))
          (tbkg:two-sided-text-points (nth 4 item) (nth 11 item) (nth 5 item) text-ang))
         (T
@@ -2441,10 +2443,10 @@
 
   (vl-catch-all-apply 'tbkg:draw-mantelbuis-items (list items ang))
   (foreach item (reverse items)
-    (tbkg:draw-cable-icon (nth 4 item) ang (car item) (nth 2 item) (nth 9 item) nil (nth 6 item))
+    (tbkg:draw-cable-icon (nth 4 item) icon-ang (car item) (nth 2 item) (nth 9 item) nil (nth 6 item))
     (if (and (tbkg:double-p (nth 10 item)) (tbkg:point-p (nth 11 item)))
       ;; Zijde 2 gebruikt zijn eigen gekozen vorm.
-      (tbkg:draw-cable-icon (nth 11 item) ang (car item) (nth 12 item) (nth 13 item) nil (nth 14 item))))
+      (tbkg:draw-cable-icon (nth 11 item) icon-ang (car item) (nth 12 item) (nth 13 item) nil (nth 14 item))))
 
   (tbkg:make-attribute p2 0.10 text-ang "TB_CODESWAP" "Codepositie:"
     (if *tbkg:future-code-switch* "1" "0") "E_LV_CROSS_SECTION" text-just 3)
@@ -2453,7 +2455,7 @@
     (setq attr-pts
       (cond
         ((tbkg:half-rooien-p (car item))
-         (tbkg:half-rooien-text-points (nth 4 item) ang (nth 5 item) text-ang))
+         (tbkg:half-rooien-text-points (nth 4 item) icon-ang (nth 5 item) text-ang))
         ((tbkg:double-p (nth 10 item))
          (tbkg:two-sided-text-points (nth 4 item) (nth 11 item) (nth 5 item) text-ang))
         (T

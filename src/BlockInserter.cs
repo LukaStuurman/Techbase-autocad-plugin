@@ -194,6 +194,12 @@ internal static class BlockInserter
             }
         }
         Append(db, tx, block, tool.Explode, attributes, burst);
+        if (!burst && !tool.Explode && LsRackFuses.IsRack(tool.BlockName))
+        {
+            var slots = LsRackFuses.Slots((BlockTableRecord)tx.GetObject(block.BlockTableRecord, OpenMode.ForRead), tx);
+            var selected = LsRackFuses.ChooseState(slots, Array.Empty<int>(), Array.Empty<int>(), true);
+            if (selected != null) LsRackFuses.Apply(db, tx, block, catalog, selected.Directions, selected.Combi);
+        }
         tx.Commit();
         ed.WriteMessage("\nGeplaatst: " + tool.Name + " op laag " + block.Layer + ".");
         return true;

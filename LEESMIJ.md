@@ -1,4 +1,4 @@
-# Techbase Blocks 1.13.0
+# Techbase Blocks 1.20.1
 
 Gebruik zeven tabs in AutoCAD en Civil 3D voor Windows: Blocks, Lichtmasten, Enexis kabelchecker, Richtingen, Instellingen, Kabelgeul en Stationslocaties.
 
@@ -206,7 +206,7 @@ De concrete testresultaten en resterende praktijktests staan in `VALIDATIE.md` b
 
 ## Opnieuw bouwen
 
-Gebruik een .NET 10 SDK en voer `Build.ps1 -Dotnet <pad-naar-dotnet.exe>` uit. De build haalt Autodesk AutoCAD.NET API 25.0.1 en 26.0.0 via NuGet op en bouwt de Excel-worker voor beide runtimes. De Autodesk API-DLL's worden niet meegeleverd: die levert de hostapplicatie. De uitvoer staat in `dist/1.13.0` en in `Techbase Blocks 1.13.0.zip`. Versiegebonden DLL-mappen maken een update mogelijk zonder een reeds geladen oude DLL te overschrijven; herstart de CAD-toepassing om de nieuwe versie te laden.
+Gebruik een .NET 10 SDK en voer `Build.ps1 -Dotnet <pad-naar-dotnet.exe>` uit. De build haalt Autodesk AutoCAD.NET API 25.0.1 en 26.0.0 via NuGet op en bouwt de Excel-worker voor beide runtimes. De Autodesk API-DLL's worden niet meegeleverd: die levert de hostapplicatie. De uitvoer staat in `dist/1.20.1` en in `Techbase Blocks 1.20.1.zip`. Versiegebonden DLL-mappen maken een update mogelijk zonder een reeds geladen oude DLL te overschrijven; herstart de CAD-toepassing om de nieuwe versie te laden.
 
 
 ## Stationslocaties in de Techbase-plugin
@@ -216,3 +216,8 @@ Open `TECHBASE` en kies de tab **Stationslocaties**. Het overzicht toont de VL- 
 In het beheer kun je locaties en trafoblokken plaatsen of verplaatsen, VL en AL instellen, projectgegevens beheren, A3-detailbladen op schaal 1:250 en het blad **Totaal** aanmaken, locatiefotos toevoegen, bladen bewerken en als PDF plotten. Ook inbegrepen zijn de KLIC-, Topo- en Percelen-kaartreferenties (PDOK), de adreszoekfunctie en de opdrachtgevers/paraafopties.
 
 Beschikbare commando’s: `TBSTATIONLOCATIES` (tab openen), `TBSTATIONBEHEER` (beheer openen) en `STATIONLOCATIES` (compatibiliteitsalias). De achtergrondimport gebruikt intern `TBSTATIONXREFSTART`. Alle functies zijn nu onderdeel van `Techbase.Blocks.dll`. Je hoeft het losse stationslocatiepakket niet te installeren; verwijder een eventueel oude `Stationlocaties.bundle` om dubbele `STATIONLOCATIES`-commando’s te vermijden.
+
+
+## Stationslocaties geïntegreerd
+
+Gebruik de navigatieknop Stationslocaties in de Techbase Werkplaats. Daar kun je meteen VL/AL-locaties, detailbladen, totaalblad, foto’s, kaartreferenties en PDF beheren. Er wordt geen afzonderlijk hoofdvenster geopend. Voor bestaande locaties uit de oude Techbase 1.20-interne stationsfunctie blijft het commando TBSTATIONLEGACY beschikbaar.

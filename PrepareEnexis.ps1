@@ -1,3 +1,9 @@
+# Version 1.20.1 includes the matching Enexis generated C# adapters in src/Generated.
+# Do not overwrite these with the older pinned vendor generator from the 1.13 repository.
+if (Test-Path -LiteralPath (Join-Path $PSScriptRoot 'src/Generated/EnexisCurrentLoadPanel.cs')) {
+    Write-Host 'Using supplied 1.20 generated Enexis sources.'
+    return
+}
 $ErrorActionPreference = 'Stop'
 $vendor = Join-Path $PSScriptRoot 'vendor\AutoCAD-Enexis-kabels-checker'
 $source = Join-Path $vendor 'src\Enexis.KabelChecker.AutoCAD\Plugin.cs'
