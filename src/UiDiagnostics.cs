@@ -16,15 +16,15 @@ internal static class UiDiagnostics
         var checks = new List<string>();
         void Check(bool ok, string text) { if (!ok) throw new InvalidOperationException("UI: " + text); checks.Add(text); }
         IEnumerable<Control> All(Control c) { yield return c; foreach (Control child in c.Controls) foreach (var item in All(child)) yield return item; }
-        using var shell = new WorkspacePanel(new BlocksPanel(), new LightmastPanel(), new KabelCheckerPanel(), new DirectionPanel(), new SettingsPanel(), new KabelgeulPanel(), new StationLocationsPanel());
+        using var shell = new WorkspacePanel(new BlocksPanel(), new LightmastPanel(), new KabelCheckerPanel(), new DirectionPanel(), new SettingsPanel(), new KabelgeulPanel(), new StationLocationsPanel(), new ZroPanel());
         using var host = new Form { ShowInTaskbar = false, FormBorderStyle = FormBorderStyle.None, Opacity = 0, ClientSize = new Size(380, 940) };
         host.Controls.Add(shell); host.Show(); Application.DoEvents();
         shell.CreateControl();
-        var names = new[] { "Blocks", "Lichtmasten", "Kabelchecker", "Richtingen", "Instellingen", "Kabelgeul", "Stationslocaties" };
+        var names = new[] { "Blocks", "Lichtmasten", "Kabelchecker", "Richtingen", "Instellingen", "Kabelgeul", "Stationslocaties", "ZRO-bladen" };
         foreach (var width in new[] { 380, 1040 })
         {
             host.ClientSize = new Size(width, 940); shell.PerformLayout(); Application.DoEvents();
-            for (var index = 0; index < 7; index++)
+            for (var index = 0; index < 8; index++)
             {
                 shell.Navigate(index); shell.PerformLayout();
                 foreach (var control in All(shell).Where(c => c.Visible)) { _ = control.Handle; control.PerformLayout(); }
@@ -90,7 +90,7 @@ internal static class UiDiagnostics
         Check(All(shell).OfType<CheckedListBox>().All(c => c.Visible), "geavanceerde modus toont lagen en blockfilter");
         host.ClientSize = new Size(380, 940); Application.DoEvents();
         var picker = All(shell).OfType<ComboBox>().Single(x => x.AccessibleName == "Kies Techbase-onderdeel");
-        Check(picker.Visible && picker.Items.Count == 7, "compacte navigatie toont alle zeven onderdelen bij versmallen");
+        Check(picker.Visible && picker.Items.Count == 8, "compacte navigatie toont alle acht onderdelen bij versmallen");
         using (var image = new Bitmap(shell.Width, shell.Height))
         { shell.DrawToBitmap(image, new Rectangle(Point.Empty, image.Size)); image.Save(Path.Combine(folder, "Lichtmasten-advanced-380.png")); }
         advanced.Checked = false; shell.Navigate(0); host.ClientSize = new Size(1040, 940); Application.DoEvents();
