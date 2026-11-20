@@ -252,19 +252,99 @@ internal static class ZroController
         ZroSheets.Edit(doc, sheet, fields);
     }
 
+    private static ObjectId PlaceNewTrafo(Document doc, StationBlockSelection choice)
+    {
+        var db = doc.Database;
+        var definition = choice.ResolveDefinition(db);
+        var scale = choice.ScaleFor(db, definition);
+        LayoutManager.Current.CurrentLayout = "Model";
+        using var preview = new BlockReference(Autodesk.AutoCAD.Geometry.Point3d.Origin, definition);
+        preview.SetDatabaseDefaults(db);
+        preview.ScaleFactors = scale;
+        if (!new Stationslocaties.StationPlacementJig(preview).Pick(doc.Editor))
+            return ObjectId.Null;
+
+        using var tr = db.TransactionManager.StartTransaction();
+        var model = (BlockTableRecord)tr.GetObject(
+            SymbolUtilityServices.GetBlockModelSpaceId(db), OpenMode.ForWrite);
+        var layerName = choice.PaletteTool?.Layer;
+        var layer = BlockInserter.DefaultLayer(db, tr,
+            string.IsNullOrWhiteSpace(layerName) ? "01 - Station" : layerName);
+        var station = new BlockReference(preview.Position, definition)
+        {
+            Rotation = preview.Rotation, ScaleFactors = preview.ScaleFactors,
+            LayerId = layer
+        };
+        var id = model.AppendEntity(station);
+        tr.AddNewlyCreatedDBObject(station, true);
+        var record = (BlockTableRecord)tr.GetObject(definition, OpenMode.ForRead);
+        foreach (ObjectId objectId in record)
+        {
+            if (tr.GetObject(objectId, OpenMode.ForRead) is not AttributeDefinition
+                { Constant: false } attribute) continue;
+            var value = new AttributeReference();
+            value.SetAttributeFromBlock(attribute, station.BlockTransform);
+            value.TextString = attribute.TextString;
+            station.AttributeCollection.AppendAttribute(value);
+            tr.AddNewlyCreatedDBObject(value, true);
+        }
+        tr.Commit();
+        return id;
+    }
+
+    private static void EraseNewTrafo(Database db, ObjectId id)
+    {
+        if (id.IsNull || !id.IsValid || id.IsErased) return;
+        using var tr = db.TransactionManager.StartTransaction();
+        var station = (BlockReference)tr.GetObject(id, OpenMode.ForWrite);
+        station.Erase();
+        tr.Commit();
+    }
+
     private static void Create(Document doc)
     {
-        var options = new PromptEntityOptions("\nSelecteer het trafoblok in modelruimte voor dit ZRO-blad: ");
-        options.SetRejectMessage("\nKies een INSERT/trafoblok.");
-        options.AddAllowedClass(typeof(BlockReference), true);
-        var chosen = doc.Editor.GetEntity(options);
-        if (chosen.Status != PromptStatus.OK) return;
-        var footprint = ZroGeometry.Inspect(doc.Database, chosen.ObjectId);
-        var defaults = ZroSheets.Defaults.Copy();
-        defaults.TrafoName = ""; // voorkomen dat de vorige trafonaam wordt hergebruikt
-        using var dialog = new ZroFieldsDialog(defaults, footprint.Center, footprint.BlockType, footprint.Area);
-        if (Autodesk.AutoCAD.ApplicationServices.Application.ShowModalDialog(dialog) != DialogResult.OK ||
-            dialog.Result is not { } details) return;
-        ZroSheets.Create(doc, chosen.ObjectId, details, footprint, dialog.Labels);
+        // Zelfde blokkiezer als Stationslocaties. Standaard is Pacto 25
+        // AANKOOP; extra blokken uit de toolpalette/bibliotheek blijven kiezen.
+        var source = StationBlockSelectionDialog.Choose(doc, allowExisting: true);
+        if (source == null) return;
+        var inserted = ObjectId.Null;
+        var success = false;
+        try
+        {
+            ObjectId stationId;
+            if (source.UseExisting)
+            {
+                LayoutManager.Current.CurrentLayout = "Model";
+                var options = new PromptEntityOptions(
+                    "\nSelecteer een bestaand trafoblok voor dit ZRO-blad: ");
+                options.SetRejectMessage("\nKies een INSERT/trafoblok.");
+                options.AddAllowedClass(typeof(BlockReference), true);
+                var picked = doc.Editor.GetEntity(options);
+                if (picked.Status != PromptStatus.OK) return;
+                stationId = picked.ObjectId;
+            }
+            else
+            {
+                stationId = inserted = PlaceNewTrafo(doc, source);
+                if (stationId.IsNull) return;
+            }
+
+            var footprint = ZroGeometry.Inspect(doc.Database, stationId);
+            var defaults = ZroSheets.Defaults.Copy();
+            defaults.TrafoName = ""; // voorkom naam van de vorige trafo
+            using var dialog = new ZroFieldsDialog(defaults, footprint.Center,
+                source.UseExisting ? footprint.BlockType : source.DisplayName, footprint.Area);
+            if (Autodesk.AutoCAD.ApplicationServices.Application.ShowModalDialog(dialog) != DialogResult.OK ||
+                dialog.Result is not { } details) return;
+            ZroSheets.Create(doc, stationId, details, footprint, dialog.Labels);
+            success = true;
+        }
+        finally
+        {
+            // Plaatst de gebruiker een nieuwe AANKOOP-trafo, maar annuleert
+            // die daarna de ZRO-gegevens? Laat dan geen losse insert achter.
+            if (!success && !inserted.IsNull)
+                EraseNewTrafo(doc.Database, inserted);
+        }
     }
 }
