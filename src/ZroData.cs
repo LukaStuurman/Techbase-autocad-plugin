@@ -11,34 +11,34 @@ namespace Techbase.Blocks;
 
 internal sealed class ZroFields
 {
-    internal string ProjectCode { get; set; } = "";
-    internal string TrafoName { get; set; } = "";
-    internal string StationNumber { get; set; } = "";
-    internal string DrawingNumber { get; set; } = "";
-    internal string AreaSquareMeters { get; set; } = "";
-    internal string CadastralMunicipality { get; set; } = "";
-    internal string Section { get; set; } = "";
-    internal string ParcelNumber { get; set; } = "";
-    internal string Address { get; set; } = "";
-    internal string Place { get; set; } = "";
-    internal string Municipality { get; set; } = "";
-    internal string OwnerName { get; set; } = "";
-    internal string OwnerAddress { get; set; } = "";
-    internal string OwnerPostcodePlace { get; set; } = "";
-    internal string Department { get; set; } = "Grondzaken";
-    internal string Email { get; set; } = "";
-    internal string Draftsman { get; set; } = "";
-    internal string Date { get; set; } = DateTime.Today.ToString("dd-MM-yyyy", CultureInfo.GetCultureInfo("nl-NL"));
-    internal string Note { get; set; } = "";
-    internal string Users1 { get; set; } = "";
-    internal string Users2 { get; set; } = "";
-    internal string Users3 { get; set; } = "";
+    public string ProjectCode { get; set; } = "";
+    public string TrafoName { get; set; } = "";
+    public string StationNumber { get; set; } = "";
+    public string DrawingNumber { get; set; } = "";
+    public string AreaSquareMeters { get; set; } = "";
+    public string CadastralMunicipality { get; set; } = "";
+    public string Section { get; set; } = "";
+    public string ParcelNumber { get; set; } = "";
+    public string Address { get; set; } = "";
+    public string Place { get; set; } = "";
+    public string Municipality { get; set; } = "";
+    public string OwnerName { get; set; } = "";
+    public string OwnerAddress { get; set; } = "";
+    public string OwnerPostcodePlace { get; set; } = "";
+    public string Department { get; set; } = "Grondzaken";
+    public string Email { get; set; } = "";
+    public string Draftsman { get; set; } = "";
+    public string Date { get; set; } = DateTime.Today.ToString("dd-MM-yyyy", CultureInfo.GetCultureInfo("nl-NL"));
+    public string Note { get; set; } = "";
+    public string Users1 { get; set; } = "";
+    public string Users2 { get; set; } = "";
+    public string Users3 { get; set; } = "";
 
     internal ZroFields Copy() => (ZroFields)MemberwiseClone();
-    internal string MunicipalText => string.IsNullOrWhiteSpace(Municipality) ?
+    public string MunicipalText => string.IsNullOrWhiteSpace(Municipality) ?
         Place : Place + " gem. " + Municipality;
-    internal string Description => ProjectCode.Trim() + " - " + TrafoName.Trim();
-    internal string SuggestedLayout => "ZRO-" + TrafoName.Trim();
+    public string Description => ProjectCode.Trim() + " - " + TrafoName.Trim();
+    public string SuggestedLayout => "ZRO-" + TrafoName.Trim();
 }
 
 internal sealed record ZroParcelLabel(string Text, Point2d Position);
